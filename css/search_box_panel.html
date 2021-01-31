@@ -1,0 +1,111 @@
+
+
+<div class= "container">
+<!--Row 1-->
+<div class="row d-flex flex-column">
+<div class="form-inline">
+
+    <!--- Buy/Rent Button-->
+    <div class="col-sm-3">
+                 <div class="btn-group" role="group" aria-label="Buy or Rent">
+                     <button type="button" class="btn btn-secondary">For Sale</button>
+                     <button type="button" class="btn btn-secondary">For Rent</button>
+                 </div>
+    </div>
+
+    <!--- Input Location-->
+    <div class="col-sm">
+                <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
+                </div>
+                  <input type="text" class="form-control" placeholder="Enter Location" aria-label="Location" aria-describedby="basic-addon1">
+                </div> 
+    </div> 
+
+</div>
+</div>
+<!--End of Row1-->
+
+<!--Row2-->
+<div class="row d-flex flex-column">
+<div class="form-inline ">
+
+
+<!--Select Property Type--> 
+    <div class="col-sm-3">
+                                  <select class="form-control" id="SelectPropertyType">
+                                  <option hidden>Property Type</option>
+                                   <option>Any</option>
+                                   <option>Retail</option>
+                                   <option>Office</option>
+                                   <option>Building</option>
+                                   <option>Warehouse</option>
+                                   <option>House</option>
+                                  </select>
+    </div>
+
+<!--No. of Bedrooms-->
+    <div class="col-sm-3">
+        <div class="form-group">
+                                <select class="form-control" id="SelectMinBr">
+                                    <option hidden>Bedrooms(Min.)</option>
+                                   <option>1 Bedroom</option>
+                                   <option>3 Bedrooms</option>
+                                   <option>5 Bedrooms</option>
+                                   <option>7 Bedrooms</option>
+                                   <option>10 Bedrooms</option>
+                                </select>                 
+        </div>                     
+    </div>
+
+
+    <div class="col-sm-3">
+        <div class="form-group">
+
+                                <select class="form-control" id="SelectMaxBr">
+                                    <option hidden>Bedrooms(Max.)</option>
+                                   <option>2 Bedrooms</option>
+                                   <option>4 Bedrooms</option>
+                                   <option>6 Bedrooms</option>
+                                   <option>8 Bedrooms</option>
+                                   <option>10 Bedrooms</option>
+                                </select>
+        </div>
+    </div>
+
+    <!--Select Property Type--> 
+              <div class="col-sm">
+                  <div class="form-group">
+
+                 <!--Lot/Floor Area-->
+                      <div class="input-group">
+                        <select id="area" class="form-control" data-live-search="true">
+                            <option>Lot Area (sqm)</option>
+                            <option>Floor Area (sqm)</option>
+                        </select>
+                            <input type="text" class="form-control" name="sqm" placeholder="123"/>
+                      </div>
+
+                  </div>
+              </div>
+
+</div>   
+</div>
+<!--End of Row2-->
+
+
+<!--Row3-->
+<div class="row d-flex flex-column">
+
+        <!--- Search Button-->
+              <div class="col-sm">
+                  <div class="form-group">
+                    <button type="submit" id="#searchproperties" class="btn btn-primary" style= "width:100px;">Find</button>
+                  </div>
+              </div>
+</div>
+<!--End of Row3-->
+</div>
+
+</div>
