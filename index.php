@@ -427,7 +427,9 @@ if (mysqli_num_rows($result) > 0) {
     </div>
 </div>
 
-<!-- Contact Agent Modal-->
+
+
+<!-- Sig In Modal-->
 <div class="properties-modal modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="propertiesModal2Label"
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -451,7 +453,7 @@ if (mysqli_num_rows($result) > 0) {
                                         class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;Sign in with Facebook
                                 </button>
                             </div>
-
+                           
                             <div>
                                 <hr data-content="OR" class="hr-text">
                             </div>

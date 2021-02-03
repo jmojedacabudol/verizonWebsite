@@ -253,26 +253,7 @@ if (isset($_SESSION['userid'])) {
 
 
 
-    <!-- <div class="properties-modal modal fade" id="Register" tabindex="-1" role="dialog"
-        aria-labelledby="propertiesModal2Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="container login-container">
-                    <br><br>
-                    <div class="row justify-content-center">
-                        <div class="col-md-6 login-form-1">
-                            <h3 class="login-title">Register</h3>
-                            <div id="registration-alert">
-                            </div>
-
-                        </div>
-                    </div>
-                </div> <br><br>
-            </div>
-        </div>
-    </div> -->
-    <!--End of Registration Modal-->
-
+  
     <!-- Terms and Condition Modal -->
 
     <div class="modal fade bd-example-modal-lg" data-target="#termscondition" id="termscondition" tabindex="-1"
