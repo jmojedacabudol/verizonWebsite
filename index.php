@@ -453,7 +453,7 @@ if (mysqli_num_rows($result) > 0) {
                                         class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;Sign in with Facebook
                                 </button>
                             </div>
-                           
+
                             <div>
                                 <hr data-content="OR" class="hr-text">
                             </div>
@@ -485,17 +485,17 @@ if (mysqli_num_rows($result) > 0) {
                                 <hr>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <button type="button" class="btn btn-primary btn-primary-w100" data-toggle="modal"
-                                    data-target="#Register" data-dismiss="modal"> Register for free</button>
-                            </div>
-
-                        </form>
+                                    data-target="#Register" data-dismiss="modal"> Register for free</button> -->
                     </div>
+
+                    </form>
                 </div>
-            </div> <br><br>
-        </div>
+            </div>
+        </div> <br><br>
     </div>
+</div>
 </div>
 
 

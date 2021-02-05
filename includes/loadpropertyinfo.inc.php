@@ -30,13 +30,22 @@ if (isset($_POST['campaignId'])) {
             echo "<!-- properties Modal - Details-->";
             echo "<h4 class='text-uppercase mproperties-available'> <i class='fas fa-home icon-green'></i>
      AVAILABLE &nbsp;</h4>";
-            echo "<p class='mproperties-desc'>";
-            echo $row['propertyname'];
+            echo "<hr> ";
+            echo "</hr>";
+            // echo "<p class='mproperties-desc'>";
+            // echo $row['propertyname'];
+            // echo "</p>";
+            echo "<p class='mproperties-desc'>Description";
             echo "</p>";
             echo "<p class='mproperties-subdesc'>";
             echo $row['propertydesc'];
             echo "</p> <br>";
 
+            echo "<p class='mproperties-desc'>Location";
+            echo "</p>";
+            echo $row['propertylocation'];
+            echo "<br>";
+            echo "<br>";
             echo " <!--Properties-Bedrooms--->";
             echo "<div class='container'>";
             echo "<div class='row'>";

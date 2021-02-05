@@ -253,7 +253,7 @@ if (isset($_SESSION['userid'])) {
 
 
 
-  
+
     <!-- Terms and Condition Modal -->
 
     <div class="modal fade bd-example-modal-lg" data-target="#termscondition" id="termscondition" tabindex="-1"
@@ -340,6 +340,7 @@ if (isset($_SESSION['userid'])) {
                                     data-target="#Register" data-dismiss="modal"> Register
                                     for free</button>
                             </div>
+                            </form>
 
                         </div>
                     </div>
