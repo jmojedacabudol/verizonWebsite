@@ -12,7 +12,7 @@ if (isset($_POST['location'])) {
     include_once 'dbh.inc.php';
 
     if ($string === "") {
-        $sql = "SELECT property.propertyid,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.offertype= ? AND property.approval  NOT IN (0, 2, 3) GROUP BY property.propertyid";
+        $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.offertype= ? AND property.approval  NOT IN (0, 2, 3) GROUP BY property.propertyid DESC LIMIT 3";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -29,13 +29,19 @@ if (isset($_POST['location'])) {
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
 
+                $databaseFileName = $row['file_name'];
+                $filename = "../uploads/$databaseFileName" . "*";
+                $fileInfo = glob($filename);
+                $fileext = explode(".", $fileInfo[0]);
+                $fileactualext = $fileext[4];
+
                 echo " <div class='card mb-3 w-100'>";
                 echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
                 echo $row['propertyid'];
                 echo ")'";
                 echo ">";
                 echo "<img class='card-img-top' src='";
-                echo "uploads/" . $row['file_name'] . ".jpg";
+                echo "uploads/" .$row['file_name'] . "." . $fileactualext;
                 echo "' alt=''>";
                 echo " </div>";
                 echo " <div class='card-body'>";
@@ -70,7 +76,7 @@ if (isset($_POST['location'])) {
                 // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
                 //                     data-target='#bookaTourModal'><i class='fas fa-info'></i>&nbsp; Book a
                 //                     Tour</button>";
-                echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+                echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
                       Tour</button>");
 
                 echo "</div>";
@@ -92,7 +98,7 @@ if (isset($_POST['location'])) {
     } else {
         $location = "%$string%";
 
-        $sql = "SELECT property.propertyid,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND  propertylocation LIKE ? AND offertype=? AND property.approval  NOT IN (0, 2, 3) GROUP BY property.propertyid";
+        $sql = "SELECT property.propertyid,propertyamount,usersId,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND  propertylocation LIKE ? AND offertype=? AND property.approval  NOT IN (0, 2, 3) GROUP BY property.propertyid";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -110,13 +116,19 @@ if (isset($_POST['location'])) {
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
 
+                $databaseFileName = $row['file_name'];
+                $filename = "../uploads/$databaseFileName" . "*";
+                $fileInfo = glob($filename);
+                $fileext = explode(".", $fileInfo[0]);
+                $fileactualext = $fileext[4];
+
                 echo " <div class='card mb-3 w-100'>";
                 echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
                 echo $row['propertyid'];
                 echo ")'";
                 echo ">";
                 echo "<img class='card-img-top' src='";
-                echo "uploads/" . $row['file_name'] . ".jpg";
+                echo "uploads/" .$row['file_name'] . "." . $fileactualext;
                 echo "' alt=''>";
                 echo " </div>";
                 echo " <div class='card-body'>";
@@ -147,7 +159,7 @@ if (isset($_POST['location'])) {
                 echo "</div>";
                 echo "<div class='col-md-4'>";
                 echo "<div class='form-group'>";
-                echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+                echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
                       Tour</button>");
 
                 // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
@@ -180,7 +192,7 @@ if (isset($_POST['location'])) {
 
     include_once 'dbh.inc.php';
 
-    $sql = "SELECT property.propertyid,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertytype=? AND property.approval  NOT IN (0, 2, 3) GROUP BY property.propertyid";
+    $sql = "SELECT property.propertyid,propertyamount,usersId,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertytype=? AND property.approval  NOT IN (0, 2, 3) GROUP BY property.propertyid";
 
     $stmt = mysqli_stmt_init($conn);
 
@@ -196,13 +208,21 @@ if (isset($_POST['location'])) {
     $result = mysqli_stmt_get_result($stmt);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
+
+            $databaseFileName = $row['file_name'];
+            $filename = "../uploads/$databaseFileName" . "*";
+            $fileInfo = glob($filename);
+            $fileext = explode(".", $fileInfo[0]);
+            $fileactualext = $fileext[4];
+
+
             echo " <div class='card mb-3 w-100'>";
             echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
             echo $row['propertyid'];
             echo ")'";
             echo ">";
             echo "<img class='card-img-top' src='";
-            echo "uploads/" . $row['file_name'] . ".jpg";
+           echo "uploads/" .$row['file_name'] . "." . $fileactualext;
             echo "' alt=''>";
             echo " </div>";
             echo " <div class='card-body'>";
@@ -235,7 +255,7 @@ if (isset($_POST['location'])) {
             echo "<div class='col-md-4'>";
             echo "<div class='form-group'>";
 
-            echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+            echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
                       Tour</button>");
 
             // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'

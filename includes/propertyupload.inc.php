@@ -23,17 +23,13 @@ if (isset($_POST['submit'])) {
     require_once 'functions.inc.php';
 
     // // echo $propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyAmount, $propertyDesc;
-    if (emptypInputProperty($propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyAmount, $propertyDesc) !== false) {
+    if (emptypInputProperty($propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyAmount, $propertyDesc) !== false) {
 
-        echo "<div class='alert alert-danger' id='alert' role='alert'>
-                  Please Fill out the fields.
-                 </div>";
+        echo "Please Fill out the fields.";
         exit();
     }
     if (emptyPropertyImg($propertyImage) !== false) {
-        echo "<div class='alert alert-danger' id='alert' role='alert'>
-                  No Image found.
-                 </div>";
+        echo "No Image found.";
         exit();
     }
 
@@ -43,28 +39,19 @@ if (isset($_POST['submit'])) {
     // // $result = invalidImgType($propertyImage);
     // // echo $result;
     if (invalidPropertyImg($propertyImage) === true) {
-        echo "<div class='alert alert-danger' id='alert' role='alert'>
-                  File is not an Image.
-                 </div>";
-
+        echo "File is not an Image.";
         exit();
     }
 
     if (invalidPropertyImgSize($propertyImage) === true) {
-        echo "<div class='alert alert-danger' id='alert' role='alert'>
-                  Image too large.
-                 </div>";
+        echo "Image too large.";
         exit();
     }
 
     $result = uploadProperty($propertyOwner, $propertyName, $propertyOfferType, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyCarpark, $propertyAmount, $propertyDesc, $propertyRentChoice, $propertyImage, $conn);
-    echo "<div class='alert alert-success' id='alert' role='alert'>
-                 $result
-                 </div>";
+    echo $result;
 
 } else {
-    echo "<div class='alert alert-danger' id='alert' role='alert'>
-                  Error occured.
-                 </div>";
+    echo "Error occured.";
 
 }

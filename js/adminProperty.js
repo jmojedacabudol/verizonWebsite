@@ -211,13 +211,22 @@ $(document).ready(function () {
     var data = table.row($(this).parents("tr")).data();
     var propertyid = data[0];
 
-    $("#propertyContainer").load("includes/loadproperty.inc.php", {
-      campaignId: propertyid,
+  
+    $("#propertyContainer").load("includes/adminpropertyimgload.inc.php", {
+      propertyId: propertyid,
+    }, function (callback) {
+      // console.log("HGHGHGHGHGH"+callback)
     });
+  
+    $("#property-title").load('includes/loadpropertynameandprice.inc.php', {
+      propertyId: propertyid,
+    })
+    $("#property-info").load('includes/loadpropertyinfo.inc.php', {
+      propertyId: propertyid,
+    })
+
     $("#propertiesModal").modal('show');
-
-
-
+    
     $("#approvelisting").click(function () {
       Swal.fire({
         icon: "warning",

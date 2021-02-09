@@ -11,6 +11,7 @@ if (isset($_POST['userId'])) {
     $propertyid = $_POST['propertyid'];
     $schedulestart = $_POST['start'];
     $scheduleend = $_POST['end'];
+    $scheduleAgentId=$_POST['agentId'];
 
     if ($userId === 'no-user') {
         $username = $_POST['userName'];
@@ -27,14 +28,14 @@ if (isset($_POST['userId'])) {
             exit();
         }
 
-        $sql = "INSERT INTO schedules (propertyid,propertyname,clientname,usersMobileNumber,start_event,end_event) VALUES(?,?,?,?,?,?);";
+        $sql = "INSERT INTO schedules (propertyid,propertyname,clientname,usersMobileNumber,start_event,end_event,agentId) VALUES(?,?,?,?,?,?,?);";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             // header("location: ../index.php?error=stmtfailed");
             echo "statement Failed";
             // exit();
         } else {
-            mysqli_stmt_bind_param($stmt, 'ssssss', $propertyid, $propertyname, $username, $usernumber, $schedulestart, $scheduleend);
+            mysqli_stmt_bind_param($stmt, 'sssssss', $propertyid, $propertyname, $username, $usernumber, $schedulestart, $scheduleend,$scheduleAgentId);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
             echo "Statement Success";
@@ -69,14 +70,14 @@ if (isset($_POST['userId'])) {
             exit();
         }
 
-        $sql = "INSERT INTO schedules (propertyid,propertyname,clientname,usersMobileNumber,start_event,end_event,userid) VALUES(?,?,?,?,?,?,?);";
+        $sql = "INSERT INTO schedules (propertyid,propertyname,clientname,usersMobileNumber,start_event,end_event,userid,agentId) VALUES(?,?,?,?,?,?,?,?);";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             // header("location: ../index.php?error=stmtfailed");
             echo "statement Failed";
             // exit();
         } else {
-            mysqli_stmt_bind_param($stmt, 'sssssss', $propertyid, $propertyname, $username, $usernumber, $schedulestart, $scheduleend, $userId);
+            mysqli_stmt_bind_param($stmt, 'ssssssss', $propertyid, $propertyname, $username, $usernumber, $schedulestart, $scheduleend, $userId,$scheduleAgentId);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
             echo "Statement Success";

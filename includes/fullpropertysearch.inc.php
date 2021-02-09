@@ -1,5 +1,6 @@
 <?php
-$query = "SELECT * FROM property";
+$query = "SELECT property.propertyid, property.usersId,property.propertyname,property.propertylocation,MIN(images.file_name)AS file_name FROM property,images  WHERE  property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3)" ;
+
 require_once 'dbh.inc.php';
 
 $by_offertype = $_POST['offertype'];
@@ -21,9 +22,17 @@ if (isset($_SESSION['userid'])) {
 $conditions = array();
 
 if (!empty($by_offertype)) {
-    $conditions[] = "offertype='$by_offertype'";
+    if($by_offertype!=='Offer Type'){
+        if($by_offertype==='Any'){
+            $conditions[] = "offertype IN ('Sell','Rent','Presell')";
+        }else{
+            $conditions[] = "offertype='$by_offertype'";
+        }
+    }
+ 
 }
 if (!empty($by_propertylocation)) {
+
     $conditions[] = "propertylocation='$by_propertylocation'";
 }
 if (!empty($by_propertylotarea)) {
@@ -33,7 +42,13 @@ if (!empty($by_propertyfloorarea)) {
     $conditions[] = "propertyfloorarea='$by_propertyfloorarea'";
 }
 if (!empty($by_propertytype)) {
-    $conditions[] = "propertytype='$by_propertytype'";
+    if($by_propertytype!=='Property Type'){
+        if($by_propertytype==='Any'){
+            $conditions[] = "propertytype IN ('Building','Condominium','Farm Lots','House','Industrial','Offices','Warehouse')";
+        }else{
+            $conditions[] = "propertytype='$by_propertytype'";
+        }
+    }
 }
 
 if (!empty($by_minpropertybedrooms) && !empty($by_maxpropertybedrooms)) {
@@ -53,8 +68,10 @@ require_once 'dbh.inc.php';
 $sql = $query;
 // $test = "";
 if (count($conditions) > 0) {
-    $sql .= " WHERE " . implode(' AND ', $conditions);
+    $sql .=" AND ". implode(' AND ', $conditions)."GROUP BY property.propertyid DESC LIMIT 10";
 
+}else{
+    $sql.="GROUP BY property.propertyid DESC LIMIT 3";
 }
 
 $sql .= ";";
@@ -63,10 +80,19 @@ $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
 
+        $databaseFileName = $row['file_name'];
+        $filename = "../uploads/$databaseFileName" . "*";
+        $fileInfo = glob($filename);
+        $fileext = explode(".", $fileInfo[0]);
+        $fileactualext = $fileext[4];
+
         echo " <div class='card mb-3 w-100'>";
-        echo "   <div class='properties-item mx-auto' data-toggle='modal' data-target='#propertiesModal1'>";
-        echo "<img class='card-img-top' width='924' height='300'  src='";
-        echo "uploads/" . $row['propertyimage'] . ".jpg";
+        echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
+        echo $row['propertyid'];
+        echo ")'";
+        echo ">";
+        echo "<img class='card-img-top' src='";
+        echo "uploads/" .$row['file_name'] . "." . $fileactualext;
         echo "' alt=''>";
         echo " </div>";
         echo " <div class='card-body'>";
@@ -92,14 +118,18 @@ if (mysqli_num_rows($result) > 0) {
         echo "<div class='col-md-4'>";
         echo "<div class='form-group'>";
         echo (" <button type='button' class='btn btn-primary w-100' onclick='viewAgent(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\")'><i class='fas fa-user'></i>&nbsp; Contact Agent</button>");
+
         echo "</div>";
         echo "</div>";
 
         echo "<div class='col-md-4'>";
         echo "<div class='form-group'>";
-        echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
-                                    data-target='#propertiesModal1'><i class='fas fa-info'></i>&nbsp; Book a
-                                    Tour</button>";
+        // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
+        //                     data-target='#bookaTourModal'><i class='fas fa-info'></i>&nbsp; Book a
+        //                     Tour</button>";
+        echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+              Tour</button>");
+
         echo "</div>";
         echo "</div>";
         echo "</div>";

@@ -1,9 +1,9 @@
 <?php
 
-if (isset($_POST['campaignId'])) {
+if (isset($_POST['propertyId'])) {
     include_once 'dbh.inc.php';
 
-    $propertyId = $_POST['campaignId'];
+    $propertyId = $_POST['propertyId'];
     $sql = "SELECT * FROM property WHERE propertyid=?;";
     $stmt = mysqli_stmt_init($conn);
 

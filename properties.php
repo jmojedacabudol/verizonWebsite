@@ -352,6 +352,7 @@ require_once 'header.php'
 <script src="js/viewpropertyAgent.js"></script>
 <!-- <script src="js/messages.js"></script> -->
 <script src="js/indexSearch.js"></script>
+<script src="js/login.js"></script>
 </body>
 
 </html>

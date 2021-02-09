@@ -40,7 +40,9 @@ $(function () {
       type: "POST",
       success: function (data) {
         Swal.close();
-        if (data === "Property Uploaded." || data === "Your listing is now uploaded. Awaiting for Admin`s Approval.") {
+        if (data == "Property Uploaded." || data == "Your listing is now uploaded. Awaiting for Admin`s Approval.") {
+          // console.log("Yahoo")
+          $("#form-message").html(``);
           Swal.fire({
             icon: "success",
             title: "Property Uploaded",
@@ -53,7 +55,7 @@ $(function () {
           })
         } else {
           // console.log(data)
-          $("#form-message").html(data);
+          $("#form-message").html(`<div class='alert alert-danger' id='alert' role='alert'>${data}</div>`);
         }
 
       },

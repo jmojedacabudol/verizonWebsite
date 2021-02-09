@@ -69,21 +69,6 @@ if (isset($_POST['propertyId'])) {
 
         echo '</div> <br><br>';
 
-        // echo "<div class='col-md-4'>";
-        // echo "<div class='form-group'>";
-        echo (" <button type='button' class='btn btn-primary w-100' onclick='viewAgent(\"" . $userlogged . "\" ,\"" . $propertid . "\")'><i class='fas fa-user'></i>&nbsp; Contact Agent</button>");
-
-        // echo "</div>";
-        // echo "</div>";
-
-        // echo "<div class='col-md-4'>";
-        echo "<div class='form-group'>";
-
-        echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $propertid . "\",\"" . $propertyname . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
-                      Tour</button>");
-        echo "</div>";
-        // echo "</div>";
-
     } else {
         echo "<tr>";
         echo "No Data";

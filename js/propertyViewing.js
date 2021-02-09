@@ -1,4 +1,4 @@
-function viewCampaign(campaignId) {
+function viewCampaign(propertyid) {
   $("#propertiesModal1").modal("show");
 
   // $("#propertyContainer").load("includes/loadproperty.inc.php", {
@@ -9,15 +9,15 @@ function viewCampaign(campaignId) {
   //   campaignId: campaignId,
   // });
   $("#propertyContainer").load("includes/loadpropertyImgs.inc.php", {
-    campaignId: campaignId,
+    propertyId: propertyid,
   }, function (callback) {
     // console.log("HGHGHGHGHGH"+callback)
   });
 
   $("#property-title").load('includes/loadpropertynameandprice.inc.php', {
-    campaignId: campaignId,
+    propertyId: propertyid,
   })
   $("#property-info").load('includes/loadpropertyinfo.inc.php', {
-    campaignId: campaignId,
+    propertyId: propertyid,
   })
 }

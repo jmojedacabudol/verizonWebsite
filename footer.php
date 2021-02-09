@@ -19,7 +19,7 @@
 <script src="assets/mail/contact_me.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
-<script src="js/campaignViewing.js"></script>
+<script src="js/propertyViewing.js"></script>
 <script src="js/indexSearch.js"></script>
 <script src="js/login.js"></script>
 <script src="js/register.js"></script>

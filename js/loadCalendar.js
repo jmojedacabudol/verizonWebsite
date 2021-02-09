@@ -1,4 +1,4 @@
-function viewPropertyCalendar(userid, propertyid, propertyname) {
+function viewPropertyCalendar(userid, propertyid, propertyname,agentId) {
 
     // $("#date-container").load('includes/loadschedules.inc.php', {
     //     propertyId: propertyid
@@ -80,6 +80,7 @@ function viewPropertyCalendar(userid, propertyid, propertyname) {
                     userForm.append("propertyid", propertyid);
                     userForm.append("propertyname", propertyname);
                     userForm.append("userId", userid);
+                    userForm.append("agentId", agentId);
                     // userForm.append("name", username);
                     // userForm.append("number", userNumber);
 
@@ -157,7 +158,8 @@ function viewPropertyCalendar(userid, propertyid, propertyname) {
                             "start": moment().format(info.startStr, "Y-MM-DD"),
                             "end": moment().format(info.endStr, "Y-MM-DD"),
                             "propertyid": propertyid,
-                            "propertyname": propertyname
+                            "propertyname": propertyname,
+                            "agentId": agentId
                         },
                         type: "POST",
                         success: function (data) {

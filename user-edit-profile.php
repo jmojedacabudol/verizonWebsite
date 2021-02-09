@@ -21,6 +21,11 @@ if (isset($_SESSION["userid"])) {
 
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
+            $databaseFileName = $row['profile_Img'];
+            $filename = "uploads/$databaseFileName" . "*";
+            $fileInfo = glob($filename);
+            $fileext = explode(".", $fileInfo[0]);
+            $fileactualext = $fileext[2];
             echo "<div class='main'>";
             echo "<div class='card container-fluid'>";
             echo "<div class='card-body'>";
@@ -30,14 +35,18 @@ if (isset($_SESSION["userid"])) {
             echo "<hr>";
             echo "</div>";
             echo "</div>";
+            echo "<div id='update-error'></div>";
+            echo "<form id='updateForm' action='dashboard-User.inc.php' method='post' enctype='multipart/form-data'>";
             echo "<div class='row'>";
             echo "<div class='col-md-12 silver'>";
             echo "<div class='container-fluid square'>";
             echo " <div class='img-content'>";
-            echo "<img class='img-responsive' style='width:200px; heigth:200px;' id='userImg' img-fluid' src='assets/img/user.png'>";
+            echo "<img class='img-responsive' style='width:200px; heigth:200px;' id='userImg' img-fluid' src='uploads/";
+            echo $row['profile_Img'].".".$fileactualext;
+            echo"'>";
             echo " <div class='btn-change'>";
-            echo " <input id='check' type='file' style='display:none;'/>";
-            echo "<input type='button' id='viewImg' class='btn btn-primary w-50' value='Change Picture...'/>";
+            echo " <input id='check' name='profilePic' type='file' style='display:none;'/>";
+            echo "<input type='button' id='viewImg' class='btn btn-primary w-50' style='margin:25% auto' value='Change Picture...'/>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
@@ -46,11 +55,10 @@ if (isset($_SESSION["userid"])) {
             echo "<hr>";
             echo "<div class='row'>";
             echo "<div class='col-md-12'>";
-            echo "<form>";
             echo "<div class='form-group row'>";
             echo " <label for='name' class='col-4 col-form-label'>First Name</label>";
             echo " <div class='col-8'>";
-            echo " <input id='name' name='name'class='form-control here' value='";
+            echo " <input id='name' name='firstname'class='form-control here' value='";
             echo $row['usersFirstName'];
             echo "' type='text'>";
             echo "</div>";
@@ -68,7 +76,7 @@ if (isset($_SESSION["userid"])) {
             echo "<div class='col-8'>";
             if ($row['usersPosition'] === "Agent") {
                 echo "<select id='select'";
-                echo "name='select' class='custom-select' >";
+                echo "name='select' class='custom-select' disabled >";
                 echo "<option value='Agent'selected>Agent</option>";
                 echo "<option value='Manager'>Manager</option>";
                 echo "</select>";
@@ -108,14 +116,14 @@ if (isset($_SESSION["userid"])) {
             echo "<div class='form-group row'>";
             echo " <label for='up-valid-id' class='col-4 col-form-label'>Valid ID</label>";
             echo " <div class='col-8'>";
-            echo " <input id='fileValidId' type='file' style='display:none;'/>";
-            echo "<input type='button' class='btn btn-secondary w-100' value='Replace Valid ID' onclick='document.getElementById(`fileValidId`).click();'/>";
+            echo " <input id='validId' name='validId' type='file'/>";
+            // echo "<input type='button' class='btn btn-secondary w-100' value='Replace Valid ID' onclick='document.getElementById(`validId`).click();'/>";
             echo "</div>";
             echo "</div>";
             echo "<hr>";
 
             echo "<div class='form-group row'>";
-            echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
+            echo " <label for='lastname' class='col-4 col-form-label'></label>";
             echo " <div class='col-8'>";
             echo "<button name='btn-save' type='submit' class='btn btn-primary w-100'>Save Changes</button>";
             echo "</div>";
@@ -309,9 +317,12 @@ if (isset($_SESSION["userid"])) {
 <!-- Contact form JS-->
 <script src="assets/mail/jqBootstrapValidation.js"></script>
 <script src="assets/mail/contact_me.js"></script>
+<script src="js/dashboard-updateUser.js"></script>
 <!-- Core theme JS-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="js/scripts.js"></script>
 <script src="js/imageLoading.js"></script>
+
 </body>
 
 </html>

@@ -21,6 +21,11 @@ if (isset($_SESSION["userid"])) {
 
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
+            $databaseFileName = $row['profile_Img'];
+            $filename = "uploads/$databaseFileName" . "*";
+            $fileInfo = glob($filename);
+            $fileext = explode(".", $fileInfo[0]);
+            $fileactualext = $fileext[2];
             echo "<div class='main'>";
             echo "<div class='card container-fluid'>";
             echo "<div class='card-body'>";
@@ -34,7 +39,9 @@ if (isset($_SESSION["userid"])) {
             echo "<div class='col-md-12 silver'>";
             echo "<div class='container-fluid square'>";
             echo " <div class='img-content'>";
-            echo "<img class='img-responsive img-fluid' src='assets/img/user.png'>";
+            echo "<img class='img-responsive img-fluid' src='uploads/";
+            echo $row['profile_Img'] . "." . $fileactualext;
+            echo "'>";
             echo " <div class='btn-change'>";
             echo "<br>";
             echo " <input id='fileInput' type='file'style='display:none;'/>";
@@ -72,14 +79,12 @@ if (isset($_SESSION["userid"])) {
                 echo "<option value='Agent'selected>Agent</option>";
                 echo "<option value='Manager'>Manager</option>";
                 echo "</select>";
-
             } else {
                 echo "<select id='select'";
                 echo "name='select' class='custom-select' disabled>";
                 echo "<option value='Agent'>Agent</option>";
                 echo "<option value='Manager'selected>Manager(Pending)</option>";
                 echo "</select>";
-
             }
             echo "</div>";
             echo "</div>";
@@ -98,10 +103,8 @@ if (isset($_SESSION["userid"])) {
             echo "</div>";
             echo "</div>";
             echo "</div>";
-
         }
     }
-
 } else {
     header('location: index.php');
 }
@@ -116,8 +119,7 @@ if (isset($_SESSION["userid"])) {
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -140,8 +142,7 @@ if (isset($_SESSION["userid"])) {
 
 <!-- properties Modals-->
 <!-- properties Modal 1-->
-<div class="properties-modal modal fade" id="propertiesModal1" tabindex="-1" role="dialog"
-    aria-labelledby="propertiesModal1Label" aria-hidden="true">
+<div class="properties-modal modal fade" id="propertiesModal1" tabindex="-1" role="dialog" aria-labelledby="propertiesModal1Label" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content"> <br>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -154,15 +155,13 @@ if (isset($_SESSION["userid"])) {
                         <div class="col-lg">
 
                             <!-- properties Modal - Title-->
-                            <h2 class="properties-modal-title text-secondary text-uppercase mb-0"
-                                id="propertiesModal1Label">Down Avenue</h2>
+                            <h2 class="properties-modal-title text-secondary text-uppercase mb-0" id="propertiesModal1Label">Down Avenue</h2>
                             <h5 class="text-uppercase mproperties-price"> P 40,000,000 </h5><br>
 
 
                             <!-- properties Modal - Image-->
                             <div class="container">
-                                <img class="img-fluid rounded mb-5" src="assets/img/properties/sampl_properties1_xl.png"
-                                    alt="" />
+                                <img class="img-fluid rounded mb-5" src="assets/img/properties/sampl_properties1_xl.png" alt="" />
                             </div>
 
 
@@ -299,4 +298,3 @@ if (isset($_SESSION["userid"])) {
 <script src="js/scripts.js"></script>
 
 </html>
-dfnmdnfdmf

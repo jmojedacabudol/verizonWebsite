@@ -392,7 +392,7 @@ function invalidPropertyImgSize($propertyImage)
 
 }
 
-function emptypInputProperty($propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyAmount, $propertyDesc)
+function emptypInputProperty($propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyAmount, $propertyDesc)
 {
     $result;
     if (empty($propertyName) || empty($propertyLocation) || empty($propertyLotArea) || empty($propertyFloorArea) || empty($propertyBedroom) || empty($propertyAmount) || empty($propertyDesc)) {

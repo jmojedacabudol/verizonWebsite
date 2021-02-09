@@ -43,7 +43,7 @@ $("#propertySearch").submit(function (event) {
             // $("#alert").remove();
             // $("#form-message").append(data);
             $("#propertiesContainer").html(data);
-            // console.log(data)
+        //    console.log(data)
         },
         error: function (data) {
             alert(data);
