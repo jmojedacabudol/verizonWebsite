@@ -81,7 +81,6 @@ function mobileNumberExists($conn, $mobile)
     }
 
     mysqli_stmt_close($stmt);
-
 }
 
 function userMobileNumberExist($conn, $mobile, $propertyId, $tableName)
@@ -97,7 +96,7 @@ function userMobileNumberExist($conn, $mobile, $propertyId, $tableName)
     mysqli_stmt_bind_param($stmt, 'ss', $mobile, $propertyId);
     mysqli_stmt_execute($stmt);
     $resultData = mysqli_stmt_get_result($stmt);
-// echo $resultData;
+    // echo $resultData;
     if (mysqli_num_rows($resultData) > 0) {
         $row = mysqli_fetch_assoc($resultData);
         return $row;
@@ -107,7 +106,6 @@ function userMobileNumberExist($conn, $mobile, $propertyId, $tableName)
     }
 
     mysqli_stmt_close($stmt);
-
 }
 
 function userNotApproved($conn, $propertyOwner)
@@ -133,7 +131,6 @@ function userNotApproved($conn, $propertyOwner)
     }
     return $result;
     mysqli_stmt_close($stmt);
-
 }
 
 function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $position, $valididimg, $managerid)
@@ -170,7 +167,6 @@ function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $positi
                 // $result = "Upload Success";
 
             }
-
         } else if ($position === "Agent" && $managerid != 0) {
 
             $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key,managerid) VALUES(?,?,?,?,?,?,?,?);";
@@ -188,7 +184,6 @@ function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $positi
                 mysqli_stmt_close($stmt);
                 // $result = "Normal Agent2 Upload Success";
                 $result = "Success2";
-
             }
             //             $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key) VALUES('" . $email . "','" . $firstname . "','" . $lastname . "','" . $mobile . "','" . $position . "','" . $pwd . "','" . $newFileName . "');";
             // $result = print_r("option1" . $sql);
@@ -223,7 +218,6 @@ function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $positi
                     $result = 'Success3';
                     //exit();
                 }
-
             }
             // $result = "Manager";
 
@@ -246,35 +240,78 @@ function emptyInputLogin($email, $pwd)
     return $result;
 }
 
+// function loginUser($conn, $email, $pwd)
+// {
+//     $uidExists = emailExists($conn, $email);
+//     $result;
+//     if ($uidExists === 0) {
+//         // header("location: ../index.php?error=wronglogin");
+//         $result = "User not Exists";
+//         // exit();
+//     } else {
+
+
+//         $pwdhashed = $uidExists['usersPwd'];
+//         $checkPwd = password_verify($pwd, $pwdhashed);
+
+//         if ($checkPwd === false) {
+//             // header("location: ../index.php?error=wronglogin");
+//             $result = "Wrong logged in Credentials";
+//             // exit();
+//         } else if ($checkPwd === true) {
+//             session_start();
+//             $_SESSION["userid"] = $uidExists["usersId"];
+//             // header("location: ../index.php");
+//             // exit();
+//             $result = "Success";
+//         }
+
+//     }
+
+//     return $result;
+
+// }
+
+
+
+
 function loginUser($conn, $email, $pwd)
 {
     $uidExists = emailExists($conn, $email);
-    $result;
+    $result = false;
     if ($uidExists === 0) {
         // header("location: ../index.php?error=wronglogin");
         $result = "User not Exists";
         // exit();
     } else {
-        $pwdhashed = $uidExists['usersPwd'];
-        $checkPwd = password_verify($pwd, $pwdhashed);
-
-        if ($checkPwd === false) {
-            // header("location: ../index.php?error=wronglogin");
-            $result = "Wrong logged in Credentials";
-            // exit();
-        } else if ($checkPwd === true) {
+        $accountType = $uidExists['Tag'];
+        if ($accountType == 'facebook') {
             session_start();
             $_SESSION["userid"] = $uidExists["usersId"];
-            // header("location: ../index.php");
-            // exit();
             $result = "Success";
-        }
+        } else if ($accountType == 'Google') {
+            session_start();
+            $_SESSION["userid"] = $uidExists["usersId"];
+            $result = "Success";
+        } else {
+            $pwdhashed = $uidExists['usersPwd'];
+            $checkPwd = password_verify($pwd, $pwdhashed);
 
+            if ($checkPwd === false) {
+                // header("location: ../index.php?error=wronglogin");
+                $result = "Wrong logged in Credentials";
+                // exit();
+            } else if ($checkPwd === true) {
+                session_start();
+                $_SESSION["userid"] = $uidExists["usersId"];
+                $result = "Success";
+            }
+        }
     }
 
     return $result;
-
 }
+
 
 function emptyvalIdImg($valididimg)
 {
@@ -288,7 +325,6 @@ function emptyvalIdImg($valididimg)
     }
 
     return $result;
-
 }
 
 function invalidImgType($valididimg)
@@ -328,13 +364,10 @@ function emptypropertyImg($propertyImage)
     $fileNames = array_filter($propertyImage['name']);
     if (empty($fileNames)) {
         $result = true;
-
     } else {
         $result = false;
-
     }
     return $result;
-
 }
 
 function invalidPropertyImg($propertyImage)
@@ -348,7 +381,7 @@ function invalidPropertyImg($propertyImage)
 
     $fileNames = array_filter($propertyImage['name']);
 
-// print_r(pathinfo($fileNames, PATHINFO_EXTENSION));
+    // print_r(pathinfo($fileNames, PATHINFO_EXTENSION));
 
     if (!empty($fileNames)) {
         foreach ($propertyImage['name'] as $key => $val) {
@@ -365,7 +398,6 @@ function invalidPropertyImg($propertyImage)
             }
         }
     }
-
 }
 
 function invalidPropertyImgSize($propertyImage)
@@ -373,7 +405,7 @@ function invalidPropertyImgSize($propertyImage)
     $fileSize = array_filter($propertyImage['size']);
     $result = false;
 
-// print_r($fileSize);
+    // print_r($fileSize);
     // print_r(pathinfo($fileNames, PATHINFO_EXTENSION));
 
     if (!empty($fileSize)) {
@@ -389,13 +421,12 @@ function invalidPropertyImgSize($propertyImage)
             }
         }
     }
-
 }
 
-function emptypInputProperty($propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyAmount, $propertyDesc)
+function emptypInputProperty($propertyName, $propertyLocation, $propertyLotArea, $propertyFloorArea, $propertyAmount, $propertyDesc)
 {
     $result;
-    if (empty($propertyName) || empty($propertyLocation) || empty($propertyLotArea) || empty($propertyFloorArea) || empty($propertyBedroom) || empty($propertyAmount) || empty($propertyDesc)) {
+    if (empty($propertyName) || empty($propertyLocation) || empty($propertyLotArea) || empty($propertyFloorArea) || empty($propertyAmount) || empty($propertyDesc)) {
         $result = true;
     } else {
         $result = false;
@@ -529,7 +560,6 @@ function uploadProperty($propertyOwner, $propertyName, $propertyOfferType, $prop
         }
         return $result;
         mysqli_stmt_close($stmt);
-
     }
 }
 
@@ -570,7 +600,6 @@ function approvePropertyStatus($propertyid, $conn)
         mysqli_stmt_bind_param($stmt, 's', $propertyid);
         mysqli_stmt_execute($stmt);
     }
-
 }
 
 function propertyAlreadydenied($propertyid, $conn)
@@ -609,7 +638,6 @@ function denyPropertyStatus($propertyid, $conn)
         mysqli_stmt_bind_param($stmt, 's', $propertyid);
         mysqli_stmt_execute($stmt);
     }
-
 }
 
 function deleteProperty($propertyid, $conn)
@@ -622,7 +650,6 @@ function deleteProperty($propertyid, $conn)
         mysqli_stmt_bind_param($stmt, 's', $propertyid);
         mysqli_stmt_execute($stmt);
     }
-
 }
 
 function userAlreadyApproved($userid, $conn)
@@ -662,7 +689,6 @@ function approveUserStatus($userid, $conn)
         mysqli_stmt_bind_param($stmt, 's', $userid);
         mysqli_stmt_execute($stmt);
     }
-
 }
 
 function userAlreadydenied($userid, $conn)
@@ -701,7 +727,6 @@ function denyUserStatus($userid, $conn)
         mysqli_stmt_bind_param($stmt, 's', $userid);
         mysqli_stmt_execute($stmt);
     }
-
 }
 
 function deleteUser($userid, $conn)
@@ -714,7 +739,6 @@ function deleteUser($userid, $conn)
         mysqli_stmt_bind_param($stmt, 's', $userid);
         mysqli_stmt_execute($stmt);
     }
-
 }
 
 function minGreaterThanMax($minBedrooms, $maxBedrooms)
@@ -779,7 +803,6 @@ function insertMessage($userName, $userNo, $propertyId, $propertyName, $agentId,
         //exit();
     }
     return $result;
-
 }
 
 function notvalidMobileNumber($userNo)
@@ -791,7 +814,6 @@ function notvalidMobileNumber($userNo)
         $result = 0;
     }
     return $result;
-
 }
 
 // ADMIN FUNCTIONS
@@ -804,7 +826,6 @@ function emptyInputs($username, $email, $pwd, $pwdrepeat, $firstname, $lastname,
         $result = false;
     }
     return $result;
-
 }
 
 function createAdminAccount($username, $email, $pwd, $firstname, $lastname, $mobile, $conn)
@@ -824,7 +845,6 @@ function createAdminAccount($username, $email, $pwd, $firstname, $lastname, $mob
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         $result = "Upload Success2";
-
     }
     return $result;
 }
@@ -861,7 +881,6 @@ function loginAdmin($conn, $uid, $pwd)
             // exit();
             $result = "Success";
         }
-
     } else {
         $result = "No User Found";
     }

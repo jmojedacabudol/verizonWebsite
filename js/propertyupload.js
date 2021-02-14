@@ -159,3 +159,95 @@ $("#monthlyBtn").click(function () {
   document.getElementById("weeklyBtn").classList.add('btn-secondary');
   document.getElementById("dailyBtn").classList.add('btn-secondary');
 })
+
+
+
+
+//EDIT PROPERTY MODAL
+
+
+function showRentOptions(value) {
+
+  if (value === "Rent") {
+    document.getElementById("erentBtn").style.display = "block";
+  } else {
+    document.getElementById("erentBtn").style.display = "none";
+  }
+}
+
+
+function checkRentChoice(buttonClicked) {
+  if (buttonClicked == "edailyBtn") {
+    document.getElementById("edailyBtn").classList.remove('btn-secondary');
+    document.getElementById("edailyBtn").classList.add('btn-primary');
+    $("#eofferchoice").val("Daily")
+
+    // document.getElementById("forrentBtn").classList.remove('gradient-bg');
+    document.getElementById("eweeklyBtn").classList.add('btn-secondary');
+    document.getElementById("emonthlyBtn").classList.add('btn-secondary');
+  } else if (buttonClicked == "eweeklyBtn") {
+    document.getElementById("eweeklyBtn").classList.remove('btn-secondary');
+    document.getElementById("eweeklyBtn").classList.add('btn-primary');
+    $("#eofferchoice").val("Weekly")
+
+    // document.getElementById("forrentBtn").classList.remove('gradient-bg');
+    document.getElementById("edailyBtn").classList.add('btn-secondary');
+    document.getElementById("emonthlyBtn").classList.add('btn-secondary');
+
+  } else if (buttonClicked == "emonthlyBtn") {
+    document.getElementById("emonthlyBtn").classList.remove('btn-secondary');
+    document.getElementById("emonthlyBtn").classList.add('btn-primary');
+    $("#eofferchoice").val("Monthly")
+
+    // document.getElementById("forrentBtn").classList.remove('gradient-bg');
+    document.getElementById("eweeklyBtn").classList.add('btn-secondary');
+    document.getElementById("edailyBtn").classList.add('btn-secondary');
+  }
+}
+
+
+function deleteProperty(id,propertyid) {
+  Swal.fire({
+    icon: "warning",
+    title: "Delete this Picture?"
+  }).then(result => {
+    if (result.value) {
+      //ajax request to delete the image selected and show again the updated images
+      Swal.fire({
+        text: "Please Wait....",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+
+      $.ajax({
+        url: "includes/propertyimgdelete.inc.php",
+        data: {
+          "file_name": id
+        },
+        type: "POST",
+        success: function (data) {
+          Swal.close();
+          if (data == "Picture Deleted") {
+            //delete the image of property to reload
+            var imageContainer = document.getElementById("propertyImgs");
+            imageContainer.innerHTML = '';
+            //load property Imgs
+            $("#propertyImgs").load('includes/propertyloadeditimg.inc.php', {
+              propertyId: propertyid
+            }, function (callback) {
+              // console.log(callback)
+            })
+          }
+        },
+        error: function (data) {
+          alert(data);
+        },
+      });
+    }
+  })
+}

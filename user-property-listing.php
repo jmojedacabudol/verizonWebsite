@@ -434,154 +434,54 @@ require 'sidenav.php'
                                                     </div>
                                                 </div>
                                             </div> -->
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="elisting-title" class="col-4 col-form-label">Listing
-                                            Title</label>
-                                        <div class="col-8">
-                                            <input id="elisting-title" name="listing-title" placeholder="Enter Listing Title" class="form-control here" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="listing-offer-type" class="col-4 col-form-label">Offer Type</label>
-                                        <div class="col-8">
-                                            <select id=elisting-offer-type name="listing-offer-type" class="form-control">
-                                                <option selected>Sell</option>
-                                                <option>Rent</option>
-                                                <option>Presell</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="location" class="col-4 col-form-label">Location</label>
-                                        <div class="col-8">
-                                            <div class="input-group w-100">
-
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
-                                                </div>
-
-                                                <input type="text" id="elisting-location" name="listing-location" class="form-control" placeholder="Enter Location" aria-label="Location" aria-describedby="basic-addon1">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="location" class="col-4 col-form-label">Price (₱)</label>
-                                        <div class="col-8">
-                                            <div class="input-group w-100">
-                                                <input type="text" id='eofferchoice' name="listing-rentChoice" style="display:none;" value="none">
-                                                <input type="text" class="form-control" placeholder="Enter Amount" aria-label="Price" name='listing-price' aria-describedby="basic-addon2">
-                                                <div class="input-group-append" id='rentBtn' style="display:none;">
-                                                    <button class="btn btn-secondary" id="edailyBtn" type="button">Daily</button>
-                                                    <button class="btn btn-secondary" id="eweeklyBtn" type="button">Weekly</button>
-                                                    <button class="btn btn-secondary" id="emonthlyBtn" type="button">Monthly</button>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group row">
-                                        <label for="listing-type" class="col-4 col-form-label">Property Type</label>
-                                        <div class="col-8">
-                                            <select id='elisting-type' name="listing-type" class="form-control">
-                                                <option selected>Building</option>
-                                                <option>Condominium</option>
-                                                <option>Farm Lots</option>
-                                                <option>House</option>
-                                                <option>Industrial</option>
-                                                <option>Offices</option>
-                                                <option>Warehouse</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="onlyNumbers1" class="col-4 col-form-label">Lot Area (per
-                                            sqm)</label>
-                                        <div class="col-8">
-                                            <input type="text" class="form-control" placeholder="0" id="elisting-lot-area" name="listing-lot-area" aria-label="" aria-describedby="button-addon3">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="onlyNumbers2" class="col-4 col-form-label">Floor Area (per
-                                            sqm)*</label>
-                                        <div class="col-8">
-                                            <input type="text" class="form-control" placeholder="0" id="elisting-floor-area" name="listing-floor-area" aria-label="" aria-describedby="button-addon3">
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group row">
-                                        <label for="bedroom" class="col-4 col-form-label">No. of Bedrooms</label>
-                                        <div class="col-8">
-                                            <input type="number" min="1" max="10" class="form-control" placeholder="0" id="elisting-bedroom" name="listing-bedroom" onkeypress="return isNumber(event)" onpaste="return false;" aria-label="" aria-describedby="button-addon3">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="carpark" class="col-4 col-form-label">No. of Carparks</label>
-                                        <div class="col-8">
-                                            <input type="number" min="0" max="10" class="form-control" placeholder="0" id="elisting-carpark" name="listing-carpark" onkeypress="return isNumber(event)" onpaste="return false;" aria-label="" aria-describedby="button-addon3">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="listing-desc" class="col-4 col-form-label">Description</label>
-                                        <div class="col-8">
-                                            <textarea class="form-control" style="height: 150px;" name='listing-desc' id='elisting-desc'></textarea>
-                                        </div>
                                     </div>
                             </div>
                         </div>
+
+                        <div id='propertyImgs'>
+
+                        </div>
+                        <div id='propertyHolder'>
+
+                        </div>
                     </div>
-                    </section>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" name="submit" id="elisting-submit">Submit</button>
                 </div>
                 </form>
+
+
             </div>
-        </div>
-    </div>
-</div>
 
 
 
 
-<!-- Bootstrap core JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Third party plugin JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-<!-- Contact form JS-->
-<script src="assets/mail/jqBootstrapValidation.js"></script>
-<script src="assets/mail/contact_me.js"></script>
-<!-- Core theme JS-->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="js/scripts.js"></script>
-<script src="js/imageLoading.js"></script>
-<script src="js/propertyupload.js"></script>
-<script src="js/dashboard-listing.js"></script>
+            <!-- Bootstrap core JS-->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Third party plugin JS-->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+            <!-- Contact form JS-->
+            <script src="assets/mail/jqBootstrapValidation.js"></script>
+            <script src="assets/mail/contact_me.js"></script>
+            <!-- Core theme JS-->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            <script src="js/scripts.js"></script>
+            <script src="js/imageLoading.js"></script>
+            <script src="js/dashboard-listing.js"></script>
+            <script src="js/propertyupload.js"></script>
+            
+            <script src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
-<script src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+            </body>
 
-</body>
-
-</html>
+            </html>

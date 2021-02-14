@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
     require_once 'functions.inc.php';
 
     // // echo $propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyAmount, $propertyDesc;
-    if (emptypInputProperty($propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyAmount, $propertyDesc) !== false) {
+    if (emptypInputProperty($propertyName, $propertyLocation, $propertyLotArea, $propertyFloorArea, $propertyAmount, $propertyDesc) !== false) {
 
         echo "Please Fill out the fields.";
         exit();

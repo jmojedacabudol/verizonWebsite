@@ -8,7 +8,8 @@
 <!-- Third party plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
-
+<!-- Google API -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <!-- fullcalendar bundle -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js'></script>
 <!-- Select2 Plugin -->
@@ -17,6 +18,7 @@
 <script src="assets/mail/jqBootstrapValidation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="assets/mail/contact_me.js"></script>
+
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script src="js/propertyViewing.js"></script>
@@ -25,3 +27,5 @@
 <script src="js/register.js"></script>
 <script src="js/viewpropertyAgent.js"></script>
 <script src="js/loadCalendar.js"></script>
+<script src="js/facebookLogin.js"></script>
+<script src="js/googleLogin.js"></script>

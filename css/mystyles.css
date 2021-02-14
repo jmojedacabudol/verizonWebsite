@@ -12970,3 +12970,16 @@ form .row:first-child .floating-label-form-group {
 .carousel-control-next {
   bottom: 60%;
 }
+
+
+
+.propertyEditImg{
+  margin-left: 15px;
+  cursor: pointer;
+ 
+}
+.propertyEditImg:hover {
+  transform: scale(5);
+  position: relative;
+  z-index: 10;
+}

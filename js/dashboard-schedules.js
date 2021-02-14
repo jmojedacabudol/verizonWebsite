@@ -202,8 +202,7 @@ var userlogged=localStorage.getItem('userlogged');
           failure: function () {
               Swal.fire({
                   icon: "info",
-                  title: "This Property dont have any schedules",
-                  text: "The agent welcomes you."
+                  title: "You dont have any Schedules",
               })
           },
       },

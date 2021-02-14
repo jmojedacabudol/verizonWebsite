@@ -129,13 +129,22 @@ $(document).ready(function () {
     $("#editPropertyModal").modal('show');
 
     $("#editPropertyModal").on('shown.bs.modal', function () {
-      $("#date-container").load('includes/propertyloadedit.inc.php', {
-          propertyId: propertyid
+      //load property information
+      $("#propertyHolder").load('includes/propertyloadedit.inc.php', {
+        propertyId: propertyid
       }, function (callback) {
-          console.log(callback)
+        // console.log(callback)
+      })
+
+      //load property Imgs
+      $("#propertyImgs").load('includes/propertyloadeditimg.inc.php', {
+        propertyId: propertyid
+      }, function (callback) {
+        // console.log(callback)
       })
 
     });
+
 
 
   })
