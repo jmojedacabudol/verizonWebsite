@@ -21,7 +21,7 @@ require_once 'header.php'
                                     <option>Any</option>
                                     <option value="Sell">For Sale</option>
                                     <option value="Rent">For Rent</option>
-                                    <option value="Presell"> Preselling</option>
+                                    <option value="Presell"> Presell</option>
                                 </select>
                             </div>
                         </div>
@@ -74,7 +74,7 @@ require_once 'header.php'
                                     <option>Any</option>
                                     <option>Building</option>
                                     <option>Condominium</option>
-                                    <option>Farm Lots</option>
+                                    <option>Lots</option>
                                     <option>House</option>
                                     <option>Industrial</option>
                                     <option>Offices</option>

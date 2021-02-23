@@ -452,7 +452,7 @@ if (isset($_SESSION['userid'])) {
                 <div class="modal-body">
                     <div class="col-md-6 login-form-1">
                         <h3 class="login-title">Forgot Password</h3>
-                        <div id="registration-alert" style="text-align:center;">
+                        <div id="forgotPwd-Alert" style="text-align:center;">
                         </div>
 
                     </div>
@@ -463,7 +463,7 @@ if (isset($_SESSION['userid'])) {
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Mobile No. *" name="mobile" />
+                            <input type="number" class="form-control" placeholder="Mobile No. *" name="mobile" />
                             <br>
                         </div>
 
@@ -480,7 +480,8 @@ if (isset($_SESSION['userid'])) {
 
                         <div class="form-group">
                             <!-- <input type="Submit" class="btn btn-primary btn-primary-w100" value="Register" /> -->
-                            <button type="submit" class="btn btn-primary btn-primary-w100" name="submit">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-primary-w100"
+                                name="forgotPwdBtn">Submit</button>
                         </div>
                     </form>
                     <br>

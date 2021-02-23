@@ -961,3 +961,112 @@ function featuredTable($conn)
     }
 
 }
+
+function forgotPwdInputsEmpty($email, $mobile, $pwd, $pwdrepeat)
+{
+    $result = false;
+
+    if (empty($email) || empty($mobile) || empty($pwd) || empty($pwdrepeat)) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
+function passwordNotSame($pwd, $pwdrepeat)
+{
+    $result = false;
+
+    if ($pwd != $pwdrepeat) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+
+    return $result;
+}
+
+function emailAndMobileNumberNotExists($conn, $email, $mobile)
+{
+    $sql = "SELECT usersId FROM users WHERE usersEmail=? AND usersMobileNumber=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = false;
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        // header("location: ../index.php?error=stmtfailed");
+        $result = "statement Failed";
+        //exit();
+    }
+    mysqli_stmt_bind_param($stmt, 'ss', $email, $mobile);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+// echo $resultData;
+    if (mysqli_num_rows($resultData) > 0) {
+        $row = mysqli_fetch_assoc($resultData);
+        $result = false;
+    } else {
+        $result = true;
+    }
+    mysqli_stmt_close($stmt);
+    return $result;
+
+}
+
+function accountIsNotRegularAccount($conn, $email)
+{
+    $sql = "SELECT Tag FROM users WHERE usersEmail=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = false;
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        // header("location: ../index.php?error=stmtfailed");
+        $result = "statement Failed";
+        //exit();
+    }
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+// echo $resultData;
+    if (mysqli_num_rows($resultData) > 0) {
+        while ($row = mysqli_fetch_assoc($resultData)) {
+            if ($row['Tag'] == 'facebook' || $row['Tag'] == 'Google') {
+                $result = true;
+
+            } else {
+                $result = false;
+            }
+        }
+
+    } else {
+        $result = false;
+    }
+    mysqli_stmt_close($stmt);
+    return $result;
+
+}
+
+function changePassword($conn, $email, $pwd)
+{
+    $sql = "UPDATE users SET usersPwd=? WHERE usersEmail=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = false;
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        // header("location: ../index.php?error=stmtfailed");
+        $result = "statement Failed";
+        //exit();
+    }
+    $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+    mysqli_stmt_bind_param($stmt, 'ss', $hashedPwd, $email);
+
+    if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_close($stmt);
+
+        $result = true;
+    } else {
+        mysqli_stmt_close($stmt);
+        $result = false;
+
+    }
+    return $result;
+}
