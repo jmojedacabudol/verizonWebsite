@@ -10,7 +10,7 @@ $(function () {
             icon: "info",
             title: "Please make sure about your credentials.",
             text: "Check your credentials before hitting 'okay' buton.",
-            confirmButtonText:'Okay'
+            confirmButtonText: 'Okay'
         }).then(result => {
             if (result.value) {
                 Swal.fire({
@@ -32,7 +32,7 @@ $(function () {
                     success: function (data) {
                         Swal.close();
                         if (data == 1) {
-
+                            $("#update-error").html(``);
                             Swal.fire({
                                 icon: "success",
                                 title: "Account Updated",

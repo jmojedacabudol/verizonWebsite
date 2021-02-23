@@ -26,57 +26,57 @@ require 'sidenav.php'
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT * FROM property WHERE usersId=?;";
-                                $stmt = mysqli_stmt_init($conn);
+$sql = "SELECT * FROM property WHERE usersId=?;";
+$stmt = mysqli_stmt_init($conn);
 
-                                if (!mysqli_stmt_prepare($stmt, $sql)) {
-                                    echo "<tr>";
-                                    echo "SQL ERROR";
-                                    echo "</tr>";
-                                    exit();
-                                }
-                                mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
-                                mysqli_stmt_execute($stmt);
-                                $result = mysqli_stmt_get_result($stmt);
+if (!mysqli_stmt_prepare($stmt, $sql)) {
+    echo "<tr>";
+    echo "SQL ERROR";
+    echo "</tr>";
+    exit();
+}
+mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-                                if (mysqli_num_rows($result) > 0) {
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo "<tr>";
-                                        echo "<td class='w-20'>";
-                                        echo $row['propertyid'];
-                                        echo "</td>";
-                                        echo "<td class='w-20'>";
-                                        echo $row['propertyname'];
-                                        echo "</td>";
-                                        echo "<td><i class='fas fa-building'></i>&nbsp;&nbsp;";
-                                        echo $row['propertytype'];
-                                        echo "</td>";
-                                        echo "<td><i class='fas fa-flag'></i>&nbsp;&nbsp;";
-                                        echo $row['offertype'];
-                                        echo "</td>";
-                                        echo "<td><i class='fas fa-map-marker-alt'></i>&nbsp;&nbsp;";
-                                        echo $row['propertylocation'];
-                                        echo "</td>";
-                                        echo "<td><i>PHP</i>&nbsp;&nbsp;";
-                                        echo $row['propertyamount'];
-                                        echo "</td>";
-                                        if ($row['approval'] === 0) {
-                                            echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
-                                            echo "Pending";
-                                            echo "</td>";
-                                        } else if ($row['approval'] === 1) {
-                                            echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
-                                            echo "Posted";
-                                            echo "</td>";
-                                        }
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td class='w-20'>";
+        echo $row['propertyid'];
+        echo "</td>";
+        echo "<td class='w-20'>";
+        echo $row['propertyname'];
+        echo "</td>";
+        echo "<td><i class='fas fa-building'></i>&nbsp;&nbsp;";
+        echo $row['propertytype'];
+        echo "</td>";
+        echo "<td><i class='fas fa-flag'></i>&nbsp;&nbsp;";
+        echo $row['offertype'];
+        echo "</td>";
+        echo "<td><i class='fas fa-map-marker-alt'></i>&nbsp;&nbsp;";
+        echo $row['propertylocation'];
+        echo "</td>";
+        echo "<td><i>PHP</i>&nbsp;&nbsp;";
+        echo $row['propertyamount'];
+        echo "</td>";
+        if ($row['approval'] === 0) {
+            echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
+            echo "Pending";
+            echo "</td>";
+        } else if ($row['approval'] === 1) {
+            echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
+            echo "Posted";
+            echo "</td>";
+        }
 
-                                        echo "<td>";
-                                        echo "<button type='button' id='editProperty' class='btn btn-secondary w-100'> 
+        echo "<td>";
+        echo "<button type='button' id='editProperty' class='btn btn-secondary w-100'>
                                         <i class='far fa-edit'></i>Edit</button>";
-                                        echo "</td>";
-                                    }
-                                }
-                                ?>
+        echo "</td>";
+    }
+}
+?>
                             </tbody>
                         </table>
                     </div>
@@ -99,7 +99,8 @@ require 'sidenav.php'
 
 <!--Add Property List Modal -->
 
-<div class="modal fade bd-example-modal" id="AddPropertyList" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal" id="AddPropertyList" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,7 +115,8 @@ require 'sidenav.php'
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form id="propertyForm" action="includes/propertyupload.inc.php" method="post" enctype='multipart/form-data'>
+                                <form id="propertyForm" action="includes/propertyupload.inc.php" method="post"
+                                    enctype='multipart/form-data'>
                                     <div id="form-message" style="text-align:center;">
 
                                     </div>
@@ -143,13 +145,15 @@ require 'sidenav.php'
                                         <label for="listing-title" class="col-4 col-form-label">Listing
                                             Title</label>
                                         <div class="col-8">
-                                            <input id="listing-title" name="listing-title" placeholder="Enter Listing Title" class="form-control here" type="text">
+                                            <input id="listing-title" name="listing-title"
+                                                placeholder="Enter Listing Title" class="form-control here" type="text">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="listing-offer-type" class="col-4 col-form-label">Offer Type</label>
                                         <div class="col-8">
-                                            <select id=listing-offer-type name="listing-offer-type" class="form-control">
+                                            <select id=listing-offer-type name="listing-offer-type"
+                                                class="form-control">
                                                 <option selected>Sell</option>
                                                 <option>Rent</option>
                                                 <option>Presell</option>
@@ -164,10 +168,13 @@ require 'sidenav.php'
                                             <div class="input-group w-100">
 
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-map-marker-alt"></i></span>
+                                                    <span class="input-group-text" id="basic-addon1"><i
+                                                            class="fas fa-map-marker-alt"></i></span>
                                                 </div>
 
-                                                <input type="text" id="listing-location" name="listing-location" class="form-control" placeholder="Enter Location" aria-label="Location" aria-describedby="basic-addon1">
+                                                <input type="text" id="listing-location" name="listing-location"
+                                                    class="form-control" placeholder="Enter Location"
+                                                    aria-label="Location" aria-describedby="basic-addon1">
                                             </div>
                                         </div>
                                     </div>
@@ -176,12 +183,18 @@ require 'sidenav.php'
                                         <label for="location" class="col-4 col-form-label">Price (₱)</label>
                                         <div class="col-8">
                                             <div class="input-group w-100">
-                                                <input type="text" id='offerchoice' name="listing-rentChoice" style="display:none;" value="none">
-                                                <input type="text" class="form-control" placeholder="Enter Amount" aria-label="Price" name='listing-price' aria-describedby="basic-addon2">
+                                                <input type="text" id='offerchoice' name="listing-rentChoice"
+                                                    style="display:none;" value="none">
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    aria-label="Price" name='listing-price'
+                                                    aria-describedby="basic-addon2">
                                                 <div class="input-group-append" id='rentBtn' style="display:none;">
-                                                    <button class="btn btn-secondary" id="dailyBtn" type="button">Daily</button>
-                                                    <button class="btn btn-secondary" id="weeklyBtn" type="button">Weekly</button>
-                                                    <button class="btn btn-secondary" id="monthlyBtn" type="button">Monthly</button>
+                                                    <button class="btn btn-secondary" id="dailyBtn"
+                                                        type="button">Daily</button>
+                                                    <button class="btn btn-secondary" id="weeklyBtn"
+                                                        type="button">Weekly</button>
+                                                    <button class="btn btn-secondary" id="monthlyBtn"
+                                                        type="button">Monthly</button>
                                                 </div>
 
                                             </div>
@@ -195,7 +208,7 @@ require 'sidenav.php'
                                             <select id=listing-type name="listing-type" class="form-control">
                                                 <option selected>Building</option>
                                                 <option>Condominium</option>
-                                                <option>Farm Lots</option>
+                                                <option>Lots</option>
                                                 <option>House</option>
                                                 <option>Industrial</option>
                                                 <option>Offices</option>
@@ -209,7 +222,9 @@ require 'sidenav.php'
                                         <label for="onlyNumbers1" class="col-4 col-form-label">Lot Area (per
                                             sqm)</label>
                                         <div class="col-8">
-                                            <input type="text" class="form-control" placeholder="0" id="listing-lot-area" name="listing-lot-area" aria-label="" aria-describedby="button-addon3">
+                                            <input type="text" class="form-control" placeholder="0"
+                                                id="listing-lot-area" name="listing-lot-area" aria-label=""
+                                                aria-describedby="button-addon3">
                                         </div>
                                     </div>
 
@@ -217,7 +232,9 @@ require 'sidenav.php'
                                         <label for="onlyNumbers2" class="col-4 col-form-label">Floor Area (per
                                             sqm)*</label>
                                         <div class="col-8">
-                                            <input type="text" class="form-control" placeholder="0" id="listing-floor-area" name="listing-floor-area" aria-label="" aria-describedby="button-addon3">
+                                            <input type="text" class="form-control" placeholder="0"
+                                                id="listing-floor-area" name="listing-floor-area" aria-label=""
+                                                aria-describedby="button-addon3">
                                         </div>
                                     </div>
 
@@ -225,21 +242,28 @@ require 'sidenav.php'
                                     <div class="form-group row">
                                         <label for="bedroom" class="col-4 col-form-label">No. of Bedrooms</label>
                                         <div class="col-8">
-                                            <input type="number" min="1" max="10" class="form-control" placeholder="0" id="listing-bedroom" name="listing-bedroom" onkeypress="return isNumber(event)" onpaste="return false;" aria-label="" aria-describedby="button-addon3">
+                                            <input type="number" min="1" max="10" class="form-control" placeholder="0"
+                                                id="listing-bedroom" name="listing-bedroom"
+                                                onkeypress="return isNumber(event)" onpaste="return false;"
+                                                aria-label="" aria-describedby="button-addon3">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="carpark" class="col-4 col-form-label">No. of Carparks</label>
                                         <div class="col-8">
-                                            <input type="number" min="0" max="10" class="form-control" placeholder="0" id="listing-carpark" name="listing-carpark" onkeypress="return isNumber(event)" onpaste="return false;" aria-label="" aria-describedby="button-addon3">
+                                            <input type="number" min="0" max="10" class="form-control" placeholder="0"
+                                                id="listing-carpark" name="listing-carpark"
+                                                onkeypress="return isNumber(event)" onpaste="return false;"
+                                                aria-label="" aria-describedby="button-addon3">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="carpark" class="col-4 col-form-label">Description</label>
                                         <div class="col-8">
-                                            <textarea class="form-control" style="height: 150px;" name='listing-desc'></textarea>
+                                            <textarea class="form-control" style="height: 150px;"
+                                                name='listing-desc'></textarea>
                                         </div>
                                     </div>
                             </div>
@@ -264,7 +288,8 @@ require 'sidenav.php'
 <br>
 
 <!-- properties Modals-->
-<div class="properties-modal modal fade" id="propertiesModal1" tabindex="-1" role="dialog" aria-labelledby="propertiesModal1Label" aria-hidden="true">
+<div class="properties-modal modal fade" id="propertiesModal1" tabindex="-1" role="dialog"
+    aria-labelledby="propertiesModal1Label" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content"> <br>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -277,13 +302,15 @@ require 'sidenav.php'
                         <div class="col-lg">
 
                             <!-- properties Modal - Title-->
-                            <h2 class="properties-modal-title text-secondary text-uppercase mb-0" id="propertiesModal1Label">Down Avenue</h2>
+                            <h2 class="properties-modal-title text-secondary text-uppercase mb-0"
+                                id="propertiesModal1Label">Down Avenue</h2>
                             <h5 class="text-uppercase mproperties-price"> P 40,000,000 </h5><br>
 
 
                             <!-- properties Modal - Image-->
                             <div class="container">
-                                <img class="img-fluid rounded mb-5" src="assets/img/properties/sampl_properties1_xl.png" alt="" />
+                                <img class="img-fluid rounded mb-5" src="assets/img/properties/sampl_properties1_xl.png"
+                                    alt="" />
                             </div>
 
 
@@ -387,7 +414,8 @@ require 'sidenav.php'
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='user-property-listing.html';">Save</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="location.href='user-property-listing.html';">Save</button>
             </div>
             <br><br>
         </div>
@@ -396,7 +424,8 @@ require 'sidenav.php'
 
 
 <!-- Edit Property Modal -->
-<div class="modal fade bd-example-modal" id="editPropertyModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal" id="editPropertyModal" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -411,52 +440,19 @@ require 'sidenav.php'
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form id="epropertyForm" action="includes/propertyupload.inc.php" method="post" enctype='multipart/form-data'>
-                                    <div id="form-message" style="text-align:center;">
+                                <form id="epropertyForm" action="includes/insertpropertyedit.inc.php" method="post"
+                                    enctype='multipart/form-data'>
+                                    <div id='propertyHolder'>
 
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="up-valid-id" class="col-4 col-form-label">Image</label>
-                                        <div class="col-8">
-                                            <!-- <input type="file" class="btn btn-secondary w-100" name="listing-image"
-                                                id="fileImg" /> -->
-                                            <input type="file" name="listing-image[]" multiple>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" id='imgContainer'>
-                                        <!-- <label for="up-valid-id" class="col-4 col-form-label"> </label>
-                                        <div class="col-8">
-                                            <div class="col-md-8 silver w-100 h-100">
-                                                <div class="container-fluid">
-                                                    <div class="img-content"> <i class="fas fa-image"></i>
-                                                        <img class="img-responsive img-fluid" src="">
-                                                        <form>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                    </div>
+                                </form>
                             </div>
-                        </div>
-
-                        <div id='propertyImgs'>
-
-                        </div>
-                        <div id='propertyHolder'>
-
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="submit" id="elisting-submit">Submit</button>
-                </div>
-                </form>
-
-
+                <br>
+                <br>
             </div>
-
-
-
 
             <!-- Bootstrap core JS-->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -472,7 +468,7 @@ require 'sidenav.php'
             <script src="js/imageLoading.js"></script>
             <script src="js/dashboard-listing.js"></script>
             <script src="js/propertyupload.js"></script>
-            
+
             <script src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>

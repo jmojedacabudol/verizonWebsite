@@ -2,7 +2,7 @@
 
      window.fbAsyncInit = function () {
          FB.init({
-             appId: '918103622350545',
+             appId: '1074702266372575',
              cookie: true, // Enable cookies to allow the server to access the session.
              version: 'v9.0' // Use this Graph API version for this call.
          });
@@ -138,6 +138,11 @@
      }).then(result => {
          if (result.value) {
              fbLogout()
+             var auth2 = gapi.auth2.getAuthInstance();
+             auth2.signOut().then(function () {
+                 auth2.disconnect();
+                 document.location.reload();
+             });
          }
      })
  })

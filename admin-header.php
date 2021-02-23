@@ -37,11 +37,17 @@ include_once 'includes/dbh.inc.php';
             <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/logo.png" alt="" /> </a>
         </div>
         <div class="sidenav">
-            <a href="admin-agents.php"><i class="fas fa-user-edit"></i> &nbsp;Agents</a>
+            <a href="admin-agents.php"><i class="fas fa-user-edit"></i> &nbsp;Accounts</a>
+            <div class="dropdown-divider"></div>
+            <a href="admin-agents.php"><i class="fas fa-user-edit"></i> &nbsp;Managers</a>
             <div class="dropdown-divider"></div>
             <a href="admin-properties.php"><i class="fas fa-list"></i> &nbsp; Properties</a>
             <div class="dropdown-divider"></div>
             <a href="admin-messages.php"><i class="fas fa-comment"></i> &nbsp; Messages</a>
+            <div class="dropdown-divider"></div>
+            <a href="admin-messages.php"><i class="fas fa-clock"></i> &nbsp; Schedules</a>
+            <div class="dropdown-divider"></div>
+            <a href="admin-messages.php"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
 
         </div>
     </nav>

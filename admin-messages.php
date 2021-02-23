@@ -1,5 +1,10 @@
 <?php
 require_once 'admin-header.php';
+
+if (!isset($_SESSION['adminUser'])) {
+    header("location: admin.php");
+}
+
 ?>
 <div class="main">
     <div class="card container-fluid">

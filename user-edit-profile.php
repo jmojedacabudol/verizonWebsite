@@ -42,8 +42,8 @@ if (isset($_SESSION["userid"])) {
             echo "<div class='container-fluid square'>";
             echo " <div class='img-content'>";
             echo "<img class='img-responsive' style='width:200px; heigth:200px;' id='userImg' img-fluid' src='uploads/";
-            echo $row['profile_Img'].".".$fileactualext;
-            echo"'>";
+            echo $row['profile_Img'] . "." . $fileactualext;
+            echo "'>";
             echo " <div class='btn-change'>";
             echo " <input id='check' name='profilePic' type='file' style='display:none;'/>";
             echo "<input type='button' id='viewImg' class='btn btn-primary w-50' style='margin:25% auto' value='Change Picture...'/>";
@@ -91,27 +91,39 @@ if (isset($_SESSION["userid"])) {
             }
             echo "</div>";
             echo "</div>";
+            if ($row['Tag'] == 'facebook' || $row['Tag'] == 'Google') {
+                echo "<div class='form-group row'>";
+                echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
+                echo " <div class='col-8'>";
+                echo " <input id='email' name='email' value='";
+                echo $row['usersEmail'] . "'";
+                echo " class='form-control here'type='text' disabled>";
+                echo "</div>";
+                echo "</div>";
 
-            echo "<div class='form-group row'>";
-            echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
-            echo " <div class='col-8'>";
-            echo " <input id='email' name='email' value='";
-            echo $row['usersEmail'] . "'";
-            echo " class='form-control here'type='text' >";
-            echo "</div>";
-            echo "</div>";
+            } else {
+                echo "<div class='form-group row'>";
+                echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
+                echo " <div class='col-8'>";
+                echo " <input id='email' name='email' value='";
+                echo $row['usersEmail'] . "'";
+                echo " class='form-control here'type='text' >";
+                echo "</div>";
+                echo "</div>";
 
-            echo "<div class='form-group row'>";
-            echo " <label for='lastname' class='col-4 col-form-label'>New Password</label>";
-            echo "<div class='col-4'>";
-            echo "<input type='password' id='newpass' name='newpass' placeholder='New Password'
+                echo "<div class='form-group row'>";
+                echo " <label for='lastname' class='col-4 col-form-label'>New Password</label>";
+                echo "<div class='col-4'>";
+                echo "<input type='password' id='newpass' name='newpass' placeholder='New Password'
                   class='form-control here' type='text'>";
-            echo "</div>";
-            echo "<div class='col-4'>";
-            echo "<input type='password' id='confirm-pass' name='confirm-pass' placeholder='Confirm Password'
+                echo "</div>";
+                echo "<div class='col-4'>";
+                echo "<input type='password' id='confirm-pass' name='confirm-pass' placeholder='Confirm Password'
                   class='form-control here' type='text'>";
-            echo "</div>";
-            echo "</div>";
+                echo "</div>";
+                echo "</div>";
+
+            }
 
             echo "<div class='form-group row'>";
             echo " <label for='up-valid-id' class='col-4 col-form-label'>Valid ID</label>";

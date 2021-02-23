@@ -41,7 +41,7 @@ function onSignIn(googleUser) {
                                 auth2.disconnect();
                                 location.reload();
                             });
-                          
+
                         }
                     })
                 }
@@ -54,7 +54,7 @@ function onSignIn(googleUser) {
                 text: "Your email is not available because it is registered to other account."
             })
         } else {
-            console.log("No User Found");
+            // console.log("No User Found");
             //show register modal with modified registration inputs
             $('#Login').modal('hide');
             $('#fbGoogleRegister').modal({
@@ -72,3 +72,42 @@ function onSignIn(googleUser) {
 
     });
 }
+
+function registerButtonRender(Size) {
+    document.getElementById("googleSigninReg").setAttribute("data-width", `'${Size}'`);
+}
+
+
+function buttonRender(Size) {
+    document.getElementById("googleSignin").setAttribute("data-width", `'${Size}'`);
+}
+
+//resize for google sign in in login
+function resize() {
+    if ($(window).width() < 410) {
+        buttonRender(306.82)
+    } else if ($(window).width() == 633) {
+        buttonRender(480)
+    } else if ($(window).width() > 633 && $(window).width() <= 845) {
+        buttonRender(430)
+    } else if ($(window).width() > 845 && $(window).width() <= 1091) {
+        buttonRender(207)
+    } else if ($(window).width() > 1092) {
+        buttonRender(336)
+    }
+}
+
+//resize for google sign in  in registration
+function resize2() {
+    if ($(window).width() < 410) {
+        registerButtonRender(378.06)
+    } else if ($(window).width() > 519 && $(window).width() <= 892) {
+        registerButtonRender(430)
+    } else if ($(window).width() > 893) {
+        registerButtonRender(688.02)
+    }
+}
+
+$(window).on("resize", resize);
+resize(); // call once initially
+resize2();

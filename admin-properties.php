@@ -22,53 +22,54 @@ if (!isset($_SESSION['adminUser'])) {
         </thead>
         <tbody>
             <?php
-            $sql = "SELECT * FROM property WHERE approval !=3;";
-            $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>";
-                    echo $row['propertyid'];
-                    echo "</td>";
-                    echo "<td>";
-                    echo $row['propertyname'];
-                    echo "</td>";
-                    echo "<td>";
-                    echo $row['propertylocation'];
-                    echo "</td>";
+$sql = "SELECT * FROM property WHERE approval !=3;";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td>";
+        echo $row['propertyid'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertyname'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertylocation'];
+        echo "</td>";
 
-                    echo "<td>";
-                    echo $row['propertylotarea'];
-                    echo "</td>";
+        echo "<td>";
+        echo $row['propertylotarea'];
+        echo "</td>";
 
-                    echo "<td>";
-                    echo $row['propertyfloorarea'];
-                    echo "</td>";
-                    echo "<td>";
-                    echo $row['propertytype'];
-                    echo "</td>";
-                    echo "<td>";
-                    echo $row['offertype'];
-                    echo "</td>";
-                    echo "<td>";
-                    echo " <button class='btn btn-success' id='approveBtn' type='text' aria-label='approve'><i
+        echo "<td>";
+        echo $row['propertyfloorarea'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertytype'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['offertype'];
+        echo "</td>";
+        echo "<td>";
+        echo " <button class='btn btn-success' id='approveBtn' type='text' aria-label='approve'><i
                                         class='far fa-check-circle'></i></button>";
-                    echo " <button class='btn btn-danger' id='denyBtn' type='text' aria-label='deny'><i
+        echo " <button class='btn btn-danger' id='denyBtn' type='text' aria-label='deny'><i
                                         class='far fa-times-circle'></i></button>";
-                    echo " <button class='btn btn-info' id='viewBtn' type='text' aria-label='view'><i
+        echo " <button class='btn btn-info' id='viewBtn' type='text' aria-label='view'><i
                                         class='far fa-eye'></i></button>";
-                    echo "</td>";
+        echo "</td>";
 
-                    echo "</tr>";
-                }
-            }
-            ?>
+        echo "</tr>";
+    }
+}
+?>
 
         </tbody>
     </table>
 </div>
 
-<div class="properties-modal modal fade" id="propertiesModal" tabindex="-1" role="dialog" aria-labelledby="propertiesModal1Label" aria-hidden="true">
+<div class="properties-modal modal fade" id="propertiesModal" tabindex="-1" role="dialog"
+    aria-labelledby="propertiesModal1Label" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content"> <br>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -76,7 +77,6 @@ if (!isset($_SESSION['adminUser'])) {
             </button>
             <br>
             <div class="modal-body">
-
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6 col-lg-7">

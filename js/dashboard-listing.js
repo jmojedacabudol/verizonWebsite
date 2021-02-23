@@ -124,28 +124,43 @@ $(document).ready(function () {
   $("#properties").on("click", "#editProperty", function () {
     var data = table.row($(this).parents("tr")).data();
     var propertyid = data[0];
+    //create a localStorage for propertyClickeds
+    localStorage.setItem('selectedProperty', propertyid);
 
-    //call the editModal
-    $("#editPropertyModal").modal('show');
+    Swal.fire({
+      text: "Please Wait....",
+      allowOutsideClick: false,
+      showConfirmButton: false,
 
-    $("#editPropertyModal").on('shown.bs.modal', function () {
-      //load property information
-      $("#propertyHolder").load('includes/propertyloadedit.inc.php', {
-        propertyId: propertyid
-      }, function (callback) {
-        // console.log(callback)
-      })
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
 
+    //load property information
+    $("#propertyHolder").load('includes/propertyloadedit.inc.php', {
+      propertyId: propertyid
+    }, function (callback) {
+      // console.log(callback)
       //load property Imgs
       $("#propertyImgs").load('includes/propertyloadeditimg.inc.php', {
         propertyId: propertyid
       }, function (callback) {
         // console.log(callback)
+        //call the editModal
+        Swal.close();
+        $("#editPropertyModal").modal('show');
       })
-
-    });
-
+    })
 
 
-  })
-})
+
+    // $("#editPropertyModal").on('shown.bs.modal', function () {
+    //   //delete the past property information of property to reload
+    //   var propertyHolder = document.getElementById("propertyHolder");
+    //   propertyHolder.innerHTML = '';
+
+
+    // });
+  });
+});

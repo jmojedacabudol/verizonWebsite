@@ -250,7 +250,6 @@ function emptyInputLogin($email, $pwd)
 //         // exit();
 //     } else {
 
-
 //         $pwdhashed = $uidExists['usersPwd'];
 //         $checkPwd = password_verify($pwd, $pwdhashed);
 
@@ -271,9 +270,6 @@ function emptyInputLogin($email, $pwd)
 //     return $result;
 
 // }
-
-
-
 
 function loginUser($conn, $email, $pwd)
 {
@@ -311,7 +307,6 @@ function loginUser($conn, $email, $pwd)
 
     return $result;
 }
-
 
 function emptyvalIdImg($valididimg)
 {
@@ -887,4 +882,82 @@ function loginAdmin($conn, $uid, $pwd)
 
     mysqli_stmt_close($stmt);
     return $result;
+}
+
+function agentAlreadyfeatured($conn, $userNumber)
+{
+    $sql = "SELECT featId FROM featuredAgent WHERE usersNumber=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = false;
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        // header("location: ../index.php?error=stmtfailed");
+        $result = "statement Failed";
+        //exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $userNumber);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+// echo $resultData;
+    if (mysqli_num_rows($resultData) > 0) {
+        $row = mysqli_fetch_assoc($resultData);
+        $result = true;
+    } else {
+        $result = false;
+    }
+
+    mysqli_stmt_close($stmt);
+    return $result;
+}
+
+function userHaveNoProfileImg($conn, $agentNumber)
+{
+    $sql = "SELECT profile_Img FROM users WHERE usersMobileNumber=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = false;
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        // header("location: ../index.php?error=stmtfailed");
+        $result = "statement Failed";
+        //exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $agentNumber);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+// echo $resultData;
+    if (mysqli_num_rows($resultData) > 0) {
+        while ($row = mysqli_fetch_assoc($resultData)) {
+            if ($row['profile_Img'] == null) {
+                $result = true;
+
+            } else {
+                $result = false;
+
+            }
+
+        }
+
+    } else {
+        $result = false;
+    }
+
+    mysqli_stmt_close($stmt);
+    return $result;
+
+}
+
+function featuredTable($conn)
+{
+    $sql = "SELECT COUNT(featId) as Agents FROM featuredAgent;";
+
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['Agents'];
+
+    }
+
 }

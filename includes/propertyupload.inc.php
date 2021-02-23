@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
     }
 
     if (invalidPropertyImgSize($propertyImage) === true) {
-        echo "Image too large.";
+        echo "Image/s too large.";
         exit();
     }
 

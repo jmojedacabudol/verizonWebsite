@@ -21,7 +21,7 @@ require_once 'header.php'
                                     <option>Any</option>
                                     <option value="Sell">For Sale</option>
                                     <option value="Rent">For Rent</option>
-                                    <option value="Preselling"> Preselling</option>
+                                    <option value="Presell"> Preselling</option>
                                 </select>
                             </div>
                         </div>
@@ -347,7 +347,7 @@ require_once 'header.php'
 <script src="js/scripts.js"></script>
 <script src="js/loadCalendar.js"></script>
 <script src="js/propertySearch.js"></script>
-<script src="js/campaignViewing.js"></script>
+<script src="js/propertyViewing.js"></script>
 <script src="js/propertyload.js"></script>
 <script src="js/viewpropertyAgent.js"></script>
 <!-- <script src="js/messages.js"></script> -->

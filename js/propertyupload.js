@@ -77,7 +77,74 @@ $(function () {
     //   propertySubmitBtn: propertySubmitBtn,
     // });
   });
+
 });
+
+
+$("#epropertyForm").submit(function (event) {
+  event.preventDefault();
+  var formData = new FormData(this);
+  formData.append("propertyId", localStorage.getItem('selectedProperty'));
+  for (var value of formData.values()) {
+    console.log(value);
+  }
+  Swal.fire({
+    icon: "warning",
+    title: "Save Changes?",
+    text: "Please read all your changes before saving."
+  }).then(result => {
+    if (result.value) {
+      Swal.fire({
+        text: "Please Wait....",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      $.ajax({
+        url: "includes/insertpropertyedit.inc.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        type: "POST",
+        success: function (data) {
+          Swal.close();
+          console.log(data)
+          if (data == "Successfully updated your with Images." || data == "Successfully updated your Property without Images.") {
+            // console.log("Yahoo")
+            // $("#form-message").html(``);
+            Swal.fire({
+              icon: "success",
+              title: "Property Updated!",
+              text: data,
+              showConfirmButton: false,
+              allowOutsideClick: false,
+              timer: 2000
+            }).then(function (result) {
+              location.reload();
+            })
+          }
+          // } else {
+          //   // console.log(data)
+          //   $("#form-message").html(`<div class='alert alert-danger' id='alert' role='alert'>${data}</div>`);
+          // }
+
+        },
+        error: function (data) {
+          alert(data);
+        },
+      });
+    }
+  })
+
+
+
+
+
+})
 
 
 function isNumber(evt) {
@@ -167,8 +234,8 @@ $("#monthlyBtn").click(function () {
 
 
 function showRentOptions(value) {
-
-  if (value === "Rent") {
+  console.log(value)
+  if (value == "Rent") {
     document.getElementById("erentBtn").style.display = "block";
   } else {
     document.getElementById("erentBtn").style.display = "none";
@@ -206,12 +273,15 @@ function checkRentChoice(buttonClicked) {
 }
 
 
-function deleteProperty(id,propertyid) {
+function deleteProperty(id, propertyid) {
   Swal.fire({
     icon: "warning",
     title: "Delete this Picture?"
   }).then(result => {
     if (result.value) {
+      //delete the image of property to reload
+      var imageContainer = document.getElementById("propertyImgs");
+      imageContainer.innerHTML = '';
       //ajax request to delete the image selected and show again the updated images
       Swal.fire({
         text: "Please Wait....",
@@ -233,9 +303,6 @@ function deleteProperty(id,propertyid) {
         success: function (data) {
           Swal.close();
           if (data == "Picture Deleted") {
-            //delete the image of property to reload
-            var imageContainer = document.getElementById("propertyImgs");
-            imageContainer.innerHTML = '';
             //load property Imgs
             $("#propertyImgs").load('includes/propertyloadeditimg.inc.php', {
               propertyId: propertyid

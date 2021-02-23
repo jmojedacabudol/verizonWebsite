@@ -9,10 +9,14 @@ require_once 'header.php';
 <script>
 window.fbAsyncInit = function() {
     FB.init({
+        appId: '918103622350545',
+        autoLogAppEvents: true,
         xfbml: true,
         version: 'v9.0'
     });
 };
+
+
 
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -27,6 +31,8 @@ window.fbAsyncInit = function() {
 <!-- Your Chat Plugin code -->
 <div class="fb-customerchat" attribution="setup_tool" page_id="468977866973999" theme_color="#70945A">
 </div>
+
+
 <!-- Masthead-->
 <section class="page-section properties" id="Home">
     <!-- Masthead Heading-->
@@ -260,7 +266,7 @@ if (mysqli_num_rows($result) > 0) {
         echo ')">Read More</button></td>';
         echo ' </div>';
         echo ' </div>';
-        echo '<img class="img-fluid" src="Uploads/';
+        echo '<img class="img-fluid" src="uploads/';
         echo $row['file_name'] . "." . $fileactualext;
         echo '" alt="" />';
         echo '<h4 class="text-uppercase lrproperties-title">';
@@ -299,33 +305,76 @@ if (mysqli_num_rows($result) > 0) {
         <!-- Agents Section Content-->
 
         <div class="card-deck">
-            <div class="card">
-                <img class="card-img-top" src="assets/img/agent/agent1.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Mary Williams</h5>
-                    <p class="card-text">Real Estate Broker <br> 09055797910 <br> marywilliams@hotmail.com</p>
-                    <p class="card-text"><small class="text-muted">Mary has been consistently in the top 3 of Verizon’s
-                            real estate teams and number 1 agent for 8 years.</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/agent/agent2.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">James Thomas</h5>
-                    <p class="card-text">Real Estate Broker <br> 0948123437 <br> thomasjames@hotmail.com</p>
-                    <p class="card-text"><small class="text-muted">A high-touch broker known for his extensive market
-                            knowledge and his unmatched devotion to clients.</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="assets/img/agent/agent3.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">John Mitchell</h5>
-                    <p class="card-text">Real Estate Broker <br> 09991234588 <br> johnmitchell@hotmail.com</p>
-                    <p class="card-text"><small class="text-muted">He brings fourteen years of experience in real
-                            estate, excellent customer service and a commitment to work hard. </small></p>
-                </div>
-            </div>
+            <?php
+
+$featuredAgentsql = "SELECT * FROM featuredAgent;";
+
+$result = mysqli_query($conn, $featuredAgentsql);
+$counter = mysqli_num_rows($result);
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $databaseFileName = $row['profile_Img'];
+        $filename = "uploads/$databaseFileName" . "*";
+        $fileInfo = glob($filename);
+        $fileext = explode(".", $fileInfo[0]);
+        $fileactualext = $fileext[2];
+
+        if ($counter == 1) {
+            echo '<div class="row">';
+            echo '<div class="col-lg-4 mx-auto">';
+            echo '<div class="card" style="margin:0 auto">';
+            echo ' <img class="img-fluid" style="width:100vw; height:400px" src="';
+            echo 'uploads/' . $row['profile_Img'] . "." . $fileactualext;
+            echo '" alt="Card image cap">';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">';
+            echo $row['usersName'];
+            echo '</h5>';
+            echo ' <p class="card-text">' . $row['usersPosition'];
+            echo '<br>';
+            echo $row['usersNumber'];
+            echo '<br>';
+            echo $row['usersEmail'] . '</p>';
+            echo '<p class="card-text"><small class="text-muted">';
+            echo $row['description'];
+            echo '</small></p>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+
+        } else {
+            echo '<div class="card">';
+            echo ' <img class="img-fluid" style="width:100vw; height:400px" src="';
+            echo 'uploads/' . $row['profile_Img'] . "." . $fileactualext;
+            echo '" alt="Card image cap">';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">';
+            echo $row['usersName'];
+            echo '</h5>';
+            echo ' <p class="card-text">' . $row['usersPosition'];
+            echo '<br>';
+            echo $row['usersNumber'];
+            echo '<br>';
+            echo $row['usersEmail'] . '</p>';
+            echo '<p class="card-text"><small class="text-muted">';
+            echo $row['description'];
+            echo '</small></p>';
+            echo '</div>';
+            echo '</div>';
+
+        }
+
+    }
+
+} else {
+
+    echo 'No Data';
+
+}
+
+?>
+
         </div>
         <br><br>
         <br>
