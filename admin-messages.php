@@ -1,119 +1,79 @@
 <?php
 require_once 'admin-header.php';
 
-if (!isset($_SESSION['adminUser'])) {
-    header("location: admin.php");
-}
-
 ?>
 <div class="main">
-    <div class="card container-fluid">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Message List</h4>
+    <h5>All MESSAGES</h5>
+    <br>
+    <table id="messages" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User Name</th>
+                <th>Mobile Number</th>
+                <th>Property Id</th>
+                <th>Property Name</th>
+                <th>Agent Id</th>
+                <th>Agent Name</th>
+                <th class='notexport'>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+$sql = "SELECT * FROM messages;";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td>";
+        echo $row['messageId'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['userName'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['usersMobileNumber'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertyId'];
+        echo "</td>";
 
-                    <form class="form-group">
+        echo "<td>";
+        echo $row['propertyName'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['agentId'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['agentname'];
+        echo "</td>";
+        echo "<td>";
+        echo " <button class='btn btn-danger' id='deleteBtn' type='text' aria-label='deny'>Delete</button>";
+        echo "</td>";
+        echo "</tr>";
+    }
+}
+?>
 
-                        <div class="col-md-4">
-                            <!-- Search form -->
-
-                            <input id="Agents_table" class="form-control" type="text" placeholder="Search"
-                                aria-label="Search">
-                        </div>
-
-
-
-                </div>
-            </div>
-            <hr>
-            <div class="card container-fluid">
-
-
-                <table id="Agents" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Mobile Number</th>
-                            <th>Email</th>
-                            <th>Position</th>
-                            <th> Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Tiger</td>
-                            <td>Nixon</td>
-                            <td>094593748239</td>
-                            <td>tigernizxon@gmail.com</td>
-                            <td>Agents</td>
-                            <td> <button class="btn btn-success" type="text" aria-label="Search"><i
-                                        class="far fa-check-circle"></i></button>
-                                <button class="btn btn-danger" type="text" aria-label="Search"><i
-                                        class="far fa-times-circle"></i></button>
-                                <button class="btn btn-info" type="text" aria-label="Search"><i
-                                        class="far fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Douglas</td>
-                            <td>Carter</td>
-                            <td>093485726374</td>
-                            <td>carterd@gmail.com</td>
-                            <td>Agent</td>
-                            <td> <button class="btn btn-success" type="text" aria-label="Search"><i
-                                        class="far fa-check-circle"></i></button>
-                                <button class="btn btn-danger" type="text" aria-label="Search"><i
-                                        class="far fa-times-circle"></i></button>
-                                <button class="btn btn-info" type="text" aria-label="Search"><i
-                                        class="far fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Nicol</td>
-                            <td>Jean</td>
-                            <td>09374628465</td>
-                            <td>jeannicol@gmail.com</td>
-                            <td>Manager</td>
-                            <td> <button class="btn btn-success" type="text" aria-label="Search"><i
-                                        class="far fa-check-circle"></i></button>
-                                <button class="btn btn-danger" type="text" aria-label="Search"><i
-                                        class="far fa-times-circle"></i></button>
-                                <button class="btn btn-info" type="text" aria-label="Search"><i
-                                        class="far fa-eye"></i></button>
-                            </td>
-                        </tr>
-
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
+        </tbody>
+    </table>
 </div>
 
 <!-- Bootstrap core JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-<script src="js/test.js"></script>
-<script src="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"></script>
-<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function() {
-    $("#Agents_table").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#Agents tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
-</script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+<script src="js/adminMessages.js"></script>
+
 </body>
 
 </html>

@@ -25,42 +25,43 @@ require_once 'sidenav.php'
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT * FROM users WHERE managerId=?;";
-                                $stmt = mysqli_stmt_init($conn);
+$sql = "SELECT * FROM users WHERE managerid=(SELECT managerId from managers WHERE usersId=?);";
+$stmt = mysqli_stmt_init($conn);
 
-                                if (!mysqli_stmt_prepare($stmt, $sql)) {
-                                    echo "<tr>";
-                                    echo "SQL ERROR";
-                                    echo "</tr>";
-                                    exit();
-                                }
-                                mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
-                                mysqli_stmt_execute($stmt);
-                                $result = mysqli_stmt_get_result($stmt);
+if (!mysqli_stmt_prepare($stmt, $sql)) {
+    echo "<tr>";
+    echo "SQL ERROR";
+    echo "</tr>";
+    exit();
+}
+mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-                                if (mysqli_num_rows($result) > 0) {
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo "<tr>";
-                                        echo "<td class='w-20'>";
-                                        echo $row['usersId'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['usersFirstName'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['userLastName'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['usersEmail'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo "<button type='button' class='btn btn-secondary w-100'
-            data-toggle='modal' data-target='#EditProperty'> <i
-            class='far fa-edit'></i>Edit</button>";
-                                        echo "</td>";
-                                    }
-                                }
-                                ?>
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td class='w-20'>";
+        echo $row['usersId'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['usersFirstName'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['userLastName'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['usersEmail'];
+        echo "</td>";
+        echo "<td>";
+        echo " <button class='btn btn-info' id='viewMessagesBtn' type='text' aria-label='View'>Messages</button>";
+        echo " <button class='btn btn-warning' id='viewSchedulesBtn'type='text' aria-label='Deny'>Schedules</button>";
+        echo " <button class='btn btn-success' id='viewPropertiesBtn'type='text' aria-label='Deny'>Properties</button>";
+
+        echo "</td>";
+    }
+}
+?>
                             </tbody>
                         </table>
                     </div>
@@ -70,133 +71,124 @@ require_once 'sidenav.php'
     </section>
 
 </div>
-<!-- properties Modals-->
-<!-- properties Modal 1-->
-<div class="properties-modal modal fade" id="propertiesModal1" tabindex="-1" role="dialog" aria-labelledby="propertiesModal1Label" aria-hidden="true">
+
+
+
+<div class="properties-modal modal fade" id="viewMessages" tabindex="-1" role="dialog"
+    aria-labelledby="propertiesModal1Label" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content"> <br>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true"><i class="fas fa-times"></i></span>
-            </button>
-            <br>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg">
-
-                            <!-- properties Modal - Title-->
-                            <h2 class="properties-modal-title text-secondary text-uppercase mb-0" id="propertiesModal1Label">Down Avenue</h2>
-                            <h5 class="text-uppercase mproperties-price"> P 40,000,000 </h5><br>
-
-
-                            <!-- properties Modal - Image-->
-                            <div class="container">
-                                <img class="img-fluid rounded mb-5" src="assets/img/properties/sampl_properties1_xl.png" alt="" />
-                            </div>
-
-
-
-
-                            <!-- properties Modal - Details-->
-
-                            <h4 class="text-uppercase mproperties-available"> <i class="fas fa-home icon-green"></i>
-                                AVAILABLE &nbsp;</h4>
-                            <p class="mproperties-desc">Impressive Complex Mansion for Sale in Ayala Village </p>
-                            <p class="mproperties-subdesc">Beautifully-designed, all the finishes were upgraded to
-                                deliver top of the line commitment to the homeowners. Elegant granite countertops
-                                and rare usage of Narra wood was created for your townhouse. This smart e-home with
-                                solar power, a swimming pool, security all day and night provides an ideal home for
-                                you and your loved ones.</p> <br>
-                            <!--Properties-Bedrooms--->
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm mproperties-features">
-                                        <b class="mproperties-br1"> <i class="fas fa-bed"></i>&nbsp;6</b> <br>
-                                        <p class="mproperties-br2"> Bedrooms </p>
-                                    </div>
-                                    <div class="col-sm mproperties-features">
-                                        <b class="mproperties-br1"> <i class="fas fa-bath"></i>&nbsp;6</b> <br>
-                                        <p class="mproperties-br2"> Bathrooms </p>
-                                    </div>
-                                    <div class="col-sm mproperties-features">
-                                        <b class="mproperties-br1"> <i class="fas fa-car"></i>&nbsp;6</b> <br>
-                                        <p class="mproperties-br2"> Car Parks </p>
-                                    </div>
-                                    <div class="col-sm mproperties-features">
-                                        <b class="mproperties-br1"> <i class="fas fa-border-all"></i>&nbsp;438
-                                            m<sup>2</sup></b> <br>
-                                        <p class="mproperties-br2"> Floor Area </p>
-                                    </div>
-                                    <div class="col-sm mproperties-features">
-                                        <b class="mproperties-br1"> <i class="fas fa-ruler-combined"></i>&nbsp;118
-                                            m<sup>2</sup></b> <br>
-                                        <p class="mproperties-br2"> Lot Area </p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <br>
-
-                            <!--Home and Neighborhood Features--->
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm mproperties-features"> <b>Home Features</b> <br>
-                                        <div class="mproperties-features-list">
-                                            <i class="fas fa-check"></i> Outdoor Function Area <br>
-                                            <i class="fas fa-check"></i> Smart Home<br>
-                                            <i class="fas fa-check"></i> Walkin Closet<br>
-                                            <i class="fas fa-check"></i> Premium Finish<br>
-                                            <i class="fas fa-check"></i> Solar Panels<br>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm mproperties-features"> <b>Neighborhood Features</b> <br>
-                                        <div class="mproperties-features-list">
-                                            <i class="fas fa-check"></i> Private Gated Community<br>
-                                            <i class="fas fa-check"></i> Swimming Pool<br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-
-
-                            <br><br>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-
-
-<!-- Confirm Logout Modal -->
-<div class="modal fade" id="ConfirmLogout" tabindex="-1" role="dialog" aria-labelledby="ConfirmLogout" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Log Out</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <h5 class="modal-title" style="color:#5C7B49;">Messages</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
                 </button>
+                <br>
             </div>
             <div class="modal-body">
-                Do you really wish to log out?
+                <div class="container-fluid">
+                    <table id="messages" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th>Id</th>
+                                <th>Client</th>
+                                <th>Number</th>
+                                <th>Property</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='index.html';">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
-            <br><br>
+            <br>
         </div>
     </div>
 </div>
 
+<div class="properties-modal modal fade" id="viewSchedules" tabindex="-1" role="dialog"
+    aria-labelledby="propertiesModal1Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content"> <br>
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:#5C7B49;">Schedules</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+                <br>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <table id="schedules" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th>Id</th>
+                                <th>Client</th>
+                                <th>Number</th>
+                                <th>Property</th>
+                                <th>Date</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+<div class="properties-modal modal fade" id="viewProperties" tabindex="-1" role="dialog"
+    aria-labelledby="propertiesModal1Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content"> <br>
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:#5C7B49;">Properties</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+                <br>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <table id="properties" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                            <tr>
+                                <th>Id</th>
+                                <th>Property</th>
+                                <th>OfferType</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
 
 
 
@@ -206,7 +198,7 @@ require_once 'sidenav.php'
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>

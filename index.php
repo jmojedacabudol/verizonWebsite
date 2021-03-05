@@ -70,7 +70,8 @@ window.fbAsyncInit = function() {
                     </div>
 
                     <!--Row2 Buy/Rent-->
-                    <form id='searchForm' action="properties.php" method="post">
+                    <!-- <form id='searchForm' action="properties.php" method="post"> -->
+                    <form action="properties.php" method="get">
                         <div class="row align-left text-black">
 
                             <div class="col-md">
@@ -97,20 +98,32 @@ window.fbAsyncInit = function() {
                                     <div class="input-group w-100">
 
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"><i
-                                                    class="fas fa-map-marker-alt"></i></span>
-                                        </div>
+                                            <!-- <span class="input-group-text" id="basic-addon1"><i
+                                                    class="fas fa-map-marker-alt"></i></span> -->
 
+                                            <select class="form-control" name="searchOption" id='fbGoogleselUser'>
+                                                <option value="property-name">
+                                                    Name
+                                                </option>
+                                                <option value="property-location">
+                                                    Location
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!--
                                         <input type="text" name='location' class="form-control"
                                             placeholder="Enter Location" aria-label="Location"
-                                            aria-describedby="basic-addon1" id="loc_">
+                                            aria-describedby="basic-addon1" id="loc_"> -->
+                                        <input type="text" name='query' class="form-control" placeholder="Find Property"
+                                            aria-label="Location" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="form-group">
-                                    <button type="submit" name='searchSubmit' id="submitBtn" class="btn btn-primary"
-                                        style="width: 120px;">Search</button>
+                                    <button type="submit" class="btn btn-primary" style="width: 120px;">Search</button>
+                                    <!-- <button type="submit" name='searchSubmit' id="submitBtn" class="btn btn-primary"
+                                        style="width: 120px;">Search</button> -->
                                 </div> <br>
                             </div>
 
@@ -186,7 +199,7 @@ window.fbAsyncInit = function() {
             <div class="row justify-content-center padding-pr">
                 <!-- Latest Properties Item 1-->
                 <?php
-$sql = "SELECT property.propertyid,propertyamount,propertydesc,propertyname, propertybedrooms,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3) AND property.offertype='Sell' GROUP BY property.propertyid DESC LIMIT 3;";
+$sql = "SELECT property.propertyid,propertyamount,propertydesc,propertyname, propertybedrooms,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3) AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3;";
 
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {

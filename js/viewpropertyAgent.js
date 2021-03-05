@@ -3,11 +3,25 @@ function viewAgent(user, propertyid) {
         // $("#ContactAgent").modal("show");
         Swal.fire({
             icon: "info",
-            title: "Would you like to contact this Agent?",
+            title: "Do you want to contact this Agent?",
             showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No"
         }).then(result => {
             if (result.value) {
                 // console.log(user)
+
+                Swal.fire({
+                    text: "Please Wait....",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+
                 $.ajax({
                     url: "includes/insertmessages.inc.php",
                     data: {
@@ -16,10 +30,10 @@ function viewAgent(user, propertyid) {
                     },
                     type: "POST",
                     success: function (data) {
-                        Swal.close();
                         // console.log(data)
                         // $("#userNotification").html('');
                         if (data === "Message saved") {
+                            Swal.close();
                             Swal.fire({
                                 icon: "success",
                                 title: "Contact Information  Submitted",
@@ -27,12 +41,13 @@ function viewAgent(user, propertyid) {
                                 allowOutsideClick: false
                             }).then(result => {
                                 if (result.value) {
+
                                     $("#userContact").modal('hide');
                                     $("#ContactAgent").modal('show');
                                 }
                             })
                         } else {
-                            Swal.close();
+
                             // $("#userNotification").html(`<div class = "alert alert-danger" role = "alert" >${data}</div>`)
                             Swal.fire({
                                 icon: "info",
@@ -41,6 +56,7 @@ function viewAgent(user, propertyid) {
                                 allowOutsideClick: false
                             }).then(result => {
                                 if (result.value) {
+                                    Swal.close();
                                     $("#agentContainer").load("includes/loadAgent.inc.php", {
                                         propertyId: propertyid,
                                     }, function (data, status) {
@@ -113,10 +129,20 @@ function viewAgent(user, propertyid) {
                                 allowOutsideClick: false
                             }).then(result => {
                                 if (result.value) {
+                                    Swal.fire({
+                                        text: "Please Wait....",
+                                        allowOutsideClick: false,
+                                        showConfirmButton: false,
+
+                                        willOpen: () => {
+                                            Swal.showLoading();
+                                        },
+                                    });
                                     $("#agentContainer").load("includes/loadAgent.inc.php", {
                                         propertyId: propertyid,
                                     }, function (data, status) {
                                         if (status === "success") {
+                                            Swal.close();
                                             $("#userContact").modal('hide');
                                             $("#ContactAgent").modal('show');
                                         }

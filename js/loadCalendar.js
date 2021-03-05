@@ -1,4 +1,4 @@
-function viewPropertyCalendar(userid, propertyid, propertyname,agentId) {
+function viewPropertyCalendar(userid, propertyid, propertyname, agentId) {
 
     // $("#date-container").load('includes/loadschedules.inc.php', {
     //     propertyId: propertyid
@@ -138,7 +138,10 @@ function viewPropertyCalendar(userid, propertyid, propertyname,agentId) {
             // console.log(userid)
             Swal.fire({
                 icon: 'info',
-                title: "Do you want to set schedule in this date?"
+                title: "Do you want to book this sdsd?",
+                // showCancelButton: true,
+                // confirmButtonText: "Yes",
+                // cancelButtonText: "No"
             }).then(result => {
                 if (result.value) {
                     Swal.fire({

@@ -68,6 +68,10 @@ if (mysqli_num_rows($result) > 0) {
             echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
             echo "Posted";
             echo "</td>";
+        } else if ($row['approval'] === 2) {
+            echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo "Denied";
+            echo "</td>";
         }
 
         echo "<td>";

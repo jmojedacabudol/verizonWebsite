@@ -1,12 +1,10 @@
 <?php
 require_once 'admin-header.php';
 
-if (!isset($_SESSION['adminUser'])) {
-    header("location: admin.php");
-}
-
 ?>
 <div class="main">
+    <h5>All PROPERTIES</h5>
+    <br>
     <table id="properties" class="display" style="width:100%">
         <thead>
             <tr>
@@ -117,8 +115,7 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 <script src="js/adminProperty.js"></script>
-<script>
-</script>
+
 </body>
 
 </html>

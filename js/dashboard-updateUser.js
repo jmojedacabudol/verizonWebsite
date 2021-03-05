@@ -8,9 +8,11 @@ $(function () {
 
         Swal.fire({
             icon: "info",
-            title: "Please make sure about your credentials.",
-            text: "Check your credentials before hitting 'okay' buton.",
-            confirmButtonText: 'Okay'
+            title: "Do you want to save the changes you made?",
+            text: "Please your credentials before saving",
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelBUttonText: "No"
         }).then(result => {
             if (result.value) {
                 Swal.fire({

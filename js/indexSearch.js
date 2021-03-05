@@ -63,54 +63,54 @@ $(() => {
 
 
 
-    $("#searchForm").submit(function (event) {
-        event.preventDefault();
-        var formData = new FormData(this);
-        // formData.append("submit", "searchSubmit");
-        for (var value of formData.values()) {
-            console.log(value);
-        }
-        $.ajax({
-            url: "includes/propertyload.inc.php",
-            data: formData,
-            processData: false,
-            contentType: false,
-            type: "POST",
-            success: function (data) {
-                localStorage.setItem('propertyResult', data);
-                window.location.href = "properties.php";
-            },
-            error: function (data) {
-                alert(data);
-            },
-        });
+    // $("#searchForm").submit(function (event) {
+    //     event.preventDefault();
+    //     var formData = new FormData(this);
+    //     // formData.append("submit", "searchSubmit");
+    //     for (var value of formData.values()) {
+    //         console.log(value);
+    //     }
+    //     $.ajax({
+    //         url: "includes/propertyload.inc.php",
+    //         data: formData,
+    //         processData: false,
+    //         contentType: false,
+    //         type: "POST",
+    //         success: function (data) {
+    //             localStorage.setItem('propertyResult', data);
+    //             window.location.href = "properties.php";
+    //         },
+    //         error: function (data) {
+    //             alert(data);
+    //         },
+    //     });
 
-    })
+    // })
 
-    $("#navForm").submit(function (event) {
-        event.preventDefault();
-        var formData = new FormData(this);
-        // console.log(formData);
-        //formData.append("submit", propertyType);
-        // for (var value of formData.values()) {
-        //     console.log(value);
-        // }
-        $.ajax({
-            url: "includes/propertyload.inc.php",
-            data: formData,
-            processData: false,
-            contentType: false,
-            type: "POST",
-            success: function (data) {
-                // console.log(data)
-                localStorage.setItem('propertyResult', data);
-                window.location.href = "properties.php";
-            },
-            error: function (data) {
-                alert(data);
-            },
-        });
-    })
+    // $("#navForm").submit(function (event) {
+    //     event.preventDefault();
+    //     var formData = new FormData(this);
+    //     // console.log(formData);
+    //     //formData.append("submit", propertyType);
+    //     // for (var value of formData.values()) {
+    //     //     console.log(value);
+    //     // }
+    //     $.ajax({
+    //         url: "includes/propertyload.inc.php",
+    //         data: formData,
+    //         processData: false,
+    //         contentType: false,
+    //         type: "POST",
+    //         success: function (data) {
+    //             // console.log(data)
+    //             localStorage.setItem('propertyResult', data);
+    //             window.location.href = "properties.php";
+    //         },
+    //         error: function (data) {
+    //             alert(data);
+    //         },
+    //     });
+    // })
 
 
 })

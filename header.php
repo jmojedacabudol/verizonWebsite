@@ -237,9 +237,11 @@ if (isset($_SESSION['userid'])) {
                         <!-- <button type="Submit" class="btn btn-primary btn-red" data-toggle="modal" data-target="#Register" data-dismiss="modal"> <i class="fab fa-google"></i>&nbsp;&nbsp;&nbsp;Sign Up with Google </button> -->
 
                         <div class="form-group">
+
                             <button type="submit" name="registration-submit" class="btn btn-primary btn-blue"
-                                onclick="fbLogin();"> <i class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;Sign Up with
-                                Facebook </button>
+                                onclick="fbLogin();"><i class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;Sign Up with
+                                Facebook
+                            </button>
                         </div>
                     </form>
                     <br>

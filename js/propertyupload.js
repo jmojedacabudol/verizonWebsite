@@ -90,8 +90,13 @@ $("#epropertyForm").submit(function (event) {
   }
   Swal.fire({
     icon: "warning",
-    title: "Save Changes?",
-    text: "Please read all your changes before saving."
+    title: "Do you want to save the changes you made?",
+    text: "Please check all your changes before saving.",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+    cancelButtonText: "No"
+
+
   }).then(result => {
     if (result.value) {
       Swal.fire({
@@ -276,7 +281,10 @@ function checkRentChoice(buttonClicked) {
 function deleteProperty(id, propertyid) {
   Swal.fire({
     icon: "warning",
-    title: "Delete this Picture?"
+    title: "Do you want to delete this Picture?",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+    cancelButtonText: "No"
   }).then(result => {
     if (result.value) {
       //delete the image of property to reload

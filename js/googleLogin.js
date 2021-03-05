@@ -107,7 +107,6 @@ function resize2() {
         registerButtonRender(688.02)
     }
 }
-
 $(window).on("resize", resize);
 resize(); // call once initially
 resize2();

@@ -143,6 +143,7 @@ function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $positi
     $fileNameNew = $newFileName . "." . $fileActualExt;
     $fileDestination = '../uploads/' . $fileNameNew;
     $result = "";
+    $insertedUserId = "";
 
     if (move_uploaded_file($fileTmpName, $fileDestination)) {
         // $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key) VALUES('" . $email . "','" . $firstname . "','" . $lastname . "','" . $mobile . "','" . $position . "','" . $pwd . "','" . $newFileName . "');";
@@ -201,8 +202,9 @@ function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $positi
                 mysqli_stmt_bind_param($stmt, 'sssssss', $email, $firstname, $lastname, $mobile, $position, $hashedPwd, $newFileName);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
+                $insertedUserId = $conn->insert_id;
 
-                $sql2 = "INSERT INTO managers (name) VALUES(?);";
+                $sql2 = "INSERT INTO managers (name,usersId) VALUES(?,?);";
                 $stmt2 = mysqli_stmt_init($conn);
 
                 if (!mysqli_stmt_prepare($stmt2, $sql2)) {
@@ -210,7 +212,7 @@ function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $positi
                     //exit();
                 } else {
                     $managername = $firstname . " " . $lastname;
-                    mysqli_stmt_bind_param($stmt2, 's', $managername);
+                    mysqli_stmt_bind_param($stmt2, 'ss', $managername, $insertedUserId);
                     mysqli_stmt_execute($stmt2);
                     mysqli_stmt_close($stmt2);
 
@@ -1069,4 +1071,73 @@ function changePassword($conn, $email, $pwd)
 
     }
     return $result;
+}
+
+function deleteMessage($messagedId, $conn)
+{
+    $sql = "DELETE FROM messages WHERE messageId=?;";
+    $result = '';
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $result = "Statement Failed";
+    } else {
+        mysqli_stmt_bind_param($stmt, 's', $messagedId);
+        mysqli_stmt_execute($stmt);
+        $result = "Success";
+    }
+    mysqli_stmt_close($stmt);
+    return $result;
+}
+
+function deleteSchedule($scheduleId, $conn)
+{
+    $sql = "DELETE FROM schedules WHERE scheduleid=?;";
+    $result = '';
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $result = "Statement Failed";
+    } else {
+        mysqli_stmt_bind_param($stmt, 's', $scheduleId);
+        mysqli_stmt_execute($stmt);
+        $result = "Success";
+    }
+    mysqli_stmt_close($stmt);
+    return $result;
+
+}
+
+function approveManager($conn, $managerId)
+{
+    $sql = "UPDATE managers SET approval=1 WHERE managerId=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = "";
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $result = "Statement Failed";
+    }
+    mysqli_stmt_bind_param($stmt, 's', $managerId);
+    if (mysqli_stmt_execute($stmt)) {
+        $result = "Success";
+    } else {
+        $result = "Error in updating the Account!";
+    }
+    return $result;
+    mysqli_stmt_close($stmt);
+}
+
+function denyManager($conn, $managerId)
+{
+    $sql = "UPDATE managers SET approval=2 WHERE managerId=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = "";
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $result = "Statement Failed";
+    }
+    mysqli_stmt_bind_param($stmt, 's', $managerId);
+    if (mysqli_stmt_execute($stmt)) {
+        $result = "Success";
+    } else {
+        $result = "Error in updating the Account!";
+    }
+    return $result;
+    mysqli_stmt_close($stmt);
 }

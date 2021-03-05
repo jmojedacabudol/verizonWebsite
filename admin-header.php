@@ -1,6 +1,10 @@
 <?php
 session_start();
 include_once 'includes/dbh.inc.php';
+if (!isset($_SESSION['adminUser'])) {
+    header("location: ../admin.php");
+    exit();
+}
 
 ?>
 
@@ -39,15 +43,42 @@ include_once 'includes/dbh.inc.php';
         <div class="sidenav">
             <a href="admin-agents.php"><i class="fas fa-user-edit"></i> &nbsp;Accounts</a>
             <div class="dropdown-divider"></div>
-            <a href="admin-agents.php"><i class="fas fa-user-edit"></i> &nbsp;Managers</a>
+            <a href="admin-managers.php"><i class="fas fa-user-tie"></i>&nbsp;Managers</a>
             <div class="dropdown-divider"></div>
-            <a href="admin-properties.php"><i class="fas fa-list"></i> &nbsp; Properties</a>
+            <a href="admin-properties.php"><i class="fas fa-list"></i> &nbsp;Properties</a>
             <div class="dropdown-divider"></div>
-            <a href="admin-messages.php"><i class="fas fa-comment"></i> &nbsp; Messages</a>
+            <a href="admin-messages.php"><i class="fas fa-comment"></i> &nbsp;Messages</a>
             <div class="dropdown-divider"></div>
-            <a href="admin-messages.php"><i class="fas fa-clock"></i> &nbsp; Schedules</a>
+            <a href="admin-schedules.php"><i class="fas fa-clock"></i> &nbsp;Schedules</a>
             <div class="dropdown-divider"></div>
-            <a href="admin-messages.php"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
+            <a style='cursor:pointer;' data-toggle='modal' data-target='#ConfirmLogout'><i
+                    class="fas fa-sign-out-alt"></i> &nbsp;Logout</a>
 
         </div>
     </nav>
+
+
+
+    <!-- Confirm Logout Modal -->
+    <div class="modal fade" id="ConfirmLogout" tabindex="-1" role="dialog" aria-labelledby="ConfirmLogout"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Log Out</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you really wish to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="location.href='includes/adminlogout.inc.php'">Yes</button>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </div>

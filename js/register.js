@@ -395,7 +395,7 @@ $(function () {
                             allowOutsideClick: false,
                             timer: 2000
                         }).then(function (result) {
-                            console.log(result)
+                            location.reload();
                         })
 
                     } else {

@@ -1,5 +1,5 @@
 <?php
-$query = "SELECT property.propertyid, property.usersId,property.propertyname,property.propertylocation,MIN(images.file_name)AS file_name FROM property,images  WHERE  property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3)" ;
+$query = "SELECT property.propertyid, property.usersId,property.propertyname,property.propertylocation,MIN(images.file_name)AS file_name FROM property,images  WHERE  property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3)";
 
 require_once 'dbh.inc.php';
 
@@ -22,14 +22,14 @@ if (isset($_SESSION['userid'])) {
 $conditions = array();
 
 if (!empty($by_offertype)) {
-    if($by_offertype!=='Offer Type'){
-        if($by_offertype==='Any'){
+    if ($by_offertype !== 'Offer Type') {
+        if ($by_offertype === 'Any') {
             $conditions[] = "offertype IN ('Sell','Rent','Presell')";
-        }else{
+        } else {
             $conditions[] = "offertype='$by_offertype'";
         }
     }
- 
+
 }
 if (!empty($by_propertylocation)) {
 
@@ -42,10 +42,10 @@ if (!empty($by_propertyfloorarea)) {
     $conditions[] = "propertyfloorarea='$by_propertyfloorarea'";
 }
 if (!empty($by_propertytype)) {
-    if($by_propertytype!=='Property Type'){
-        if($by_propertytype==='Any'){
-            $conditions[] = "propertytype IN ('Building','Condominium','Farm Lots','House','Industrial','Offices','Warehouse')";
-        }else{
+    if ($by_propertytype !== 'Property Type') {
+        if ($by_propertytype === 'Any') {
+            $conditions[] = "propertytype IN ('Building','Condominium','Lots','House','Industrial','Offices','Warehouse')";
+        } else {
             $conditions[] = "propertytype='$by_propertytype'";
         }
     }
@@ -68,10 +68,10 @@ require_once 'dbh.inc.php';
 $sql = $query;
 // $test = "";
 if (count($conditions) > 0) {
-    $sql .=" AND ". implode(' AND ', $conditions)."GROUP BY property.propertyid DESC LIMIT 10";
+    $sql .= " AND " . implode(' AND ', $conditions) . "GROUP BY property.propertyid DESC LIMIT 10";
 
-}else{
-    $sql.="GROUP BY property.propertyid DESC LIMIT 3";
+} else {
+    $sql .= "GROUP BY property.propertyid DESC LIMIT 3";
 }
 
 $sql .= ";";
@@ -92,7 +92,7 @@ if (mysqli_num_rows($result) > 0) {
         echo ")'";
         echo ">";
         echo "<img class='card-img-top' src='";
-        echo "uploads/" .$row['file_name'] . "." . $fileactualext;
+        echo "uploads/" . $row['file_name'] . "." . $fileactualext;
         echo "' alt=''>";
         echo " </div>";
         echo " <div class='card-body'>";

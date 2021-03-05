@@ -21,7 +21,7 @@ require_once 'header.php'
                                     <option>Any</option>
                                     <option value="Sell">For Sale</option>
                                     <option value="Rent">For Rent</option>
-                                    <option value="Presell"> Presell</option>
+                                    <option value="Presell">Preselling</option>
                                 </select>
                             </div>
                         </div>
@@ -138,7 +138,7 @@ require_once 'header.php'
         </div>
 
 
-
+        <!--
         <nav aria-label="...">
             <ul class="pagination justify-content-end">
                 <li class="page-item disabled">
@@ -160,6 +160,16 @@ require_once 'header.php'
                     <a class="page-link" href="#">>></a>
                 </li>
             </ul>
+        </nav> -->
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
         </nav>
 
 
@@ -167,9 +177,391 @@ require_once 'header.php'
 
 
         <!-- Properties Grid Items-->
-        <div id="propertiesContainer">
+        <!-- <div id="propertiesContainer">
 
-        </div>
+        </div> -->
+
+        <?php
+if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['query'])) {
+
+    $offertype = $_GET['offertype'];
+    $searchOption = strtolower($_GET['searchOption']);
+    $query = strtolower($_GET['query']);
+    $string = "%$query%";
+
+    //for pagination
+    $results_per_page = 5;
+
+    $userlogged = "no-user";
+
+    if (isset($_SESSION['userid'])) {
+        $userlogged = $_SESSION['userid'];
+    }
+
+    //check what searchoption selected
+    //check if there is a query
+
+    if ($searchOption == 'property-name') {
+        if ($query != "") {
+
+            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid";
+
+            $stmt = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                echo "<tr>";
+                echo "SQL ERROR";
+                echo "</tr>";
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, 'ss', $string, $offertype);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $number_of_results = mysqli_num_rows($result);
+            $number_of_pages = ceil($number_of_results / $results_per_page);
+            for ($page = 1; $page <= $number_of_pages; $page++) {
+                echo "<a href='properties.php?offertype=" . $offertype . "&searchOption=" . $searchOption . "&query=" . $query . "page=" . $page . "'>" . $page . "</a>";
+            }
+
+            $this_page_first_result = ($page - 1) * $results_per_page;
+            echo $this_page_first_result;
+            // if (mysqli_num_rows($result) > 0) {
+            //     while ($row = mysqli_fetch_assoc($result)) {
+            //         $databaseFileName = $row['file_name'];
+            //         $filename = "uploads/$databaseFileName" . "*";
+            //         $fileInfo = glob($filename);
+            //         $fileext = explode(".", $fileInfo[0]);
+            //         $fileactualext = $fileext[2];
+
+            //         echo " <div class='card mb-3 w-100'>";
+            //         echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
+            //         echo $row['propertyid'];
+            //         echo ")'";
+            //         echo ">";
+            //         echo "<img class='card-img-top' src='";
+            //         echo "uploads/" . $row['file_name'] . "." . $fileactualext;
+            //         echo "' alt=''>";
+            //         echo " </div>";
+            //         echo " <div class='card-body'>";
+            //         echo " <h5 class='card-title'>";
+            //         echo $row['propertyname'];
+            //         echo "</h5>";
+            //         echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
+            //         echo $row['propertylocation'];
+            //         echo "</p>";
+            //         echo "<div class='container'>";
+            //         echo "<div class='row'>";
+
+            //         echo "<div class='col-md-4'>";
+            //         echo "<div class='form-group'>";
+            //         echo " <button type='button' class='btn btn-primary w-100' onclick='viewCampaign(";
+            //         echo $row['propertyid'];
+            //         echo ")'";
+            //         echo "><i class='fas fa-info'></i>&nbsp; View Info</button>";
+
+            //         echo "</div>";
+            //         echo "</div>";
+
+            //         echo "<div class='col-md-4'>";
+            //         echo "<div class='form-group'>";
+            //         echo (" <button type='button' class='btn btn-primary w-100' onclick='viewAgent(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\")'><i class='fas fa-user'></i>&nbsp; Contact Agent</button>");
+
+            //         echo "</div>";
+            //         echo "</div>";
+
+            //         echo "<div class='col-md-4'>";
+            //         echo "<div class='form-group'>";
+            //         // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
+            //         //                     data-target='#bookaTourModal'><i class='fas fa-info'></i>&nbsp; Book a
+            //         //                     Tour</button>";
+            //         echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+            //           Tour</button>");
+
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+
+            //     }
+            //     mysqli_stmt_close($stmt);
+            // } else {
+            //     //no property found
+            //     echo "No Property Found";
+            // }
+
+        } else {
+            //query is empty
+            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval=1 GROUP BY property.propertyid";
+
+            $stmt = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                echo "<tr>";
+                echo "SQL ERROR";
+                echo "</tr>";
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, 's', $offertype);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $number_of_results = mysqli_num_rows($result);
+            $number_of_pages = ceil($number_of_results / $results_per_page);
+            for ($page = 1; $page <= $number_of_pages; $page++) {
+                echo "<a href='properties.php?offertype=" . $offertype . "&searchOption=" . $searchOption . "&query=" . $query . "&page=" . $page . "'>" . $page . "</a>";
+
+            }
+
+            $this_page_first_result = ($page - 1) * $results_per_page;
+
+            // if (mysqli_num_rows($result) > 0) {
+            //     while ($row = mysqli_fetch_assoc($result)) {
+            //         $databaseFileName = $row['file_name'];
+            //         $filename = "uploads/$databaseFileName" . "*";
+            //         $fileInfo = glob($filename);
+            //         $fileext = explode(".", $fileInfo[0]);
+            //         $fileactualext = $fileext[2];
+
+            //         echo " <div class='card mb-3 w-100'>";
+            //         echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
+            //         echo $row['propertyid'];
+            //         echo ")'";
+            //         echo ">";
+            //         echo "<img class='card-img-top' src='";
+            //         echo "uploads/" . $row['file_name'] . "." . $fileactualext;
+            //         echo "' alt=''>";
+            //         echo " </div>";
+            //         echo " <div class='card-body'>";
+            //         echo " <h5 class='card-title'>";
+            //         echo $row['propertyname'];
+            //         echo "</h5>";
+            //         echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
+            //         echo $row['propertylocation'];
+            //         echo "</p>";
+            //         echo "<div class='container'>";
+            //         echo "<div class='row'>";
+
+            //         echo "<div class='col-md-4'>";
+            //         echo "<div class='form-group'>";
+            //         echo " <button type='button' class='btn btn-primary w-100' onclick='viewCampaign(";
+            //         echo $row['propertyid'];
+            //         echo ")'";
+            //         echo "><i class='fas fa-info'></i>&nbsp; View Info</button>";
+
+            //         echo "</div>";
+            //         echo "</div>";
+
+            //         echo "<div class='col-md-4'>";
+            //         echo "<div class='form-group'>";
+            //         echo (" <button type='button' class='btn btn-primary w-100' onclick='viewAgent(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\")'><i class='fas fa-user'></i>&nbsp; Contact Agent</button>");
+
+            //         echo "</div>";
+            //         echo "</div>";
+
+            //         echo "<div class='col-md-4'>";
+            //         echo "<div class='form-group'>";
+            //         // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
+            //         //                     data-target='#bookaTourModal'><i class='fas fa-info'></i>&nbsp; Book a
+            //         //                     Tour</button>";
+            //         echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+            //           Tour</button>");
+
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+            //         echo "</div>";
+
+            //     }
+            //     mysqli_stmt_close($stmt);
+            // } else {
+            //     //no property found
+            //     echo "No Property Found";
+            // }
+
+        }
+        //SEARCH FOR PROPERTY LOCATION
+    } else if ($searchOption == 'property-location') {
+        if ($query != "") {
+            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertylocation LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid DESC LIMIT 3";
+
+            $stmt = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                echo "<tr>";
+                echo "SQL ERROR";
+                echo "</tr>";
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, 'ss', $string, $offertype);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $databaseFileName = $row['file_name'];
+                    $filename = "uploads/$databaseFileName" . "*";
+                    $fileInfo = glob($filename);
+                    $fileext = explode(".", $fileInfo[0]);
+                    $fileactualext = $fileext[2];
+
+                    echo " <div class='card mb-3 w-100'>";
+                    echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
+                    echo $row['propertyid'];
+                    echo ")'";
+                    echo ">";
+                    echo "<img class='card-img-top' src='";
+                    echo "uploads/" . $row['file_name'] . "." . $fileactualext;
+                    echo "' alt=''>";
+                    echo " </div>";
+                    echo " <div class='card-body'>";
+                    echo " <h5 class='card-title'>";
+                    echo $row['propertyname'];
+                    echo "</h5>";
+                    echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
+                    echo $row['propertylocation'];
+                    echo "</p>";
+                    echo "<div class='container'>";
+                    echo "<div class='row'>";
+
+                    echo "<div class='col-md-4'>";
+                    echo "<div class='form-group'>";
+                    echo " <button type='button' class='btn btn-primary w-100' onclick='viewCampaign(";
+                    echo $row['propertyid'];
+                    echo ")'";
+                    echo "><i class='fas fa-info'></i>&nbsp; View Info</button>";
+
+                    echo "</div>";
+                    echo "</div>";
+
+                    echo "<div class='col-md-4'>";
+                    echo "<div class='form-group'>";
+                    echo (" <button type='button' class='btn btn-primary w-100' onclick='viewAgent(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\")'><i class='fas fa-user'></i>&nbsp; Contact Agent</button>");
+
+                    echo "</div>";
+                    echo "</div>";
+
+                    echo "<div class='col-md-4'>";
+                    echo "<div class='form-group'>";
+                    // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
+                    //                     data-target='#bookaTourModal'><i class='fas fa-info'></i>&nbsp; Book a
+                    //                     Tour</button>";
+                    echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+                      Tour</button>");
+
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+
+                }
+                mysqli_stmt_close($stmt);
+            } else {
+                //no property found
+                echo "No Property Found";
+            }
+
+        } else {
+            //query is empty
+            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval=1 GROUP BY property.propertyid DESC LIMIT 3";
+
+            $stmt = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+
+                echo "<tr>";
+                echo "SQL ERROR1";
+                echo "</tr>";
+                exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, 's', $offertype);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $databaseFileName = $row['file_name'];
+                    $filename = "uploads/$databaseFileName" . "*";
+                    $fileInfo = glob($filename);
+                    $fileext = explode(".", $fileInfo[0]);
+                    $fileactualext = $fileext[2];
+
+                    echo " <div class='card mb-3 w-100'>";
+                    echo " <div class='properties-item mx-auto' onclick='viewCampaign(";
+                    echo $row['propertyid'];
+                    echo ")'";
+                    echo ">";
+                    echo "<img class='card-img-top' src='";
+                    echo "uploads/" . $row['file_name'] . "." . $fileactualext;
+                    echo "' alt=''>";
+                    echo " </div>";
+                    echo " <div class='card-body'>";
+                    echo " <h5 class='card-title'>";
+                    echo $row['propertyname'];
+                    echo "</h5>";
+                    echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
+                    echo $row['propertylocation'];
+                    echo "</p>";
+                    echo "<div class='container'>";
+                    echo "<div class='row'>";
+
+                    echo "<div class='col-md-4'>";
+                    echo "<div class='form-group'>";
+                    echo " <button type='button' class='btn btn-primary w-100' onclick='viewCampaign(";
+                    echo $row['propertyid'];
+                    echo ")'";
+                    echo "><i class='fas fa-info'></i>&nbsp; View Info</button>";
+
+                    echo "</div>";
+                    echo "</div>";
+
+                    echo "<div class='col-md-4'>";
+                    echo "<div class='form-group'>";
+                    echo (" <button type='button' class='btn btn-primary w-100' onclick='viewAgent(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\")'><i class='fas fa-user'></i>&nbsp; Contact Agent</button>");
+
+                    echo "</div>";
+                    echo "</div>";
+
+                    echo "<div class='col-md-4'>";
+                    echo "<div class='form-group'>";
+                    // echo " <button type='button' class='btn btn-primary w-100' data-toggle='modal'
+                    //                     data-target='#bookaTourModal'><i class='fas fa-info'></i>&nbsp; Book a
+                    //                     Tour</button>";
+                    echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $row['propertyid'] . "\",\"" . $row['propertyname'] . "\",\"" . $row['usersId'] . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+                      Tour</button>");
+
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
+
+                }
+                mysqli_stmt_close($stmt);
+            } else {
+                //no property found
+                echo "No Property Found";
+            }
+
+        }
+
+    }
+
+}
+//  else {
+//     echo "Error Occured Contact Web Admin.";
+// }
+?>
 
 </section>
 

@@ -31,7 +31,7 @@ if (isset($_SESSION["userid"])) {
             echo "<div class='card-body'>";
             echo "<div class='row'>";
             echo "<div class='col-md-12'>";
-            echo "<h4 align='center'>My Profile</h4>";
+            echo "<h4 align='center'>Edit Profile</h4>";
             echo "<hr>";
             echo "</div>";
             echo "</div>";

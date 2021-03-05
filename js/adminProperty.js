@@ -119,6 +119,9 @@ $(document).ready(function () {
     Swal.fire({
       icon: "warning",
       title: "Approve This Property?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
         $.post('includes/approveproperty.inc.php', {
@@ -129,7 +132,9 @@ $(document).ready(function () {
               case "Already Approved":
                 Swal.fire({
                   icon: "info",
-                  title: "Campaign already Approved"
+                  title: "Property already Approved",
+
+
                 })
                 break;
               case "Listing Approved":
@@ -154,6 +159,9 @@ $(document).ready(function () {
     Swal.fire({
       icon: "error",
       title: "Deny This Property?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.value) {
         $.post('includes/denyproperty.inc.php', {
@@ -165,7 +173,7 @@ $(document).ready(function () {
               case "Already Denied":
                 Swal.fire({
                   icon: "info",
-                  title: "Campaign already Denied",
+                  title: "Property already Denied",
                   text: "You can delete this Listing.",
                   showCancelButton: true,
                   confirmButtonColor: "#d33",
@@ -211,13 +219,13 @@ $(document).ready(function () {
     var data = table.row($(this).parents("tr")).data();
     var propertyid = data[0];
 
-  
+
     $("#propertyContainer").load("includes/adminpropertyimgload.inc.php", {
       propertyId: propertyid,
     }, function (callback) {
       // console.log("HGHGHGHGHGH"+callback)
     });
-  
+
     $("#property-title").load('includes/loadpropertynameandprice.inc.php', {
       propertyId: propertyid,
     })
@@ -226,11 +234,14 @@ $(document).ready(function () {
     })
 
     $("#propertiesModal").modal('show');
-    
+
     $("#approvelisting").click(function () {
       Swal.fire({
         icon: "warning",
         title: "Approve This Property?",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
       }).then((result) => {
         if (result.value) {
           $.post('includes/approveproperty.inc.php', {
@@ -241,13 +252,19 @@ $(document).ready(function () {
                 case "Already Approved":
                   Swal.fire({
                     icon: "info",
-                    title: "Campaign already Approved"
+                    title: "Property already Approved",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
                   })
                   break;
                 case "Listing Approved":
                   Swal.fire({
                     icon: "success",
-                    title: "Listing Approved"
+                    title: "Listing Approved",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "Close",
                   })
                   break;
               }

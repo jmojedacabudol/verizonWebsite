@@ -119,8 +119,11 @@ $(document).ready(function () {
     var messageId = data[0];
     Swal.fire({
       icon: "warning",
-      title: "Delete this Message?",
-      text: "This message will no longer be retrievable."
+      title: "Do you want to delete this Message?",
+      text: "This message will be permanently deleted.",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No"
     }).then(result => {
       if (result.value) {
 
@@ -145,14 +148,14 @@ $(document).ready(function () {
 
             if (data == 'Success') {
               Swal.fire({
-                  icon: "success",
-                  title: "Message Deleted",
-                  showConfirmButton: false,
-                  allowOutsideClick: false,
-                  timer: 2000
-                }).then(function (result) {
-                  location.reload();
-                })
+                icon: "success",
+                title: "Message Deleted",
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                timer: 2000
+              }).then(function (result) {
+                location.reload();
+              })
             }
           },
           error: function (data) {

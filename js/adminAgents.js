@@ -121,6 +121,7 @@ $(document).ready(function () {
         Swal.fire({
             icon: "warning",
             title: "Approve This User?",
+            showCancelButton: true
         }).then((result) => {
             if (result.value) {
                 $.post('includes/approveuser.inc.php', {
@@ -156,6 +157,7 @@ $(document).ready(function () {
         Swal.fire({
             icon: "error",
             title: "Deny This User?",
+            showCancelButton: true
         }).then((result) => {
             if (result.value) {
                 $.post('includes/denyuser.inc.php', {
@@ -538,8 +540,11 @@ $(document).ready(function () {
 
         Swal.fire({
             icon: "warning",
-            title: "Do you wanna delete this featured Agent?",
-            text: "Deleting from this table will also remove him/her from the main page`s 'TOP AGENTS'."
+            title: "Do you want to delete this featured Agent?",
+            text: "Deleting from this table will also remove him/her from the main page`s 'TOP AGENTS'.",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No"
         }).then(result => {
             if (result.value) {
                 Swal.fire({
