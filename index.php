@@ -9,7 +9,7 @@ require_once 'header.php';
 <script>
 window.fbAsyncInit = function() {
     FB.init({
-        appId: '918103622350545',
+        appId: '1074702266372575',
         autoLogAppEvents: true,
         xfbml: true,
         version: 'v9.0'
@@ -101,7 +101,7 @@ window.fbAsyncInit = function() {
                                             <!-- <span class="input-group-text" id="basic-addon1"><i
                                                     class="fas fa-map-marker-alt"></i></span> -->
 
-                                            <select class="form-control" name="searchOption" id='fbGoogleselUser'>
+                                            <select class="form-control" name="searchOption">
                                                 <option value="property-name">
                                                     Name
                                                 </option>
@@ -130,7 +130,7 @@ window.fbAsyncInit = function() {
                         </div>
                     </form>
                     <!--On key press SEARCH-->
-                    <script>
+                    <!-- <script>
                     var inputA = document.getElementById("loc_");
                     inputA.addEventListener("keyup", function(event) {
                         if (event.keyCode === 13) {
@@ -138,7 +138,7 @@ window.fbAsyncInit = function() {
                             document.getElementById("submitBtn").click();
                         }
                     });
-                    </script>
+                    </script> -->
 
 
                     <!--Row4 Search Button-->
@@ -214,7 +214,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "<div class='properties-item mx-auto'>";
         echo "<div class='properties-item-caption d-flex align-items-center justify-content-center h-100 w-100'>";
         echo "<div class='properties-item-caption-content text-center text-white'>";
-        echo "<button type='submit' class='btn btn-primary' onclick='viewCampaign(";
+        echo "<button type='submit' class='btn btn-primary' onclick='viewProperty(";
         echo $row['propertyid'];
         echo ")'>Read More</button>";
         echo "</div>";
@@ -225,8 +225,8 @@ if (mysqli_num_rows($result) > 0) {
         echo "<h4 class='text-uppercase lproperties-title'>";
         echo $row['propertyname'];
         echo "</h4>";
-        echo "<h5 class='text-uppercase lproperties-price'> P ";
-        echo $row['propertyamount'];
+        echo "<h5 class='text-uppercase lproperties-price'> ₱ ";
+        echo number_format($row['propertyamount']);
         echo "</h5>";
         echo "<h6 class='lproperties-br'>";
         echo $row['propertybedrooms'];
@@ -274,7 +274,7 @@ if (mysqli_num_rows($result) > 0) {
         echo '<div class="properties-item mx-auto">';
         echo '<div class="properties-item-caption d-flex align-items-center justify-content-center h-100 w-100">';
         echo '<div class="properties-item-caption-content text-center text-white">';
-        echo ' <button type="submit" class="btn btn-primary" onclick="viewCampaign(';
+        echo ' <button type="submit" class="btn btn-primary" onclick="viewProperty(';
         echo $row['propertyid'];
         echo ')">Read More</button></td>';
         echo ' </div>';
@@ -487,74 +487,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 
-<!-- Sig In Modal-->
-<div class="properties-modal modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="propertiesModal2Label"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="container login-container">
-                <br><br>
-                <div class="row justify-content-center">
-                    <div class="col-md-6 login-form-1">
-                        <form>
 
-
-                            <div class="form-group">
-                                <button type="Submit" class="btn btn-primary btn-red" data-toggle="modal"
-                                    data-target="#Register" data-dismiss="modal"> <i
-                                        class="fab fa-google"></i>&nbsp;&nbsp;&nbsp;Sign in with Google </button>
-                            </div>
-
-                            <div class="form-group">
-                                <button type="Submit" class="btn btn-primary btn-blue" data-toggle="modal"
-                                    data-target="#Register" data-dismiss="modal"> <i
-                                        class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;Sign in with Facebook
-                                </button>
-                            </div>
-
-                            <div>
-                                <hr data-content="OR" class="hr-text">
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Email *" id="_email"
-                                    name="email" />
-                                <br>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="Password" class="form-control" id="_pw" placeholder="Your Password *"
-                                    name="pwd">
-                                <br>
-                            </div>
-
-                            <div class="form-group">
-                                <a data-toggle="modal" data-target="#Register" data-dismiss="modal" class="forgot-pwd"
-                                    id="link-forget-pw">Forgot Password?</a>
-                            </div>
-
-                            <div class="form-group">
-                                <button type="button" class="btn btn-primary btn-green btn-primary-w100" value="Login"
-                                    id="btn-login" onclick="location.href='user-property-listing.php';"> Login
-                                </button>
-                            </div>
-
-                            <div>
-                                <hr>
-                            </div>
-
-                            <!-- <div class="form-group">
-                                <button type="button" class="btn btn-primary btn-primary-w100" data-toggle="modal"
-                                    data-target="#Register" data-dismiss="modal"> Register for free</button> -->
-                    </div>
-
-                    </form>
-                </div>
-            </div>
-        </div> <br><br>
-    </div>
-</div>
-</div>
 
 
 

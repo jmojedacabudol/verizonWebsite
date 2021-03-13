@@ -57,8 +57,8 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td><i class='fas fa-map-marker-alt'></i>&nbsp;&nbsp;";
         echo $row['propertylocation'];
         echo "</td>";
-        echo "<td><i>PHP</i>&nbsp;&nbsp;";
-        echo $row['propertyamount'];
+        echo "<td>₱&nbsp;&nbsp;";
+        echo number_format($row['propertyamount']);
         echo "</td>";
         if ($row['approval'] === 0) {
             echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
@@ -189,7 +189,7 @@ if (mysqli_num_rows($result) > 0) {
                                             <div class="input-group w-100">
                                                 <input type="text" id='offerchoice' name="listing-rentChoice"
                                                     style="display:none;" value="none">
-                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                <input type="number" class="form-control" placeholder="Enter Amount"
                                                     aria-label="Price" name='listing-price'
                                                     aria-describedby="basic-addon2">
                                                 <div class="input-group-append" id='rentBtn' style="display:none;">
@@ -226,7 +226,7 @@ if (mysqli_num_rows($result) > 0) {
                                         <label for="onlyNumbers1" class="col-4 col-form-label">Lot Area (per
                                             sqm)</label>
                                         <div class="col-8">
-                                            <input type="text" class="form-control" placeholder="0"
+                                            <input type="text" class="form-control" placeholder="Enter No. of Lot Area"
                                                 id="listing-lot-area" name="listing-lot-area" aria-label=""
                                                 aria-describedby="button-addon3">
                                         </div>
@@ -236,8 +236,9 @@ if (mysqli_num_rows($result) > 0) {
                                         <label for="onlyNumbers2" class="col-4 col-form-label">Floor Area (per
                                             sqm)*</label>
                                         <div class="col-8">
-                                            <input type="text" class="form-control" placeholder="0"
-                                                id="listing-floor-area" name="listing-floor-area" aria-label=""
+                                            <input type="text" class="form-control"
+                                                placeholder="Enter No. of Floor Area" id="listing-floor-area"
+                                                name="listing-floor-area" aria-label=""
                                                 aria-describedby="button-addon3">
                                         </div>
                                     </div>
@@ -246,28 +247,28 @@ if (mysqli_num_rows($result) > 0) {
                                     <div class="form-group row">
                                         <label for="bedroom" class="col-4 col-form-label">No. of Bedrooms</label>
                                         <div class="col-8">
-                                            <input type="number" min="1" max="10" class="form-control" placeholder="0"
-                                                id="listing-bedroom" name="listing-bedroom"
-                                                onkeypress="return isNumber(event)" onpaste="return false;"
-                                                aria-label="" aria-describedby="button-addon3">
+                                            <input type="number" min="1" max="10" class="form-control"
+                                                placeholder="Enter No. of Bedrooms" id="listing-bedroom"
+                                                name="listing-bedroom" onkeypress="return isNumber(event)"
+                                                onpaste="return false;" aria-label="" aria-describedby="button-addon3">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="carpark" class="col-4 col-form-label">No. of Carparks</label>
                                         <div class="col-8">
-                                            <input type="number" min="0" max="10" class="form-control" placeholder="0"
-                                                id="listing-carpark" name="listing-carpark"
-                                                onkeypress="return isNumber(event)" onpaste="return false;"
-                                                aria-label="" aria-describedby="button-addon3">
+                                            <input type="number" min="0" max="10" class="form-control"
+                                                placeholder="Enter No. of Carparks" id="listing-carpark"
+                                                name="listing-carpark" onkeypress="return isNumber(event)"
+                                                onpaste="return false;" aria-label="" aria-describedby="button-addon3">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="carpark" class="col-4 col-form-label">Description</label>
                                         <div class="col-8">
-                                            <textarea class="form-control" style="height: 150px;"
-                                                name='listing-desc'></textarea>
+                                            <textarea class="form-control" style="height: 150px;" name='listing-desc'
+                                                placeholder="Enter Description Here"></textarea>
                                         </div>
                                     </div>
                             </div>

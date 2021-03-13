@@ -1,4 +1,4 @@
-function viewCampaign(propertyid) {
+function viewProperty(propertyid) {
   $("#propertiesModal1").modal("show");
 
   // $("#propertyContainer").load("includes/loadproperty.inc.php", {

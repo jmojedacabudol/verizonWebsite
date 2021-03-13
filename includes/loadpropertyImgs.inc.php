@@ -12,7 +12,7 @@ if (isset($_POST['propertyId'])) {
     }
 
     $propertyId = $_POST['propertyId'];
-    $sql = "SELECT P.propertyname,P.propertyid,C.file_name FROM property P INNER JOIN images C ON C.propertyid = P.propertyid WHERE C.propertyid=?";
+    $sql = "SELECT P.usersId,P.propertyname,P.propertyid,C.file_name FROM property P INNER JOIN images C ON C.propertyid = P.propertyid WHERE C.propertyid=?";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -36,6 +36,7 @@ if (isset($_POST['propertyId'])) {
             $propertid = $row['propertyid'];
             $propertyname = $row['propertyname'];
             $databaseFileName = $row['file_name'];
+            $usersId = $row['usersId'];
             $fileName = "../uploads/$databaseFileName" . "*";
             $info = glob($fileName);
             $fileext = explode(".", $info[0]);
@@ -79,7 +80,7 @@ if (isset($_POST['propertyId'])) {
         // echo "<div class='col-md-4'>";
         echo "<div class='form-group'>";
 
-        echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $propertid . "\",\"" . $propertyname . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
+        echo (" <button type='button' class='btn btn-primary w-100' onclick='viewPropertyCalendar(\"" . $userlogged . "\" ,\"" . $propertid . "\",\"" . $propertyname . "\",\"" . $usersId . "\" )'><i class='fas fa-info'></i>&nbsp; Book a
                       Tour</button>");
         echo "</div>";
         // echo "</div>";

@@ -120,7 +120,9 @@ $(document).ready(function () {
         // console.log(userid)
         Swal.fire({
             icon: "warning",
-            title: "Approve This User?",
+            title: "Do you want to Approve this User?",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
             showCancelButton: true
         }).then((result) => {
             if (result.value) {
@@ -156,7 +158,9 @@ $(document).ready(function () {
 
         Swal.fire({
             icon: "error",
-            title: "Deny This User?",
+            title: "Do you want to deny this User?",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
             showCancelButton: true
         }).then((result) => {
             if (result.value) {
@@ -266,12 +270,18 @@ $(document).ready(function () {
                 });
             });
 
+
+
+
             //feature the user to index page of the website
             $("#featBtn").click(function () {
                 Swal.fire({
                     icon: "warning",
-                    title: "Feature this Agent?",
-                    text: "This agent will be featured in index.php"
+                    title: "Do you want to feature this Agent?",
+                    text: "This agent will be posted in your Home page.",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No"
                 }).then(result => {
                     if (result.value) {
                         Swal.fire({
@@ -322,8 +332,103 @@ $(document).ready(function () {
                     }
                 })
             })
-
         })
+
+        $("#approveAgentBtn").click(function () {
+            Swal.fire({
+                icon: "warning",
+                title: "Do you want to Approve this User?",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                showCancelButton: true
+            }).then((result) => {
+                if (result.value) {
+                    $.post('includes/approveuser.inc.php', {
+                            userId: userid,
+                        },
+                        function (returnedData) {
+                            switch (returnedData) {
+                                case "Already Approved":
+                                    Swal.fire({
+                                        icon: "info",
+                                        title: "User already Approved"
+                                    })
+                                    break;
+                                case "User Approved":
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "User Approved"
+                                    })
+                                    break;
+                            }
+                        }).fail(function () {
+                        console.log("error");
+                    });
+                }
+            });
+        })
+
+
+        $("#denyAgentBtn").click(function () {
+            Swal.fire({
+                icon: "error",
+                title: "Do you want to deny this User?",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                showCancelButton: true
+            }).then((result) => {
+                if (result.value) {
+                    $.post('includes/denyuser.inc.php', {
+                            userId: userid,
+                        },
+                        function (returnedData) {
+                            // console.log(returnedData)
+                            switch (returnedData) {
+                                case "Already Denied":
+                                    Swal.fire({
+                                        icon: "info",
+                                        title: "User already Denied",
+                                        text: "You can delete this User.",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#d33",
+                                        cancelButtonColor: "#3085d6",
+                                        confirmButtonText: "Delete",
+                                    }).then((result) => {
+                                        if (result.value) {
+                                            $.post('includes/deleteuser.inc.php', {
+                                                    userId: userid,
+                                                },
+                                                function (returnedData) {
+                                                    Swal.fire({
+                                                        icon: "success",
+                                                        title: returnedData
+                                                    }).then((result) => {
+                                                        if (result.value) {
+                                                            window.location.reload();
+                                                        }
+                                                    })
+                                                }).fail(function () {
+                                                console.log("error");
+                                            });
+                                        }
+                                    })
+                                    break;
+                                case "Listing Denied":
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Listing Denied"
+                                    })
+                                    break;
+                            }
+                        }).fail(function () {
+                        console.log("error");
+                    });
+                }
+            });
+        })
+
+
+
 
 
     });
@@ -362,8 +467,11 @@ $(document).ready(function () {
         $("#featBtn").click(function () {
             Swal.fire({
                 icon: "warning",
-                title: "Feature this Agent?",
-                text: "This agent will be featured in index.php"
+                title: "Do you want to feature  this Agent?",
+                text: "This agent will be posted in Homepage.",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                showCancelButton: true
             }).then(result => {
                 if (result.value) {
                     Swal.fire({
@@ -633,8 +741,11 @@ $(document).ready(function () {
         $("#editFeatBtn").click(function () {
             Swal.fire({
                 icon: "warning",
-                title: "Save changes?",
-                text: "Please check your changes."
+                title: "Do you want to save changes?",
+                text: "Please check your changes.",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                showCancelButton: true
             }).then(result => {
                 if (result.value) {
                     Swal.fire({

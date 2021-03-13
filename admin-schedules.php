@@ -2,7 +2,7 @@
 require_once 'admin-header.php';
 ?>
 <div class="main">
-    <h5>All SCHEDULES</h5>
+    <h5>SCHEDULES</h5>
     <br>
     <table id="schedules" class="display" style="width:100%">
         <thead>

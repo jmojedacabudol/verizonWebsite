@@ -10,7 +10,7 @@ $email = $_POST['email'];
 $newpass = $_POST['newpass'];
 $confirmpass = $_POST['confirm-pass'];
 $validId = $_FILES['validId'];
-
+$usersNumber;
 $userlogged = "no-user";
 session_start();
 
@@ -23,10 +23,11 @@ if (isset($_SESSION['userid'])) {
 $conditions = array();
 
 if ($profileImg['size'] !== 0 && $profileImg['error'] === 0) {
-    $sql = "SELECT profile_Img FROM users where usersId=$userlogged AND profile_Img!='';";
+    $sql = "SELECT usersMobileNumber,profile_Img FROM users where usersId=$userlogged AND profile_Img!='';";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
+            $usersNumber = $row['usersMobileNumber'];
             $databaseFileName = $row['profile_Img'];
             $filename = "../uploads/$databaseFileName" . "*";
             $fileInfo = glob($filename);
@@ -48,6 +49,21 @@ if ($profileImg['size'] !== 0 && $profileImg['error'] === 0) {
 
     if (move_uploaded_file($fileTmpName, $fileDestination)) {
         $conditions[] = "profile_Img='$newFileName'";
+
+        //UPDATE featured profile img
+
+        $newFeaturedImgSql = "UPDATE featuredAgent SET profile_Img=? WHERE usersNumber=?;";
+        $featuredImgStmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($featuredImgStmt, $newFeaturedImgSql)) {
+            echo 'Oppss Something Happened';
+            exit();
+        } else {
+            mysqli_stmt_bind_param($featuredImgStmt, 'ss', $newFileName, $usersNumber);
+            mysqli_stmt_execute($featuredImgStmt);
+            echo 'Success';
+            mysqli_stmt_close($featuredImgStmt);
+        }
+
     } else {
         echo "Upload Error";
         exit;
@@ -58,14 +74,14 @@ if (!empty($firstname)) {
     $conditions[] = "usersFirstName=" . "'" . mysqli_real_escape_string($conn, $firstname) . "'";
 }
 if (!empty($lastname)) {
-    $conditions[] = "userLastName=" . "'" .  mysqli_real_escape_string($conn, $lastname) . "'";
+    $conditions[] = "userLastName=" . "'" . mysqli_real_escape_string($conn, $lastname) . "'";
 }
 if (!empty($email)) {
     if (invalidEmail($email) !== false) {
         echo 'Choose proper e-mail!';
         exit();
     }
-    $conditions[] = "usersEmail=" . "'" .  mysqli_real_escape_string($conn, $email) . "'";
+    $conditions[] = "usersEmail=" . "'" . mysqli_real_escape_string($conn, $email) . "'";
 }
 if (!empty($newpass) && !empty($confirmpass)) {
     if (pwdMatch($newpass, $confirmpass) !== false) {

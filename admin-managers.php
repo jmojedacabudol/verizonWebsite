@@ -3,7 +3,7 @@ require_once 'admin-header.php';
 
 ?>
 <div class="main">
-    <h5>All MANAGERS</h5>
+    <h5>MANAGERS</h5>
     <br>
     <table id="managers" class="display" style="width:100%">
         <thead>

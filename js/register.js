@@ -103,7 +103,11 @@ $(function () {
                         Swal.fire({
                             icon: "info",
                             title: "Manager Info",
-                            text: "By not selecting any Manager your default Manager will be AR Verizon."
+                            text: "By not selecting any Manager your default Manager will be AR Verizon.",
+                            showCancelButton: true,
+                            cancelButtonText: "No",
+                            confirmButtonText: "Yes",
+                            confirmButtonColor: "#70945A"
                         }).then(result => {
                             if (result.value) {
                                 $("#fbGooglregistration-alert").html('')
@@ -262,7 +266,12 @@ $(function () {
             Swal.fire({
                 icon: "info",
                 title: "Manager Info",
-                text: "By not selecting any Manager your default Manager will be AR Verizon."
+                text: "By not selecting any Manager your default Manager will be AR Verizon.",
+                showCancelButton: true,
+                cancelButtonText: "No",
+                confirmButtonText: "Yes",
+                confirmButtonColor: "#70945A",
+                cancelButtonColor: "white"
             }).then(result => {
                 if (result.value) {
                     Swal.fire({

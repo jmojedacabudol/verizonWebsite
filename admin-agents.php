@@ -6,7 +6,7 @@ if (!isset($_SESSION['adminUser'])) {
 
 ?>
 <div class="main">
-    <h5>All Accounts</h5>
+    <h5>AGENT ACCOUNTS`</h5>
     <table id="Agents" class="display" style="width:100%">
         <thead>
             <tr>
@@ -152,9 +152,9 @@ if (mysqli_num_rows($result) > 0) {
                 <br>
             </div>
             <div class="modal-footer">
-                <button type="button" id='approvelisting' class="btn btn-success">Approve</button>
+                <button type="button" id='approveAgentBtn' class="btn btn-success">Approve</button>
                 <button type="button" id='featureUserBtn' class="btn btn-warning">Feature</button>
-                <button type="button" id='denylisting' class="btn btn-danger">Delete</button>
+                <button type="button" id='denyAgentBtn' class="btn btn-danger">Deny</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
             <br>

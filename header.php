@@ -52,8 +52,9 @@ include_once 'includes/dbh.inc.php';
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             href="index.php">Home</a></li>
-                    <form id='navForm' action="properties.php" method="get">
-                        <input id="propType" name="propertyType" style="display:none;" value="" />
+                    <form action="properties.php" method="get">
+                        <!-- <form id='navForm' action="properties.php" method="get"> -->
+                        <!-- <input id="propType" name="propertyType" style="display:none;" value="" /> -->
                         <li class="nav-item mx-0 mx-lg-1 dropdown">
                             <a class="nav-link dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                                 href="properties.html" id="navbarDropdown2" role="button" data-toggle="dropdown"

@@ -3,7 +3,7 @@ require_once 'admin-header.php';
 
 ?>
 <div class="main">
-    <h5>All MESSAGES</h5>
+    <h5>MESSAGES</h5>
     <br>
     <table id="messages" class="display" style="width:100%">
         <thead>

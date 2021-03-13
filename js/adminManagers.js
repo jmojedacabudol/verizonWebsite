@@ -121,8 +121,7 @@ $(() => {
         var managerid = data[0];
         Swal.fire({
             icon: "warning",
-            title: "Are you sure you want to Approve this Manager?",
-            text: "This Manager will be approved.",
+            title: "Do you want to Approve this Manager?",
             showCancelButton: true
         }).then(result => {
             if (result.value) {
@@ -184,8 +183,7 @@ $(() => {
 
         Swal.fire({
             icon: "warning",
-            title: "Are you sure you want to Deny this Manager?",
-            text: "This Manager will be Denied.",
+            title: "Do you want to Deny this Manager?",
             showCancelButton: true
         }).then(result => {
             if (result.value) {

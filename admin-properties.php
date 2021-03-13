@@ -3,7 +3,7 @@ require_once 'admin-header.php';
 
 ?>
 <div class="main">
-    <h5>All PROPERTIES</h5>
+    <h5>PROPERTIES</h5>
     <br>
     <table id="properties" class="display" style="width:100%">
         <thead>
@@ -15,12 +15,15 @@ require_once 'admin-header.php';
                 <th>Floor Area</th>
                 <th>Property type</th>
                 <th>Offer Type</th>
+                <th>Price</th>
+                <th>Agent</th>
+                <th>Status</th>
                 <th class='notexport'>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php
-$sql = "SELECT * FROM property WHERE approval !=3;";
+$sql = "SELECT property.*,users.usersFirstName,users.userLastName FROM property,users WHERE property.approval !=3 AND property.usersId=users.usersId;";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
@@ -48,6 +51,32 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>";
         echo $row['offertype'];
         echo "</td>";
+        echo "<td>";
+        echo $row['propertyamount'];
+        echo "</td>";
+
+        echo "<td>";
+        echo $row['usersFirstName'] . " " . $row['userLastName'];
+        echo "</td>";
+
+        // echo "<td>";
+        // echo $row['approval'];
+        // echo "</td>";
+
+        if ($row['approval'] == 0) {
+            echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
+            echo "Pending";
+            echo "</td>";
+        } else if ($row['approval'] == 1) {
+            echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
+            echo "Posted";
+            echo "</td>";
+        } else if ($row['approval'] == 2) {
+            echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo "Denied";
+            echo "</td>";
+        }
+
         echo "<td>";
         echo " <button class='btn btn-success' id='approveBtn' type='text' aria-label='approve'><i
                                         class='far fa-check-circle'></i></button>";

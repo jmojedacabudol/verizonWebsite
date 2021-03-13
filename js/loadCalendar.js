@@ -135,13 +135,13 @@ function viewPropertyCalendar(userid, propertyid, propertyname, agentId) {
             })
 
         } else {
-            // console.log(userid)
+            console.log(agentId)
             Swal.fire({
                 icon: 'info',
-                title: "Do you want to book this sdsd?",
-                // showCancelButton: true,
-                // confirmButtonText: "Yes",
-                // cancelButtonText: "No"
+                title: "Do you want to book this schedule?",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No"
             }).then(result => {
                 if (result.value) {
                     Swal.fire({
@@ -179,6 +179,7 @@ function viewPropertyCalendar(userid, propertyid, propertyname, agentId) {
                                 $("#userInfo").modal('hide');
                             } else {
                                 Swal.close();
+                                console.log(data)
                                 Swal.fire({
                                     icon: "info",
                                     title: data

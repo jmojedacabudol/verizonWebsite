@@ -41,9 +41,14 @@ function viewAgent(user, propertyid) {
                                 allowOutsideClick: false
                             }).then(result => {
                                 if (result.value) {
-
-                                    $("#userContact").modal('hide');
-                                    $("#ContactAgent").modal('show');
+                                    $("#agentContainer").load("includes/loadAgent.inc.php", {
+                                        propertyId: propertyid,
+                                    }, function (data, status) {
+                                        if (status === "success") {
+                                            // $("#userContact").modal('hide');
+                                            $("#ContactAgent").modal('show');
+                                        }
+                                    });
                                 }
                             })
                         } else {

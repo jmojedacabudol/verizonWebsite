@@ -25,11 +25,14 @@ if (isset($_POST['propertyId'])) {
             echo " <h2 class='properties-modal-title text-secondary text-uppercase mb-0'>";
             echo $row['propertyname'];
             echo "</h2>";
-            echo "<h5 class='text-uppercase mproperties-price'> P ";
+            echo "<h5 class='text-uppercase mproperties-price'> ₱ ";
             if ($row['propertyrentchoice'] === 'none') {
-                echo $row['propertyamount'];
+                // echo $row['propertyamount'];
+                echo number_format($row['propertyamount']);
+
             } else {
-                echo $row['propertyamount'] . "/" . $row['propertyrentchoice'];
+                echo number_format($row['propertyamount']) . "/" . $row['propertyrentchoice'];
+                // echo $row['propertyamount'] . "/" . $row['propertyrentchoice'];
             }
             echo "</h5>";
 

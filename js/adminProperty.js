@@ -118,7 +118,7 @@ $(document).ready(function () {
     var propertyid = data[0];
     Swal.fire({
       icon: "warning",
-      title: "Approve This Property?",
+      title: "Do you want to approve this Property?",
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "No",
@@ -133,14 +133,16 @@ $(document).ready(function () {
                 Swal.fire({
                   icon: "info",
                   title: "Property already Approved",
-
-
                 })
                 break;
               case "Listing Approved":
                 Swal.fire({
                   icon: "success",
                   title: "Listing Approved"
+                }).then(result => {
+                  if (result.value) {
+                    location.reload();
+                  }
                 })
                 break;
             }
@@ -158,7 +160,7 @@ $(document).ready(function () {
     var propertyid = data[0];
     Swal.fire({
       icon: "error",
-      title: "Deny This Property?",
+      title: "Do you want to deny this Property?",
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "No",
@@ -190,7 +192,7 @@ $(document).ready(function () {
                           title: returnedData
                         }).then((result) => {
                           if (result.value) {
-                            window.location.reload();
+                            location.reload();
                           }
                         })
                       }).fail(function () {
@@ -203,6 +205,10 @@ $(document).ready(function () {
                 Swal.fire({
                   icon: "success",
                   title: "Listing Denied"
+                }).then(result => {
+                  if (result.value) {
+                    location.reload();
+                  }
                 })
                 break;
             }
@@ -238,7 +244,7 @@ $(document).ready(function () {
     $("#approvelisting").click(function () {
       Swal.fire({
         icon: "warning",
-        title: "Approve This Property?",
+        title: "Do you want to approve this Property?",
         showCancelButton: true,
         confirmButtonText: "Yes",
         cancelButtonText: "No",
@@ -278,7 +284,10 @@ $(document).ready(function () {
     $("#denylisting").click(function () {
       Swal.fire({
         icon: "error",
-        title: "Deny This Property?",
+        title: "Do you want to deny this Property?",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
       }).then((result) => {
         if (result.value) {
           $.post('includes/denyproperty.inc.php', {

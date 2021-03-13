@@ -8,9 +8,9 @@
          });
 
 
-         FB.getLoginStatus(function (response) { // Called after the JS SDK has been initialized.
-             statusChangeCallback(response); // Returns the login status.
-         });
+         //  FB.getLoginStatus(function (response) { // Called after the JS SDK has been initialized.
+         //      statusChangeCallback(response); // Returns the login status.
+         //  });
      };
 
  })
@@ -36,6 +36,7 @@
          if (response.authResponse) {
              // Get and display the user profile data
              getUserInformation();
+             providerId = response.authResponse.graphDomain;
          } else {
              console.log("User cancelled login or did not fully authorize.");
          }
@@ -58,64 +59,89 @@
          fields: 'id,first_name,last_name,email'
      }, function (response) {
          //check if the user`s account is created using facebook  
+         //  console.log(providerId, response.email)
 
+         Swal.fire({
+             text: "Please Wait....",
+             allowOutsideClick: false,
+             showConfirmButton: false,
 
-         $.post("includes/checkaccounttag.inc.php", {
-             "userEmail": response.email
-         }, function (data) {
-             if (data == providerId) {
-                 //   console.log("User Exists Under Facebook");
-                 $.post("includes/facebookgooglelogin.inc.php", {
-                     "email": response.email
-                 }, function (data) {
-                     if (data == "Success") {
-                         Swal.fire({
-                             text: "Please Wait....",
-                             allowOutsideClick: false,
-                             showConfirmButton: false,
+             willOpen: () => {
+                 Swal.showLoading();
+             },
+         });
 
-                             willOpen: () => {
-                                 Swal.showLoading();
-                             },
-                         });
+         $.ajax({
+             url: "includes/checkaccounttag.inc.php",
+             type: "POST",
+             data: {
+                 "userEmail": response.email
+             },
 
-                         Swal.fire({
-                             icon: "success",
-                             title: "Login Success",
-                             allowOutsideClick: false
-                         }).then(result => {
-                             if (result.value) {
-                                 fbLogout();
-                                 location.reload();
+         }).done(function (data) {
+             switch (data) {
+                 case "facebook":
+                     $.post("includes/facebookgooglelogin.inc.php", {
+                         "email": response.email
+                     }, function (data) {
+                         if (data == "Success") {
+                             Swal.close();
+                             Swal.fire({
+                                 icon: "success",
+                                 title: "Login Success",
+                                 allowOutsideClick: false
+                             }).then(result => {
+                                 if (result.value) {
+                                     fbLogout();
+                                     location.reload();
+                                 }
+                             })
+                         }
+                     })
+                     break;
+                 case "No User":
 
-                             }
-                         })
-                     }
+                     //No user registered
+                     Swal.close();
+                     //show register modal with modified registration inputs
+                     $('#Login').modal('hide');
+                     $('#fbGoogleRegister').modal({
+                         backdrop: 'static',
+                         keyboard: false
+                     });
 
-                 })
-             } else if (data != "No User") {
-                 Swal.fire({
-                     icon: "error",
-                     title: "Your email is already taken.",
-                     text: "Your email is not available because it is registered to other account."
-                 })
-             } else {
-                 console.log("No User Found");
-                 //show register modal with modified registration inputs
-                 $('#Login').modal('hide');
-                 $('#fbGoogleRegister').modal({
-                     backdrop: 'static',
-                     keyboard: false
-                 });
+                     //insert the value of facebook credentials into form inputs and disable
+                     $("#userEmail").val(response.email);
+                     $("#first-name").val(response.first_name);
+                     $("#last-name").val(response.last_name);
 
-                 //insert the value of facebook credentials into form inputs and disable
-                 $("#userEmail").val(response.email);
-                 $("#first-name").val(response.first_name);
-                 $("#last-name").val(response.last_name);
+                     $("#email,#first-name,#last-name").attr('readonly', true);
+                     break;
 
-                 $("#email,#first-name,#last-name").attr('readonly', true);
+                 case "":
+                     Swal.close();
+                     Swal.fire({
+                         icon: "error",
+                         title: "Your email is already taken.",
+                         text: "Your email is not available because it is registered to other account."
+                     }).then(result => {
+                         if (result.value) {
+                             location.reload();
+                         }
+                     })
+                     break;
+
              }
 
+         }).fail(function (jqXHR, textStatus) {
+             Swal.close();
+             Swal.fire({
+                 icon: "error",
+                 title: "Error occured using Facebook login",
+                 text: "Try refreshin the page to try again.",
+                 showCancelButton: true,
+                 cancelButtonText: "Close",
+             })
          });
      });
  }
@@ -135,6 +161,10 @@
      Swal.fire({
          icon: "warning",
          title: "Cancel Registration?",
+         text: "Click ''Yes'' to refresh the page.",
+         showCancelButton: true,
+         cancelButtonText: "No",
+         confirmButtonText: "Yes"
      }).then(result => {
          if (result.value) {
              fbLogout()

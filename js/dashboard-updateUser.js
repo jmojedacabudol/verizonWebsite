@@ -9,7 +9,7 @@ $(function () {
         Swal.fire({
             icon: "info",
             title: "Do you want to save the changes you made?",
-            text: "Please your credentials before saving",
+            text: "Please check your credentials before saving",
             showCancelButton: true,
             confirmButtonText: 'Yes',
             cancelBUttonText: "No"
