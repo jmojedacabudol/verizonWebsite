@@ -187,7 +187,8 @@ if (isset($_SESSION['userid'])) {
 
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Mobile No. *" name="mobile" />
+                            <input type="number" class="form-control" placeholder="Mobile No. *" maxlength="11"
+                                name="mobile" />
                             <br>
                         </div>
 
@@ -469,7 +470,8 @@ if (isset($_SESSION['userid'])) {
                         </div>
 
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="Mobile No. *" name="mobile" />
+                            <input type="number" class="form-control" maxlength="11" placeholder="Mobile No. *"
+                                name="mobile" />
                             <br>
                         </div>
 
