@@ -107,7 +107,8 @@ $(function () {
                             showCancelButton: true,
                             cancelButtonText: "No",
                             confirmButtonText: "Yes",
-                            confirmButtonColor: "#70945A"
+                            confirmButtonColor: "#3CB371",
+                            cancelButtonColor: "#70945A"
                         }).then(result => {
                             if (result.value) {
                                 $("#fbGooglregistration-alert").html('')
@@ -270,8 +271,8 @@ $(function () {
                 showCancelButton: true,
                 cancelButtonText: "No",
                 confirmButtonText: "Yes",
-                confirmButtonColor: "#70945A",
-                cancelButtonColor: "white"
+                confirmButtonColor: "#3CB371",
+                cancelButtonColor: "#70945A"
             }).then(result => {
                 if (result.value) {
                     Swal.fire({

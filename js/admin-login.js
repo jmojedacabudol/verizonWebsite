@@ -2,7 +2,7 @@ $(function () {
   $("#adminloginform").submit(function (event) {
     event.preventDefault();
     //console.log("Error")
-    if ($("#admin").val() === "admin" || $("#admin").val() === "admin@gmail.com") {
+    if ($("#admin").val() === "" || $("#admin").val() === "") {
       //check if there is a registered admin
       $.post('includes/checkAdmin.inc.php',
         function (returnedData) {
@@ -35,7 +35,7 @@ $(function () {
                 }
               },
               error: function (data) {
-                alert(data);
+                console.log(data);
               },
             });
           } else {

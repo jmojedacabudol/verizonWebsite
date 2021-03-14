@@ -130,7 +130,9 @@ $(document).ready(function () {
       text: "This Schedule will will be permanently deleted",
       showCancelButton: true,
       confirmButtonText: "Yes",
-      cancelButtonText: "No"
+      cancelButtonText: "No",
+      confirmButtonColor: "#3CB371",
+      cancelButtonColor: "#70945A"
     }).then(result => {
       if (result.value) {
         Swal.fire({
@@ -205,6 +207,7 @@ function viewPropertyCalendar() {
         Swal.fire({
           icon: "info",
           title: "You dont have any Schedules",
+          confirmButtonColor: "#3CB371",
         })
       },
     },

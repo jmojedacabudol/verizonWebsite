@@ -37,6 +37,7 @@
              // Get and display the user profile data
              getUserInformation();
              providerId = response.authResponse.graphDomain;
+             localStorage.setItem("providerId", providerId);
          } else {
              console.log("User cancelled login or did not fully authorize.");
          }
@@ -70,6 +71,7 @@
                  Swal.showLoading();
              },
          });
+
 
          $.ajax({
              url: "includes/checkaccounttag.inc.php",
@@ -133,6 +135,9 @@
 
              }
 
+
+
+
          }).fail(function (jqXHR, textStatus) {
              Swal.close();
              Swal.fire({
@@ -164,7 +169,9 @@
          text: "Click ''Yes'' to refresh the page.",
          showCancelButton: true,
          cancelButtonText: "No",
-         confirmButtonText: "Yes"
+         confirmButtonText: "Yes",
+         confirmButtonColor: "#3CB371",
+         cancelButtonColor: "#70945A"
      }).then(result => {
          if (result.value) {
              fbLogout()

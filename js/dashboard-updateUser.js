@@ -12,7 +12,9 @@ $(function () {
             text: "Please check your credentials before saving",
             showCancelButton: true,
             confirmButtonText: 'Yes',
-            cancelBUttonText: "No"
+            cancelBUttonText: "No",
+            confirmButtonColor: "#3CB371",
+            cancelButtonColor: "#70945A"
         }).then(result => {
             if (result.value) {
                 Swal.fire({
@@ -38,6 +40,7 @@ $(function () {
                             Swal.fire({
                                 icon: "success",
                                 title: "Account Updated",
+                                text: "The page will now reload.",
                                 showConfirmButton: false,
                                 allowOutsideClick: false,
                                 timer: 2000

@@ -16,7 +16,7 @@ if (isset($_POST["submit"])) {
     $result = loginAdmin($conn, $uid, $pwd);
     echo $result;
 } else {
-    echo "no";
+    echo "Error Occured";
     // header("location: ../index.php");
     //exit();
 }

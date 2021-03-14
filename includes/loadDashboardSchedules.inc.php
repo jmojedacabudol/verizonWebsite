@@ -17,7 +17,7 @@ if (isset($_POST['userId'])) {
         while ($row = mysqli_fetch_assoc($result)) {
             $data[] = array(
                 'id' => $row['scheduleid'],
-                'title' =>  'Book Schedule',
+                'title' => $row['propertyname'],
                 'start' => $row['start_event'],
                 'end' => $row['end_event'],
                 'textColor' => 'white',

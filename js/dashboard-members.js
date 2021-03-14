@@ -401,7 +401,8 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "No Messages/s",
-        text: "This Agent does not have any message/s yet."
+        text: "This Agent does not have any message/s yet.",
+        confirmButtonColor: "#3CB371",
       })
     });
 
@@ -587,7 +588,8 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "No Schedules/s",
-        text: "This Agent does not have any schedules/s yet."
+        text: "This Agent does not have any schedules/s yet.",
+        confirmButtonColor: "#3CB371",
       })
     });
   })
@@ -653,7 +655,9 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "No Property/s",
-        text: "This Agent does not have any property/s yet."
+        text: "This Agent does not have any property/s yet.",
+        confirmButtonColor: "#3CB371",
+
       })
     });
   })

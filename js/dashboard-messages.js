@@ -123,7 +123,9 @@ $(document).ready(function () {
       text: "This message will be permanently deleted.",
       showCancelButton: true,
       confirmButtonText: "Yes",
-      cancelButtonText: "No"
+      cancelButtonText: "No",
+      confirmButtonColor: "#3CB371",
+      cancelButtonColor: "#70945A"
     }).then(result => {
       if (result.value) {
 

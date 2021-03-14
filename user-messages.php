@@ -13,54 +13,59 @@ require_once 'sidenav.php'
                     <div class="col-lg-12 col-md-8">
                         <table id="messages" class="display" style="width:100%">
                             <thead>
-                                <tr><th>Id</th>
+                                <tr>
+                                    <th>Id</th>
                                     <th>Client Name</th>
                                     <th>Client Number</th>
                                     <th>Property Id</th>
                                     <th>Property Name</th>
+                                    <th>Date</th>
                                     <th class='notexport'>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT * FROM messages WHERE agentId=?;";
-                                $stmt = mysqli_stmt_init($conn);
+$sql = "SELECT * FROM messages WHERE agentId=?;";
+$stmt = mysqli_stmt_init($conn);
 
-                                if (!mysqli_stmt_prepare($stmt, $sql)) {
-                                    echo "<tr>";
-                                    echo "SQL ERROR";
-                                    echo "</tr>";
-                                    exit();
-                                }
-                                mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
-                                mysqli_stmt_execute($stmt);
-                                $result = mysqli_stmt_get_result($stmt);
+if (!mysqli_stmt_prepare($stmt, $sql)) {
+    echo "<tr>";
+    echo "SQL ERROR";
+    echo "</tr>";
+    exit();
+}
+mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-                                if (mysqli_num_rows($result) > 0) {
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        
-                                        echo "<tr>";
-                                        echo "<td class='w-20'>";
-                                        echo $row['messageId'];
-                                        echo "</td>";
-                                        echo "<td class='w-20'>";
-                                        echo $row['userName'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['usersMobileNumber'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['propertyId'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['propertyName'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo "<button type='button' id='btn-delete' class='btn btn-danger w-100'>Delete</button>";
-                                        echo "</td>";
-                                    }
-                                }
-                                ?>
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+
+        echo "<tr>";
+        echo "<td class='w-20'>";
+        echo $row['messageId'];
+        echo "</td>";
+        echo "<td class='w-20'>";
+        echo $row['userName'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['usersMobileNumber'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertyId'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertyName'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['date'];
+        echo "</td>";
+        echo "<td>";
+        echo "<button type='button' id='btn-delete' class='btn btn-danger w-100'>Delete</button>";
+        echo "</td>";
+    }
+}
+?>
                             </tbody>
                         </table>
                     </div>

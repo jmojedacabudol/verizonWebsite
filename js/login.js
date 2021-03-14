@@ -43,7 +43,10 @@ $(() => {
                     Swal.fire({
                         icon: "success",
                         title: "Login Success",
-                        allowOutsideClick: false
+                        text: "Click ''Proceed'' to continue to website.",
+                        allowOutsideClick: false,
+                        confirmButtonText: "Proceed",
+                        confirmButtonColor: "#3CB371",
                     }).then(result => {
                         if (result.value) {
                             location.reload();
