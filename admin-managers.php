@@ -55,8 +55,6 @@ if (mysqli_num_rows($result) > 0) {
         echo "</td>";
         echo "</tr>";
     }
-} else {
-    echo "No Data";
 }
 ?>
         </tbody>

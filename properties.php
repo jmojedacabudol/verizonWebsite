@@ -156,7 +156,7 @@ if ($propertytype == 'Building') {
     echo '<option selected>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -167,7 +167,7 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option selected>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -178,18 +178,18 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option selected>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
-} else if ($propertytype == 'House') {
+} else if ($propertytype == 'House and Lot') {
     echo '<option hidden>Property Type</option>';
     echo '<option>Any</option>';
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option selected>House</option>';
+    echo '<option selected>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -200,7 +200,7 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option selected>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -211,7 +211,7 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option selected>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -222,7 +222,7 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option selected>Warehouse</option>';
@@ -233,7 +233,7 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -244,7 +244,7 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -255,7 +255,7 @@ if ($propertytype == 'Building') {
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lots</option>';
-    echo '<option>House</option>';
+    echo '<option>House and Lot</option>';
     echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
@@ -475,7 +475,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             echo '</nav>';
 
             $paginationSql =
-                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS INT)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
             // "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid LIMIT " . $this_page_first_result . "," . $results_per_page;
 
@@ -705,7 +705,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
             $paginationSql =
 
-                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS INT)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
             // echo $paginationSql;
 
@@ -936,7 +936,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             echo '</ul>';
             echo '</nav>';
 
-            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertylocation LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS INT)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertylocation LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
 // "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertylocation LIKE ?  AND offertype= ? AND property.approval=1 GROUP BY property.propertyid LIMIT " . $this_page_first_result . "," . $results_per_page;
 
@@ -1163,7 +1163,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             echo '</ul>';
             echo '</nav>';
 
-            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS INT)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
             // "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval=1 GROUP BY property.propertyid LIMIT " . $this_page_first_result . "," . $results_per_page;
 
@@ -1404,7 +1404,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     }
 
     $paginationSql =
-        "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertytype=?  AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS INT)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+        "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertytype=?  AND property.approval=1 GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
     // "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval=1 AND property.propertytype=?  GROUP BY property.propertyid LIMIT " . $this_page_first_result . "," . $results_per_page;
 
@@ -1696,10 +1696,10 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     $paginationSql = $query;
 
     if (count($conditions) > 0) {
-        $paginationSql .= " AND " . implode(' AND ', $conditions) . "GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS INT)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page . ";";
+        $paginationSql .= " AND " . implode(' AND ', $conditions) . "GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page . ";";
 
     } else {
-        $paginationSql .= "GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS INT)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page . ";";
+        $paginationSql .= "GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page . ";";
     }
 
     $paginationResult = mysqli_query($conn, $paginationSql);

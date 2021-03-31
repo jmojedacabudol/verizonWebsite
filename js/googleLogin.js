@@ -51,6 +51,7 @@ function onSignIn(googleUser) {
                 })
                 break;
             case "No User":
+                Swal.close();
                 // console.log("No User Found");
                 //show register modal with modified registration inputs
                 $('#Login').modal('hide');
@@ -75,7 +76,12 @@ function onSignIn(googleUser) {
                     text: "Your email is not available because it is registered to other account."
                 }).then(result => {
                     if (result.value) {
-                        location.reload();
+                        var auth2 = gapi.auth2.getAuthInstance();
+                        auth2.signOut().then(function () {
+                            auth2.disconnect();
+                            location.reload();
+                        });
+
                     }
                 })
                 break;

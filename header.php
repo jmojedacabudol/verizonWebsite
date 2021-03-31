@@ -73,8 +73,8 @@ include_once 'includes/dbh.inc.php';
                                 <button class="dropdown-item" type='submit' name="propertyType" value="Lots"
                                     id='propFarmLots'>Lots</button>
                                 <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type='submit' name="propertyType" value="House"
-                                    id='propHouse'>House</button>
+                                <button class="dropdown-item" type='submit' name="propertyType" value="House and Lot"
+                                    id='propHouse'>House and Lot</button>
                                 <div class="dropdown-divider"></div>
                                 <button class="dropdown-item" type='submit' name="propertyType" value="Industrial"
                                     id='propIndustrial'>Industrial</button>
@@ -94,9 +94,28 @@ include_once 'includes/dbh.inc.php';
 
                     <?php
 if (isset($_SESSION['userid'])) {
+    $userId = $_SESSION['userid'];
+
+    $sql = "SELECT usersFirstName from users WHERE usersId=?";
+    $stmt = mysqli_stmt_init($conn);
+    $result;
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        echo "SQL Error";
+    } else {
+        mysqli_stmt_bind_param($stmt, 's', $userId);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        $result = $row['usersFirstName'];
+        mysqli_stmt_close($stmt);
+    }
+
     echo "<li class='nav-item mx-0 mx-lg-1 dropdown'>";
-    echo "<a class='nav-link dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger' href='' id='navbarDropdown3' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                My Profile </a>";
+    echo "<a class='nav-link dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger' href='' id='navbarDropdown3' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+    echo "Welcome, " . $result;
+    echo "</a>";
     echo "<div class='dropdown-menu' aria-labelledby='navbarDropdown3'>";
     echo "<a class='dropdown-item' href='dashboard.php'>Dashboard</a>";
     echo " <div class='dropdown-divider'></div>";

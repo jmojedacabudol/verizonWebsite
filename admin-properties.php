@@ -51,8 +51,8 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>";
         echo $row['offertype'];
         echo "</td>";
-        echo "<td>";
-        echo $row['propertyamount'];
+        echo "<td>₱&nbsp;&nbsp;";
+        echo number_format($row['propertyamount']);
         echo "</td>";
 
         echo "<td>";
@@ -84,6 +84,8 @@ if (mysqli_num_rows($result) > 0) {
                                         class='far fa-times-circle'></i></button>";
         echo " <button class='btn btn-info' id='viewBtn' type='text' aria-label='view'><i
                                         class='far fa-eye'></i></button>";
+        echo " <button class='btn btn-warning' id='editBtn' type='text' aria-label='view'><i class='far fa-edit'></i></button>";
+
         echo "</td>";
 
         echo "</tr>";
@@ -128,6 +130,40 @@ if (mysqli_num_rows($result) > 0) {
 </div>
 
 
+<!-- Edit Property Modal -->
+<div class="modal fade bd-example-modal" id="editPropertyModal" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Property Listing</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="card container-fluid">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="epropertyForm" action="includes/insertpropertyedit.inc.php" method="post"
+                                    enctype='multipart/form-data'>
+                                    <div id='propertyHolder'>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <!-- Bootstrap core JS-->
@@ -143,7 +179,9 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+<script src="js/imageLoading.js"></script>
 <script src="js/adminProperty.js"></script>
+
 
 </body>
 

@@ -279,7 +279,7 @@ function loginUser($conn, $email, $pwd)
     $result = false;
     if ($uidExists === 0) {
         // header("location: ../index.php?error=wronglogin");
-        $result = "User not Exists";
+        $result = "User does not exist";
         // exit();
     } else {
         $accountType = $uidExists['Tag'];

@@ -79,6 +79,9 @@ if (isset($_POST['userId'])) {
                     echo "<br>";
                     echo "<h6 style='color:#5C7B49'>Change Password: </h6>";
                     echo "<input type='password' id='adminchangePassword'>";
+                    echo "<button  style='margin-left:5px;'class='btn btn-success'id='changePwdBtn' onclick='changeUserPassword(";
+                    echo $row['usersId'];
+                    echo ")'>Submit</button>";
                 } else if ($row['Tag'] == 'facebook') {
                     echo "<h6 style='color:#5C7B49'>Account Type: </h6>" . "Registered using " . "<p style='color:blue;'>Facebook</p>";
 

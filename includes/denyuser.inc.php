@@ -8,11 +8,13 @@ if (isset($_POST['userId'])) {
 
     if (userAlreadydenied($userid, $conn) !== false) {
         echo "Already Denied";
-        exit();
+        // exit();
+    } else {
+        denyUserStatus($userid, $conn);
+        echo "User Denied";
+        // exit();
+
     }
-    denyUserStatus($userid, $conn);
-    echo "User Denied";
-    exit();
 
 } else {
     echo "No";

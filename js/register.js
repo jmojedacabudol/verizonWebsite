@@ -7,7 +7,6 @@ $(function () {
             $("#managerContainer").removeAttr("style").show();
             $("#selUser").select2({
                 placeholder: "Select a Manager",
-                allowClear: true,
                 ajax: {
                     url: "includes/selectmanager.inc.php",
                     type: "post",

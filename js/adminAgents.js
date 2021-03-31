@@ -199,10 +199,10 @@ $(document).ready(function () {
                                     }
                                 })
                                 break;
-                            case "Listing Denied":
+                            case "User Denied":
                                 Swal.fire({
                                     icon: "success",
-                                    title: "Listing Denied"
+                                    title: "User Denied"
                                 })
                                 break;
                         }
@@ -413,10 +413,10 @@ $(document).ready(function () {
                                         }
                                     })
                                     break;
-                                case "Listing Denied":
+                                case "User Denied":
                                     Swal.fire({
                                         icon: "success",
-                                        title: "Listing Denied"
+                                        title: "User Denied"
                                     })
                                     break;
                             }
@@ -800,3 +800,46 @@ $(document).ready(function () {
     })
 
 });
+
+
+function changeUserPassword(userId) {
+    var password = document.querySelector("#adminchangePassword").value;
+    if (password !== "") {
+        Swal.fire({
+            icon: "warning",
+            title: "Do you want to save your changes?",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            showCancelButton: true,
+            confirmButtonColor: "#3CB371",
+        }).then(result => {
+            if (result.value) {
+                $.ajax({
+                    url: "includes/userchangepassword.inc.php",
+                    data: {
+                        userpassword: password,
+                        agentId: userId
+                    },
+                    type: "POST",
+                    success: function (data) {
+                        if (data === "Success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "User Updated!",
+                                text: "Page will now Reload",
+                                showConfirmButton: false,
+                                allowOutsideClick: false,
+                                timer: 2000
+                            }).then(function (result) {
+                                location.reload();
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+
+
+}

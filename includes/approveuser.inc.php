@@ -9,11 +9,14 @@ if (isset($_POST['userId'])) {
 
     if (userAlreadyApproved($userid, $conn) !== false) {
         echo "Already Approved";
-        exit();
+        // exit();
+    } else {
+        approveUserStatus($userid, $conn);
+        echo "User Approved";
+
     }
-    denyUserStatus($userid, $conn);
-    echo "User Approved";
-    exit();
+
+    // exit();
 
 } else {
     echo "No";

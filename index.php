@@ -199,7 +199,7 @@ window.fbAsyncInit = function() {
             <div class="row justify-content-center padding-pr">
                 <!-- Latest Properties Item 1-->
                 <?php
-$sql = "SELECT property.propertyid,propertyamount,propertydesc,propertyname, propertybedrooms,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3) AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3;";
+$sql = "SELECT property.propertyid,property.propertytype,propertyamount,propertydesc,propertyname, propertybedrooms,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3) AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3;";
 
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -228,9 +228,11 @@ if (mysqli_num_rows($result) > 0) {
         echo "<h5 class='text-uppercase lproperties-price'> ₱ ";
         echo number_format($row['propertyamount']);
         echo "</h5>";
-        echo "<h6 class='lproperties-br'>";
-        echo $row['propertybedrooms'];
-        echo " Bedrooms </h6>";
+        if ($row['propertytype'] === "House and Lot" || $row['propertytype'] === "Condominium") {
+            echo "<h6 class='lproperties-br'>";
+            echo $row['propertybedrooms'];
+            echo " Bedroom/s </h6>";
+        }
         echo "<p class='lproperties-desc'> ";
         echo $row['propertydesc'];
         echo "</p>";
@@ -292,7 +294,7 @@ if (mysqli_num_rows($result) > 0) {
         echo $row['propertydesc'];
         echo '</p>';
         echo ' <h5 class="lrproperties-price">';
-        echo 'PHP ' . $row['propertyamount'] . '/' . $row['propertyrentchoice'];
+        echo '₱ ' . number_format($row['propertyamount']) . '/' . $row['propertyrentchoice'];
         echo '</h5>';
         echo '</div>';
         echo '</div>';

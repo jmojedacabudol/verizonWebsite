@@ -142,7 +142,7 @@ if (isset($_POST['propertyId'])) {
                 echo '<option >Building</option>
                 <option>Condominium</option>
                 <option>Farm Lots</option>
-                <option>House</option>
+                <option>House and Lot</option>
                 <option>Industrial</option>
                 <option>Offices</option>
                 <option>Warehouse</option>';
@@ -150,7 +150,7 @@ if (isset($_POST['propertyId'])) {
                 echo '<option>Building</option>
                 <option selected>Condominium</option>
                 <option>Farm Lots</option>
-                <option>House</option>
+                <option>House and Lot</option>
                 <option>Industrial</option>
                 <option>Offices</option>
                 <option>Warehouse</option>';
@@ -158,15 +158,15 @@ if (isset($_POST['propertyId'])) {
                 echo '<option>Building</option>
                 <option>Condominium</option>
                 <option selected>Lots</option>
-                <option>House</option>
+                <option>House and Lot</option>
                 <option>Industrial</option>
                 <option>Offices</option>
                 <option>Warehouse</option>';
-            } else if ($row['propertytype'] == 'House') {
+            } else if ($row['propertytype'] == 'House and Lot') {
                 echo '<option>Building</option>
                 <option>Condominium</option>
                 <option>Farm Lots</option>
-                <option selected>House</option>
+                <option selected>House and Lot</option>
                 <option>Industrial</option>
                 <option>Offices</option>
                 <option>Warehouse</option>';
@@ -174,7 +174,7 @@ if (isset($_POST['propertyId'])) {
                 echo '<option>Building</option>
                 <option>Condominium</option>
                 <option>Farm Lots</option>
-                <option>House</option>
+                <option>House and Lot</option>
                 <option selected>Industrial</option>
                 <option>Offices</option>
                 <option>Warehouse</option>';
@@ -182,7 +182,7 @@ if (isset($_POST['propertyId'])) {
                 echo '<option>Building</option>
                 <option>Condominium</option>
                 <option>Farm Lots</option>
-                <option>House</option>
+                <option>House and Lot</option>
                 <option>Industrial</option>
                 <option selected>Offices</option>
                 <option>Warehouse</option>';
@@ -190,7 +190,7 @@ if (isset($_POST['propertyId'])) {
                 echo '<option>Building</option>
                 <option>Condominium</option>
                 <option>Farm Lots</option>
-                <option>House</option>
+                <option>House and Lot</option>
                 <option>Industrial</option>
                 <option>Offices</option>
                 <option selected>Warehouse</option>';
@@ -202,7 +202,7 @@ if (isset($_POST['propertyId'])) {
             echo '<label for="onlyNumbers1" class="col-4 col-form-label">Lot Area (per
             sqm)</label>';
             echo '<div class="col-8">';
-            echo '<input type="text" class="form-control" placeholder="0" value="';
+            echo '<input type="number" class="form-control" placeholder="0" value="';
             echo $row['propertylotarea'] . '"';
             echo 'name="elisting-lot-area" aria-label="" aria-describedby="button-addon3">';
             echo '</div>';
@@ -211,7 +211,7 @@ if (isset($_POST['propertyId'])) {
             echo '<label for="onlyNumbers2" class="col-4 col-form-label">Floor Area (per
             sqm)*</label>';
             echo '<div class="col-8">';
-            echo '<input type="text" class="form-control" placeholder="0" value="';
+            echo '<input type="number" class="form-control" placeholder="0" value="';
             echo $row['propertyfloorarea'] . '"';
             echo 'id="elisting-floor-area" name="elisting-floor-area" aria-label="" aria-describedby="button-addon3">';
             echo '</div>';
@@ -219,7 +219,7 @@ if (isset($_POST['propertyId'])) {
             echo '<div class="form-group row">';
             echo '<label for="bedroom" class="col-4 col-form-label">No. of Bedrooms</label>';
             echo '<div class="col-8">';
-            echo '<input type="number" min="1" max="10" class="form-control" placeholder="0" id="elisting-bedroom" name="elisting-bedroom" onkeypress="return isNumber(event)" value="';
+            echo '<input type="number" min="0" max="10" class="form-control" placeholder="0" id="elisting-bedroom" name="elisting-bedroom" onkeypress="return isNumber(event)" value="';
             echo $row['propertybedrooms'] . '"';
             echo 'onpaste="return false;" aria-label="" aria-describedby="button-addon3" >';
             echo '</div>';
