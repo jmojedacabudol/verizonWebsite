@@ -12992,3 +12992,7 @@ form .row:first-child .floating-label-form-group {
     data-width: 207px;
   }
 }
+
+.loginPointer {
+  cursor: pointer;
+}

@@ -164,7 +164,7 @@ if (mysqli_num_rows($result) > 0) {
                                                 class="form-control">
                                                 <option selected>Sell</option>
                                                 <option>Rent</option>
-                                                <option>Presell</option>
+                                                <option>Preselling</option>
 
                                             </select>
                                         </div>

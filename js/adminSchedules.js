@@ -5,6 +5,7 @@ $(() => {
             extend: 'pdfHtml5',
             className: 'btn btn-primary ',
             title: "Schedules",
+            titleAttr: 'Export as PDF',
             orientation: 'portrait',
             exportOptions: {
                 columns: ':visible'
@@ -72,6 +73,7 @@ $(() => {
         }, {
             extend: 'excelHtml5',
             className: 'btn btn-primary',
+            titleAttr: 'Export as XSLSX',
             title: "Schedules",
             text: '<i class="fas fa-file-excel"></i>',
             exportOptions: {
@@ -80,6 +82,7 @@ $(() => {
 
         }, {
             extend: 'csvHtml5',
+            titleAttr: 'Export as CSV',
             className: 'btn btn-primary ',
             title: "Schedules",
             text: '<i class="fas fa-file-csv"></i>',
@@ -92,6 +95,7 @@ $(() => {
             extend: 'print',
             className: 'btn btn-primary ',
             title: "Schedules",
+            titleAttr: 'PRINT',
             text: '<i class="fas fa-print"></i>',
             exportOptions: {
                 columns: ':not(.notexport)'

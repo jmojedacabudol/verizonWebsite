@@ -1630,7 +1630,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     if (!empty($by_propertytype)) {
         if ($by_propertytype !== 'Property Type') {
             if ($by_propertytype === 'Any') {
-                $conditions[] = "propertytype IN ('Building','Condominium','Lots','House','Industrial','Offices','Warehouse')";
+                $conditions[] = "propertytype IN ('Building','Condominium','Lots','House and Lot','Industrial','Offices','Warehouse')";
             } else {
                 $conditions[] = "propertytype='$by_propertytype'";
             }

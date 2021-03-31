@@ -119,11 +119,11 @@ if (isset($_SESSION['userid'])) {
     echo "<div class='dropdown-menu' aria-labelledby='navbarDropdown3'>";
     echo "<a class='dropdown-item' href='dashboard.php'>Dashboard</a>";
     echo " <div class='dropdown-divider'></div>";
-    echo "<a class='dropdown-item' data-toggle='modal' data-target='#ConfirmLogout'>Log Out</a>";
+    echo "<a class='dropdown-item loginPointer' data-toggle='modal' data-target='#ConfirmLogout'>Log Out</a>";
     echo "</div>";
     echo "</li>";
 } else {
-    echo "<li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger' data-toggle='modal' data-target='#Login'>Log In</a></li>";
+    echo "<li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger loginPointer' data-toggle='modal' data-target='#Login'>Log In</a></li>";
 }
 ?>
 

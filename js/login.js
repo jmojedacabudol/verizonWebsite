@@ -42,7 +42,7 @@ $(() => {
                 if (data == "Success") {
                     Swal.fire({
                         icon: "success",
-                        title: "Login Success",
+                        title: "Log In Succesful",
                         text: "Click ''Proceed'' to continue to website.",
                         allowOutsideClick: false,
                         confirmButtonText: "Proceed",

@@ -7,6 +7,7 @@ $(document).ready(function () {
       extend: 'pdfHtml5',
       className: 'btn btn-primary ',
       title: "Property Listing",
+      titleAttr: 'Export as PDF',
       orientation: 'portrait',
       exportOptions: {
         columns: ':visible'
@@ -75,6 +76,7 @@ $(document).ready(function () {
       extend: 'excelHtml5',
       className: 'btn btn-primary',
       title: "Property Listing",
+      titleAttr: 'Export as XLSX',
       text: '<i class="fas fa-file-excel"></i>',
       exportOptions: {
         columns: ':not(.notexport)'
@@ -83,6 +85,7 @@ $(document).ready(function () {
     }, {
       extend: 'csvHtml5',
       className: 'btn btn-primary ',
+      titleAttr: 'Export as CSV',
       title: "Property Listing",
       text: '<i class="fas fa-file-csv"></i>',
       exportOptions: {
@@ -93,6 +96,7 @@ $(document).ready(function () {
 
       extend: 'print',
       className: 'btn btn-primary ',
+      titleAttr: 'PRINT',
       title: "Property Listing",
       text: '<i class="fas fa-print"></i>',
       exportOptions: {
