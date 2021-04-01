@@ -30,5 +30,3 @@
 <script src="js/viewpropertyAgent.js"></script>
 <script src="js/loadCalendar.js"></script>
 <script src="js/forgotPwd.js"></script>
-<script src="js/facebookLogin.js"></script>
-<script src="js/googleLogin.js"></script>

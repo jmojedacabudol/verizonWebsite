@@ -12996,3 +12996,13 @@ form .row:first-child .floating-label-form-group {
 .loginPointer {
   cursor: pointer;
 }
+
+
+.hidden {
+  display: none;
+}
+
+.noteIndention {
+  margin-left: 5px;
+  margin-top: 5px;
+}

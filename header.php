@@ -179,23 +179,27 @@ if (isset($_SESSION['userid'])) {
                     </div>
                     <form id='registraitonForm' action="includes/signup.inc.php" method="post"
                         enctype='multipart/form-data'>
+
+                        <img id="imgFileUpload" alt="Select File" title="Select File" src="images/upload.png"
+                            style="cursor: pointer " class="center" />
+                        <br />
+                        <input type="file" id="FileUpload" style="display: none" />
+                        <p style="margin-left: 140px;">Click image to upload your Profile Image</p>
+
+
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Email *" name="email" /> <br>
                         </div>
-
-                        <div class="form-group">
-                            <input type="Password" class="form-control" placeholder="Password *" name="pwd" />
-                            <br>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="Password" class="form-control" placeholder="Confirm Password *"
-                                name="pwdrepeat" />
-                            <br>
-                        </div>
-
+                        <p class="noteIndention">Note: Please provide a valid email address. Your login access will be
+                            sent to specified
+                            email.</p>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="First Name *" name="firstname" />
+                            <br>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Middle Name *" name="middlename" />
                             <br>
                         </div>
 
@@ -204,9 +208,17 @@ if (isset($_SESSION['userid'])) {
                             <br>
                         </div>
 
-
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="Mobile No. *" maxlength="11"
+                            <input type="text" class="form-control" placeholder="Address *" name="address" />
+                            <br>
+                        </div>
+                        <div class="form-group">
+                            <input pattern=".{12,}" required title="12 characters minimum" class="form-control"
+                                placeholder="TIN No. *" name="tin" />
+                            <br>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Mobile No. *" minlength="11"
                                 name="mobile" />
                             <br>
                         </div>
@@ -218,6 +230,11 @@ if (isset($_SESSION['userid'])) {
                                 <option>Manager</option>
                             </select>
                         </div>
+                        <p class="noteIndention hidden">Note: For the approval of your position as Manager, you are
+                            required to recruit
+                            at least 3
+                            agents within 30 days. Failure to complete this requirement, the system will automatically
+                            change your status to "Agent" position.</p>
 
                         <div class="form-group" id="managerContainer" style="display:none;">
                             <select class="form-control" name="manager" id='selUser'>
@@ -231,6 +248,9 @@ if (isset($_SESSION['userid'])) {
                             <h6 class="login-title">Select Valid ID</h6>
                             <input type="file" class="btn btn-secondary w-100" name="validid" /> <br>
                         </div>
+                        <p class="noteIndention">Note: Valid Government ID with address and picture
+                            -UMID, SSS, Driver's License</p>
+
                         <div class="form-group">
                             <!-- <input type="Submit" class="btn btn-primary btn-primary-w100" value="Register" /> -->
                             <div class="form-group form-check">
