@@ -251,22 +251,6 @@ if (isset($_SESSION['userid'])) {
                         <div class="form-group"> <br>
                             <a href="#" class="forgot-pwd">Already a member? Log in here</a>
                         </div>
-
-
-                        <div>
-                            <hr data-content="OR" class="hr-text">
-                        </div>
-
-                        <div class="g-signin2" data-onsuccess="onSignIn" id='googleSigninReg' data-theme="dark"></div>
-                        <!-- <button type="Submit" class="btn btn-primary btn-red" data-toggle="modal" data-target="#Register" data-dismiss="modal"> <i class="fab fa-google"></i>&nbsp;&nbsp;&nbsp;Sign Up with Google </button> -->
-
-                        <div class="form-group">
-
-                            <button type="submit" name="registration-submit" class="btn btn-primary btn-blue"
-                                onclick="fbLogin();"><i class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;Sign Up with
-                                Facebook
-                            </button>
-                        </div>
                     </form>
                     <br>
                 </div>
@@ -274,98 +258,6 @@ if (isset($_SESSION['userid'])) {
             </div>
         </div>
     </div>
-
-
-
-    <!-- Facebook And Gmail Register Modal-->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="fbGoogleRegister"
-        aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-6 login-form-1">
-                        <h3 class="login-title">Register</h3>
-                        <div id="fbGooglregistration-alert">
-                        </div>
-
-                    </div>
-                    <form id='fbGoogleregistraitonForm' action="includes/signup.inc.php" method="post"
-                        enctype='multipart/form-data'>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Email *" id='userEmail' name="email" />
-                            <br>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="First Name *" id='first-name'
-                                name="firstname" />
-                            <br>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Last Name *" id='last-name'
-                                name="lastname" />
-                            <br>
-                        </div>
-
-
-                        <div class="form-group">
-                            <input type="number" maxlength="11" class="form-control" placeholder="Mobile No. *"
-                                name="mobile" />
-                            <br>
-                        </div>
-
-                        <div class="form-group">
-                            <select class="form-control" id="fbGooglePosSelect" name="position">
-                                <option hidden>Position Type</option>
-                                <option>Agent</option>
-                                <option>Manager</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group" id="fbGooglemanagerContainer" style="display:none;">
-                            <select class="form-control" name="manager" id='fbGoogleselUser'>
-                                <option value="0" hidden>Select Manager</option>
-                            </select>
-                            <br>
-                        </div>
-
-
-                        <div class="form-group">
-                            <h6 class="login-title">Select Valid ID</h6>
-                            <input type="file" class="btn btn-secondary w-100" name="validid" /> <br>
-                        </div>
-                        <div class="form-group">
-                            <!-- <input type="Submit" class="btn btn-primary btn-primary-w100" value="Register" /> -->
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                                <label class="form-check-label" for="exampleCheck1">I have read and agree to
-                                    the </label>
-                                <a href="termsandcondition.php" target="_blank">&nbsp;Terms and
-                                    Conditions
-                                </a>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-primary-w100"
-                                name="submit">Register</button>
-                        </div>
-
-                        <div class="form-group">
-                            <button type="button" id='closeBtn'
-                                class="btn btn-secondary btn-primary-w100">Close</button>
-                        </div>
-                    </form>
-                    <br>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Facebook And Gmail Register Modal Ends Here-->
 
 
 
@@ -404,25 +296,6 @@ if (isset($_SESSION['userid'])) {
                         <div class="col-md-6 login-form-1">
 
                             <form id='loginForm' action="includes/login.inc.php" method="post">
-                                <!-- <div class="form-group">
-                                    <button type="Submit" class="btn btn-primary btn-red" data-toggle="modal" data-target="#Register" data-dismiss="modal"> <i class="fab fa-google"></i>&nbsp;&nbsp;&nbsp; Sign in with Google -
-                                        (Coming
-                                        Soon)
-                                    </button>
-                                </div> -->
-                                <div class="g-signin2" data-onsuccess="onSignIn" id='googleSignin' data-theme="dark"
-                                    style="align:center; "></div>
-
-                                <div class="form-group">
-                                    <button type="button" class="btn btn-primary btn-blue" onclick="fbLogin();"> <i
-                                            class="fab fa-facebook-f"></i>&nbsp;&nbsp;&nbsp;Sign in with
-                                        Facebook
-                                    </button>
-                                </div>
-
-                                <div>
-                                    <hr data-content="OR" class="hr-text">
-                                </div>
                                 <div id="loginNotf"></div>
                                 <div class="form-group">
                                     <input id='uid' type="text" class="form-control" placeholder="Your Email *"

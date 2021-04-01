@@ -18,6 +18,7 @@ require_once 'header.php'
 //check if there are items inside forms to save after page refresh
 if (isset($_GET['offertype'])) {
     $offertype = $_GET['offertype'];
+    // echo $offertype;
 }
 if (isset($_GET['propertylocation'])) {
     $propertylocation = $_GET['propertylocation'];
@@ -34,8 +35,8 @@ if (isset($_GET['floorarea'])) {
 } else {
     $floorarea = '';
 }
-if (isset($_GET['propertytype'])) {
-    $propertytype = $_GET['propertytype'];
+if (isset($_GET['propertyType'])) {
+    $propertytype = $_GET['propertyType'];
 } else {
     $propertytype = '';
 }
@@ -54,15 +55,14 @@ echo '<div class="col-md-3">';
 echo ' <div class="form-group">';
 echo '<select name="offertype" id=offerType class="form-control">';
 
-if ($offertype == 'Sell') {
+if ($offertype == 'sell') {
     echo '<option hidden>Offer Type</option>';
     echo '<option>Any</option>';
-
     echo '<option value="Sell" selected>For Sale</option>';
     echo '<option value="Rent">For Rent</option>';
     echo '<option value="Presell">Preselling</option>';
 
-} else if ($offertype == 'Rent') {
+} else if ($offertype == 'rent') {
     echo '<option hidden>Offer Type</option>';
     echo '<option>Any</option>';
 
@@ -70,7 +70,7 @@ if ($offertype == 'Sell') {
     echo '<option value="Rent"selected>For Rent</option>';
     echo '<option value="Presell">Preselling</option>';
 
-} else if ($offertype == 'Presell') {
+} else if ($offertype == 'presell') {
     echo '<option hidden>Offer Type</option>';
     echo '<option>Any</option>';
 
