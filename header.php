@@ -172,7 +172,7 @@ if (isset($_SESSION['userid'])) {
                 </div>
                 <div class="modal-body">
                     <div class="col-md-6 login-form-1">
-                        <h3 class="login-title">Register</h3>
+                        <h3 class="login-title">Registration</h3>
                         <div id="registration-alert" style="text-align:center;">
                         </div>
 
@@ -180,17 +180,20 @@ if (isset($_SESSION['userid'])) {
                     <form id='registraitonForm' action="includes/signup.inc.php" method="post"
                         enctype='multipart/form-data'>
 
-                        <img id="imgFileUpload" alt="Select File" title="Select File" src="images/upload.png"
-                            style="cursor: pointer " class="center" />
-                        <br />
-                        <input type="file" id="FileUpload" style="display: none" />
-                        <p style="margin-left: 140px;">Click image to upload your Profile Image</p>
-
+                        <div class="profileImgContainer">
+                            <img class="addCursorPointer profileImage" id="imgFileUpload" alt="Select Profile Image"
+                                title="Profile Image" src="assets/img/user.png" />
+                            <br>
+                            <input type="file" id="FileUpload" class="hidden" />
+                            <br>
+                            <p>Click image to select your Profile Image</p>
+                        </div>
 
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Email *" name="email" /> <br>
                         </div>
-                        <p class="noteIndention">Note: Please provide a valid email address. Your login access will be
+                        <p class="noteIndention"><strong>Note:
+                            </strong> Please provide a valid email address. Your login access will be
                             sent to specified
                             email.</p>
                         <div class="form-group">
@@ -209,17 +212,23 @@ if (isset($_SESSION['userid'])) {
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Address *" name="address" />
+                            <input type="date" class="form-control" id="inputDate">
+                            <br>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Address *" name="Full Address" />
                             <br>
                         </div>
                         <div class="form-group">
-                            <input pattern=".{12,}" required title="12 characters minimum" class="form-control"
-                                placeholder="TIN No. *" name="tin" />
+                            <input type="text" onkeypress="return isNumberKey(event);" class="form-control"
+                                placeholder="TIN No. *" name="tin">
                             <br>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" placeholder="Mobile No. *" minlength="11"
-                                name="mobile" />
+                            <input type="text" onkeypress="return isNumberKey(event);" class="form-control"
+                                placeholder="Mobile No. *" minlength="11" name="mobile" />
                             <br>
                         </div>
 
@@ -230,7 +239,8 @@ if (isset($_SESSION['userid'])) {
                                 <option>Manager</option>
                             </select>
                         </div>
-                        <p class="noteIndention hidden">Note: For the approval of your position as Manager, you are
+                        <p class="noteIndention hidden"><strong>Note:
+                            </strong> For the approval of your position as Manager, you are
                             required to recruit
                             at least 3
                             agents within 30 days. Failure to complete this requirement, the system will automatically
@@ -248,7 +258,8 @@ if (isset($_SESSION['userid'])) {
                             <h6 class="login-title">Select Valid ID</h6>
                             <input type="file" class="btn btn-secondary w-100" name="validid" /> <br>
                         </div>
-                        <p class="noteIndention">Note: Valid Government ID with address and picture
+                        <p class="noteIndention"><strong>Note:
+                            </strong> Valid Government ID with address and picture
                             -UMID, SSS, Driver's License</p>
 
                         <div class="form-group">

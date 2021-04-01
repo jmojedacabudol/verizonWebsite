@@ -21,6 +21,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="assets/mail/contact_me.js"></script>
 
+<!-- Script for mobile number and tin number -->
+<script>
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+    return !(charCode > 31 && (charCode < 48 || charCode > 57));
+}
+</script>
+
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 <script src="js/propertyViewing.js"></script>

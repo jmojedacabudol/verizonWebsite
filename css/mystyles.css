@@ -13006,3 +13006,23 @@ form .row:first-child .floating-label-form-group {
   margin-left: 5px;
   margin-top: 5px;
 }
+
+.profileImgContainer {
+  text-align: center;
+}
+
+.profileImage {
+  /* width: 30%;
+  height: 30%;
+  border-radius: 50%; */
+
+  border-radius: 50%;
+  height: 250px;
+  width: 250px;
+  overflow: hidden;
+  border: 5px solid #70945A;
+}
+
+.addCursorPointer {
+  cursor: pointer
+}
