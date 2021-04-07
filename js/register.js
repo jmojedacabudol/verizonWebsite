@@ -44,7 +44,7 @@ $(function () {
         var mobileNo = formData.get("mobile");
         var selectedPosition = formData.get("position");
         var validId = document.querySelector("#filevalidid");
-        var termsAgreement = document.getElementById("exampleCheck2");
+        var termsAgreement = document.querySelector("#exampleCheck2");
         //registration as agent
         if (selectedPosition === "Agent") {
             if (imgValidation(imgURL)) {
