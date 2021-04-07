@@ -44,7 +44,7 @@ $(function () {
         var mobileNo = formData.get("mobile");
         var selectedPosition = formData.get("position");
         var validId = document.querySelector("#filevalidid");
-
+        var termsAgreement = document.getElementById("exampleCheck2");
         //registration as agent
         if (selectedPosition === "Agent") {
             if (imgValidation(imgURL)) {
@@ -72,24 +72,29 @@ $(function () {
                                                         if (defaultManagaerId !== "anf-Verizon") {
                                                             //set AR Verizon as default manager 
                                                             $("#managerId").val("anf-Verizon");
+
                                                         } else {
                                                             //check if the id is valid
                                                             if (imgValidation(validId)) {
-                                                                Swal.fire({
-                                                                    icon: "info",
-                                                                    title: "Register as an Agent of AR Verizon?",
-                                                                    text: "If you`re sure about all information kindly click ''Yes''",
-                                                                    showCancelButton: true,
-                                                                    cancelButtonText: "No",
-                                                                    confirmButtonText: "Yes",
-                                                                    confirmButtonColor: "#3CB371",
-                                                                    cancelButtonColor: "#70945A"
-                                                                }).then(result => {
-                                                                    if (result.value) {
-                                                                        console.log(selectedPosition);
-                                                                    }
-                                                                })
-                                                                // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                                //terms of Agreement
+                                                                if (termsAgreement.checked) {
+                                                                    Swal.fire({
+                                                                        icon: "info",
+                                                                        title: "Register as an Agent of AR Verizon?",
+                                                                        text: "If you`re sure about all information kindly click ''Yes''",
+                                                                        showCancelButton: true,
+                                                                        cancelButtonText: "No",
+                                                                        confirmButtonText: "Yes",
+                                                                        confirmButtonColor: "#3CB371",
+                                                                        cancelButtonColor: "#70945A"
+                                                                    }).then(result => {
+                                                                        if (result.value) {
+                                                                            console.log(selectedPosition);
+                                                                        }
+                                                                    })
+                                                                    // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                                }
+
                                                             }
                                                         }
                                                     }
