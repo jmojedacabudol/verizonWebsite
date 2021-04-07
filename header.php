@@ -28,6 +28,7 @@ include_once 'includes/dbh.inc.php';
     <link href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' rel='stylesheet'
         type='text/css'>
 
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
     <link href='assets/fullcalendar/main.css' rel='stylesheet' />
 
@@ -173,22 +174,19 @@ if (isset($_SESSION['userid'])) {
                 <div class="modal-body">
                     <div class="col-md-6 login-form-1">
                         <h3 class="login-title">Registration</h3>
-                        <div id="registration-alert" style="text-align:center;">
-                        </div>
-
                     </div>
                     <form id='registraitonForm' action="includes/signup.inc.php" method="post"
                         enctype='multipart/form-data'>
 
-                        <div class="profileImgContainer">
+                        <div class="center">
                             <img class="addCursorPointer profileImage" id="imgFileUpload" alt="Select Profile Image"
                                 title="Profile Image" src="assets/img/user.png" />
                             <br>
-                            <input type="file" id="FileUpload" class="hidden" />
+                            <input type="file" name="FileUpload" id="FileUpload" class="hidden" />
                             <br>
                             <p>Click image to select your Profile Image</p>
                         </div>
-
+                        <div id="registration-alert" class="center"></div>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Email *" name="email" /> <br>
                         </div>
@@ -197,28 +195,31 @@ if (isset($_SESSION['userid'])) {
                             sent to specified
                             email.</p>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="First Name *" name="firstname" />
+                            <input type="text" class="form-control" onkeypress="return /[a-z]/i.test(event.key)"
+                                placeholder="First Name *" name="firstname" />
                             <br>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Middle Name *" name="middlename" />
+                            <input type="text" class="form-control" onkeypress="return /[a-z]/i.test(event.key)"
+                                placeholder="Middle Name *" name="middlename" />
                             <br>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Last Name *" name="lastname" />
+                            <input type="text" class="form-control" onkeypress="return /[a-z]/i.test(event.key)"
+                                placeholder="Last Name *" name="lastname" />
                             <br>
                         </div>
 
                         <div class="form-group">
-                            <input type="date" class="form-control" id="inputDate">
+                            <input type="date" class="form-control" name="birthday">
                             <br>
                         </div>
 
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Address *" name="Full Address" />
+                            <input type="text" class="form-control" placeholder="Address *" name="full-address" />
                             <br>
                         </div>
                         <div class="form-group">
@@ -246,18 +247,20 @@ if (isset($_SESSION['userid'])) {
                             agents within 30 days. Failure to complete this requirement, the system will automatically
                             change your status to "Agent" position.</p>
 
-                        <div class="form-group" id="managerContainer" style="display:none;">
-                            <select class="form-control" name="manager" id='selUser'>
-                                <option value="0" hidden>Select Manager</option>
-                            </select>
-                            <br>
+                        <p class="noteIndention hidden">
+                            <strong>Note: </strong> If you dont provide a manager Id, AR Verizon will be your default
+                            manager.
+                        </p>
+                        <div class="form-group">
+                            <input type="text" id="managerId" name="managerId" class="form-control hidden"
+                                placeholder="Enter Manager ID" />
                         </div>
 
                         <div class="form-group">
-                            <input id="fileValidId" type="file" style="display:none;" />
                             <h6 class="login-title">Select Valid ID</h6>
-                            <input type="file" class="btn btn-secondary w-100" name="validid" /> <br>
+                            <input name="filevalidid" id="filevalidid" type="file" class="btn btn-secondary w-100" />
                         </div>
+
                         <p class="noteIndention"><strong>Note:
                             </strong> Valid Government ID with address and picture
                             -UMID, SSS, Driver's License</p>

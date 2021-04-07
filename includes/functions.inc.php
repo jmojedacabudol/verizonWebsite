@@ -282,29 +282,19 @@ function loginUser($conn, $email, $pwd)
         $result = "User does not exist";
         // exit();
     } else {
-        $accountType = $uidExists['Tag'];
-        if ($accountType == 'facebook') {
-            session_start();
-            $_SESSION["userid"] = $uidExists["usersId"];
-            $result = "Success";
-        } else if ($accountType == 'Google') {
-            session_start();
-            $_SESSION["userid"] = $uidExists["usersId"];
-            $result = "Success";
-        } else {
-            $pwdhashed = $uidExists['usersPwd'];
-            $checkPwd = password_verify($pwd, $pwdhashed);
+        $pwdhashed = $uidExists['usersPwd'];
+        $checkPwd = password_verify($pwd, $pwdhashed);
 
-            if ($checkPwd === false) {
-                // header("location: ../index.php?error=wronglogin");
-                $result = "Wrong logged in Credentials";
-                // exit();
-            } else if ($checkPwd === true) {
-                session_start();
-                $_SESSION["userid"] = $uidExists["usersId"];
-                $result = "Success";
-            }
+        if ($checkPwd === false) {
+            // header("location: ../index.php?error=wronglogin");
+            $result = "Wrong logged in Credentials";
+            // exit();
+        } else if ($checkPwd === true) {
+            session_start();
+            $_SESSION["userid"] = $uidExists["usersId"];
+            $result = "Success";
         }
+
     }
 
     return $result;
@@ -1140,4 +1130,25 @@ function denyManager($conn, $managerId)
     }
     return $result;
     mysqli_stmt_close($stmt);
+}
+
+function checkManagerId($managerId, $conn)
+{
+    $sql = "SELECT COUNT(managerId) AS managerId from managers;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = "";
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $result = "Statement Failed";
+    } else {
+
+        mysqli_stmt_execute($stmt);
+
+        $resultData = mysqli_stmt_get_result($stmt);
+
+        if ($row = mysqli_fetch_assoc($resultData)) {
+            $result = $row['managerId'];
+        }
+        mysqli_stmt_close($stmt);
+    }
+    return $result;
 }

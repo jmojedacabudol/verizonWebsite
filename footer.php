@@ -20,6 +20,8 @@
 <script src="assets/mail/jqBootstrapValidation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="assets/mail/contact_me.js"></script>
+<!-- Moment Js -->
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
 
 <!-- Script for mobile number and tin number -->
 <script>
@@ -27,6 +29,11 @@ function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : evt.keyCode
     return !(charCode > 31 && (charCode < 48 || charCode > 57));
 }
+
+function alphaOnly(event) {
+    var key = event.keyCode;
+    return ((key >= 65 && key <= 90) || key == 8);
+};
 </script>
 
 <!-- Core theme JS-->
