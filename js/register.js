@@ -95,6 +95,8 @@ $(function () {
                                                                     // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
                                                                 }
 
+                                                            } else {
+                                                                $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
                                                             }
                                                         }
                                                     }
@@ -117,6 +119,57 @@ $(function () {
 
 
         } else if (selectedPosition === "Manager") {
+            if (imgValidation(imgURL)) {
+                //check if the email is in valid format
+                if (emailValidation(email)) {
+                    //check if first name is valid format
+                    if (firstNameMiddleNameLastNameIsValid(firstName)) {
+                        //check if middle name is valid format
+                        if (firstNameMiddleNameLastNameIsValid(middleName)) {
+                            //check if lastname is valid format
+                            if (firstNameMiddleNameLastNameIsValid(lastName)) {
+                                //check if birthday is above 18
+                                if (birthdayValidation(birthday)) {
+                                    //check if the address is not empty and valid
+                                    if (addressValidation(address)) {
+                                        //check if tin number is 12 characters
+                                        if (tinValidation(tinNo)) {
+                                            //check if mobile number is valid
+                                            if (mobileNumberValidation(mobileNo)) {
+                                                //check if the id is valid
+                                                if (imgValidation(validId)) {
+                                                    //terms of Agreement
+                                                    if (termsAgreement.checked) {
+                                                        Swal.fire({
+                                                            icon: "info",
+                                                            title: "Register as an Agent of AR Verizon?",
+                                                            text: "If you`re sure about all information kindly click ''Yes''",
+                                                            showCancelButton: true,
+                                                            cancelButtonText: "No",
+                                                            confirmButtonText: "Yes",
+                                                            confirmButtonColor: "#3CB371",
+                                                            cancelButtonColor: "#70945A"
+                                                        }).then(result => {
+                                                            if (result.value) {
+                                                                console.log(selectedPosition);
+                                                            }
+                                                        })
+                                                        // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                    }
+
+                                                } else {
+                                                    $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
 
         } else {
             //Agent nor Manager is selected
