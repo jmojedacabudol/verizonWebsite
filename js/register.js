@@ -44,7 +44,7 @@ $(function () {
         var mobileNo = formData.get("mobile");
         var selectedPosition = formData.get("position");
         var validId = document.querySelector("#filevalidid");
-        var termsAgreement = document.querySelector("#exampleCheck2");
+        var termsAgreement = document.querySelector("#termsNCondtions");
         //registration as agent
         if (selectedPosition === "Agent") {
             if (imgValidation(imgURL)) {
@@ -93,10 +93,10 @@ $(function () {
                                                                         }
                                                                     })
                                                                     // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                                } else {
+                                                                    $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
                                                                 }
 
-                                                            } else {
-                                                                $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
                                                             }
                                                         }
                                                     }
@@ -151,14 +151,18 @@ $(function () {
                                                             cancelButtonColor: "#70945A"
                                                         }).then(result => {
                                                             if (result.value) {
-                                                                console.log(selectedPosition);
+                                                                //insert to sql database
+                                                                //email to user`s email
+                                                                //notif to users about about the result
+                                                                var generatedPassword = generatePassword();
+                                                                console.log(generatedPassword)
                                                             }
                                                         })
                                                         // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                    } else {
+                                                        $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
                                                     }
 
-                                                } else {
-                                                    $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
                                                 }
                                             }
                                         }
@@ -188,6 +192,25 @@ $(function () {
 
 
 })
+
+
+
+
+function generatePassword() {
+    var pass = '';
+    var str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+        'abcdefghijklmnopqrstuvwxyz0123456789@#$';
+
+    for (i = 1; i <= 10; i++) {
+        var char = Math.round(Math.random() *
+            str.length + 1);
+
+        pass += str.charAt(char)
+    }
+
+    return pass;
+}
+
 
 
 function addressValidation(address) {

@@ -269,7 +269,7 @@ if (isset($_SESSION['userid'])) {
                             <!-- <input type="Submit" class="btn btn-primary btn-primary-w100" value="Register" /> -->
                             <div class="form-group form-check">
                                 <input type="checkbox" name="termsNConditions" class="form-check-input"
-                                    id="exampleCheck2">
+                                    id="termsNCondtions">
                                 <label class="form-check-label" for="exampleCheck1">I have read and agree to
                                     the </label>
                                 <a href="termsandcondition.php" target="_blank">&nbsp;Terms and

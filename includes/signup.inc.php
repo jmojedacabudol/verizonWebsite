@@ -39,11 +39,6 @@ if (isset($_POST['termsNConditions'])) {
         exit();
     }
 
-    if (pwdMatch($pwd, $pwdrepeat) !== false) {
-        echo '<div class = "alert alert-danger" role = "alert">Passwords doesn`t match!</div>';
-        exit();
-    }
-
     if (emptyvalIdImg($valididimg) !== false) {
         echo '<div class = "alert alert-danger" role = "alert">Image is empty!</div>';
         exit();

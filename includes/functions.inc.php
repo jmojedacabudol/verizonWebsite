@@ -22,16 +22,16 @@ function invalidEmail($email)
     return $result;
 }
 
-function pwdMatch($pwd, $pwdrepeat)
-{
-    $result;
-    if ($pwd !== $pwdrepeat) {
-        $result = true;
-    } else {
-        $result = false;
-    }
-    return $result;
-}
+// function pwdMatch($pwd, $pwdrepeat)
+// {
+//     $result;
+//     if ($pwd !== $pwdrepeat) {
+//         $result = true;
+//     } else {
+//         $result = false;
+//     }
+//     return $result;
+// }
 
 function emailExists($conn, $email)
 {
