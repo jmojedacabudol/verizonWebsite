@@ -46,124 +46,99 @@ $(function () {
         var validId = document.querySelector("#filevalidid");
         var termsAgreement = document.querySelector("#termsNCondtions");
         //registration as agent
-        if (selectedPosition === "Agent") {
-            if (imgValidation(imgURL, "Profile Image")) {
-                //check if the email is in valid format
-                if (emailValidation(email)) {
-                    //check if first name is valid format
-                    if (firstNameMiddleNameLastNameIsValid(firstName)) {
-                        //check if middle name is valid format
-                        if (firstNameMiddleNameLastNameIsValid(middleName)) {
-                            //check if lastname is valid format
-                            if (firstNameMiddleNameLastNameIsValid(lastName)) {
-                                //check if birthday is above 18
-                                if (birthdayValidation(birthday)) {
-                                    //check if the address is not empty and valid
-                                    if (addressValidation(address)) {
-                                        //check if tin number is 12 characters
-                                        if (tinValidation(tinNo)) {
-                                            //check if mobile number is valid
-                                            if (mobileNumberValidation(mobileNo)) {
-                                                //check if there is a manager corresponds to the manager Id provided 0=>False 1=>True 
-                                                managerIdValidation(managerId).then((result) => {
-                                                    //if the manager id is empty and AR Verizon will be the default manager
-                                                    if (result === true) {
-                                                        var defaultManagaerId = $("#managerId").val();
-                                                        if (defaultManagaerId !== "anf-Verizon") {
-                                                            //set AR Verizon as default manager 
-                                                            $("#managerId").val("anf-Verizon");
 
-                                                        } else {
-                                                            //check if the id is valid
-                                                            if (imgValidation(validId, "Valid Id")) {
-                                                                //terms of Agreement
-                                                                if (termsAgreement.checked) {
-                                                                    Swal.fire({
-                                                                        icon: "info",
-                                                                        title: "Register as an Agent of AR Verizon?",
-                                                                        text: "If you`re sure about all information kindly click ''Yes''",
-                                                                        showCancelButton: true,
-                                                                        cancelButtonText: "No",
-                                                                        confirmButtonText: "Yes",
-                                                                        confirmButtonColor: "#3CB371",
-                                                                        cancelButtonColor: "#70945A"
-                                                                    }).then(result => {
-                                                                        if (result.value) {
-                                                                            console.log(selectedPosition);
-                                                                        }
-                                                                    })
-                                                                    // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
-                                                                } else {
-                                                                    $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+
+        if (imgValidation(imgURL, "Profile Image")) {
+            if (emailValidation(email)) {
+                //check if first name is valid format
+                if (firstNameMiddleNameLastNameIsValid(firstName)) {
+                    //check if middle name is valid format
+                    if (firstNameMiddleNameLastNameIsValid(middleName)) {
+                        //check if lastname is valid format
+                        if (firstNameMiddleNameLastNameIsValid(lastName)) {
+                            //check if birthday is above 18
+                            if (birthdayValidation(birthday)) {
+                                //check if the address is not empty and valid
+                                if (addressValidation(address)) {
+                                    //check if tin number is 12 characters
+                                    if (tinValidation(tinNo)) {
+                                        //check if mobile number is valid
+                                        if (mobileNumberValidation(mobileNo)) {
+                                            if (positionValidation(selectedPosition)) {
+
+                                                if (selectedPosition === "Agent") {
+                                                    //check if there is a manager corresponds to the manager Id provided 0=>False 1=>True 
+                                                    managerIdValidation(managerId).then((result) => {
+                                                        //if the manager id is empty and AR Verizon will be the default manager
+                                                        if (result === true) {
+                                                            var defaultManagaerId = $("#managerId").val();
+                                                            if (defaultManagaerId !== "anf-Verizon") {
+                                                                //set AR Verizon as default manager 
+                                                                $("#managerId").val("anf-Verizon");
+
+                                                            } else {
+                                                                //check if the id is valid
+                                                                if (imgValidation(validId, "Valid Id")) {
+                                                                    //terms of Agreement
+                                                                    if (termsAgreement.checked) {
+                                                                        Swal.fire({
+                                                                            icon: "info",
+                                                                            title: "Register as an Agent of AR Verizon?",
+                                                                            text: "If you`re sure about all information kindly click ''Yes''",
+                                                                            showCancelButton: true,
+                                                                            cancelButtonText: "No",
+                                                                            confirmButtonText: "Yes",
+                                                                            confirmButtonColor: "#3CB371",
+                                                                            cancelButtonColor: "#70945A"
+                                                                        }).then(result => {
+                                                                            if (result.value) {
+                                                                                $("#registration-alert").html("");
+                                                                                //insert to sql database
+                                                                                //email to user`s email
+                                                                                //notif to users about about the result
+                                                                                var generatedPassword = generatePassword();
+                                                                                console.log(generatedPassword)
+                                                                            }
+                                                                        })
+                                                                        // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                                    } else {
+                                                                        $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+                                                                    }
                                                                 }
-
                                                             }
                                                         }
+                                                    }).catch(error => {
+                                                        $("#registration-alert").html('<div class="alert alert-danger" role="alert">' + error + '!</div>');
+                                                    });
+                                                } else if (selectedPosition === "Manager") {
+                                                    //check if the id is valid
+                                                    if (imgValidation(validId, "Valid Id")) {
+                                                        //terms of Agreement
+                                                        if (termsAgreement.checked) {
+                                                            Swal.fire({
+                                                                icon: "info",
+                                                                title: "Register as an Agent of AR Verizon?",
+                                                                text: "If you`re sure about all information kindly click ''Yes''",
+                                                                showCancelButton: true,
+                                                                cancelButtonText: "No",
+                                                                confirmButtonText: "Yes",
+                                                                confirmButtonColor: "#3CB371",
+                                                                cancelButtonColor: "#70945A"
+                                                            }).then(result => {
+                                                                if (result.value) {
+                                                                    $("#registration-alert").html("");
+                                                                    //insert to sql database
+                                                                    //email to user`s email
+                                                                    //notif to users about about the result
+                                                                    var generatedPassword = generatePassword();
+                                                                    console.log(generatedPassword)
+                                                                }
+                                                            })
+                                                            // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                        } else {
+                                                            $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+                                                        }
                                                     }
-                                                }).catch(error => {
-                                                    $("#registration-alert").html('<div class="alert alert-danger" role="alert">' + error + '!</div>');
-                                                });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return false;
-
-            //check if the id is valid
-            //check if he checked the terms and agreement
-
-
-        } else if (selectedPosition === "Manager") {
-            if (imgValidation(imgURL, "Profile Image")) {
-                //check if the email is in valid format
-                if (emailValidation(email)) {
-                    //check if first name is valid format
-                    if (firstNameMiddleNameLastNameIsValid(firstName)) {
-                        //check if middle name is valid format
-                        if (firstNameMiddleNameLastNameIsValid(middleName)) {
-                            //check if lastname is valid format
-                            if (firstNameMiddleNameLastNameIsValid(lastName)) {
-                                //check if birthday is above 18
-                                if (birthdayValidation(birthday)) {
-                                    //check if the address is not empty and valid
-                                    if (addressValidation(address)) {
-                                        //check if tin number is 12 characters
-                                        if (tinValidation(tinNo)) {
-                                            //check if mobile number is valid
-                                            if (mobileNumberValidation(mobileNo)) {
-                                                //check if the id is valid
-                                                if (imgValidation(validId, "Valid Id")) {
-                                                    //terms of Agreement
-                                                    if (termsAgreement.checked) {
-                                                        Swal.fire({
-                                                            icon: "info",
-                                                            title: "Register as an Agent of AR Verizon?",
-                                                            text: "If you`re sure about all information kindly click ''Yes''",
-                                                            showCancelButton: true,
-                                                            cancelButtonText: "No",
-                                                            confirmButtonText: "Yes",
-                                                            confirmButtonColor: "#3CB371",
-                                                            cancelButtonColor: "#70945A"
-                                                        }).then(result => {
-                                                            if (result.value) {
-                                                                $("#registration-alert").html("");
-                                                                //insert to sql database
-                                                                //email to user`s email
-                                                                //notif to users about about the result
-                                                                var generatedPassword = generatePassword();
-                                                                console.log(generatedPassword)
-                                                            }
-                                                        })
-                                                        // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
-                                                    } else {
-                                                        $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
-                                                    }
-
                                                 }
                                             }
                                         }
@@ -174,12 +149,148 @@ $(function () {
                     }
                 }
             }
-            return false;
-
-        } else {
-            //Agent nor Manager is selected
-            console.log(selectedPosition);
         }
+        return false;
+        // if (selectedPosition === "Agent") {
+        //     if (imgValidation(imgURL, "Profile Image")) {
+        //         //check if the email is in valid format
+        //         if (emailValidation(email)) {
+        //             //check if first name is valid format
+        //             if (firstNameMiddleNameLastNameIsValid(firstName)) {
+        //                 //check if middle name is valid format
+        //                 if (firstNameMiddleNameLastNameIsValid(middleName)) {
+        //                     //check if lastname is valid format
+        //                     if (firstNameMiddleNameLastNameIsValid(lastName)) {
+        //                         //check if birthday is above 18
+        //                         if (birthdayValidation(birthday)) {
+        //                             //check if the address is not empty and valid
+        //                             if (addressValidation(address)) {
+        //                                 //check if tin number is 12 characters
+        //                                 if (tinValidation(tinNo)) {
+        //                                     //check if mobile number is valid
+        //                                     if (mobileNumberValidation(mobileNo)) {
+        //                                         //check if there is a manager corresponds to the manager Id provided 0=>False 1=>True 
+        //                                         managerIdValidation(managerId).then((result) => {
+        //                                             //if the manager id is empty and AR Verizon will be the default manager
+        //                                             if (result === true) {
+        //                                                 var defaultManagaerId = $("#managerId").val();
+        //                                                 if (defaultManagaerId !== "anf-Verizon") {
+        //                                                     //set AR Verizon as default manager 
+        //                                                     $("#managerId").val("anf-Verizon");
+
+        //                                                 } else {
+        //                                                     //check if the id is valid
+        //                                                     if (imgValidation(validId, "Valid Id")) {
+        //                                                         //terms of Agreement
+        //                                                         if (termsAgreement.checked) {
+        //                                                             Swal.fire({
+        //                                                                 icon: "info",
+        //                                                                 title: "Register as an Agent of AR Verizon?",
+        //                                                                 text: "If you`re sure about all information kindly click ''Yes''",
+        //                                                                 showCancelButton: true,
+        //                                                                 cancelButtonText: "No",
+        //                                                                 confirmButtonText: "Yes",
+        //                                                                 confirmButtonColor: "#3CB371",
+        //                                                                 cancelButtonColor: "#70945A"
+        //                                                             }).then(result => {
+        //                                                                 if (result.value) {
+        //                                                                     $("#registration-alert").html("");
+        //                                                                     //insert to sql database
+        //                                                                     //email to user`s email
+        //                                                                     //notif to users about about the result
+        //                                                                     var generatedPassword = generatePassword();
+        //                                                                     console.log(generatedPassword)
+        //                                                                 }
+        //                                                             })
+        //                                                             // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+        //                                                         } else {
+        //                                                             $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+        //                                                         }
+
+        //                                                     }
+        //                                                 }
+        //                                             }
+        //                                         }).catch(error => {
+        //                                             $("#registration-alert").html('<div class="alert alert-danger" role="alert">' + error + '!</div>');
+        //                                         });
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     return false;
+
+        //     //check if the id is valid
+        //     //check if he checked the terms and agreement
+
+
+        // } else if (selectedPosition === "Manager") {
+        //     if (imgValidation(imgURL, "Profile Image")) {
+        //         //check if the email is in valid format
+        //         if (emailValidation(email)) {
+        //             //check if first name is valid format
+        //             if (firstNameMiddleNameLastNameIsValid(firstName)) {
+        //                 //check if middle name is valid format
+        //                 if (firstNameMiddleNameLastNameIsValid(middleName)) {
+        //                     //check if lastname is valid format
+        //                     if (firstNameMiddleNameLastNameIsValid(lastName)) {
+        //                         //check if birthday is above 18
+        //                         if (birthdayValidation(birthday)) {
+        //                             //check if the address is not empty and valid
+        //                             if (addressValidation(address)) {
+        //                                 //check if tin number is 12 characters
+        //                                 if (tinValidation(tinNo)) {
+        //                                     //check if mobile number is valid
+        //                                     if (mobileNumberValidation(mobileNo)) {
+        //                                         //check if the id is valid
+        //                                         if (imgValidation(validId, "Valid Id")) {
+        //                                             //terms of Agreement
+        //                                             if (termsAgreement.checked) {
+        //                                                 Swal.fire({
+        //                                                     icon: "info",
+        //                                                     title: "Register as an Agent of AR Verizon?",
+        //                                                     text: "If you`re sure about all information kindly click ''Yes''",
+        //                                                     showCancelButton: true,
+        //                                                     cancelButtonText: "No",
+        //                                                     confirmButtonText: "Yes",
+        //                                                     confirmButtonColor: "#3CB371",
+        //                                                     cancelButtonColor: "#70945A"
+        //                                                 }).then(result => {
+        //                                                     if (result.value) {
+        //                                                         $("#registration-alert").html("");
+        //                                                         //insert to sql database
+        //                                                         //email to user`s email
+        //                                                         //notif to users about about the result
+        //                                                         var generatedPassword = generatePassword();
+        //                                                         console.log(generatedPassword)
+        //                                                     }
+        //                                                 })
+        //                                                 // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+        //                                             } else {
+        //                                                 $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+        //                                             }
+
+        //                                         }
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     return false;
+
+        // } else {
+        //     //Agent nor Manager is selected
+        //     // console.log(selectedPosition);
+        //     $("#registration-alert").html('<div class="alert alert-danger" role="alert">Invalid Position type!</div>');
+        // }
 
 
     })
@@ -243,6 +354,20 @@ function mobileNumberValidation(number) {
     }
 
 }
+
+
+function positionValidation(selectedPosition) {
+    if (selectedPosition === "Agent") {
+        return true;
+    } else if (selectedPosition === "Manager") {
+        return true;
+    } else {
+        //selected position is invalid
+        $("#registration-alert").html('<div class="alert alert-danger" role="alert">Invalid Position type!</div>');
+        return false;
+    }
+}
+
 //function for selecting profile Img
 $("#imgFileUpload").click(function () {
     $("#FileUpload").click();
@@ -349,27 +474,18 @@ function emailValidation(email) {
 }
 
 function imgValidation(imgURL, location) {
-    console.log(imgURL.files[0]['type'])
+
     //check if the imgURL is empty
     if (imgURL.files.length !== 0) {
         //get the name and extension of the picture
-        var imageName = imgURL.files[0].name.split("/")[0];
-        var imageExtension = imageName.split(".")[1];
-        //check if the profile image is not the dafault image
-        //default image name "user.png"
-        //check image extension if it is valid image extension
+        var imageExtension = imgURL.files[0]['type'];
 
-        if (imageName !== "user") {
-            if ($.inArray(imageExtension, validImagetypes) > 0) {
-                //check if name is not empty
-                return true;
+        if ($.inArray(imageExtension, validImagetypes) > 0) {
+            //check if name is not empty
+            return true;
 
-            } else {
-                $("#registration-alert").html('<div class="alert alert-danger" role="alert">Invalid ' + location + ' type!' + '</div>');
-                return false;
-            }
         } else {
-            $("#registration-alert").html('<div class="alert alert-danger" role="alert">Please select a ' + location + '</div>');
+            $("#registration-alert").html('<div class="alert alert-danger" role="alert">Invalid ' + location + ' type!' + '</div>');
             return false;
         }
 

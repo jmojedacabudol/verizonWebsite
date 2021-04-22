@@ -66,35 +66,55 @@ include_once 'includes/dbh.inc.php';
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Building</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="properties.php">Residential</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Building&sub-type=Residential">Residential</a>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li><a class="dropdown-item" href="#">Commercial</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Building&sub-type=Commercial">Commercial</a>
+                                    </li>
                                 </ul>
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Condominium</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Residential</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Condominium&sub-type=Residential">Residential</a>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li><a class="dropdown-item" href="#">Commercial</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Condominium&sub-type=Commercial">Commercial</a>
+                                    </li>
                                 </ul>
                             </li>
                             <div class="dropdown-divider"></div>
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Lot</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Agricultural</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Condominium&sub-type=Agricultural">Agricultural</a>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li><a class="dropdown-item" href="#">Commercial</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Condominium&sub-type=Commercial">Commercial</a>
+                                    </li>
                                     <div class="dropdown-divider"></div>
-                                    <li><a class="dropdown-item" href="#">Residential</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Condominium&sub-type=Residential">Residential</a>
+                                    </li>
                                 </ul>
                             </li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="#">House and Lot</a></li>
+                            <li><a class="dropdown-item" href="properties.php?propertyType=House and Lot">House and
+                                    Lot</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="#">Industrial</a></li>
+                            <li><a class="dropdown-item" href="properties.php?propertyType=Industrial">Industrial
+                                    Lot</a>
+                            </li>
                             <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="#">Warehouse</a></li>
+                            <li><a class="dropdown-item" href="properties.php?propertyType=Office">Office</a>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="properties.php?propertyType=Warehouse">Warehouse</a></li>
 
                         </ul>
                     </li>
@@ -227,8 +247,18 @@ if (isset($_SESSION['userid'])) {
 
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Address *" name="full-address" />
+                            <input type="text" class="form-control" placeholder="House no. *" name="house-number" />
                             <br>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="city" name="city">
+                                <option hidden>Select City</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="province" name="province">
+                                <option hidden>Select Province</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input type="text" onkeypress="return isNumberKey(event);" class="form-control"
@@ -291,7 +321,7 @@ if (isset($_SESSION['userid'])) {
                                 name="submit">Register</button>
                         </div>
                         <div class="form-group"> <br>
-                            <a href="#" class="forgot-pwd">Already a member? Log in here</a>
+                            <a href="#" class="forgot-pwd addCursorPointer">Already a member? Log in here</a>
                         </div>
                     </form>
                     <br>
@@ -352,7 +382,7 @@ if (isset($_SESSION['userid'])) {
 
                                 <div class="form-group">
                                     <a data-toggle="modal" data-target="#forgotPwd" data-dismiss="modal"
-                                        class="forgot-pwd" id="link-forget-pw">Forgot Password?</a>
+                                        class="forgot-pwd addCursorPointer" id="link-forget-pw">Forgot Password?</a>
                                 </div>
 
                                 <div class="form-group">
