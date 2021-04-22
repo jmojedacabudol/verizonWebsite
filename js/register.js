@@ -1,5 +1,5 @@
 //validation for image validity
-var validImagetypes = ["image/gif", "image/jpg", "image/png", "image/jpeg", "gif", "jpg", "png", "jpeg"];
+var validImagetypes = ["image/gif", "image/jpg", "image/png", "image/jpeg"];
 $(function () {
     //displaying manager ID and Notes for Agents and Manager
     $("#posSelect").change(function () {
@@ -20,6 +20,29 @@ $(function () {
 
         }
     });
+
+    $("#city").select2({
+        placeholder: "Select a City",
+        ajax: {
+            url: "includes/selectcity.inc.php",
+            type: "post",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    searchTerm: params.term // search term
+                };
+            },
+            processResults: function (response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
+
+
 
 
     $("#registraitonForm").submit(function (event) {

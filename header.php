@@ -252,7 +252,6 @@ if (isset($_SESSION['userid'])) {
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="city" name="city">
-                                <option hidden>Select City</option>
                             </select>
                         </div>
                         <div class="form-group">
