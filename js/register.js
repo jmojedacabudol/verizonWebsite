@@ -47,7 +47,7 @@ $(function () {
         var termsAgreement = document.querySelector("#termsNCondtions");
         //registration as agent
         if (selectedPosition === "Agent") {
-            if (imgValidation(imgURL)) {
+            if (imgValidation(imgURL, "Profile Image")) {
                 //check if the email is in valid format
                 if (emailValidation(email)) {
                     //check if first name is valid format
@@ -75,7 +75,7 @@ $(function () {
 
                                                         } else {
                                                             //check if the id is valid
-                                                            if (imgValidation(validId)) {
+                                                            if (imgValidation(validId, "Valid Id")) {
                                                                 //terms of Agreement
                                                                 if (termsAgreement.checked) {
                                                                     Swal.fire({
@@ -119,7 +119,7 @@ $(function () {
 
 
         } else if (selectedPosition === "Manager") {
-            if (imgValidation(imgURL)) {
+            if (imgValidation(imgURL, "Profile Image")) {
                 //check if the email is in valid format
                 if (emailValidation(email)) {
                     //check if first name is valid format
@@ -137,7 +137,7 @@ $(function () {
                                             //check if mobile number is valid
                                             if (mobileNumberValidation(mobileNo)) {
                                                 //check if the id is valid
-                                                if (imgValidation(validId)) {
+                                                if (imgValidation(validId, "Valid Id")) {
                                                     //terms of Agreement
                                                     if (termsAgreement.checked) {
                                                         Swal.fire({
@@ -151,6 +151,7 @@ $(function () {
                                                             cancelButtonColor: "#70945A"
                                                         }).then(result => {
                                                             if (result.value) {
+                                                                $("#registration-alert").html("");
                                                                 //insert to sql database
                                                                 //email to user`s email
                                                                 //notif to users about about the result
@@ -347,8 +348,8 @@ function emailValidation(email) {
     }
 }
 
-function imgValidation(imgURL) {
-
+function imgValidation(imgURL, location) {
+    console.log(imgURL.files[0]['type'])
     //check if the imgURL is empty
     if (imgURL.files.length !== 0) {
         //get the name and extension of the picture
@@ -364,16 +365,16 @@ function imgValidation(imgURL) {
                 return true;
 
             } else {
-                $("#registration-alert").html('<div class="alert alert-danger" role="alert">Invalid Image type!</div>');
+                $("#registration-alert").html('<div class="alert alert-danger" role="alert">Invalid ' + location + ' type!' + '</div>');
                 return false;
             }
         } else {
-            $("#registration-alert").html('<div class="alert alert-danger" role="alert">Please select an Image!</div>');
+            $("#registration-alert").html('<div class="alert alert-danger" role="alert">Please select a ' + location + '</div>');
             return false;
         }
 
     } else {
-        $("#registration-alert").html('<div class="alert alert-danger" role="alert">Please select an Image!</div>');
+        $("#registration-alert").html('<div class="alert alert-danger" role="alert">Please select a ' + location + '</div>');
         return false;
     }
 

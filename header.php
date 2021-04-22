@@ -44,7 +44,8 @@ include_once 'includes/dbh.inc.php';
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/logo.png" alt="" /> </a>
+            <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/logo.png"
+                    alt="AR Verizon Logo" /> </a>
             <button
                 class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -52,42 +53,51 @@ include_once 'includes/dbh.inc.php';
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="index.php">Home</a></li>
-                    <form action="properties.php" method="get">
-                        <!-- <form id='navForm' action="properties.php" method="get"> -->
-                        <!-- <input id="propType" name="propertyType" style="display:none;" value="" /> -->
-                        <li class="nav-item mx-0 mx-lg-1 dropdown">
-                            <a class="nav-link dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                                href="properties.html" id="navbarDropdown2" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                Properties </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                <button type='submit' id='propBuilding' name="propertyType" value="Building"
-                                    class="dropdown-item">Building</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type='submit' name="propertyType" value="Condominium"
-                                    id='propCondominium'>Condominium</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type='submit' name="propertyType" value="Lots"
-                                    id='propFarmLots'>Lots</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type='submit' name="propertyType" value="House and Lot"
-                                    id='propHouse'>House and Lot</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type='submit' name="propertyType" value="Industrial"
-                                    id='propIndustrial'>Industrial</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type='submit' name="propertyType" value="Offices"
-                                    id='propOffices'>Offices</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item" type='submit' name="propertyType" value="Warehouse"
-                                    id='propWarehouse'>Warehouse</button>
-                            </div>
-                        </li>
-                    </form>
+                    <li class="nav-item mx-0">
+                        <a class="nav-link py-3 px-0  px-lg-3" href="index.php">Home <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle py-3 px-0  px-lg-3 " href="http://example.com"
+                            id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">Property</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Building</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Residential</a></li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href="#">Commercial</a></li>
+                                </ul>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Condominium</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Residential</a></li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href="#">Commercial</a></li>
+                                </ul>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Lot</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Agricultural</a></li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href="#">Commercial</a></li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href="#">Residential</a></li>
+                                </ul>
+                            </li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="#">House and Lot</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="#">Industrial</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a class="dropdown-item" href="#">Warehouse</a></li>
+
+                        </ul>
+                    </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             href="index.php#AboutUs">About Us</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
@@ -132,8 +142,6 @@ if (isset($_SESSION['userid'])) {
             </div>
         </div>
     </nav>
-
-
     <!-- Confirm Logout Modal -->
     <div class="modal fade" id="ConfirmLogout" tabindex="-1" role="dialog" aria-labelledby="ConfirmLogout"
         aria-hidden="true">

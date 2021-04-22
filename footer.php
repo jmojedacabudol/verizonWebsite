@@ -34,6 +34,13 @@ function alphaOnly(event) {
     var key = event.keyCode;
     return ((key >= 65 && key <= 90) || key == 8);
 };
+
+
+$('.dropdown-submenu a.test').on("click", function(e) {
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+});
 </script>
 
 <!-- Core theme JS-->

@@ -13026,3 +13026,48 @@ form .row:first-child .floating-label-form-group {
 .addCursorPointer {
   cursor: pointer
 }
+
+
+/* .building-menu {
+  position: relative;
+  top: 5%;
+  left: 100%;
+  margin-top: -1px;
+}
+
+.condo-menu {
+  position: relative;
+  top: 15%;
+  left: 100%;
+  margin-top: -1px;
+}
+
+.lot-menu {
+  position: relative;
+  top: 30%;
+  left: 100%;
+  margin-top: -1px;
+} */
+
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+}
+
+.navbar-nav li:hover>ul.dropdown-menu {
+  display: block;
+}
+
+
+
+/* rotate caret on hover */
+.dropdown-menu>li>a:hover:after {
+  text-decoration: underline;
+  transform: rotate(-90deg);
+}
