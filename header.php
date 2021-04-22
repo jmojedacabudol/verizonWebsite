@@ -66,7 +66,7 @@ include_once 'includes/dbh.inc.php';
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Building</a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Residential</a></li>
+                                    <li><a class="dropdown-item" href="properties.php">Residential</a></li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item" href="#">Commercial</a></li>
                                 </ul>
