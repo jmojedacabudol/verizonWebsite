@@ -250,8 +250,10 @@ if (isset($_SESSION['userid'])) {
                             <input type="text" class="form-control" placeholder="House no. *" name="house-number" />
                             <br>
                         </div>
+
                         <div class="form-group">
                             <select class="form-control" id="city" name="city">
+                                <option hidden>Select City</option>
                             </select>
                         </div>
                         <div class="form-group">
