@@ -25,8 +25,7 @@ include_once 'includes/dbh.inc.php';
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
 
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css' rel='stylesheet'
-        type='text/css'>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
@@ -223,20 +222,23 @@ if (isset($_SESSION['userid'])) {
                             sent to specified
                             email.</p>
                         <div class="form-group">
-                            <input type="text" class="form-control" onkeypress="return /[a-z]/i.test(event.key)"
-                                placeholder="First Name *" name="firstname" />
+                            <input type="text" class="form-control transform"
+                                onkeypress="return /[a-z]/i.test(event.key)" placeholder="First Name *"
+                                name="firstname" />
                             <br>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" onkeypress="return /[a-z]/i.test(event.key)"
-                                placeholder="Middle Name *" name="middlename" />
+                            <input type="text" class="form-control transform"
+                                onkeypress="return /[a-z]/i.test(event.key)" placeholder="Middle Name *"
+                                name="middlename" />
                             <br>
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control" onkeypress="return /[a-z]/i.test(event.key)"
-                                placeholder="Last Name *" name="lastname" />
+                            <input type="text" class="form-control transform"
+                                onkeypress="return /[a-z]/i.test(event.key)" placeholder="Last Name *"
+                                name="lastname" />
                             <br>
                         </div>
 
@@ -247,20 +249,28 @@ if (isset($_SESSION['userid'])) {
 
 
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="House no. *" name="house-number" />
+                            <input type="text" class="form-control transform" placeholder="House no. *"
+                                name="house-number" />
                             <br>
                         </div>
 
                         <div class="form-group">
-                            <select class="form-control" id="city" name="city">
-                                <option hidden>Select City</option>
+                            <select class="form-control transform" id="brgy" name="brgy" style="width: 100%">
+                                <!-- <option value="default" hidden>Select Barangay</option> -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select class="form-control transform" id="city" name="city" style="width: 100%">
+                                <!-- <option value="default" hidden>Select City/Municipality</option> -->
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="province" name="province">
-                                <option hidden>Select Province</option>
+                            <select class="form-control transform" id="province" style="width: 100%" name="province">
+                                <!-- <option value="default" hidden>Select Province</option> -->
                             </select>
                         </div>
+
                         <div class="form-group">
                             <input type="text" onkeypress="return isNumberKey(event);" class="form-control"
                                 placeholder="TIN No. *" name="tin">

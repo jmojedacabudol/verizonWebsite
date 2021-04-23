@@ -15,7 +15,8 @@
 <!-- fullcalendar bundle -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js'></script>
 <!-- Select2 Plugin -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- Contact form JS-->
 <script src="assets/mail/jqBootstrapValidation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
