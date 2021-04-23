@@ -133,102 +133,132 @@ function userNotApproved($conn, $propertyOwner)
     mysqli_stmt_close($stmt);
 }
 
-function createUser($conn, $email, $pwd, $firstname, $lastname, $mobile, $position, $valididimg, $managerid)
+function createManagerUser($conn, $email, $firstname, $middlename, $lastname, $birthday, $houseno, $brgy, $city, $province, $tin, $mobile, $position, $profileImg, $valididimg, $password)
 {
-    $fileName = $valididimg['name'];
-    $fileExt = explode('.', $fileName);
-    $fileTmpName = $valididimg['tmp_name'];
-    $fileActualExt = strtolower(end($fileExt));
-    $newFileName = uniqid('', true);
-    $fileNameNew = $newFileName . "." . $fileActualExt;
-    $fileDestination = '../uploads/' . $fileNameNew;
+//result variable
     $result = "";
-    $insertedUserId = "";
+    $managerId;
+//upload first: profile image
+    $profileImgName = $profileImg['name'];
+    $profileExt = explode('.', $profileImgName);
+    $profileTmpName = $profileImg['tmp_name'];
+    $profileFileActualExt = strtolower(end($profileExt));
+    $newProfileFileName = uniqid('', true);
+    $profileFileNameNew = $newProfileFileName . "." . $profileFileActualExt;
+    $profileFileDestination = '../uploads/' . $profileFileNameNew;
 
-    if (move_uploaded_file($fileTmpName, $fileDestination)) {
-        // $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key) VALUES('" . $email . "','" . $firstname . "','" . $lastname . "','" . $mobile . "','" . $position . "','" . $pwd . "','" . $newFileName . "');";
-        // print_r("option " . $sql . " and " . $newFileName);
-        // $result = mysqli_query($conn, $sql);
-        // echo $result;
+    if (move_uploaded_file($profileTmpName, $profileFileDestination)) {
+        //profile Image Uploaded successfully
+        //upload second: valid Img
+        $fileName = $valididimg['name'];
+        $fileExt = explode('.', $fileName);
+        $fileTmpName = $valididimg['tmp_name'];
+        $fileActualExt = strtolower(end($fileExt));
+        $newFileName = uniqid('', true);
+        $fileNameNew = $newFileName . "." . $fileActualExt;
+        $fileDestination = '../uploads/' . $fileNameNew;
 
-        if ($position === "Agent" && $managerid == 0) {
-            $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key) VALUES(?,?,?,?,?,?,?);";
+        if (move_uploaded_file($fileTmpName, $fileDestination)) {
+            //valid Id Uploaded Successfully
+            $companyEmail = strtolower(current(explode("@", $email))) . "@arverizon.com";
+
+            $sql = "INSERT INTO users (usersEmail,companyEmail,usersFirstName,usersMiddleName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key,profile_Img,birthday,houseNo,tinNo,barangay,city,province) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
             $stmt = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($stmt, $sql)) {
-                $result = "1st Statement Failed";
-
-                //exit();
+                $result = "Internal Error: Manager`s Statement Error";
             } else {
-                $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-                mysqli_stmt_bind_param($stmt, 'sssssss', $email, $firstname, $lastname, $mobile, $position, $hashedPwd, $newFileName);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-                $result = "Success1";
-                // $result = "Upload Success";
+                mysqli_stmt_bind_param($stmt, 'ssssssssssssssss', $email, $companyEmail, $firstname, $middlename, $lastname, $mobile, $position, $password, $newFileName, $newProfileFileName, $birthday, $houseno, $tin, $brgy, $city, $province);
+                if (mysqli_stmt_execute($stmt)) {
+                    //get the id of latest inserted query;
+                    $managerId = $conn->insert_id;
+                    mysqli_stmt_close($stmt);
+                    $managerReference = "AR-" . $firstname[0] . $lastname[0] . $managerId;
 
-            }
-        } else if ($position === "Agent" && $managerid != 0) {
-
-            $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key,managerid) VALUES(?,?,?,?,?,?,?,?);";
-            $stmt = mysqli_stmt_init($conn);
-
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                //$result = "1st Statement Failed";
-
-                //exit();
-            } else {
-                $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-
-                mysqli_stmt_bind_param($stmt, 'ssssssss', $email, $firstname, $lastname, $mobile, $position, $hashedPwd, $newFileName, $managerid);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-                // $result = "Normal Agent2 Upload Success";
-                $result = "Success2";
-            }
-            //             $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key) VALUES('" . $email . "','" . $firstname . "','" . $lastname . "','" . $mobile . "','" . $position . "','" . $pwd . "','" . $newFileName . "');";
-            // $result = print_r("option1" . $sql);
-            // mysqli_query($conn, $sql);
-
-        } else if ($position === 'Manager') {
-            $sql = "INSERT INTO users (usersEmail,usersFirstName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key) VALUES(?,?,?,?,?,?,?);";
-            $stmt = mysqli_stmt_init($conn);
-
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                // $result = "1st Statement Failed";
-                //exit();
-            } else {
-                $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-                mysqli_stmt_bind_param($stmt, 'sssssss', $email, $firstname, $lastname, $mobile, $position, $hashedPwd, $newFileName);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-                $insertedUserId = $conn->insert_id;
-
-                $sql2 = "INSERT INTO managers (name,usersId) VALUES(?,?);";
-                $stmt2 = mysqli_stmt_init($conn);
-
-                if (!mysqli_stmt_prepare($stmt2, $sql2)) {
-                    //  $result2 = "2nd Statement Failed";
-                    //exit();
+                    //insert the user to manager table
+                    $sql = "INSERT INTO managers (name,usersId,managerReference) VALUES(?,?,?);";
+                    $stmt = mysqli_stmt_init($conn);
+                    if (!mysqli_stmt_prepare($stmt, $sql)) {
+                        $result = "Internal Error: Manager`s Statement Error";
+                    } else {
+                        $name = $firstname . " " . $lastname;
+                        mysqli_stmt_bind_param($stmt, 'sss', $name, $managerId, $managerReference);
+                        if (mysqli_stmt_execute($stmt)) {
+                            $result = "Manager Successfully Registered";
+                        } else {
+                            //error in inserting in manager table
+                            $result = "Internal Server Error";
+                        }
+                    }
                 } else {
-                    $managername = $firstname . " " . $lastname;
-                    mysqli_stmt_bind_param($stmt2, 'ss', $managername, $insertedUserId);
-                    mysqli_stmt_execute($stmt2);
-                    mysqli_stmt_close($stmt2);
-
-                    // $result = "Manager Upload Success";
-                    $result = 'Success3';
-                    //exit();
+                    $result = "Internal Server Error";
                 }
             }
-            // $result = "Manager";
-
+        } else {
+            //error in uploading valid Id
+            $result = "Error Uploading valid Image";
         }
+
     } else {
-        $result = "Upload Error";
-        //exit();
+        //error in upload profile img
+        $result = "Error Uploading Profile Image";
     }
     return $result;
+}
+
+function createAgentUser($conn, $email, $firstname, $middlename, $lastname, $birthday, $houseno, $brgy, $city, $province, $tin, $mobile, $position, $profileImg, $valididimg, $password, $managerid)
+{
+//result variable
+    $result = "";
+//upload first: profile image
+    $profileImgName = $profileImg['name'];
+    $profileExt = explode('.', $profileImgName);
+    $profileTmpName = $profileImg['tmp_name'];
+    $profileFileActualExt = strtolower(end($profileExt));
+    $newProfileFileName = uniqid('', true);
+    $profileFileNameNew = $newProfileFileName . "." . $profileFileActualExt;
+    $profileFileDestination = '../uploads/' . $profileFileNameNew;
+
+    if (move_uploaded_file($profileTmpName, $profileFileDestination)) {
+        //profile Image Uploaded successfully
+        //upload second: valid Img
+        $fileName = $valididimg['name'];
+        $fileExt = explode('.', $fileName);
+        $fileTmpName = $valididimg['tmp_name'];
+        $fileActualExt = strtolower(end($fileExt));
+        $newFileName = uniqid('', true);
+        $fileNameNew = $newFileName . "." . $fileActualExt;
+        $fileDestination = '../uploads/' . $fileNameNew;
+
+        if (move_uploaded_file($fileTmpName, $fileDestination)) {
+            //valid Id Uploaded Successfully
+            $companyEmail = strtolower(current(explode("@", $email))) . "@arverizon.com";
+
+            $sql = "INSERT INTO users (usersEmail,companyEmail,usersFirstName,usersMiddleName,userLastName,usersMobileNumber,usersPosition,usersPwd,validid_key,profile_Img,birthday,houseNo,tinNo,barangay,city,province,managerid) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                $result = "Internal Error: Agent`s Statement Error";
+            } else {
+
+                mysqli_stmt_bind_param($stmt, 'sssssssssssssssss', $email, $companyEmail, $firstname, $middlename, $lastname, $mobile, $position, $password, $newFileName, $newProfileFileName, $birthday, $houseno, $tin, $brgy, $city, $province, $managerid);
+                if (mysqli_stmt_execute($stmt)) {
+                    $result = "Agent Successfully Registered";
+
+                } else {
+                    $result = "Internal Server Error";
+                }
+            }
+        } else {
+            //error in uploading valid Id
+            $result = "Error Uploading valid Image";
+        }
+
+    } else {
+        //error in upload profile img
+        $result = "Error Uploading Profile Image";
+    }
+    return $result;
+
 }
 
 function emptyInputLogin($email, $pwd)
@@ -1134,20 +1164,26 @@ function denyManager($conn, $managerId)
 
 function checkManagerId($managerId, $conn)
 {
-    $sql = "SELECT COUNT(managerId) AS managerId from managers;";
+    $sql = "SELECT * from managers WHERE managerReference=?;";
     $stmt = mysqli_stmt_init($conn);
     $result = "";
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         $result = "Statement Failed";
     } else {
-
+        mysqli_stmt_bind_param($stmt, 's', $managerId);
         mysqli_stmt_execute($stmt);
-
         $resultData = mysqli_stmt_get_result($stmt);
 
-        if ($row = mysqli_fetch_assoc($resultData)) {
-            $result = $row['managerId'];
+        $result = mysqli_num_rows($resultData);
+        if (mysqli_num_rows($resultData) > 0) {
+            //there is a result
+            $result = true;
+            // $row = mysqli_fetch_assoc($resultData);
+            // $reuslt = $row;
+        } else {
+            $result = false;
         }
+
         mysqli_stmt_close($stmt);
     }
     return $result;

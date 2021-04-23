@@ -98,7 +98,8 @@ $(function () {
         var formData = new FormData(this);
         // console.log(formData.get('position'));
         // console.log(formData.get('manager'));
-        // formData.append("submit", "registration-submit");
+        var generatedPassword = generatePassword();
+        formData.append("password", generatedPassword);
         // console.log(formData.keys('manager'))
 
         var selectedPosition = formData.get("position");
@@ -147,47 +148,63 @@ $(function () {
                                                             if (selectedPosition === "Agent") {
                                                                 //check if there is a manager corresponds to the manager Id provided 0=>False 1=>True 
                                                                 managerIdValidation(managerId).then((result) => {
-                                                                    //if the manager id is empty and AR Verizon will be the default manager
+                                                                    //if the manager id is valid
                                                                     if (result === true) {
-                                                                        var defaultManagaerId = $("#managerId").val();
-                                                                        if (defaultManagaerId !== "anf-Verizon") {
-                                                                            //set AR Verizon as default manager 
-                                                                            $("#managerId").val("anf-Verizon");
+                                                                        //check if the id is valid
+                                                                        if (imgValidation(validId, "Valid Id")) {
+                                                                            //terms of Agreement
+                                                                            if (termsAgreement.checked) {
+                                                                                Swal.fire({
+                                                                                    icon: "info",
+                                                                                    title: "Register as an Agent of AR Verizon?",
+                                                                                    text: "If you`re sure about all information kindly click ''Yes''",
+                                                                                    showCancelButton: true,
+                                                                                    cancelButtonText: "No",
+                                                                                    confirmButtonText: "Yes",
+                                                                                    confirmButtonColor: "#3CB371",
+                                                                                    cancelButtonColor: "#70945A"
+                                                                                }).then(result => {
+                                                                                    if (result.value) {
+                                                                                        $("#registration-alert").html("");
+                                                                                        //insert to sql database
+                                                                                        //email to user`s email
+                                                                                        //notif to users about about the result
 
-                                                                        } else {
-                                                                            //check if the id is valid
-                                                                            if (imgValidation(validId, "Valid Id")) {
-                                                                                //terms of Agreement
-                                                                                if (termsAgreement.checked) {
-                                                                                    Swal.fire({
-                                                                                        icon: "info",
-                                                                                        title: "Register as an Agent of AR Verizon?",
-                                                                                        text: "If you`re sure about all information kindly click ''Yes''",
-                                                                                        showCancelButton: true,
-                                                                                        cancelButtonText: "No",
-                                                                                        confirmButtonText: "Yes",
-                                                                                        confirmButtonColor: "#3CB371",
-                                                                                        cancelButtonColor: "#70945A"
-                                                                                    }).then(result => {
-                                                                                        if (result.value) {
-                                                                                            $("#registration-alert").html("");
-                                                                                            //insert to sql database
-                                                                                            //email to user`s email
-                                                                                            //notif to users about about the result
-                                                                                            var generatedPassword = generatePassword();
-                                                                                            console.log(generatedPassword, barangay, city, province)
+                                                                                        $.ajax({
+                                                                                            url: "includes/signup.inc.php",
+                                                                                            data: formData,
+                                                                                            processData: false,
+                                                                                            contentType: false,
+                                                                                            type: "POST",
+                                                                                            success: function (data) {
+                                                                                                Swal.close();
+                                                                                                console.log(data)
 
-                                                                                        }
-                                                                                    })
-                                                                                    // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
-                                                                                } else {
-                                                                                    $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
-                                                                                }
-                                                                            };
+                                                                                            },
+                                                                                            error: function (data) {
+                                                                                                Swal.close();
+                                                                                                alert("Error: " + data);
+                                                                                            },
+                                                                                        });
+                                                                                    }
+                                                                                })
+                                                                                // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                                            } else {
+                                                                                $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+                                                                            }
                                                                         };
                                                                     };
                                                                 }).catch(error => {
-                                                                    $("#registration-alert").html('<div class="alert alert-danger" role="alert">' + error + '!</div>');
+                                                                    //there is no Manager Id
+                                                                    $("#managerId").val("anf-Verizon");
+                                                                    // // $("#registration-alert").html('<div class="alert alert-danger" role="alert">' + error + '!</div>');
+                                                                    // var defaultManagaerId = $("#managerId").val();
+                                                                    // if (defaultManagaerId !== "anf-Verizon") {
+                                                                    //     //set AR Verizon as default manager 
+
+                                                                    // } else {
+
+                                                                    // }
                                                                 });
                                                             } else if (selectedPosition === "Manager") {
                                                                 //check if the id is valid
@@ -209,10 +226,48 @@ $(function () {
                                                                                 //insert to sql database
                                                                                 //email to user`s email
                                                                                 //notif to users about about the result
-                                                                                var generatedPassword = generatePassword();
-                                                                                console.log(generatedPassword, barangay, city, province)
-                                                                            }
-                                                                        })
+                                                                                Swal.fire({
+                                                                                    text: "Please Wait....",
+                                                                                    allowOutsideClick: false,
+                                                                                    showConfirmButton: false,
+
+                                                                                    willOpen: () => {
+                                                                                        Swal.showLoading();
+                                                                                    },
+                                                                                });
+
+                                                                                $.ajax({
+                                                                                    url: "includes/signup.inc.php",
+                                                                                    data: formData,
+                                                                                    processData: false,
+                                                                                    contentType: false,
+                                                                                    type: "POST",
+                                                                                    success: function (data) {
+                                                                                        Swal.close();
+                                                                                        console.log(data)
+                                                                                        // if (data == 'Success1' || data == 'Success2' || data == 'Success3') {
+                                                                                        //     Swal.fire({
+                                                                                        //         icon: "success",
+                                                                                        //         title: "Registration Complete",
+                                                                                        //         text: "You can now logged in.",
+                                                                                        //         showConfirmButton: false,
+                                                                                        //         allowOutsideClick: false,
+                                                                                        //         timer: 2000
+                                                                                        //     }).then(function (result) {
+                                                                                        //         location.reload();
+                                                                                        //     })
+
+                                                                                        // } else {
+                                                                                        //     $("#fbGooglregistration-alert").html(data)
+                                                                                        // }
+                                                                                    },
+                                                                                    error: function (data) {
+                                                                                        Swal.close();
+                                                                                        alert("Error: " + data);
+                                                                                    },
+                                                                                });
+                                                                            };
+                                                                        });
                                                                         // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
                                                                     } else {
                                                                         $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
@@ -478,51 +533,30 @@ function managerIdValidation(managerid) {
         });
 
         if (managerid !== "") {
-            //check if the manager id length =10(default manager Id length)
-            if (!managerid.length < 10) {
-                //check if the manager id exists in database
-                $.ajax({
-                    url: "includes/checkmanagerid.inc.php",
-                    data: {
-                        "managerId": managerid
-                    },
-                    type: "POST",
-                    success: function (data) {
-                        if (data === "No Manager Found!") {
-                            Swal.close();
-                            reject("No Manager Found");
-                        } else {
-                            //manager found
-                            Swal.close();
-                            resolve("Manager Found");
-                        }
-                    },
-                    error: function (data) {
-                        // alert(data);
-                        // return false;
-                        reject("Error Occured: Please contact admin");
-                    },
-                });
-            } else {
-                Swal.close();
+            //check if the manager id exists in database
+            $.ajax({
+                url: "includes/checkmanagerid.inc.php",
+                data: {
+                    "managerId": managerid
+                },
+                type: "POST",
+                success: function (data) {
+                    if (data == 1) {
+                        Swal.close();
+                        resolve(true);
+                    } else {
+                        //manager found
+                        Swal.close();
+                        reject("No Manager Found");
+                    }
+                },
+                error: function (data) {
+                    // alert(data);
+                    // return false;
+                    reject("Error Occured: Please contact admin");
+                },
+            });
 
-                Swal.fire({
-                    icon: "error",
-                    title: "Invalid Manager Id",
-                    text: "By clicking ''Proceed'' your default manager will be AR Verzion",
-                    confirmButtonText: "Proceed",
-                    confirmButtonColor: "#3CB371",
-                    allowOutsideClick: false,
-                    showCancelButton: true
-                }).then(result => {
-                    if (result.value) {
-                        resolve(result.value);
-                        // $("#managerId").val("ahf-Verizon");
-                        // return false;
-                    };
-
-                });
-            }
         } else {
             Swal.close();
             Swal.fire({
@@ -535,8 +569,9 @@ function managerIdValidation(managerid) {
                 showCancelButton: true
             }).then(result => {
                 if (result.value) {
-                    // return result;
-                    resolve(result.value)
+                    resolve(result.value);
+                    $("#managerId").val("ahf-Verizon");
+                    return false;
                 };
 
             });
