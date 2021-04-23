@@ -178,20 +178,33 @@ $(function () {
                                                                                             type: "POST",
                                                                                             success: function (data) {
                                                                                                 Swal.close();
-                                                                                                console.log(data)
+                                                                                                // console.log(data)
+                                                                                                if (data === "Agent Successfully Registered") {
+                                                                                                    Swal.fire({
+                                                                                                        icon: "success",
+                                                                                                        title: "Registration Complete",
+                                                                                                        text: "You can now logged in.",
+                                                                                                        showConfirmButton: false,
+                                                                                                        allowOutsideClick: false,
+                                                                                                        timer: 2000
+                                                                                                    }).then(function (result) {
+                                                                                                        location.reload();
+                                                                                                    })
 
+                                                                                                } else {
+                                                                                                    $("#registration-alert").html('<div class="alert alert-warning" role="alert">' + data + '</div>');
+                                                                                                }
                                                                                             },
                                                                                             error: function (data) {
                                                                                                 Swal.close();
                                                                                                 alert("Error: " + data);
                                                                                             },
                                                                                         });
-                                                                                    }
-                                                                                })
-                                                                                // console.log(email, firstName, middleName, lastName, birthday, address, tinNo, mobileNo, selectedPosition, managerId);
+                                                                                    };
+                                                                                });
                                                                             } else {
                                                                                 $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
-                                                                            }
+                                                                            };
                                                                         };
                                                                     };
                                                                 }).catch(error => {
@@ -244,22 +257,20 @@ $(function () {
                                                                                     type: "POST",
                                                                                     success: function (data) {
                                                                                         Swal.close();
-                                                                                        console.log(data)
-                                                                                        // if (data == 'Success1' || data == 'Success2' || data == 'Success3') {
-                                                                                        //     Swal.fire({
-                                                                                        //         icon: "success",
-                                                                                        //         title: "Registration Complete",
-                                                                                        //         text: "You can now logged in.",
-                                                                                        //         showConfirmButton: false,
-                                                                                        //         allowOutsideClick: false,
-                                                                                        //         timer: 2000
-                                                                                        //     }).then(function (result) {
-                                                                                        //         location.reload();
-                                                                                        //     })
-
-                                                                                        // } else {
-                                                                                        //     $("#fbGooglregistration-alert").html(data)
-                                                                                        // }
+                                                                                        if (data === "Manager Successfully Registered") {
+                                                                                            Swal.fire({
+                                                                                                icon: "success",
+                                                                                                title: "Registration Complete",
+                                                                                                text: "You can now logged in.",
+                                                                                                showConfirmButton: false,
+                                                                                                allowOutsideClick: false,
+                                                                                                timer: 2000
+                                                                                            }).then(function (result) {
+                                                                                                location.reload();
+                                                                                            });
+                                                                                        } else {
+                                                                                            $("#registration-alert").html('<div class="alert alert-warning" role="alert">' + data + '</div>');
+                                                                                        };
                                                                                     },
                                                                                     error: function (data) {
                                                                                         Swal.close();
