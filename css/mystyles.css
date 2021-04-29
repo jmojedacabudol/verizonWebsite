@@ -13099,3 +13099,7 @@ form .row:first-child .floating-label-form-group {
   background-color: #70945A;
   color: white;
 }
+
+.reset-button-margin {
+  margin-top: 15px;
+}

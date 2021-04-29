@@ -74,7 +74,7 @@ if (isset($_POST['propertyId'])) {
             if ($row['offertype'] == "Sell") {
                 echo '<input type="text" id="eofferchoice" name="elisting-rentChoice" style="display:none;" value="none">';
                 echo '<input type="text" class="form-control" placeholder="Enter Amount" aria-label="Price" value="';
-                echo $row['propertyamount'] . '"';
+                echo (int) $row['propertyamount'] . '"';
                 echo 'name="elisting-price" aria-describedby="basic-addon2">';
 
                 echo '<div class="input-group-append" id="erentBtn" style="display:none;">';
@@ -87,7 +87,7 @@ if (isset($_POST['propertyId'])) {
                     echo $row['propertyrentchoice'] . '"';
                     echo 'name="elisting-rentChoice" style="display:none;" value="none">';
                     echo '<input type="text" class="form-control" placeholder="Enter Amount" aria-label="Price" value="';
-                    echo $row['propertyamount'] . '"';
+                    echo (int) $row['propertyamount'] . '"';
                     echo 'name="elisting-price" aria-describedby="basic-addon2">';
 
                     echo '<div class="input-group-append" id="erentBtn">';
@@ -99,7 +99,7 @@ if (isset($_POST['propertyId'])) {
                     echo $row['propertyrentchoice'] . '"';
                     echo 'name="elisting-rentChoice" style="display:none;" value="none">';
                     echo '<input type="text" class="form-control" placeholder="Enter Amount" aria-label="Price" value="';
-                    echo $row['propertyamount'] . '"';
+                    echo (int) $row['propertyamount'] . '"';
                     echo 'name="elisting-price" aria-describedby="basic-addon2">';
 
                     echo '<div class="input-group-append" id="erentBtn" >';
@@ -111,7 +111,7 @@ if (isset($_POST['propertyId'])) {
                     echo $row['propertyrentchoice'] . '"';
                     echo 'name="elisting-rentChoice" style="display:none;" value="none">';
                     echo '<input type="text" class="form-control" placeholder="Enter Amount" aria-label="Price" value="';
-                    echo $row['propertyamount'] . '"';
+                    echo (int) $row['propertyamount'] . '"';
                     echo 'name="elisting-price" aria-describedby="basic-addon2">';
 
                     echo '<div class="input-group-append" id="erentBtn" >';
@@ -122,7 +122,7 @@ if (isset($_POST['propertyId'])) {
             } else if ($row['offertype'] == 'Presell') {
                 echo '<input type="text" id="eofferchoice" name="elisting-rentChoice" style="display:none;" value="none">';
                 echo '<input type="text" class="form-control" placeholder="Enter Amount" aria-label="Price" value="';
-                echo $row['propertyamount'] . '"';
+                echo (int) $row['propertyamount'] . '"';
                 echo 'name="elisting-price" aria-describedby="basic-addon2">';
 
                 echo '<div class="input-group-append" id="erentBtn" style="display:none;">';

@@ -9,8 +9,6 @@ if (isset($_POST["submit"])) {
     require_once 'functions.inc.php';
 
     if (emptyInputLogin($email, $pwd) !== false) {
-        // header("location: ../index.php?error=emptyinput");
-        // echo "Success";
         echo 'Fill All Fields!';
         exit();
     }

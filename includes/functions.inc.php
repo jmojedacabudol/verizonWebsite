@@ -35,12 +35,12 @@ function invalidEmail($email)
 
 function emailExists($conn, $email)
 {
-    $sql = "SELECT * FROM users WHERE usersEmail=?;";
+    $sql = "SELECT * FROM users WHERE companyEmail=?;";
     $stmt = mysqli_stmt_init($conn);
     $result = false;
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         // header("location: ../index.php?error=stmtfailed");
-        $result = "statemen Failed";
+        $result = "statement Failed";
         //exit();
     }
     mysqli_stmt_bind_param($stmt, 's', $email);
@@ -184,7 +184,8 @@ function createManagerUser($conn, $email, $firstname, $middlename, $lastname, $b
                         $name = $firstname . " " . $lastname;
                         mysqli_stmt_bind_param($stmt, 'sss', $name, $managerId, $managerReference);
                         if (mysqli_stmt_execute($stmt)) {
-                            $result = "Manager Successfully Registered";
+                            // $result = "Manager Successfully Registered";
+                            $result = sendEmail($companyEmail, $password, $firstname, $lastname);
                         } else {
                             //error in inserting in manager table
                             $result = "Internal Server Error";
@@ -272,59 +273,32 @@ function emptyInputLogin($email, $pwd)
     return $result;
 }
 
-// function loginUser($conn, $email, $pwd)
-// {
-//     $uidExists = emailExists($conn, $email);
-//     $result;
-//     if ($uidExists === 0) {
-//         // header("location: ../index.php?error=wronglogin");
-//         $result = "User not Exists";
-//         // exit();
-//     } else {
-
-//         $pwdhashed = $uidExists['usersPwd'];
-//         $checkPwd = password_verify($pwd, $pwdhashed);
-
-//         if ($checkPwd === false) {
-//             // header("location: ../index.php?error=wronglogin");
-//             $result = "Wrong logged in Credentials";
-//             // exit();
-//         } else if ($checkPwd === true) {
-//             session_start();
-//             $_SESSION["userid"] = $uidExists["usersId"];
-//             // header("location: ../index.php");
-//             // exit();
-//             $result = "Success";
-//         }
-
-//     }
-
-//     return $result;
-
-// }
-
 function loginUser($conn, $email, $pwd)
 {
     $uidExists = emailExists($conn, $email);
     $result = false;
     if ($uidExists === 0) {
-        // header("location: ../index.php?error=wronglogin");
         $result = "User does not exist";
-        // exit();
     } else {
-        $pwdhashed = $uidExists['usersPwd'];
-        $checkPwd = password_verify($pwd, $pwdhashed);
+        //get the user password and compare to users password in the database
+        $hashedPwd = $uidExists['usersPwd'];
+        $userTag = $uidExists['Tag'];
+        if ($userTag == "New User") {
+            //password is not hashed and need to be change
+            $result = "Password reset needed";
 
-        if ($checkPwd === false) {
-            // header("location: ../index.php?error=wronglogin");
-            $result = "Wrong logged in Credentials";
-            // exit();
-        } else if ($checkPwd === true) {
-            session_start();
-            $_SESSION["userid"] = $uidExists["usersId"];
-            $result = "Success";
+        } else {
+            //check if the password user typed is verified
+            $checkPwd = password_verify($pwd, $hashedPwd);
+            if ($checkPwd === false) {
+                $result = "Wrong logged in Credentials";
+            } else if ($checkPwd === true) {
+                session_start();
+                $_SESSION["userid"] = $uidExists["usersId"];
+                $result = "Success";
+            }
+
         }
-
     }
 
     return $result;
@@ -996,6 +970,18 @@ function forgotPwdInputsEmpty($email, $mobile, $pwd, $pwdrepeat)
     return $result;
 }
 
+function resetPwdInputsEmpty($pwd, $pwdrepeat)
+{
+    $result = false;
+
+    if (empty($pwd) || empty($pwdrepeat)) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
 function passwordNotSame($pwd, $pwdrepeat)
 {
     $result = false;
@@ -1009,81 +995,22 @@ function passwordNotSame($pwd, $pwdrepeat)
     return $result;
 }
 
-function emailAndMobileNumberNotExists($conn, $email, $mobile)
-{
-    $sql = "SELECT usersId FROM users WHERE usersEmail=? AND usersMobileNumber=?;";
-    $stmt = mysqli_stmt_init($conn);
-    $result = false;
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        // header("location: ../index.php?error=stmtfailed");
-        $result = "statement Failed";
-        //exit();
-    }
-    mysqli_stmt_bind_param($stmt, 'ss', $email, $mobile);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-// echo $resultData;
-    if (mysqli_num_rows($resultData) > 0) {
-        $row = mysqli_fetch_assoc($resultData);
-        $result = false;
-    } else {
-        $result = true;
-    }
-    mysqli_stmt_close($stmt);
-    return $result;
-
-}
-
-function accountIsNotRegularAccount($conn, $email)
-{
-    $sql = "SELECT Tag FROM users WHERE usersEmail=?;";
-    $stmt = mysqli_stmt_init($conn);
-    $result = false;
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        // header("location: ../index.php?error=stmtfailed");
-        $result = "statement Failed";
-        //exit();
-    }
-    mysqli_stmt_bind_param($stmt, 's', $email);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-// echo $resultData;
-    if (mysqli_num_rows($resultData) > 0) {
-        while ($row = mysqli_fetch_assoc($resultData)) {
-            if ($row['Tag'] == 'facebook' || $row['Tag'] == 'Google') {
-                $result = true;
-
-            } else {
-                $result = false;
-            }
-        }
-
-    } else {
-        $result = false;
-    }
-    mysqli_stmt_close($stmt);
-    return $result;
-
-}
-
 function changePassword($conn, $email, $pwd)
 {
-    $sql = "UPDATE users SET usersPwd=? WHERE usersEmail=?;";
+    $sql = "UPDATE users SET usersPwd=?, Tag=? WHERE companyEmail=?;";
     $stmt = mysqli_stmt_init($conn);
     $result = false;
+    $Tag = "Regular User";
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         // header("location: ../index.php?error=stmtfailed");
         $result = "statement Failed";
         //exit();
     }
     $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
-    mysqli_stmt_bind_param($stmt, 'ss', $hashedPwd, $email);
+    mysqli_stmt_bind_param($stmt, 'sss', $hashedPwd, $Tag, $email);
 
     if (mysqli_stmt_execute($stmt)) {
         mysqli_stmt_close($stmt);
-
         $result = true;
     } else {
         mysqli_stmt_close($stmt);
@@ -1187,4 +1114,72 @@ function checkManagerId($managerId, $conn)
         mysqli_stmt_close($stmt);
     }
     return $result;
+}
+
+function sendEmail($companyemail, $defaultPassword, $firstname, $lastname)
+{
+
+    $result = "";
+
+    // $to = "jmojedacabudol@gmail.com";
+    // $subject = "Test mail";
+    // $message = "Hello! This is a simple email message.";
+    // $from = "testemail@arverizon.com";
+    // $headers = "From: $from";
+    // mail($to, $subject, $message, $headers);
+    // $result = "Mail Sent.";
+
+    define("DEMO", false);
+
+//location of template file
+
+    $template_file = "../email_templates/emailTemplate.php";
+
+//create the basic email info to send
+    $email_to = "testemail@arverizon.com";
+    $subject = "Account Information";
+
+    //create the swap vaiable array
+    $swap_var = array(
+        "{USER_NAME}" => $firstname . " " . $lastname,
+        "{EMAIL_ADDRESS}" => $companyemail,
+        "{EMAIL_PASSWORD}" => "$defaultPassword",
+    );
+
+//create email headers
+    $headers = "From: AR Verizon <testemail@arverizon.com>\r\n";
+    $headers .= "MIME-Version 1.0 \r\n";
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+//create the html message
+
+    if (file_exists($template_file)) {
+        $message = file_get_contents($template_file);
+
+    } else {
+        die("unable to locate the template file");
+    }
+    //search and replace all the swap_var
+
+    foreach (array_keys($swap_var) as $key) {
+        if (strlen($key) > 2 && trim($key) != "") {
+            $message = str_replace($key, $swap_var[$key], $message);
+        }
+    }
+
+    $result = $message;
+    //display the email message to the user;
+
+    if (DEMO) {
+        die("<hr />no email was sent in purpose");
+    }
+
+    if (mail($email_to, $subject, $message, $headers)) {
+        $result = "Success";
+    } else {
+        $result = "Error not sent";
+    }
+
+    return $result;
+
 }

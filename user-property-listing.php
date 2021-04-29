@@ -58,7 +58,7 @@ if (mysqli_num_rows($result) > 0) {
         echo $row['propertylocation'];
         echo "</td>";
         echo "<td>₱&nbsp;&nbsp;";
-        echo number_format($row['propertyamount']);
+        echo number_format((int) $row['propertyamount']);
         echo "</td>";
         if ($row['approval'] === 0) {
             echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";

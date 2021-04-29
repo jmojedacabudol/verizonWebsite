@@ -52,6 +52,7 @@ include_once 'includes/dbh.inc.php';
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0">
@@ -90,25 +91,25 @@ include_once 'includes/dbh.inc.php';
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Lot</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertyType=Condominium&sub-type=Agricultural">Agricultural</a>
+                                            href="properties.php?propertyType=Lot&sub-type=Agricultural">Agricultural</a>
                                     </li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertyType=Condominium&sub-type=Commercial">Commercial</a>
+                                            href="properties.php?propertyType=Lot&sub-type=Commercial">Commercial</a>
                                     </li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertyType=Condominium&sub-type=Residential">Residential</a>
+                                            href="properties.php?propertyType=Lot&sub-type=Residential">Residential</a>
+                                    </li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertyType=Lot&sub-type=Industrial">Industrial</a>
                                     </li>
                                 </ul>
                             </li>
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="properties.php?propertyType=House and Lot">House and
                                     Lot</a></li>
-                            <div class="dropdown-divider"></div>
-                            <li><a class="dropdown-item" href="properties.php?propertyType=Industrial">Industrial
-                                    Lot</a>
-                            </li>
                             <div class="dropdown-divider"></div>
                             <li><a class="dropdown-item" href="properties.php?propertyType=Office">Office</a>
                             </li>
@@ -475,6 +476,59 @@ if (isset($_SESSION['userid'])) {
     </div>
 
     <!-- End of Forgot Password Modal -->
+
+
+
+    <!-- Reset Password Modal -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="resetPwd"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-6 login-form-1">
+                        <h3 class="login-title">Reset Password</h3>
+                        <div id="resetPwd-Alert" style="text-align:center;">
+                        </div>
+
+                    </div>
+                    <form id='resetPwdForm' action="includes/signup.inc.php" method="post"
+                        enctype='multipart/form-data'>
+
+                        <div class="form-group">
+                            <input type="Password" class="form-control" placeholder="Password *" name="resetPwd" />
+                            <br>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="Password" class="form-control" placeholder="Confirm Password *"
+                                name="restPwdRepeat" />
+                            <br>
+                        </div>
+
+                        <div class="form-group">
+                            <!-- <input type="Submit" class="btn btn-primary btn-primary-w100" value="Register" /> -->
+                            <button type="submit" class="btn btn-primary btn-primary-w100"
+                                name="resetPwdBtn">Submit</button>
+
+                            <hr>
+
+                            <button class="reset-button-margin btn btn-secondary btn-primary-w100" class="close"
+                                data-dismiss="modal" name="forgotPwdBtn">Cancel</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- End of Reset Password Modal -->
 
     <script>
     //get the userid of logged user

@@ -331,6 +331,7 @@ function generatePassword() {
 
 
 
+
 function addressValidation(address) {
     if (address !== "") {
         return true;
