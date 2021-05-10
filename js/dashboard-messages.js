@@ -1,6 +1,11 @@
 $(document).ready(function () {
 
   //<----------------PROPERTIES------------------->
+  $('#messages tfoot th').each(function () {
+    var title = $(this).text();
+    console.log(title);
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
   var table = $('#messages').DataTable({
     dom: 'Bfrtip',
     buttons: [{
@@ -114,7 +119,21 @@ $(document).ready(function () {
           .css('font-size', 'inherit');
       }
 
-    }]
+    }],
+    initComplete: function () {
+      // Apply the search
+      this.api().columns().every(function () {
+        var that = this;
+
+        $('input', this.footer()).on('keyup change clear', function () {
+          if (that.search() !== this.value) {
+            that
+              .search(this.value)
+              .draw();
+          }
+        });
+      });
+    }
   });
 
 

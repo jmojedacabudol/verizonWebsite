@@ -13,7 +13,7 @@ require_once 'sidenav.php'
                 <h5 class="card-title">Your Schedule/s</h5>
                 <div class="row">
                     <div class="col-lg-12 col-md-8">
-                        <table id="schedules" class="display" style="width:100%">
+                        <table id="schedules" class="display table-responsive" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -27,47 +27,58 @@ require_once 'sidenav.php'
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT * FROM schedules WHERE agentId=?;";
-                                $stmt = mysqli_stmt_init($conn);
+$sql = "SELECT * FROM schedules WHERE agentId=?;";
+$stmt = mysqli_stmt_init($conn);
 
-                                if (!mysqli_stmt_prepare($stmt, $sql)) {
-                                    echo "<tr>";
-                                    echo "SQL ERROR";
-                                    echo "</tr>";
-                                    exit();
-                                }
-                                mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
-                                mysqli_stmt_execute($stmt);
-                                $result = mysqli_stmt_get_result($stmt);
+if (!mysqli_stmt_prepare($stmt, $sql)) {
+    echo "<tr>";
+    echo "SQL ERROR";
+    echo "</tr>";
+    exit();
+}
+mysqli_stmt_bind_param($stmt, 's', $_SESSION['userid']);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-                                if (mysqli_num_rows($result) > 0) {
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo "<tr>";
-                                        echo "<td class='w-20'>";
-                                        echo $row['scheduleid'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['propertyid'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['propertyname'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['clientname'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['usersMobileNumber'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo $row['start_event'];
-                                        echo "</td>";
-                                        echo "<td>";
-                                        echo "<button type='button' id='delete-btn'class='btn btn-danger w-100'></i>Delete</button>";
-                                        echo "</td>";
-                                    }
-                                }
-                                ?>
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<tr>";
+        echo "<td class='w-20'>";
+        echo $row['scheduleid'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertyid'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['propertyname'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['clientname'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['usersMobileNumber'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['start_event'];
+        echo "</td>";
+        echo "<td>";
+        echo "<button type='button' id='delete-btn'class='btn btn-danger w-100'></i>Delete</button>";
+        echo "</td>";
+    }
+}
+?>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Property Id</th>
+                                    <th>Property Name</th>
+                                    <th>Client Name</th>
+                                    <th>Client Number</th>
+                                    <th>Date</th>
+                                    <th class='notexport'>Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

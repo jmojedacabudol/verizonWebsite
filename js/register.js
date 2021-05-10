@@ -192,7 +192,7 @@ $(function () {
                                                                                                     })
 
                                                                                                 } else {
-                                                                                                    $("#registration-alert").html('<div class="alert alert-warning" role="alert">' + data + '</div>');
+                                                                                                    $("#registration-alert").html(data);
                                                                                                 }
                                                                                             },
                                                                                             error: function (data) {
@@ -269,7 +269,7 @@ $(function () {
                                                                                                 location.reload();
                                                                                             });
                                                                                         } else {
-                                                                                            $("#registration-alert").html('<div class="alert alert-warning" role="alert">' + data + '</div>');
+                                                                                            $("#registration-alert").html(data);
                                                                                         };
                                                                                     },
                                                                                     error: function (data) {
@@ -582,10 +582,9 @@ function managerIdValidation(managerid) {
             }).then(result => {
                 if (result.value) {
                     resolve(result.value);
-                    $("#managerId").val("ahf-Verizon");
+                    $("#managerId").val("AR-DM1");
                     return false;
                 };
-
             });
         };
     });

@@ -199,7 +199,7 @@ window.fbAsyncInit = function() {
             <div class="row justify-content-center padding-pr">
                 <!-- Latest Properties Item 1-->
                 <?php
-$sql = "SELECT property.propertyid,property.propertytype,propertyamount,propertydesc,propertyname, propertybedrooms,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3) AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3;";
+$sql = "SELECT property.propertyid,MIN(images.file_name) as file_name,property.propertytype,propertyamount,propertydesc,propertyname, propertybedrooms,property.approval FROM property,images WHERE property.propertyid=images.propertyid AND property.approval NOT IN ('Pending','Deny','Delete')AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3";
 
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {

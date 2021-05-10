@@ -31,10 +31,14 @@ function isNumberKey(evt) {
     return !(charCode > 31 && (charCode < 48 || charCode > 57));
 }
 
-function alphaOnly(event) {
-    var key = event.keyCode;
-    return ((key >= 65 && key <= 90) || key == 8);
-};
+//preventing numbers to names
+function allowOnlyLetters(evt) {
+    var inputValue = evt.charCode;
+    if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
+        event.preventDefault();
+    }
+}
+
 
 
 $('.dropdown-submenu a.test').on("click", function(e) {

@@ -9,9 +9,10 @@ require 'sidenav.php'
         <div class="card container-fluid">
             <div class="card-body">
                 <h5 class="card-title">Your Property Listing</h5>
+                <!-- <input type="text" id="column3_search"> -->
                 <div class="row">
                     <div class="col-lg-12 col-md-8">
-                        <table id="properties" class="display" style="width:100%">
+                        <table id="properties" class="display table-responsive">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -60,25 +61,25 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>₱&nbsp;&nbsp;";
         echo number_format((int) $row['propertyamount']);
         echo "</td>";
-        if ($row['approval'] === 0) {
+        if ($row['approval'] === "Pending") {
             echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
             echo "Pending";
             echo "</td>";
-        } else if ($row['approval'] === 1) {
+        } else if ($row['approval'] === "Posted") {
             echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
             echo "Posted";
             echo "</td>";
-        } else if ($row['approval'] === 2) {
+        } else if ($row['approval'] === "Deny") {
             echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
             echo "Denied";
             echo "</td>";
         }
 
         echo "<td>";
-        echo "<button type='button' id='editProperty' class='btn btn-secondary w-50'>
+        echo "<button type='button' id='editProperty' class='btn btn-secondary w-100' data-toggle='tooltip' data-placement='bottom' title='Edit Property'>
                                         <i class='far fa-edit'></i>Edit</button>";
-        echo "<button type='button' id='viewProperty' class='btn btn-info w-50'>
-                                        <i class='far fa-edit'></i>View</button>";
+        echo "<button type='button' id='viewProperty' class='btn btn-info w-100' data-toggle='tooltip' data-placement='bottom' title='View Property'>
+                                        <i class='far fa-eye'></i>View</button>";
 
         echo "</td>";
 
@@ -86,6 +87,18 @@ if (mysqli_num_rows($result) > 0) {
 }
 ?>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Property Name</th>
+                                    <th>Type</th>
+                                    <th>Offer Type</th>
+                                    <th>Location</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th class='notexport'>Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -136,19 +149,6 @@ if (mysqli_num_rows($result) > 0) {
                                             <input type="file" name="listing-image[]" multiple>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group row">
-                                        <label for="up-valid-id" class="col-4 col-form-label"> </label>
-                                        <div class="col-8">
-                                            <div class="col-md-12 silver w-100 h-100">
-                                                <div class="container-fluid">
-                                                    <div class="img-content">
-                                                        <img id="propertyImg" class="img-responsive img-fluid"
-                                                            style="height:300px; width:300px" src="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                     <div class="form-group row">
                                         <label for="listing-title" class="col-4 col-form-label">Listing
                                             Title</label>
@@ -171,10 +171,9 @@ if (mysqli_num_rows($result) > 0) {
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="location" class="col-4 col-form-label">Location</label>
+                                        <label for="location" class="col-4 col-form-label">Street No/</label>
                                         <div class="col-8">
                                             <div class="input-group w-100">
-
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i
                                                             class="fas fa-map-marker-alt"></i></span>
@@ -279,10 +278,13 @@ if (mysqli_num_rows($result) > 0) {
                     </div>
                     </section>
                 </div>
+                <br>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="submit" id="listing-submit">Add</button>
+                    <button type="submit" class="btn btn-primary" name="submit" id="listing-submit">Add
+                        Property</button>
                 </div>
+                <br>
                 </form>
             </div>
         </div>
@@ -368,7 +370,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 <!-- Bootstrap core JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
@@ -378,11 +380,10 @@ if (mysqli_num_rows($result) > 0) {
 <!-- Core theme JS-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="js/scripts.js"></script>
-<script src="js/imageLoading.js"></script>
-<script src="js/dashboard-listing.js"></script>
-<script src="js/propertyupload.js"></script>
 
-<script src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -390,6 +391,12 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+
+
+<script src="js/imageLoading.js"></script>
+<script src="js/dashboard-listing.js"></script>
+<script src="js/propertyupload.js"></script>
+
 
 </body>
 

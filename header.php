@@ -224,21 +224,21 @@ if (isset($_SESSION['userid'])) {
                             email.</p>
                         <div class="form-group">
                             <input type="text" class="form-control transform"
-                                onkeypress="return /[a-z]/i.test(event.key)" placeholder="First Name *"
+                                onkeypress="return allowOnlyLetters(event);" placeholder="First Name *"
                                 name="firstname" />
                             <br>
                         </div>
 
                         <div class="form-group">
                             <input type="text" class="form-control transform"
-                                onkeypress="return /[a-z]/i.test(event.key)" placeholder="Middle Name *"
+                                onkeypress="return allowOnlyLetters(event);" placeholder="Middle Name *"
                                 name="middlename" />
                             <br>
                         </div>
 
                         <div class="form-group">
                             <input type="text" class="form-control transform"
-                                onkeypress="return /[a-z]/i.test(event.key)" placeholder="Last Name *"
+                                onkeypress="return allowOnlyLetters(event);" placeholder="Last Name *"
                                 name="lastname" />
                             <br>
                         </div>
@@ -274,12 +274,12 @@ if (isset($_SESSION['userid'])) {
 
                         <div class="form-group">
                             <input type="text" onkeypress="return isNumberKey(event);" class="form-control"
-                                placeholder="TIN No. *" name="tin">
+                                placeholder="TIN No. *" name="tin" maxlength="12">
                             <br>
                         </div>
                         <div class="form-group">
                             <input type="text" onkeypress="return isNumberKey(event);" class="form-control"
-                                placeholder="Mobile No. *" minlength="11" name="mobile" />
+                                placeholder="Mobile No. *" maxlength="11" name="mobile" />
                             <br>
                         </div>
 

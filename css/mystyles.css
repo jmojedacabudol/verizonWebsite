@@ -13103,3 +13103,7 @@ form .row:first-child .floating-label-form-group {
 .reset-button-margin {
   margin-top: 15px;
 }
+
+.input-group .form-control {
+  height: 43.7px;
+}

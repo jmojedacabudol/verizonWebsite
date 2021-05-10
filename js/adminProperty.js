@@ -1,7 +1,13 @@
 $(document).ready(function () {
 
   //<----------------PROPERTIES------------------->
+  $('#properties tfoot th').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+
   var table = $('#properties').DataTable({
+
     dom: 'Bfrtip',
     buttons: [{
       extend: 'pdfHtml5',
@@ -114,7 +120,28 @@ $(document).ready(function () {
           .css('font-size', 'inherit');
       }
 
-    }]
+    }],
+    initComplete: function () {
+
+      // Apply the search
+      this.api().columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change clear', function () {
+          if (that.search() !== this.value) {
+            that
+              .search(this.value)
+              .draw();
+          }
+        });
+      });
+
+      var r = $('#members tfoot tr');
+      r.find('th').each(function () {
+        $(this).css('padding', 8);
+      });
+      $('#members thead').append(r);
+      $('#search_0').css('text-align', 'center')
+    }
   });
 
   $("#properties").on("click", "#approveBtn", function () {

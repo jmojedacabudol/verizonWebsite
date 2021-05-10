@@ -11,7 +11,7 @@ require_once 'sidenav.php'
                 <h5 class="card-title">Your Messages</h5>
                 <div class="row">
                     <div class="col-lg-12 col-md-8">
-                        <table id="messages" class="display" style="width:100%">
+                        <table id="messages" class="display table-responsive" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -66,6 +66,17 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 ?>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Client Name</th>
+                                    <th>Client Number</th>
+                                    <th>Property Id</th>
+                                    <th>Property Name</th>
+                                    <th>Date</th>
+                                    <th class='notexport'>Action</th>
+                                </tr>
+                            </tfoot>
                             </tbody>
                         </table>
                     </div>

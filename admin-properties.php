@@ -63,15 +63,15 @@ if (mysqli_num_rows($result) > 0) {
         // echo $row['approval'];
         // echo "</td>";
 
-        if ($row['approval'] == 0) {
+        if ($row['approval'] == 'Pending') {
             echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
             echo "Pending";
             echo "</td>";
-        } else if ($row['approval'] == 1) {
+        } else if ($row['approval'] == 'Posted') {
             echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
             echo "Posted";
             echo "</td>";
-        } else if ($row['approval'] == 2) {
+        } else if ($row['approval'] == 'Deny') {
             echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
             echo "Denied";
             echo "</td>";
@@ -94,6 +94,22 @@ if (mysqli_num_rows($result) > 0) {
 ?>
 
         </tbody>
+        <tfoot>
+            <tr>
+                <th>Property Id</th>
+                <th>Property Name</th>
+                <th>Location</th>
+                <th>Lot Area</th>
+                <th>Floor Area</th>
+                <th>Property type</th>
+                <th>Offer Type</th>
+                <th>Price</th>
+                <th>Agent</th>
+                <th>Status</th>
+                <th class='notexport'>Action</th>
+            </tr>
+
+        </tfoot>
     </table>
 </div>
 

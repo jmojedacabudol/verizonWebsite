@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST['termsNConditions'])) {
     $profileImg = $_FILES['FileUpload'];
     $email = $_POST['email'];
@@ -28,6 +27,7 @@ if (isset($_POST['termsNConditions'])) {
         //get the manager Id for the agent
         $managerid = $_POST['managerId'];
 
+        // echo $managerid;
         if (emailExists($conn, $email)) {
             echo '<div class = "alert alert-danger" role = "alert">Email already exists</div>';
             exit();

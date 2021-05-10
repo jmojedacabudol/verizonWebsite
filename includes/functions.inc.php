@@ -1,4 +1,6 @@
 <?php
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 function emptyInputsSignup($email, $pwd, $pwdrepeat, $firstname, $lastname, $mobile, $position, $managerid)
 {
@@ -173,7 +175,7 @@ function createManagerUser($conn, $email, $firstname, $middlename, $lastname, $b
                     //get the id of latest inserted query;
                     $managerId = $conn->insert_id;
                     mysqli_stmt_close($stmt);
-                    $managerReference = "AR-" . $firstname[0] . $lastname[0] . $managerId;
+                    $managerReference = "AR-" . strtoupper($firstname[0]) . strtoupper($lastname[0]) . $managerId;
 
                     //insert the user to manager table
                     $sql = "INSERT INTO managers (name,usersId,managerReference) VALUES(?,?,?);";
@@ -185,7 +187,7 @@ function createManagerUser($conn, $email, $firstname, $middlename, $lastname, $b
                         mysqli_stmt_bind_param($stmt, 'sss', $name, $managerId, $managerReference);
                         if (mysqli_stmt_execute($stmt)) {
                             // $result = "Manager Successfully Registered";
-                            $result = sendEmail($companyEmail, $password, $firstname, $lastname);
+                            $result = sendEmail($companyEmail, $email, $password, $firstname, $lastname);
                         } else {
                             //error in inserting in manager table
                             $result = "Internal Server Error";
@@ -583,7 +585,7 @@ function propertyAlreadyApproved($propertyid, $conn)
 function approvePropertyStatus($propertyid, $conn)
 {
     $result;
-    $sql = "UPDATE property SET approval = 1  WHERE propertyid=?;";
+    $sql = "UPDATE property SET approval = 'Posted'  WHERE propertyid=?;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         exit();
@@ -621,7 +623,7 @@ function propertyAlreadydenied($propertyid, $conn)
 
 function denyPropertyStatus($propertyid, $conn)
 {
-    $sql = "UPDATE property SET approval = 2  WHERE propertyid=?;";
+    $sql = "UPDATE property SET approval = 'Deny'  WHERE propertyid=?;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         exit();
@@ -1116,70 +1118,72 @@ function checkManagerId($managerId, $conn)
     return $result;
 }
 
-function sendEmail($companyemail, $defaultPassword, $firstname, $lastname)
+function sendEmail($companyemail, $email, $defaultPassword, $firstname, $lastname)
 {
-
     $result = "";
+    try {
+        require '../PHPMailer/src/PHPMailer.php';
+        require '../PHPMailer/src/Exception.php';
+        require '../PHPMailer/src/SMTP.php';
 
-    // $to = "jmojedacabudol@gmail.com";
-    // $subject = "Test mail";
-    // $message = "Hello! This is a simple email message.";
-    // $from = "testemail@arverizon.com";
-    // $headers = "From: $from";
-    // mail($to, $subject, $message, $headers);
-    // $result = "Mail Sent.";
+        $mail = new PHPMailer();
+        $mail->IsHTML(true);
+        $mail->IsSMTP(true);
+        $mail->CharSet = "utf-8";
+// Sending Email
+        // $mail->SMTPAuth = true; // enable SMTP authentication
+        // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // sets the prefix to the servier
+        // $mail->Host = "smtp.elasticemail.com"; // sets GMAIL as the SMTP server
+        // $mail->Port = 2525; // set the SMTP port for the GMAIL server
+        // $mail->Username = "nonreply@arverizon.com"; // GMAIL username
+        // $mail->Password = "BEE0AAD9AFCC23302CACD16D67246F43B4CC"; // GMAIL password
 
-    define("DEMO", false);
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
+        $mail->Host = 'smtp.elasticemail.com'; //Set the SMTP server to send through
+        $mail->SMTPAuth = true; //Enable SMTP authentication
+        $mail->Username = 'nonreply@arverizon.com'; //SMTP username
+        $mail->Password = 'EC3F3DFEC4DEFCF5EEDB9C3A38285A4674EA'; //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+        $mail->Port = 2525; //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-//location of template file
+//Recipients
+        $mail->setFrom('noreply@arverizon.com', 'AR Verizon');
 
-    $template_file = "../email_templates/emailTemplate.php";
+//ROOM FOR IMPROVE
 
-//create the basic email info to send
-    $email_to = "testemail@arverizon.com";
-    $subject = "Account Information";
+        // $mail->DKIM_domain = 'arverizon.com';
+        // $mail->DKIM_private = '../keys/private.key';
+        // $mail->DKIM_selector = 'phpmailer';
+        // $mail->DKIM_passphrase = '';
+        // $mail->DKIM_identity = $mail->From;
 
-    //create the swap vaiable array
-    $swap_var = array(
-        "{USER_NAME}" => $firstname . " " . $lastname,
-        "{EMAIL_ADDRESS}" => $companyemail,
-        "{EMAIL_PASSWORD}" => "$defaultPassword",
-    );
+        $mail->addAddress($email); //Add a recipient
+        $mail->addReplyTo('helpdesk@arverizon.com', 'Customer Service');
+        $mail->addCC('helpdesk@arverizon.com');
 
-//create email headers
-    $headers = "From: AR Verizon <testemail@arverizon.com>\r\n";
-    $headers .= "MIME-Version 1.0 \r\n";
-    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+        $email_template = '../email_templates/emailTemplate.html';
 
-//create the html message
+        $username = 'nonreply@arverizon.com';
+        $password = 'C6D97476387E1AA45833DFDA523959397F5B';
 
-    if (file_exists($template_file)) {
-        $message = file_get_contents($template_file);
+        $message = file_get_contents($email_template);
+        $message = str_replace('%USER_NAME%', $firstname . " " . $lastname, $message);
+        $message = str_replace('%EMAIL_ADDRESS%', $companyemail, $message);
+        $message = str_replace('%EMAIL_PASSWORD%', $defaultPassword, $message);
 
-    } else {
-        die("unable to locate the template file");
+        //adding image to the website
+        $message = str_replace("%BANNER_ACCOUNT%", "https://filebin.net/pbbc48bgsuldpf7u/Optimized-banner_userAccount.png", $message);
+        $message = str_replace("%FB_LOGO%", "https://filebin.net/pbbc48bgsuldpf7u/fbLogo.png", $message);
+        $message = str_replace("%INSTA_LOGO%", "https://filebin.net/pbbc48bgsuldpf7u/instaLogo.png", $message);
+        $message = str_replace("%TWITTER_LOGO%", "https://filebin.net/pbbc48bgsuldpf7u/twitterLogo.png", $message);
+
+        $mail->MsgHTML($message);
+        $mail->Subject = "Welcome to AR Verizon";
+        $mail->send();
+        $result = 'Message has been sent';
+
+    } catch (Exception $e) {
+        $result = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-    //search and replace all the swap_var
-
-    foreach (array_keys($swap_var) as $key) {
-        if (strlen($key) > 2 && trim($key) != "") {
-            $message = str_replace($key, $swap_var[$key], $message);
-        }
-    }
-
-    $result = $message;
-    //display the email message to the user;
-
-    if (DEMO) {
-        die("<hr />no email was sent in purpose");
-    }
-
-    if (mail($email_to, $subject, $message, $headers)) {
-        $result = "Success";
-    } else {
-        $result = "Error not sent";
-    }
-
     return $result;
-
 }

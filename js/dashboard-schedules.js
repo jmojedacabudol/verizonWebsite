@@ -1,6 +1,12 @@
 $(document).ready(function () {
 
   //<----------------PROPERTIES------------------->
+  $('#schedules tfoot th').each(function () {
+    var title = $(this).text();
+    console.log(title);
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+
   var table = $('#schedules').DataTable({
     dom: 'Bfrtip',
     buttons: [{
@@ -122,7 +128,21 @@ $(document).ready(function () {
 
         viewPropertyCalendar();
       }
-    }]
+    }],
+    initComplete: function () {
+      // Apply the search
+      this.api().columns().every(function () {
+        var that = this;
+
+        $('input', this.footer()).on('keyup change clear', function () {
+          if (that.search() !== this.value) {
+            that
+              .search(this.value)
+              .draw();
+          }
+        });
+      });
+    }
   });
 
   $("#schedules").on("click", "#delete-btn", function () {

@@ -1,7 +1,13 @@
 $(document).ready(function () {
 
   //<----------------PROPERTIES------------------->
+  $('#members tfoot th').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+
   var table = $('#members').DataTable({
+    responsive: true,
     dom: 'Bfrtip',
     buttons: [{
       extend: 'pdfHtml5',
@@ -114,7 +120,28 @@ $(document).ready(function () {
           .css('font-size', 'inherit');
       }
 
-    }]
+    }],
+    initComplete: function () {
+
+      // Apply the search
+      this.api().columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change clear', function () {
+          if (that.search() !== this.value) {
+            that
+              .search(this.value)
+              .draw();
+          }
+        });
+      });
+
+      var r = $('#members tfoot tr');
+      r.find('th').each(function () {
+        $(this).css('padding', 8);
+      });
+      $('#members thead').append(r);
+      $('#search_0').css('text-align', 'center')
+    }
   });
 
 
@@ -410,127 +437,6 @@ $(document).ready(function () {
       })
     });
 
-    // $("#messagesTable").load("includes/loadmembermessage.inc.php", {
-    //   memberId: memberid,
-    // }, function (callback) {
-    //   // console.log(callback)
-    //   Swal.close();
-    //   //delete the first initialize datatable
-    //   $("#messages").dataTable().fnDestroy();
-
-    //   $('#messages').DataTable({
-    //     dom: 'Bfrtip',
-    //     buttons: [{
-    //       extend: 'pdfHtml5',
-    //       className: 'btn btn-primary ',
-    //       title: "Team Members",
-    //       orientation: 'portrait',
-    //       exportOptions: {
-    //         columns: ':visible'
-    //       },
-    //       text: '<i class="fas fa-file-pdf"></i>',
-    //       exportOptions: {
-    //         columns: ':not(.notexport)'
-    //       },
-    //       customize: function (doc) {
-    //         doc.pageMargins = [50, 50, 10, 10];
-    //         doc.defaultStyle.fontSize = 7;
-    //         doc.styles.tableHeader.fontSize = 10;
-    //         doc.styles.title.fontSize = 15;
-    //         // Remove spaces around page title
-    //         doc.content[0].text = doc.content[0].text.trim();
-    //         // Create a footer
-    //         doc['footer'] = (function (page, pages) {
-    //           return {
-    //             columns: [
-    //               'Copyright © Verizon 2020',
-    //               {
-    //                 // This is the right column
-    //                 alignment: 'right',
-    //                 text: ['page ', {
-    //                   text: page.toString()
-    //                 }, ' of ', {
-    //                   text: pages.toString()
-    //                 }]
-    //               }
-    //             ],
-    //             margin: [10, 0]
-    //           }
-    //         });
-    //         // Styling the table: create style object
-    //         var objLayout = {};
-    //         // Horizontal line thickness
-    //         objLayout['hLineWidth'] = function (i) {
-    //           return .5;
-    //         };
-    //         // Vertikal line thickness
-    //         objLayout['vLineWidth'] = function (i) {
-    //           return .5;
-    //         };
-    //         // Horizontal line color
-    //         objLayout['hLineColor'] = function (i) {
-    //           return '#aaa';
-    //         };
-    //         // Vertical line color
-    //         objLayout['vLineColor'] = function (i) {
-    //           return '#aaa';
-    //         };
-    //         // Left padding of the cell
-    //         objLayout['paddingLeft'] = function (i) {
-    //           return 4;
-    //         };
-    //         // Right padding of the cell
-    //         objLayout['paddingRight'] = function (i) {
-    //           return 4;
-    //         };
-    //         // Inject the object in the document
-    //         doc.content[1].layout = objLayout;
-    //       }
-
-
-    //     }, {
-    //       extend: 'excelHtml5',
-    //       className: 'btn btn-primary',
-    //       title: "Team Members",
-    //       text: '<i class="fas fa-file-excel"></i>',
-    //       exportOptions: {
-    //         columns: ':not(.notexport)'
-    //       },
-
-    //     }, {
-    //       extend: 'csvHtml5',
-    //       className: 'btn btn-primary ',
-    //       title: "Team Members",
-    //       text: '<i class="fas fa-file-csv"></i>',
-    //       exportOptions: {
-    //         columns: ':not(.notexport)'
-    //       },
-
-    //     }, {
-
-    //       extend: 'print',
-    //       className: 'btn btn-primary ',
-    //       title: "Team Members",
-    //       text: '<i class="fas fa-print"></i>',
-    //       exportOptions: {
-    //         columns: ':not(.notexport)'
-    //       },
-    //       customize: function (win) {
-    //         $(win.document.body)
-    //           .css('font-size', '10pt')
-    //           .prepend(
-    //             '<img src="https://linkpicture.com/q/logo_295.png" style="position:absolute; margin: auto; top: 0; left: 0; bottom: 0; right: 0;" />'
-    //           );
-
-    //         $(win.document.body).find('table')
-    //           .addClass('compact')
-    //           .css('font-size', 'inherit');
-    //       }
-
-    //     }]
-    //   });
-    //   $("#viewMessages").modal('show');
-    // })
   })
 
   $("#members").on("click", "#viewSchedulesBtn", function () {
@@ -664,5 +570,107 @@ $(document).ready(function () {
 
       })
     });
-  })
-})
+  });
+
+
+  $("#members").on("click", "#viewTransactionBtn", function () {
+    var data = table.row($(this).parents("tr")).data();
+    var memberid = data[0];
+
+    Swal.fire({
+      text: "Please Wait....",
+      allowOutsideClick: false,
+      showConfirmButton: false,
+
+      willOpen: () => {
+        Swal.showLoading();
+      },
+    });
+
+    $.ajax({
+      url: "includes/loadmembertransactions.inc.php",
+      type: "POST",
+      dataType: 'json',
+      cache: false,
+      data: {
+        memberId: memberid
+      },
+
+    }).done(function (data) {
+      if (data != "") {
+        Swal.close();
+        // console.log(data)
+        // $("#managerAgents").dataTable().fnDestroy()
+        $('#transaction').dataTable({
+          destroy: true,
+          "aaData": data,
+          "columns": [{
+              "data": "Id"
+            },
+            {
+              "data": "Property Name"
+            },
+            {
+              "data": " Property Type"
+            },
+            {
+              "data": "Category"
+            },
+            {
+              "data": "Unit No "
+            }, {
+              "data": "TCP"
+            }, {
+              "data": "Terms Of Payment"
+            },
+            {
+              "data": "Address"
+            },
+            {
+              "data": "Buyer Name"
+            }, , {
+              "data": "Contact Info"
+            }, {
+              "data": "Status"
+            }, {
+              "data": "Date of Transaction "
+            }, {
+              "data": "Date of Reservation "
+            },
+            {
+              "data": "Final TCP"
+            },
+            {
+              "data": "Commission"
+            },
+            {
+              "data": "Receivable"
+            }, {
+              "data": "Agent's Commission"
+            }, {
+              "data": "AR's Commision "
+            }, {
+              "data": "Buyer's Commission"
+            }, {
+              "data": "Final Receivable"
+            }
+          ]
+
+        })
+      }
+
+      $("#viewTransaction").modal('show');
+
+    }).fail(function (jqXHR, textStatus) {
+      Swal.close();
+      Swal.fire({
+        icon: "info",
+        title: "No Transaction/s",
+        text: "This Agent does not have any transaction/s yet.",
+        confirmButtonColor: "#3CB371",
+
+      });
+    });
+  });
+
+});
