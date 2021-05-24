@@ -210,7 +210,8 @@ if (isset($_SESSION['userid'])) {
                             <img class="addCursorPointer profileImage" id="imgFileUpload" alt="Select Profile Image"
                                 title="Profile Image" src="assets/img/user.png" />
                             <br>
-                            <input type="file" name="FileUpload" id="FileUpload" class="hidden" />
+                            <input type="file" name="FileUpload" id="FileUpload" class="hidden"
+                                accept=".jpg, .jpeg, .png" />
                             <br>
                             <p>Click image to select your Profile Image</p>
                         </div>
@@ -308,7 +309,8 @@ if (isset($_SESSION['userid'])) {
 
                         <div class="form-group">
                             <h6 class="login-title">Select Valid ID</h6>
-                            <input name="filevalidid" id="filevalidid" type="file" class="btn btn-secondary w-100" />
+                            <input name="filevalidid" id="filevalidid" type="file" class="btn btn-secondary w-100"
+                                accept=".jpg, .jpeg, .png" />
                         </div>
 
                         <p class="noteIndention"><strong>Note:

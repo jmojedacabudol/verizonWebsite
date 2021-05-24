@@ -1,5 +1,5 @@
 //validation for image validity
-var validImagetypes = ["image/gif", "image/jpg", "image/png", "image/jpeg"];
+var validImagetypes = ["image/jpg", "image/png", "image/jpeg"];
 $(function () {
     //displaying manager ID and Notes for Agents and Manager
     $("#posSelect").change(function () {
@@ -179,7 +179,7 @@ $(function () {
                                                                                             success: function (data) {
                                                                                                 Swal.close();
                                                                                                 // console.log(data)
-                                                                                                if (data === "Agent Successfully Registered") {
+                                                                                                if (data === "Message has been sent") {
                                                                                                     Swal.fire({
                                                                                                         icon: "success",
                                                                                                         title: "Registration Complete",
@@ -257,7 +257,7 @@ $(function () {
                                                                                     type: "POST",
                                                                                     success: function (data) {
                                                                                         Swal.close();
-                                                                                        if (data === "Manager Successfully Registered") {
+                                                                                        if (data === "Message has been sent") {
                                                                                             Swal.fire({
                                                                                                 icon: "success",
                                                                                                 title: "Registration Complete",

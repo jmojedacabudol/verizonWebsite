@@ -245,7 +245,8 @@ function createAgentUser($conn, $email, $firstname, $middlename, $lastname, $bir
 
                 mysqli_stmt_bind_param($stmt, 'sssssssssssssssss', $email, $companyEmail, $firstname, $middlename, $lastname, $mobile, $position, $password, $newFileName, $newProfileFileName, $birthday, $houseno, $tin, $brgy, $city, $province, $managerid);
                 if (mysqli_stmt_execute($stmt)) {
-                    $result = "Agent Successfully Registered";
+                    // $result = "Agent Successfully Registered";
+                    $result = sendEmail($companyEmail, $email, $password, $firstname, $lastname);
 
                 } else {
                     $result = "Internal Server Error";
@@ -1184,6 +1185,27 @@ function sendEmail($companyemail, $email, $defaultPassword, $firstname, $lastnam
 
     } catch (Exception $e) {
         $result = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+    return $result;
+}
+
+function createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable)
+{
+    $result = "";
+    $sql = "INSERT INTO transactions (agentId,propertyName,propertyType,category,unitNo,TCP,termsOfPayment,address,status,dateOfTransaction,dataOfReservation,finalTCP,commission,receivable,commissionAgent,commissionAR,commissionBuyer,receivable2) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $result = "Internal Error: Transaction`s Statement Error";
+    } else {
+
+        mysqli_stmt_bind_param($stmt, 'ssssssssssssssssss', $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $terms, $Address, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable);
+        if (mysqli_stmt_execute($stmt)) {
+            //get the id of latest inserted query;
+            $result = $conn->insert_id;
+        } else {
+            $result = mysqli_stmt_error($stmt);
+        }
+
     }
     return $result;
 }
