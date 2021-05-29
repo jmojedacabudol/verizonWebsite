@@ -13105,11 +13105,15 @@ form .row:first-child .floating-label-form-group {
 }
 
 .input-group .form-control {
-  height: 43.7px;
+  height: 44.7px;
 }
 
 
 
 .input-error {
   border: 1px solid #ff0000 !important;
+}
+
+.textToGreen {
+  color: #70945A;
 }

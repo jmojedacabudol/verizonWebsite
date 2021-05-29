@@ -1,57 +1,90 @@
 <?php
 if (isset($_POST['submit'])) {
-    session_start();
-    $propertyName = $_POST['listing-title'];
-    $propertyOfferType = $_POST['listing-offer-type'];
-    $propertyLocation = $_POST['listing-location'];
-    $propertyType = $_POST['listing-type'];
-    $propertyLotArea = $_POST['listing-lot-area'];
-    $propertyFloorArea = $_POST['listing-floor-area'];
-    $propertyBedroom = $_POST['listing-bedroom'];
-    $propertyCarpark = $_POST['listing-carpark'];
-    $propertyRentChoice = $_POST['listing-rentChoice'];
-    $propertyAmount = $_POST['listing-price'];
-    $propertyDesc = $_POST['listing-desc'];
-    $propertyImage = $_FILES['listing-image'];
-    $propertyOwner = $_SESSION['userid'];
-
-    // echo $propertyImage;
-    // $errorEmpty = false;
-    // $errorImage = false;
-
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
-    // // echo $propertyName, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyAmount, $propertyDesc;
-    if (emptypInputProperty($propertyName, $propertyLocation, $propertyLotArea, $propertyFloorArea, $propertyAmount, $propertyDesc) !== false) {
+    session_start();
 
-        echo "Please Fill out the fields.";
-        exit();
-    }
-    if (emptyPropertyImg($propertyImage) !== false) {
-        echo "No Image found.";
-        exit();
-    }
+//all variables that have value of "null" will have a certain value in a condition
 
-    // // print_r($propertyImage['size']);
-    // // $fileNames = array_filter($propertyImage['name']);
-    // // print_r($fileNames);
-    // // $result = invalidImgType($propertyImage);
-    // // echo $result;
-    if (invalidPropertyImg($propertyImage) === true) {
-        echo "File is not an Image.";
-        exit();
+    $propertyImage = $_FILES['listingImage'];
+    $propertyName = $_POST['listingTitle'];
+    $propertyType = $_POST['listingType'];
+    $listingUnitNo = null;
+
+    if (isset($_POST['listingUnitNo']) && $_POST['listingUnitNo'] !== "") {
+        $listingUnitNo = $_POST['listingUnitNo'];
     }
 
-    if (invalidPropertyImgSize($propertyImage) === true) {
-        echo "Image/s too large.";
+    $listingSubCategory = null;
+    if (isset($_POST['listingSubCategory']) && $_POST['listingSubCategory'] !== "") {
+        $listingSubCategory = $_POST['listingSubCategory'];
+    }
+
+    $listingOfferType = null;
+    if (isset($_POST['listingOfferType']) && $_POST['listingOfferType'] !== "") {
+        $listingOfferType = $_POST['listingOfferType'];
+    }
+
+    $listingPrice = $_POST['listingPrice'];
+
+    $listingRentChoice = null;
+    if (isset($_POST['listingRentChoice']) && $_POST['listingRentChoice'] !== "") {
+        $listingRentChoice = $_POST['listingRentChoice'];
+    }
+
+    $listingLotArea = null;
+    if (isset($_POST['listingLotArea']) && $_POST['listingLotArea'] !== "") {
+        $listingLotArea = $_POST['listingLotArea'];
+    }
+
+    $listingFloorArea = null;
+    if (isset($_POST['listingFloorArea']) && $_POST['listingFloorArea'] !== "") {
+        $listingFloorArea = $_POST['listingFloorArea'];
+    }
+
+    $listingBedrooms = null;
+    if (isset($_POST['listingBedrooms']) && $_POST['listingBedrooms'] !== "") {
+        $listingBedrooms = $_POST['listingBedrooms'];
+    }
+
+    $listingCapacityOfGarage = null;
+
+    $listingCapacityOfGarage = null;
+    if (isset($_POST['listingCapacityOfGarage']) && $_POST['listingCapacityOfGarage'] !== "") {
+        $listingCapacityOfGarage = $_POST['listingCapacityOfGarage'];
+    }
+
+    $propertyDesc = $_POST['listingDesc'];
+    $propertyATS = $_FILES['listingATS'];
+    $listingRFUB = $_POST['listingRFUB'];
+    $listingHLB = $_POST['listingHLB'];
+    $listingStreet = $_POST['listingStreet'];
+    $listingSubdivision = $_POST['listingSubdivision'];
+    $listingBrgyAddress = $_POST['listingBrgyAddress'];
+    $listingCityAddress = $_POST['listingCityAddress'];
+    $propertyOwner = $_SESSION['userid'];
+
+    //check first the size/s of all img/s of Property
+    if (checkPropertyImgSize($propertyImage)) {
+        //return the error
+        echo "Property Image/s is too large.";
         exit();
     }
 
-    $result = uploadProperty($propertyOwner, $propertyName, $propertyOfferType, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyCarpark, $propertyAmount, $propertyDesc, $propertyRentChoice, $propertyImage, $conn);
+    //check for size of ATS file
+    if (invalidATSSize($propertyATS)) {
+        echo "ATS file is too large.";
+        exit();
+    }
+
+    //UPLOAD THE PROPERTY
+    $result = uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $listingUnitNo, $listingSubCategory, $listingOfferType, $listingPrice, $listingRentChoice, $listingLotArea, $listingFloorArea, $listingBedrooms, $listingCapacityOfGarage, $propertyDesc, $propertyATS, $listingRFUB, $listingHLB, $listingStreet, $listingSubdivision, $listingBrgyAddress, $listingCityAddress, $propertyOwner);
+
     echo $result;
+    exit();
 
 } else {
-    echo "Error occured.";
+    echo "Error submitting Property Information: Contact Developer!";
 
 }

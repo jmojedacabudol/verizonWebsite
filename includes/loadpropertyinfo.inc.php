@@ -32,9 +32,6 @@ if (isset($_POST['propertyId'])) {
      AVAILABLE &nbsp;</h4>";
             echo "<hr> ";
             echo "</hr>";
-            // echo "<p class='mproperties-desc'>";
-            // echo $row['propertyname'];
-            // echo "</p>";
             echo "<p class='mproperties-desc'>Description";
             echo "</p>";
             echo "<p class='mproperties-subdesc'>";
@@ -43,7 +40,7 @@ if (isset($_POST['propertyId'])) {
 
             echo "<p class='mproperties-desc'>Location";
             echo "</p>";
-            echo $row['propertylocation'];
+            echo completeAddress($row['RoomFloorUnitNoBuilding'], $row['HouseLotBlockNo'], $row['street'], $row['subdivision'], $row['barangay'], $row['city']);
             echo "<br>";
             echo "<br>";
             echo " <!--Properties-Bedrooms--->";
@@ -51,14 +48,26 @@ if (isset($_POST['propertyId'])) {
             echo "<div class='row'>";
             echo " <div class='col-sm mproperties-features'>";
             echo "<b class='mproperties-br1'> <i class='fas fa-bed'></i>&nbsp";
-            echo $row['propertybedrooms'];
+            if ($row['propertybedrooms'] == null) {
+                echo "0";
+
+            } else {
+                echo $row['propertybedrooms'];
+
+            }
             echo "</b><br>";
             echo "<p class='mproperties-br2'> Bed rooms </p>";
             echo "</div>";
 
             echo " <div class='col-sm mproperties-features'>";
             echo "<b class='mproperties-br1'> <i class='fas fa-car'></i>&nbsp;";
-            echo $row['propertycarpark'];
+            if ($row['propertycarpark'] == null) {
+                echo "0";
+
+            } else {
+                echo $row['propertycarpark'];
+
+            }
             echo "</b><br>";
             echo "<p class='mproperties-br2'> Car Parks </p>";
             echo "</div>";
@@ -79,4 +88,30 @@ if (isset($_POST['propertyId'])) {
 
         }
     }
+}
+
+function completeAddress($RFUB, $HLB, $street, $subdivision, $barangay, $city)
+{
+
+    if ($RFUB != null && $HLB != null && $street != null && $subdivision != null && $barangay != null && $city != null) {
+        //all is not empty
+        return ucfirst($RFUB) . " " . ucfirst($HLB) . " " . ucfirst($street) . " " . ucfirst($subdivision) . " " . ucfirst($barangay) . ", " . ucfirst($city);
+    } else if ($RFUB == null && $HLB != null && $street != null && $subdivision != null && $barangay != null && $city != null) {
+        //RFUB is  empty
+        return ucfirst($HLB) . " " . ucfirst($street) . " " . ucfirst($subdivision) . " " . ucfirst($barangay) . ", " . ucfirst($city);
+
+    } else if ($RFUB != null && $HLB == null && $street != null && $subdivision != null && $barangay != null && $city != null) {
+        //HLB is  empty
+        return ucfirst($RFUB) . " " . ucfirst($street) . " " . ucfirst($subdivision) . " " . ucfirst($barangay) . ", " . ucfirst($city);
+
+    } else if ($RFUB == null && $HLB != null && $street != null && $subdivision == null && $barangay != null && $city != null) {
+        //RFUB and subdivision is  empty
+        return ucfirst($HLB) . " " . ucfirst($street) . " " . ucfirst($barangay) . ", " . ucfirst($city);
+
+    } else if ($RFUB != null && $HLB == null && $street != null && $subdivision == null && $barangay != null && $city != null) {
+        //HLB and subdivision is  empty
+        return ucfirst($RFUB) . " " . ucfirst($street) . " " . ucfirst($barangay) . ", " . ucfirst($city);
+
+    }
+
 }

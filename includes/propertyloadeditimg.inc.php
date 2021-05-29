@@ -3,7 +3,6 @@
 if (isset($_POST['propertyId'])) {
     $propertyId = $_POST['propertyId'];
     require_once 'dbh.inc.php';
-    $propertyId = $_POST['propertyId'];
 
     $sql = "SELECT file_name FROM images WHERE propertyid=" . "'" . mysqli_real_escape_string($conn, $propertyId) . "'";
 

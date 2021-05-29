@@ -39,7 +39,7 @@ window.fbAsyncInit = function() {
     <header class="masthead bg-photo text-white text-center">
         <!--Call Us Panel-->
         <div class="overlay">
-            <i class="fas fa-phone"></i> Call Us! (02) 799-4864
+            <i class="fas fa-phone"></i> Call Us! (+63) 9310645492
         </div>
         <!---End of Call Us Panel--->
 
@@ -76,14 +76,14 @@ window.fbAsyncInit = function() {
 
                             <div class="col-md">
                                 <div class="form-group">
-                                    <input id="offertype" name="offertype" style="display:none;" value="sell" />
+                                    <input id="offertype" name="offertype" style="display:none;" value="Sell" />
                                     <div class="btn-group" role="group" aria-label="Buy or Rent">
                                         <button type="button" id="forsaleBtn" class="btn btn-primary">For
                                             Sale</button>
                                         <button type="button" id="forrentBtn" class="btn btn-secondary">For
                                             Rent</button>
                                         <button type="button" id="presellingBtn"
-                                            class="btn btn-secondary">Preselling</button>
+                                            class="btn btn-secondary">Presell</button>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +226,7 @@ if (mysqli_num_rows($result) > 0) {
         echo $row['propertyname'];
         echo "</h4>";
         echo "<h5 class='text-uppercase lproperties-price'> ₱ ";
-        echo number_format($row['propertyamount']);
+        echo $row['propertyamount'];
         echo "</h5>";
         if ($row['propertytype'] === "House and Lot" || $row['propertytype'] === "Condominium") {
             echo "<h6 class='lproperties-br'>";

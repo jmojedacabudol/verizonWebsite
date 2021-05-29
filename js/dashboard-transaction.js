@@ -445,7 +445,7 @@ function previewImage(image_blog, container) {
 //preventing numbers to names 
 function allowOnlyLetters(evt) {
     var inputValue = evt.charCode;
-    if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
+    if (!(inputValue >= 65 && inputValue <= 122) && (inputValue != 32 && inputValue != 0)) {
         evt.preventDefault();
     }
 }
@@ -1145,49 +1145,31 @@ $("#addTransactionForm").submit(function (event) {
                                                     contentType: false,
                                                     type: "POST",
                                                     success: function (data) {
-                                                        Swal.close();
-                                                        console.log(data)
-                                                        // if (data == "Property Uploaded." || data == "Your listing is now uploaded. Awaiting for Admin`s Approval.") {
-                                                        //     // console.log("Yahoo")
-                                                        //     $("#form-message").html(``);
-                                                        //     Swal.fire({
-                                                        //         icon: "success",
-                                                        //         title: "Property Uploaded",
-                                                        //         text: data,
-                                                        //         showConfirmButton: false,
-                                                        //         allowOutsideClick: false,
-                                                        //         timer: 2000
-                                                        //     }).then(function (result) {
-                                                        //         location.reload();
-                                                        //     })
-                                                        // } else {
-                                                        //     // console.log(data)
-                                                        //     $("#form-message").html(`<div class='alert alert-danger' id='alert' role='alert'>${data}</div>`);
-                                                        // }
+                                                        //transfer the id of inserted transaction to another ajax call
+                                                        $.ajax({
+                                                            url: "includes/insertclients.inc.php",
+                                                            type: "POST",
+                                                            processData: false,
+                                                            contentType: false,
+                                                            data: {
+                                                                "clients": JSON.stringify(arrayOfClients),
+                                                            },
+                                                            success: function (data) {
+                                                                Swal.close();
+                                                                console.log(data)
+
+                                                            },
+                                                            error: function (data) {
+                                                                Swal.close();
+                                                                console.log(data);
+                                                            },
+                                                        });
 
                                                     },
                                                     error: function (data) {
                                                         alert(data);
                                                     },
                                                 });
-
-                                                // //check for imagesholder id to know the index of the client to be added
-                                                // if (client0.children().length !== 0 && client1.children().length !== 0) {
-                                                //     //first img holder and second img holder is not empty
-
-                                                // } else {
-                                                //     //if there are at least 1 client added
-                                                //     if (client0.children().length !== 0 && client1.children().length === 0) {
-
-                                                //         //1st have client 2nd dont have client
-                                                //     } else if (client0.children().length === 0 && client1.children().length !== 0) {
-
-                                                //     } else {
-                                                //         //there is not client added , add error
-
-                                                //     }
-                                                // }
-
                                             }
                                         })
                                     }
@@ -1241,47 +1223,11 @@ $("#addTransactionForm").submit(function (event) {
                                                         success: function (data) {
                                                             Swal.close();
                                                             console.log(data)
-                                                            // if (data == "Property Uploaded." || data == "Your listing is now uploaded. Awaiting for Admin`s Approval.") {
-                                                            //     // console.log("Yahoo")
-                                                            //     $("#form-message").html(``);
-                                                            //     Swal.fire({
-                                                            //         icon: "success",
-                                                            //         title: "Property Uploaded",
-                                                            //         text: data,
-                                                            //         showConfirmButton: false,
-                                                            //         allowOutsideClick: false,
-                                                            //         timer: 2000
-                                                            //     }).then(function (result) {
-                                                            //         location.reload();
-                                                            //     })
-                                                            // } else {
-                                                            //     // console.log(data)
-                                                            //     $("#form-message").html(`<div class='alert alert-danger' id='alert' role='alert'>${data}</div>`);
-                                                            // }
-
                                                         },
                                                         error: function (data) {
                                                             alert(data);
                                                         },
                                                     });
-
-                                                    // //check for imagesholder id to know the index of the client to be added
-                                                    // if (client0.children().length !== 0 && client1.children().length !== 0) {
-                                                    //     //first img holder and second img holder is not empty
-
-                                                    // } else {
-                                                    //     //if there are at least 1 client added
-                                                    //     if (client0.children().length !== 0 && client1.children().length === 0) {
-
-                                                    //         //1st have client 2nd dont have client
-                                                    //     } else if (client0.children().length === 0 && client1.children().length !== 0) {
-
-                                                    //     } else {
-                                                    //         //there is not client added , add error
-
-                                                    //     }
-                                                    // }
-
                                                 }
                                             })
                                         }
@@ -1559,7 +1505,7 @@ function mobileNumberValidation(clientMobileNumber, mobileNumberTag, alertId) {
 //landline validation
 function landlineValidation(clientLandlineNumber, landLineTag, alertId) {
     //regex for mobule number ex. 09123456789
-    var regex = /^(9)\d{9}$/;
+    var regex = /^(8)\d{9}$/;
     //mobile number is not empty
     if (clientLandlineNumber !== "") {
         //meet the requiret number lenght of mobile number

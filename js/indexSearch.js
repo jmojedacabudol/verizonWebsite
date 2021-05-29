@@ -2,7 +2,7 @@ $(() => {
     $("#forsaleBtn").click(function () {
         document.getElementById("forsaleBtn").classList.remove('btn-secondary');
         document.getElementById("forsaleBtn").classList.add('btn-primary');
-        $("#offertype").val("sell")
+        $("#offertype").val("Sell")
 
         // document.getElementById("forrentBtn").classList.remove('gradient-bg');
         document.getElementById("forrentBtn").classList.add('btn-secondary');
@@ -12,7 +12,7 @@ $(() => {
     $("#forrentBtn").click(function () {
         document.getElementById("forrentBtn").classList.remove('btn-secondary');
         document.getElementById("forrentBtn").classList.add('btn-primary');
-        $("#offertype").val("rent")
+        $("#offertype").val("Rent")
 
         // document.getElementById("forsaleBtn").classList.remove('btn-primary');
         document.getElementById("forsaleBtn").classList.add('btn-secondary');
@@ -24,7 +24,7 @@ $(() => {
     $("#presellingBtn").click(function () {
         document.getElementById("presellingBtn").classList.remove('btn-secondary');
         document.getElementById("presellingBtn").classList.add('btn-primary');
-        $("#offertype").val("presell")
+        $("#offertype").val("Presell")
 
         // document.getElementById("forsaleBtn").classList.remove('btn-primary');
         document.getElementById("forsaleBtn").classList.add('btn-secondary');

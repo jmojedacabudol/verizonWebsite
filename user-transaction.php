@@ -256,7 +256,7 @@ if (mysqli_num_rows($result) > 0) {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add New Transaction</h5>
+                <h5 class="modal-title textToGreen">Add New Transaction</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -504,7 +504,7 @@ if (mysqli_num_rows($result) > 0) {
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Client Information</h5>
+                <h5 class="modal-title textToGreen" id="exampleModalLabel">Add Client Information</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -750,7 +750,7 @@ if (mysqli_num_rows($result) > 0) {
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Client Information</h5>
+                <h5 class="modal-title textToGreen" id="exampleModalLabel">Edit Client Information</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1014,8 +1014,9 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+<!-- Numeral Plugin -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-<!-- Moment Js -->
+<!-- Moment Plugin -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
 
 <script src="js/imageLoading.js"></script>
