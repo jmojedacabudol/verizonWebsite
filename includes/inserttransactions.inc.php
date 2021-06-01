@@ -5,6 +5,7 @@ if (isset($_POST['submit'])) {
     require_once 'functions.inc.php';
 
     session_start();
+    $propertyId = $_POST['agentProperties'];
     $agentProperties = $_POST['propertyName'];
     $propertyType = $_POST['propertyType'];
     $propertyOfferType = $_POST['propertyOfferType'];
@@ -28,13 +29,24 @@ if (isset($_POST['submit'])) {
     $buyersCommision = null;
     $finalReceivable = null;
     $commission = null;
+    $firstClient = null;
+    $secondClient = null;
+
+    if (isset($_POST['firstClient'])) {
+        $firstClient = $_POST['firstClient'];
+
+    }
+    if (isset($_POST['secondClient'])) {
+        $secondClient = $_POST['secondClient'];
+
+    }
 
     if ($propertyOfferType === "Preselling") {
         if ($propertyType === "Condominium") {
             //preselling condo
             $reservationDate = $_POST['saleDate'];
             $unitNo = $_POST['unitNo'];
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
             //this result will return the index of transaction that is inserted
             echo $result;
 
@@ -42,7 +54,7 @@ if (isset($_POST['submit'])) {
             //preselling but not condomonium
             //preselling condo
             $reservationDate = $_POST['saleDate'];
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
             //this result will return the index of transaction that is inserted
             echo $result;
 
@@ -57,7 +69,7 @@ if (isset($_POST['submit'])) {
             $commission = $_POST['commission'];
 
             $unitNo = $_POST['unitNo'];
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
 //this result will return the index of transaction that is inserted
             echo $result;
 
@@ -69,7 +81,7 @@ if (isset($_POST['submit'])) {
             $finalReceivable = $_POST['finalReceivable'];
             $commission = $_POST['commission'];
 
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
 //this result will return the index of transaction that is inserted
             echo $result;
 

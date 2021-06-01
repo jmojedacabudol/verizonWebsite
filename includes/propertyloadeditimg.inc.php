@@ -25,7 +25,7 @@ if (isset($_POST['propertyId'])) {
             $img->setAttribute('width', '60px');
             $img->setAttribute('marginLeft', '15px');
             $img->setAttribute('class', 'propertyEditImg');
-            $img->setAttribute('onclick', 'deleteProperty(this.id,' . $propertyId . ')');
+            $img->setAttribute('onclick', 'deletePropertyImg(this.id,' . $propertyId . ')');
             $doc->appendChild($img);
             echo $doc->saveHTML();
         }

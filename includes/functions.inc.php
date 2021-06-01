@@ -467,45 +467,45 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
                         $targetDir = '../uploads/';
                         $fileNames = array_filter($propertyImage['name']);
                         if (!empty($fileNames)) {
-                            if (!empty($fileNames)) {
-                                foreach ($propertyImage['name'] as $key => $val) {
-                                    $fileName = basename($propertyImage['name'][$key]);
-                                    $fileExt = explode('.', $fileName);
-                                    $fileTmpName = $propertyImage['tmp_name'];
-                                    $fileActualExt = strtolower(end($fileExt));
-                                    $newFileName = uniqid('', true);
-                                    $fileNameNew = $newFileName . "." . $fileActualExt;
+                            foreach ($propertyImage['name'] as $key => $val) {
+                                $fileName = basename($propertyImage['name'][$key]);
+                                $fileExt = explode('.', $fileName);
+                                $fileTmpName = $propertyImage['tmp_name'];
+                                $fileActualExt = strtolower(end($fileExt));
+                                $newFileName = uniqid('', true);
+                                $fileNameNew = $newFileName . "." . $fileActualExt;
 
-                                    $targetFilePath = $targetDir . $fileNameNew;
-                                    if (move_uploaded_file($propertyImage['tmp_name'][$key], $targetFilePath)) {
-                                        $sql = "INSERT INTO images (propertyid,file_name) VALUES(?,?);";
-                                        $stmt = mysqli_stmt_init($conn);
-                                        if (!mysqli_stmt_prepare($stmt, $sql)) {
-                                            if (TESTING) {
-                                                //show this error in testing mode
-                                                $result = "Error inserting image name to datebase!";
-                                            }
-                                            //stop the loop
-                                            break;
-                                        } else {
-                                            mysqli_stmt_bind_param($stmt, 'ss', $propertyId, $newFileName);
-                                            if (!mysqli_stmt_execute($stmt)) {
-                                                //display the error in testing mode
-                                                if (TESTING) {
-                                                    //inserting property information error
-                                                    $result = mysqli_stmt_error($stmt);
-                                                }
-                                                //close statement;
-                                                mysqli_stmt_close($stmt);
-
-                                                break;
-                                            }
+                                $targetFilePath = $targetDir . $fileNameNew;
+                                if (move_uploaded_file($propertyImage['tmp_name'][$key], $targetFilePath)) {
+                                    $sql = "INSERT INTO images (propertyid,file_name) VALUES(?,?);";
+                                    $stmt = mysqli_stmt_init($conn);
+                                    if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                        if (TESTING) {
+                                            //show this error in testing mode
+                                            $result = "Error inserting image name to datebase!";
                                         }
-                                    } else {
-                                        //uploading property img error
-                                        $result = "Error Uploading Property Image/s";
+                                        //stop the loop
                                         break;
+                                    } else {
+                                        mysqli_stmt_bind_param($stmt, 'ss', $propertyId, $newFileName);
+                                        if (!mysqli_stmt_execute($stmt)) {
+                                            //display the error in testing mode
+                                            if (TESTING) {
+                                                //inserting property information error
+                                                $result = mysqli_stmt_error($stmt);
+                                            }
+                                            //close statement;
+                                            mysqli_stmt_close($stmt);
+
+                                            break;
+                                        }
                                     }
+                                } else {
+                                    //show error in uploading ATS FILE in testing mode
+                                    if (TESTING) {
+                                        $result = "Image NOT UPLOADED" . $_FILES["file"]["error"];
+                                    }
+                                    break;
                                 }
                             }
                         }
@@ -566,117 +566,6 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
         }
     }
     return $result;
-    // mysqli_stmt_bind_param($stmt, 's', $propertyOwner);
-    // mysqli_stmt_execute($stmt);
-
-    // $resultData = mysqli_stmt_get_result($stmt);
-
-    // if ($row = mysqli_fetch_assoc($resultData)) {
-    //     if ($row['approval'] === 0) {
-
-    //         $insertsql = "INSERT INTO property (usersId,propertyname,offertype,propertylocation,propertytype,propertylotarea,propertyfloorarea,propertybedrooms,propertycarpark,propertyamount,propertydesc,propertyrentchoice) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
-    //         $insertstmt = mysqli_stmt_init($conn);
-
-    //         if (!mysqli_stmt_prepare($insertstmt, $insertsql)) {
-    //             // header("location: ../index.php?error=stmtfailed");
-    //             $result = "statement1 failed";
-    //             //exit();
-    //         } else {
-    //             mysqli_stmt_bind_param($insertstmt, 'ssssssssssss', $propertyOwner, $propertyName, $propertyOfferType, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyCarpark, $propertyAmount, $propertyDesc, $propertyRentChoice);
-    //             mysqli_stmt_execute($insertstmt);
-    //             $propertyid = $conn->insert_id; // function will now return the ID instead of true.
-    //             $targetDir = '../uploads/';
-    //             $fileNames = array_filter($propertyImage['name']);
-    //             if (!empty($fileNames)) {
-    //                 foreach ($propertyImage['name'] as $key => $val) {
-    //                     $fileName = basename($propertyImage['name'][$key]);
-    //                     $fileExt = explode('.', $fileName);
-    //                     $fileTmpName = $propertyImage['tmp_name'];
-    //                     $fileActualExt = strtolower(end($fileExt));
-    //                     $newFileName = uniqid('', true);
-    //                     $fileNameNew = $newFileName . "." . $fileActualExt;
-
-    //                     $targetFilePath = $targetDir . $fileNameNew;
-    //                     if (move_uploaded_file($propertyImage['tmp_name'][$key], $targetFilePath)) {
-
-    //                         // $insertValuesSQL .= $propertyid . ",('" . $fileName . "'),";
-
-    //                         $sql = "INSERT INTO images (propertyid,file_name) VALUES(?,?);";
-    //                         $stmt = mysqli_stmt_init($conn);
-
-    //                         if (!mysqli_stmt_prepare($stmt, $sql)) {
-    //                             echo "stmt failed";
-
-    //                             //exit();
-    //                         } else {
-    //                             mysqli_stmt_bind_param($stmt, 'ss', $propertyid, $newFileName);
-    //                             mysqli_stmt_execute($stmt);
-    //                             mysqli_stmt_close($stmt);
-    //                         }
-    //                         // echo $insertValuesSQL;
-    //                     } else {
-    //                         $result = "uploaderror ";
-    //                         exit();
-    //                     }
-    //                 }
-    //             }
-    //             $result = "Your listing is now uploaded. Awaiting for Admin`s Approval.";
-    //         }
-    //     } else if ($row['approval'] === 1) {
-
-    //         $sql2 = "INSERT INTO property (usersId,propertyname,offertype,propertylocation,propertytype,propertylotarea,propertyfloorarea,propertybedrooms,propertycarpark,propertyamount,propertydesc,propertyrentchoice) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
-    //         $stmt2 = mysqli_stmt_init($conn);
-
-    //         if (!mysqli_stmt_prepare($stmt2, $sql2)) {
-    //             // header("location: ../index.php?error=stmtfailed");
-    //             exit();
-    //         } else {
-    //             mysqli_stmt_bind_param($stmt2, 'ssssssssssss', $propertyOwner, $propertyName, $propertyOfferType, $propertyLocation, $propertyType, $propertyLotArea, $propertyFloorArea, $propertyBedroom, $propertyCarpark, $propertyAmount, $propertyDesc, $propertyRentChoice);
-    //             mysqli_stmt_execute($stmt2);
-    //             mysqli_stmt_close($stmt2);
-    //             $propertyid = $conn->insert_id; // function will now return the ID instead of true.
-
-    //             $targetDir = '../uploads/';
-    //             $fileNames = array_filter($propertyImage['name']);
-    //             if (!empty($fileNames)) {
-    //                 foreach ($propertyImage['name'] as $key => $val) {
-    //                     $fileName = basename($propertyImage['name'][$key]);
-    //                     $fileExt = explode('.', $fileName);
-    //                     $fileTmpName = $propertyImage['tmp_name'];
-    //                     $fileActualExt = strtolower(end($fileExt));
-    //                     $newFileName = uniqid('', true);
-    //                     $fileNameNew = $newFileName . "." . $fileActualExt;
-
-    //                     $targetFilePath = $targetDir . $fileNameNew;
-    //                     if (move_uploaded_file($propertyImage['tmp_name'][$key], $targetFilePath)) {
-
-    //                         // $insertValuesSQL .= $propertyid . ",('" . $fileName . "'),";
-
-    //                         $sql = "INSERT INTO images (propertyid,file_name) VALUES(?,?);";
-    //                         $stmt = mysqli_stmt_init($conn);
-
-    //                         if (!mysqli_stmt_prepare($stmt, $sql)) {
-    //                             echo "stmt failed";
-
-    //                             //exit();
-    //                         } else {
-    //                             mysqli_stmt_bind_param($stmt, 'ss', $propertyid, $newFileName);
-    //                             mysqli_stmt_execute($stmt);
-    //                             mysqli_stmt_close($stmt);
-    //                         }
-    //                         // echo $insertValuesSQL;
-    //                     } else {
-    //                         $result = "uploaderror ";
-    //                         exit();
-    //                     }
-    //                 }
-    //             }
-    //             $result = "Property Uploaded.";
-    //         }
-    //     }
-    //     return $result;
-    //     mysqli_stmt_close($stmt);
-    // }
 }
 
 function propertyAlreadyApproved($propertyid, $conn)
@@ -1311,23 +1200,97 @@ function sendEmail($companyemail, $email, $defaultPassword, $firstname, $lastnam
     return $result;
 }
 
-function createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable)
+function createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId)
 {
     $result = "";
-    $sql = "INSERT INTO transactions (agentId,propertyName,propertyType,category,unitNo,TCP,termsOfPayment,address,status,dateOfTransaction,dataOfReservation,finalTCP,commission,receivable,commissionAgent,commissionAR,commissionBuyer,receivable2) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql = "INSERT INTO transactions (agentId,propertyName,propertyType,category,unitNo,TCP,termsOfPayment,address,status,dateOfTransaction,dataOfReservation,finalTCP,commission,receivable,commissionAgent,commissionAR,commissionBuyer,receivable2,firstClientId,secondClientId,propertyId) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         $result = "Internal Error: Transaction`s Statement Error";
     } else {
 
-        mysqli_stmt_bind_param($stmt, 'ssssssssssssssssss', $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $terms, $Address, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable);
+        mysqli_stmt_bind_param($stmt, 'sssssssssssssssssssss', $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $terms, $Address, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
         if (mysqli_stmt_execute($stmt)) {
             //get the id of latest inserted query;
-            $result = $conn->insert_id;
+            $result = "Transaction Created";
         } else {
             $result = mysqli_stmt_error($stmt);
         }
 
     }
     return $result;
+}
+
+function insertClientInformation($conn, $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdHolder, $secondValidIdHolder)
+{
+    $result = "default";
+    //testing mode (to see error properly)
+    define("TESTING", false);
+
+    $firstValidIdImgName = $firstValidIdHolder['name'];
+    $firstValidIdExt = explode('.', $firstValidIdImgName);
+    $firstValidIdTmpName = $firstValidIdHolder['tmp_name'];
+    $firstValidIdActualExt = strtolower(end($firstValidIdExt));
+    $newFirstValidIdFileName = uniqid('', true);
+    $firstValidIdFileNameNew = $newFirstValidIdFileName . "." . $firstValidIdActualExt;
+    $profileFileDestination = '../uploads/' . $firstValidIdFileNameNew;
+
+    //upload first valid Id to file folder
+    if (move_uploaded_file($firstValidIdTmpName, $profileFileDestination)) {
+        //upload the second Valid Id
+
+        $secondValidIdImgName = $secondValidIdHolder['name'];
+        $secondValidIdExt = explode('.', $secondValidIdImgName);
+        $secondValidIdTmpName = $secondValidIdHolder['tmp_name'];
+        $secondValidIdActualExt = strtolower(end($secondValidIdExt));
+        $newSecondValidIdFileName = uniqid('', true);
+        $secondValidIdFileNameNew = $newSecondValidIdFileName . "." . $secondValidIdActualExt;
+        $profileFileDestination = '../uploads/' . $secondValidIdFileNameNew;
+
+        //upload second valid Id to file folder
+        if (move_uploaded_file($secondValidIdTmpName, $profileFileDestination)) {
+            //upload the second Valid Id
+
+            //INSERT TO CLIENTS TABLE
+            $sql = "INSERT INTO clients (firstName,middleName,lastName,mobileNumber,landlineNumber,email,birthday,gender,age,civilStatus,RoomFloorUnitNoBuilding,HouseLotBlockNo,street,subdivision,barangay,city,companyName,companyRoomFloorUnitNoBuilding,companyStreet,companyBarangay,companyCity,primaryId,secondaryId) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            $stmt = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                $result = "Internal Error: Transaction`s Statement Error";
+            } else {
+                mysqli_stmt_bind_param($stmt, 'sssssssssssssssssssssss', $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdFileNameNew, $secondValidIdFileNameNew);
+                if (mysqli_stmt_execute($stmt)) {
+
+                    mysqli_stmt_close($stmt);
+                    //return the name of the client
+                    // insert->id returns zero if there is an error
+                    $result = $conn->insert_id;
+                } else {
+                    mysqli_stmt_close($stmt);
+
+                    if (TESTING) {
+                        //inserting property information error
+                        $result = mysqli_stmt_error($stmt);
+                    }
+
+                }
+            }
+        } else {
+            //error in upload second valid Id
+            //show error in uploading ATS FILE in testing mode
+            if (TESTING) {
+                $result = "Second Image NOT UPLOADED" . $secondValidIdHolder["error"];
+            }
+            exit();
+        }
+
+    } else {
+        //error in upload first valid Id
+        //show error in uploading ATS FILE in testing mode
+        if (TESTING) {
+            $result = "First Image NOT UPLOADED" . $firstValidIdHolder["error"];
+        }
+        exit();
+    }
+    echo $result;
 }

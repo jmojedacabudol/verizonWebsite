@@ -35,7 +35,7 @@ if (mysqli_num_rows($result) > 0) {
         echo $row['propertyname'];
         echo "</td>";
         echo "<td>";
-        echo $row['propertylocation'];
+        echo $row['barangay'] . "," . $row['city'];
         echo "</td>";
 
         echo "<td>";
@@ -52,7 +52,7 @@ if (mysqli_num_rows($result) > 0) {
         echo $row['offertype'];
         echo "</td>";
         echo "<td>₱&nbsp;&nbsp;";
-        echo number_format($row['propertyamount']);
+        echo $row['propertyamount'];
         echo "</td>";
 
         echo "<td>";

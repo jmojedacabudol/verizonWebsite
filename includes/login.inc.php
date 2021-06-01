@@ -1,12 +1,11 @@
 <?php
+require_once 'dbh.inc.php';
+require_once 'functions.inc.php';
 
 if (isset($_POST["submit"])) {
 
     $email = $_POST['uid'];
     $pwd = $_POST['pwd'];
-
-    require_once 'dbh.inc.php';
-    require_once 'functions.inc.php';
 
     if (emptyInputLogin($email, $pwd) !== false) {
         echo 'Fill All Fields!';

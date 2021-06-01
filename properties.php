@@ -10,12 +10,14 @@ require_once 'header.php'
         <div class="container table-bg d-flex flex-column">
 
             <!-- Search-->
-            <form action="properties.php" method="get">
+            <form action="properties.php" id="propertySearchForm" method="get">
                 <div class="container text-black">
                     <h2 class="h2-size">Find your ideal property </h2>
                     <div class="row align-left text-black">
-                        <?php
+                        <div class="col-md-3">
+                            <div class="form-group">
 
+                                <?php
 // the link come from "search" at index
 //SEARCH FILTER
 
@@ -27,10 +29,26 @@ if (isset($_GET['offertype'])) {
     $offertype = 'Any';
 
 }
-if (isset($_GET['propertylocation'])) {
-    $propertylocation = $_GET['propertylocation'];
+
+if (isset($_GET['offertype'])) {
+    $offertype = $_GET['offertype'];
+    // echo $offertype;
 } else {
-    $propertylocation = '';
+    $offertype = 'Any';
+
+}
+
+if (isset($_GET['sub-type'])) {
+    $subType = $_GET['sub-type'];
+    // echo $offertype;
+} else {
+    $subType = '';
+}
+
+if (isset($_GET['city'])) {
+    $city = $_GET['city'];
+} else {
+    $city = '';
 }
 if (isset($_GET['lotarea'])) {
     $lotarea = $_GET['lotarea'];
@@ -58,10 +76,8 @@ if (isset($_GET['maxpropertybedrooms'])) {
     $maxpropertybedrooms = '';
 }
 
-echo '<div class="col-md-3">';
-echo ' <div class="form-group">';
+//OFFFER TYPE
 echo '<select name="offertype" id=offerType class="form-control">';
-
 if ($offertype == 'Sell') {
     echo '<option hidden>Offer Type</option>';
     echo '<option>Any</option>';
@@ -104,6 +120,8 @@ echo '</select>';
 echo '</div>';
 echo '</div>';
 
+//LOCATION
+
 echo '<div class="col-md-3">';
 echo '<div class="form-group">';
 echo '<div class="input-group w-100">';
@@ -111,13 +129,15 @@ echo ' <div class="input-group-prepend">';
 echo '   <span class="input-group-text" id="basic-addon1"><i
                                                 class="fas fa-map-marker-alt"></i></span>';
 echo '</div>';
-echo '<input type="text" name="propertylocation" class="form-control"
+echo '<input type="text" name="city" class="form-control"
                                         placeholder="Enter Location" aria-label="Location" value="';
-echo $propertylocation;
+echo $city;
 echo '"aria-describedby="basic-addon1">';
 echo '</div>';
 echo '</div>';
 echo '</div>';
+
+//LOT AREA
 
 echo '   <div class="col-md-3">';
 echo '<div class="form-group">';
@@ -134,6 +154,8 @@ echo '">';
 echo '</div>';
 echo '</div>';
 echo '</div>';
+
+//FLOOR AREA
 
 echo '<div class="col-md-3">';
 echo '<div class="form-group">';
@@ -153,10 +175,12 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 
+//PROPERTY TYPE
+
 echo '<div class="row align-left text-black">';
 echo '<div class="col-md-3">';
 echo '<div class="form-group">';
-echo '<select name="propertytype" id=propertyType class="form-control">';
+echo '<select name="propertytype" id=propertyType class="form-control" onchange="subCategoryDisplay(this.value)">';
 if ($propertytype == 'Building') {
     echo '<option hidden>Property Type</option>';
     echo '<option>Any</option>';
@@ -164,7 +188,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -175,7 +198,6 @@ if ($propertytype == 'Building') {
     echo '<option selected>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -186,7 +208,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option selected>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -197,18 +218,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option selected>House and Lot</option>';
-    echo '<option>Industrial</option>';
-    echo '<option>Offices</option>';
-    echo '<option>Warehouse</option>';
-
-} else if ($propertytype == 'Industrial') {
-    echo '<option hidden>Property Type</option>';
-    echo '<option>Any</option>';
-    echo '<option>Building</option>';
-    echo '<option>Condominium</option>';
-    echo '<option>Lot</option>';
-    echo '<option>House and Lot</option>';
-    echo '<option selected>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -219,7 +228,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option selected>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -230,7 +238,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option selected>Warehouse</option>';
 
@@ -241,7 +248,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -252,7 +258,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -263,7 +268,6 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Industrial</option>';
     echo '<option>Offices</option>';
     echo '<option>Warehouse</option>';
 
@@ -272,6 +276,79 @@ echo '</select>';
 
 echo '</div>';
 echo '</div>';
+
+//SUB CATEGORY
+if ($propertytype === "Building" || $propertytype === "Condominium") {
+    echo '<div class="col-md-3" id="subCategoryHolder">';
+    echo '<div class="form-group">';
+    echo '<select name="sub-type" id=subCategory class="form-control">';
+
+    if ($subType === "Residential") {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option selected>Residential</option>';
+        echo '<option>Commercial</option>';
+
+    } else {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option>Residential</option>';
+        echo '<option selected>Commercial</option>';
+
+    }
+
+    echo '</select>';
+    echo '</div>';
+    echo '</div>';
+
+} else if ($propertytype === "Lot") {
+    echo ' <div class="col-md-3" id="subCategoryHolder">';
+    echo '<div class="form-group">';
+    echo '<select name="sub-type" id=subCategory class="form-control">';
+
+    if ($subType === "Agricultural") {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option selected>Agricutural</option>';
+        echo '<option>Commercial</option>';
+        echo '<option>Residential</option>';
+        echo '<option>Industrial</option>';
+
+    } else if ($subType === "Commercial") {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option>Agricutural</option>';
+        echo '<option selected>Commercial</option>';
+        echo '<option>Residential</option>';
+        echo '<option>Industrial</option>';
+
+    } else if ($subType === "Residential") {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option>Agricutural</option>';
+        echo '<option>Commercial</option>';
+        echo '<option selected>Residential</option>';
+        echo '<option>Industrial</option>';
+
+    } else if ($subType === "Industrial") {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option>Agricutural</option>';
+        echo '<option>Commercial</option>';
+        echo '<option>Residential</option>';
+        echo '<option selected>Industrial</option>';
+
+    }
+
+    echo '</select>';
+    echo '</div>';
+    echo '</div>';
+
+} else {
+    echo ' <div class="col-md-3 hidden" id="subCategoryHolder">';
+    echo '<div class="form-group">';
+    echo '<select name="propertytype" id=subCategory class="form-control">';
+    echo '</select>';
+    echo '</div>';
+    echo '</div>';
+
+}
+
+//MIN BEDROOMS
 
 echo ' <div class="col-md-3">';
 echo ' <div class="form-group">';
@@ -283,6 +360,7 @@ echo $minpropertybedrooms . '">';
 echo '</div>';
 echo '</div>';
 
+//MAX BEDROOMS
 echo ' <div class="col-md-3">';
 echo '<div class="form-group">';
 echo '<input type="number"  max="10" class="form-control"
@@ -292,7 +370,7 @@ echo $maxpropertybedrooms . '">';
 echo '</div>';
 echo '</div>';
 
-echo '<div class="col-md-3">';
+echo '<div class="col-md-12">';
 echo '      <div class="form-group">';
 echo '    <button type="submit" name="filtersubmit" value="filter"
                                     class="btn btn-primary w-100">Search</button>';
@@ -305,10 +383,14 @@ echo '</div>';
 ?>
 
 
-                    </div>
 
+
+                            </div>
             </form>
     </header>
+
+
+
 
 
 
@@ -344,7 +426,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     if ($searchOption == 'property-name') {
         if ($query != "") {
 
-            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid";
+            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid";
 
             $stmt = mysqli_stmt_init($conn);
 
@@ -493,7 +575,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             //"results_per_page" is the value from previous query above
 
             $paginationSql =
-                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertyname LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
             $paginationStmt = mysqli_stmt_init($conn);
 
@@ -528,7 +610,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
                     echo $row['propertyname'];
                     echo "</h5>";
                     echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
-                    echo $row['propertylocation'];
+                    echo $row['city'];
                     echo "</p>";
                     echo "<div class='container'>";
                     echo "<div class='row'>";
@@ -577,7 +659,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             //ELSE QUERY IS EMPTY
             //create a query that matches the first 1 value in the link "offertype"
 
-            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid";
+            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid";
 
             $stmt = mysqli_stmt_init($conn);
 
@@ -727,7 +809,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
             $paginationSql =
 
-                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
             $paginationStmt = mysqli_stmt_init($conn);
 
@@ -765,7 +847,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
                     echo $row['propertyname'];
                     echo "</h5>";
                     echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
-                    echo $row['propertylocation'];
+                    echo $row['city'];
                     echo "</p>";
                     echo "<div class='container'>";
                     echo "<div class='row'>";
@@ -812,7 +894,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     } else if ($searchOption == 'property-location') {
         if ($query != "") {
             $sql =
-                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertylocation LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid;";
+                "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.city LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid;";
 
             $stmt = mysqli_stmt_init($conn);
 
@@ -940,7 +1022,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             echo '</ul>';
             echo '</nav>';
 
-            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertylocation LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.city LIKE ?  AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
             $paginationStmt = mysqli_stmt_init($conn);
 
@@ -977,7 +1059,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
                     echo $row['propertyname'];
                     echo "</h5>";
                     echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
-                    echo $row['propertylocation'];
+                    echo $row['city'];
                     echo "</p>";
                     echo "<div class='container'>";
                     echo "<div class='row'>";
@@ -1022,7 +1104,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
         } else {
             //query is empty
-            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid";
+            $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid";
 
             $stmt = mysqli_stmt_init($conn);
 
@@ -1153,7 +1235,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             echo '</ul>';
             echo '</nav>';
 
-            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+            $paginationSql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND offertype= ? AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
             $paginationStmt = mysqli_stmt_init($conn);
 
@@ -1191,7 +1273,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
                     echo $row['propertyname'];
                     echo "</h5>";
                     echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
-                    echo $row['propertylocation'];
+                    echo $row['city'];
                     echo "</p>";
                     echo "<div class='container'>";
                     echo "<div class='row'>";
@@ -1239,10 +1321,10 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
     }
 
-} else if (isset($_GET['propertytype'])) {
-    //check if the selected is from property types
-
+} else if (isset($_GET['propertytype']) && isset($_GET['sub-type'])) {
     $propertyType = $_GET['propertytype'];
+    $subType = $_GET['sub-type'];
+
     $results_per_page = 5;
     $userlogged = "no-user";
 
@@ -1251,7 +1333,8 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     }
 
     // echo $propertyType;
-    $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval NOT IN ('Pending','Deny','Delete') AND property.propertytype=?  GROUP BY property.propertyid;";
+    $sql = "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval NOT IN ('Pending','Deny','Delete') AND property.propertytype=? AND property.subcategory=? GROUP BY property.propertyid;";
+
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
 
@@ -1278,39 +1361,39 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     echo '<div class=form-inline>';
     if ($sort == "property.propertyamount") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence;
         echo '" selected>Sort by Price</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence;
         echo '">Sort by Floor Area</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence;
         echo '">Sort by Lot Area</option>';
 
         echo '</select>';
 
     } else if ($sort == "property.propertyfloorarea") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence;
         echo '">Sort by Price</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence;
         echo '" selected >Sort by Floor Area</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence;
         echo '">Sort by Lot Area</option>';
 
         echo '</select>';
 
     } else if ($sort == "property.propertylotarea") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence;
         echo '" selected>Sort by Price</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence;
         echo '">Sort by Floor Area</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence;
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence;
         echo '" selected >Sort by Lot Area</option>';
 
         echo '</select>';
@@ -1321,20 +1404,20 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
     if ($sequence == "DESC") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC';
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC';
         echo '" selected>Highest First</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC';
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC';
         echo '">Lowest First</option>';
 
         echo '</select>';
 
     } else if ($sequence == "ASC") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC';
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC';
         echo '">Highest First</option>';
 
-        echo '<option value="properties.php?propertyType=' . $propertyType . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC';
+        echo '<option value="properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC';
         echo '" selected>Lowest First</option>';
 
         echo '</select>';
@@ -1344,13 +1427,13 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     echo '&nbsp;&nbsp;';
     echo '</div>';
 
-    mysqli_stmt_bind_param($stmt, 's', $propertyType);
+    mysqli_stmt_bind_param($stmt, 'ss', $propertyType, $subType);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $number_of_results = mysqli_num_rows($result);
     $number_of_pages = ceil($number_of_results / $results_per_page);
     $this_page_first_result = ($page - 1) * $results_per_page;
-    //display the number of pages if there is a property
+//display the number of pages if there is a property
     if ($number_of_results > 0) {
         echo '<nav aria-label="Page navigation example">';
         echo '<ul class="pagination justify-content-end">';
@@ -1359,13 +1442,13 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
             if ($pageNo == $page) {
                 echo '<li class="page-item active"><a class="page-link" href="';
-                echo 'properties.php?propertyType=' . $propertyType . '&page=' . $pageNo . '.&sort=' . $sort . "&sequence=" . $sequence;
+                echo 'properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $pageNo . '.&sort=' . $sort . "&sequence=" . $sequence;
                 echo '">' . $pageNo;
                 echo '</a></li>';
 
             } else {
                 echo '<li class="page-item"><a class="page-link" href="';
-                echo 'properties.php?propertyType=' . $propertyType . '&page=' . $pageNo . '&sort=' . $sort . "&sequence=" . $sequence;
+                echo 'properties.php?propertyType=' . $propertyType . '&sub-type=' . $subType . '&page=' . $pageNo . '&sort=' . $sort . "&sequence=" . $sequence;
                 echo '">' . $pageNo;
                 echo '</a></li>';
 
@@ -1379,7 +1462,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     }
 
     $paginationSql =
-        "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.propertylocation,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertytype=?  AND property.approval NOT IN ('Pending','Deny','Delete') GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
+        "SELECT property.propertyid,usersId,propertyamount,propertydesc,propertyname, propertybedrooms,property.city,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.propertytype=?  AND property.approval NOT IN ('Pending','Deny','Delete') AND property.subcategory=? GROUP BY property.propertyid ORDER BY CAST(" . $sort . " AS UNSIGNED)" . $sequence . " LIMIT " . $this_page_first_result . "," . $results_per_page;
 
     $paginationStmt = mysqli_stmt_init($conn);
 
@@ -1390,7 +1473,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
         exit();
     }
 
-    mysqli_stmt_bind_param($paginationStmt, 's', $propertyType);
+    mysqli_stmt_bind_param($paginationStmt, 'ss', $propertyType, $subType);
     mysqli_stmt_execute($paginationStmt);
     $paginationResult = mysqli_stmt_get_result($paginationStmt);
 
@@ -1417,7 +1500,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             echo $row['propertyname'];
             echo "</h5>";
             echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
-            echo $row['propertylocation'];
+            echo $row['city'];
             echo "</p>";
             echo "<div class='container'>";
             echo "<div class='row'>";
@@ -1463,13 +1546,13 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
 } else if (isset($_GET['filtersubmit'])) {
 
-    $query = "SELECT property.propertyid, property.usersId,property.propertyname,property.propertylocation,MIN(images.file_name)AS file_name FROM property,images  WHERE  property.propertyid = images.propertyid AND property.approval  NOT IN ('Pending','Deny','Delete')";
+    $query = "SELECT property.propertyid, property.usersId,property.propertyname,property.city,MIN(images.file_name)AS file_name FROM property,images  WHERE  property.propertyid = images.propertyid AND property.approval  NOT IN ('Pending','Deny','Delete') AND subcategory=" . mysqli_real_escape_string($conn, $subType);
 
     // for pagination
     $results_per_page = 5;
 
     $by_offertype = $_GET['offertype'];
-    $by_propertylocation = $_GET['propertylocation'];
+    $by_city = $_GET['city'];
     $by_propertylotarea = $_GET['lotarea'];
     $by_propertyfloorarea = $_GET['floorarea'];
     $by_propertytype = $_GET['propertytype'];
@@ -1500,39 +1583,39 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
     echo '<div class=form-inline>';
     if ($sort == "property.propertyamount") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '" selected>Sort by Price</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '">Sort by Floor Area</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '">Sort by Lot Area</option>';
 
         echo '</select>';
 
     } else if ($sort == "property.propertyfloorarea") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '">Sort by Price</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '" selected >Sort by Floor Area</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '">Sort by Lot Area</option>';
 
         echo '</select>';
 
     } else if ($sort == "property.propertylotarea") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyamount' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '" selected>Sort by Price</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertyfloorarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '">Sort by Floor Area</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=property.propertylotarea' . '&sequence=' . $sequence . "&filtersubmit=filter";
         echo '" selected >Sort by Lot Area</option>';
 
         echo '</select>';
@@ -1543,20 +1626,20 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 
     if ($sequence == "DESC") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC' . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC' . "&filtersubmit=filter";
         echo '" selected>Highest First</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC' . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC' . "&filtersubmit=filter";
         echo '">Lowest First</option>';
 
         echo '</select>';
 
     } else if ($sequence == "ASC") {
         echo '<select class="form-control" onchange="location=this.value;">';
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC' . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=DESC' . "&filtersubmit=filter";
         echo '">Highest First</option>';
 
-        echo '<option value="properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC' . "&filtersubmit=filter";
+        echo '<option value="properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $page . '&sort=' . $sort . '&sequence=ASC' . "&filtersubmit=filter";
         echo '" selected>Lowest First</option>';
 
         echo '</select>';
@@ -1579,9 +1662,9 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
         }
 
     }
-    if (!empty($by_propertylocation)) {
+    if (!empty($by_city)) {
 
-        $conditions[] = "propertylocation='$by_propertylocation'";
+        $conditions[] = "city='$by_city'";
     }
     if (!empty($by_propertylotarea)) {
         $conditions[] = "propertylotarea='$by_propertylotarea'";
@@ -1635,13 +1718,13 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             if ($pageNo == $page) {
 
                 echo '<li class="page-item active"><a class="page-link" href="';
-                echo 'properties.php??offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $pageNo . '&sort=' . $sort . '&sequence=' . $sequence . "&filtersubmit=filter";
+                echo 'properties.php??offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $pageNo . '&sort=' . $sort . '&sequence=' . $sequence . "&filtersubmit=filter";
                 echo '">' . $pageNo;
                 echo '</a></li>';
 
             } else {
                 echo '<li class="page-item"><a class="page-link" href="';
-                echo 'properties.php?offertype=' . $by_offertype . "&propertylocation=" . $by_propertylocation . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $pageNo . '&sort=' . $sort . '&sequence=' . $sequence . "&filtersubmit=filter";
+                echo 'properties.php?offertype=' . $by_offertype . "&city=" . $by_city . "&lotarea=" . $by_propertylotarea . "&floorarea=" . $by_propertyfloorarea . "&propertytype=" . $by_propertytype . "&minpropertybedrooms=" . $by_minpropertybedrooms . "&maxpropertybedrooms=" . $by_maxpropertybedrooms . '&page=' . $pageNo . '&sort=' . $sort . '&sequence=' . $sequence . "&filtersubmit=filter";
                 echo '">' . $pageNo;
                 echo '</a></li>';
 
@@ -1687,7 +1770,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
             echo $row['propertyname'];
             echo "</h5>";
             echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
-            echo $row['propertylocation'];
+            echo $row['city'];
             echo "</p>";
             echo "<div class='container'>";
             echo "<div class='row'>";
@@ -1919,6 +2002,7 @@ if (isset($_GET['offertype']) && isset($_GET['searchOption']) && isset($_GET['qu
 <!-- <script src="js/messages.js"></script> -->
 <script src="js/indexSearch.js"></script>
 <script src="js/login.js"></script>
+<script src="js/propertiesdisplay.js"></script>
 </body>
 
 </html>

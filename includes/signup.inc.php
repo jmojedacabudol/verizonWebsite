@@ -1,4 +1,7 @@
 <?php
+require_once 'dbh.inc.php';
+require_once 'functions.inc.php';
+
 if (isset($_POST['termsNConditions'])) {
     $profileImg = $_FILES['FileUpload'];
     $email = $_POST['email'];
@@ -16,9 +19,6 @@ if (isset($_POST['termsNConditions'])) {
     $password = $_POST['password'];
 
     $valididimg = $_FILES['filevalidid'];
-
-    require_once 'dbh.inc.php';
-    require_once 'functions.inc.php';
 
     // echo $email, $firstname, $middlename, $lastname, $birthday, $houseno, $brgy, $city, $province, $tin, $mobile, $position;
     //check if the position is either Agent or Manager

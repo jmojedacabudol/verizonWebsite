@@ -409,7 +409,7 @@ if (mysqli_num_rows($result) > 0) {
 
                         <div class="form-group row">
                             <label for="up-valid-id" class="col-4 col-form-label">Image</label>
-                            <div class="col-8" id="propertyImgHolder">
+                            <div class="col-8" id="ePropertyImgHolder">
                                 <input type="file" name="eListingImage[]" id="eListingImg" multiple
                                     accept=".jpg, .jpeg, .png">
                             </div>
