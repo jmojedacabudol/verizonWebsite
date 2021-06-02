@@ -8,7 +8,7 @@ require_once 'sidenav.php'
     <section id="ViewList">
         <div class="card container-fluid">
             <div class="card-body">
-                <h5 class="card-title">Your Messages</h5>
+                <h5 class="card-title textToGreen">Your Messages</h5>
                 <div class="row">
                     <div class="col-lg-12 col-md-8">
                         <table id="messages" class="display table-responsive" style="width:100%">

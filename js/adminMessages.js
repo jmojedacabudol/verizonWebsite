@@ -121,15 +121,15 @@ $(() => {
         var messagesid = data[0];
         Swal.fire({
             icon: "warning",
-            title: "Are you sure you want to delete this Message?",
-            text: "This message will no longer retrievable.",
+            title: "Are you sure you want to delete this message?",
+            text: "This message will be permanently deleted.",
             showCancelButton: true,
             confirmButtonText: "Yes",
             cancelButtonText: "No",
         }).then(result => {
             if (result.value) {
                 Swal.fire({
-                    text: "Please Wait....",
+                    text: "Please wait....",
                     allowOutsideClick: false,
                     showConfirmButton: false,
 
@@ -151,7 +151,7 @@ $(() => {
                             Swal.fire({
                                 icon: "success",
                                 title: "Message Deleted",
-                                text: "The page will now reload.",
+                                text: "The page will be reloaded.",
                                 showConfirmButton: false,
                                 allowOutsideClick: false,
                                 timer: 2000
@@ -161,7 +161,7 @@ $(() => {
                         } else {
                             Swal.fire({
                                 icon: "error",
-                                title: "Error Deleting Message",
+                                title: "There is an error deleting the message",
                                 text: data
                             }).then(function (result) {
                                 location.reload();

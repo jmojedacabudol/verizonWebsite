@@ -31,11 +31,11 @@ if (isset($_SESSION["userid"])) {
             echo "<div class='card-body'>";
             echo "<div class='row'>";
             echo "<div class='col-md-12'>";
-            echo "<h4 align='center'>Edit Profile</h4>";
+            echo "<h4 align='center' class='textToGreen'>Edit Profile</h4>";
             echo "<hr>";
             echo "</div>";
             echo "</div>";
-            echo "<div id='update-error'></div>";
+            echo "<div id='update-error' class='center'></div>";
             echo "<form id='updateForm' action='dashboard-User.inc.php' method='post' enctype='multipart/form-data'>";
             echo "<div class='row'>";
             echo "<div class='col-md-12 silver'>";
@@ -45,7 +45,7 @@ if (isset($_SESSION["userid"])) {
             echo $row['profile_Img'] . "." . $fileactualext;
             echo "'>";
             echo " <div class='btn-change'>";
-            echo " <input id='check' name='profilePic' type='file' style='display:none;'/>";
+            echo " <input id='check' name='profilePic' type='file' style='display:none;'  accept='.jpg, .jpeg, .png' />";
             echo "<input type='button' id='viewImg' class='btn btn-primary w-50' style='margin:25% auto' value='Change Picture...'/>";
             echo "</div>";
             echo "</div>";
@@ -60,7 +60,7 @@ if (isset($_SESSION["userid"])) {
             echo " <div class='col-8'>";
             echo " <input id='name' name='firstname'class='form-control here' value='";
             echo $row['usersFirstName'];
-            echo "' type='text'>";
+            echo "' type='text' disabled>";
             echo "</div>";
             echo "</div>";
             echo "<div class='form-group row'>";
@@ -68,7 +68,7 @@ if (isset($_SESSION["userid"])) {
             echo " <div class='col-8'>";
             echo " <input id='lastname' name='lastname' class='form-control here' value='";
             echo $row['userLastName'];
-            echo "' type='text' >";
+            echo "' type='text' disabled>";
             echo "</div>";
             echo "</div>";
             echo "<div class='form-group row'>";
@@ -91,44 +91,38 @@ if (isset($_SESSION["userid"])) {
             }
             echo "</div>";
             echo "</div>";
-            if ($row['Tag'] == 'facebook' || $row['Tag'] == 'Google') {
-                echo "<div class='form-group row'>";
-                echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
-                echo " <div class='col-8'>";
-                echo " <input id='email' name='email' value='";
-                echo $row['usersEmail'] . "'";
-                echo " class='form-control here'type='text' disabled>";
-                echo "</div>";
-                echo "</div>";
 
-            } else {
-                echo "<div class='form-group row'>";
-                echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
-                echo " <div class='col-8'>";
-                echo " <input id='email' name='email' value='";
-                echo $row['usersEmail'] . "'";
-                echo " class='form-control here'type='text' >";
-                echo "</div>";
-                echo "</div>";
+            echo "<div class='form-group row'>";
+            echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
+            echo " <div class='col-8'>";
+            echo " <input id='email' name='email' value='";
+            echo $row['companyEmail'] . "'";
+            echo " class='form-control here'type='text' disabled>";
+            echo "</div>";
+            echo "</div>";
 
-                echo "<div class='form-group row'>";
-                echo " <label for='lastname' class='col-4 col-form-label'>New Password</label>";
-                echo "<div class='col-4'>";
-                echo "<input type='password' id='newpass' name='newpass' placeholder='New Password'
+            echo "<div class='form-group row'>";
+            echo " <label for='lastname' class='col-4 col-form-label'>New Password</label>";
+            echo "<div class='col-4'>";
+            echo "<input type='password' id='newpass' name='newpass' placeholder='New Password'
                   class='form-control here' type='text'>";
-                echo "</div>";
-                echo "<div class='col-4'>";
-                echo "<input type='password' id='confirm-pass' name='confirm-pass' placeholder='Confirm Password'
+            echo "</div>";
+            echo "<div class='col-4'>";
+            echo "<input type='password' id='confirm-pass' name='confirm-pass' placeholder='Confirm Password'
                   class='form-control here' type='text'>";
-                echo "</div>";
-                echo "</div>";
-
-            }
-
+            echo "</div>";
+            echo "</div>";
+            echo "<div class='form-group row'>";
+            echo "<div class='col-4'>";
+            echo "</div>";
+            echo "<div class='col-8'>";
+            echo "<p><b>Note:</b> For setting up a new password, it shoud contain at least 1 capital Letter, at leat 1 small letter, at least 1 number, and at least 1 special character/s</p>";
+            echo "</div>";
+            echo "</div>";
             echo "<div class='form-group row'>";
             echo " <label for='up-valid-id' class='col-4 col-form-label'>Valid ID</label>";
             echo " <div class='col-8'>";
-            echo " <input id='validId' name='validId' type='file'/>";
+            echo " <input id='validId' name='validId' accept='.jpg, .jpeg, .png' type='file'/>";
             // echo "<input type='button' class='btn btn-secondary w-100' value='Replace Valid ID' onclick='document.getElementById(`validId`).click();'/>";
             echo "</div>";
             echo "</div>";

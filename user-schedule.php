@@ -10,7 +10,7 @@ require_once 'sidenav.php'
     <section id="ViewList">
         <div class="card container-fluid">
             <div class="card-body">
-                <h5 class="card-title">Your Schedule/s</h5>
+                <h5 class="card-title textToGreen">Your Schedule/s</h5>
                 <div class="row">
                     <div class="col-lg-12 col-md-8">
                         <table id="schedules" class="display table-responsive" style="width:100%">

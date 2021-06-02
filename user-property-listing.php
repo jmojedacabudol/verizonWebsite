@@ -8,7 +8,7 @@ require 'sidenav.php'
     <section id="ViewList">
         <div class="card container-fluid">
             <div class="card-body">
-                <h5 class="card-title">Your Property Listing</h5>
+                <h5 class="card-title textToGreen">Your Property Listing</h5>
                 <!-- <input type="text" id="column3_search"> -->
                 <div class="row">
                     <div class="col-lg-12 col-md-8">
@@ -76,9 +76,9 @@ if (mysqli_num_rows($result) > 0) {
         }
 
         echo "<td>";
-        echo "<button type='button' id='editProperty' class='btn btn-secondary w-100' data-toggle='tooltip' data-placement='bottom' title='Edit Property'>
+        echo "<button type='button' id='editProperty' class='btn btn-secondary w-50' data-toggle='tooltip' data-placement='bottom' title='Edit Property'>
                                         <i class='far fa-edit'></i>Edit</button>";
-        echo "<button type='button' id='viewProperty' class='btn btn-info w-100' data-toggle='tooltip' data-placement='bottom' title='View Property'>
+        echo "<button type='button' id='viewProperty' class='btn btn-info w-50' data-toggle='tooltip' data-placement='bottom' title='View Property'>
                                         <i class='far fa-eye'></i>View</button>";
 
         echo "</td>";
@@ -392,7 +392,7 @@ if (mysqli_num_rows($result) > 0) {
             <div class="modal-header">
                 <h5 class="modal-title textToGreen">Edit Property Listing</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
@@ -467,11 +467,13 @@ if (mysqli_num_rows($result) > 0) {
 
                         <div class="form-group row">
                             <label for="listing-offer-type" class="col-4 col-form-label">Offer Type</label>
-                            <div class="col-8">
-                                <select name="eListingOfferType" class="form-control"
+                            <div class="col-8" id="ePropertyOfferType">
+                                <!-- <select name="eListingOfferType" class="form-control"
                                     onchange="priceVariations(this.value)" id="eListingOfferType">
                                     <option value="default" selected>Please select offer type first</option>
-                                </select>
+                                    <option value="Rent">Rent</option>
+                                    <option value="Sell">Sell</option>
+                                </select> -->
                             </div>
                         </div>
 
@@ -483,7 +485,7 @@ if (mysqli_num_rows($result) > 0) {
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">₱</span>
                                     </div>
-                                    <input type="text" id='eOfferchoice' name="eListingRentChoice"
+                                    <input type="text" id='eListingRentChoice' name="eListingRentChoice"
                                         style="display:none;">
                                     <input type="text" class="form-control CurrencyInput"
                                         onkeypress="return isNumberKey(event)" aria-label="Price" id="eListingPrice"

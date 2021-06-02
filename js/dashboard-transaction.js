@@ -131,7 +131,7 @@ $(document).ready(function () {
 
 
                 Swal.fire({
-                    text: "Please Wait....",
+                    text: "Please wait....",
                     allowOutsideClick: false,
                     showConfirmButton: false,
 
@@ -170,25 +170,6 @@ $(document).ready(function () {
 
                     Swal.close();
                 });
-
-
-                // //load all agents property name
-                // $("#allPropertyHolder").load('includes/selectproperty.inc.php', {
-                //     usersId: localStorage.getItem("userlogged")
-                // }, function (callback) {
-                //     $('#allPropertyHolder option:eq(0)').prop('selected', true);
-                //     $("#allPropertyHolder ").select2({
-                //         placeholder: "Select a Property",
-                //         allowClear: true,
-                //     });
-
-                //     Swal.close();
-                //     // //open add property modal
-
-                // });
-
-
-
 
                 //handle events on closing the modal
                 $('#addTransaction').on('hidden.bs.modal', function () {
@@ -237,7 +218,7 @@ function propertyNameBehavior(value) {
     propertyIdSelected = value;
 
     Swal.fire({
-        text: "Please Wait....",
+        text: "Please wait....",
         allowOutsideClick: false,
         showConfirmButton: false,
 
@@ -437,7 +418,7 @@ function previewImage(image_blog, container) {
         Swal.fire({
             icon: "error",
             title: "No Image Found",
-            text: "Please Select a valid image. Valid Image formats are jpg, png, and jpeg file formats.",
+            text: "Please upload an image.",
             allowOutsideClick: false
         }).then(function (result) {
             if (result.value) {
@@ -458,7 +439,7 @@ function previewImage(image_blog, container) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Image",
-                text: "Please Select a valid image. Valid Image formats are jpg, png, and jpeg file formats.",
+                text: "Kindly, upload a valid image format. These are jpg, png, and jpeg file formats.",
                 allowOutsideClick: false
             }).then(function (result) {
                 if (result.value) {
@@ -605,7 +586,7 @@ $("#addClientForm").submit(function (event) {
                                                                             Swal.fire({
                                                                                 icon: "warning",
                                                                                 title: "Are you sure about all Client details?",
-                                                                                text: "Please double check information before submitting",
+                                                                                text: "Kindly, double check information before submitting",
                                                                                 showCancelButton: true,
                                                                                 cancelButtonText: "Close",
                                                                                 confirmButtonText: "Submit",
@@ -615,7 +596,7 @@ $("#addClientForm").submit(function (event) {
                                                                                 if (result.value) {
 
                                                                                     Swal.fire({
-                                                                                        text: "Please Wait....",
+                                                                                        text: "Please wait....",
                                                                                         allowOutsideClick: false,
                                                                                         showConfirmButton: false,
 
@@ -2133,207 +2114,13 @@ function completeAddress(RFUB, HLB, street, subdivision, barangay, city) {
 
 
 //------------EDITING TRANSACTION-----------
-$("#transaction").on("click", "#editTransactionBtn", function () {
+$("#transaction").on("click", "#editTransactionBtn", function (evt) {
+    evt.stopPropagation();
     var data = table.row($(this).parents("tr")).data();
     var transactionId = data[0];
-    Swal.fire({
-        text: "Please Wait....",
-        allowOutsideClick: false,
-        showConfirmButton: false,
 
-        willOpen: () => {
-            Swal.showLoading();
-        },
-    });
-
-    //ajax call
-    $.ajax({
-        url: "includes/transactionloadedit.inc.php",
-        data: {
-            "transactionId": transactionId
-        },
-        type: "POST",
-        dataType: "json",
-        success: function (transactionInformation) {
-            Swal.close();
-            $("#editTransaction").modal('show');
-            //use modal function to load data into the modal before showing
-            $("#editTransaction").on('shown.bs.modal', function () {
-
-                var agentProperties = document.querySelector("#eAllPropertyHolder");
-                var propertyType = document.querySelector("#ePropertyType");
-                var propertyOfferType = document.querySelector("#ePropertyOfferType");
-                var unitNo = document.querySelector("#eUnitNo");
-                var tcp = document.querySelector("#ePropertyTcp");
-                var Address = document.querySelector("#ePropertyAddress");
-                var terms = document.querySelector("#eTerms");
-                var status = document.querySelector("#eStatus");
-                var transactionDate = document.querySelector("#eTransactionDate");
-                var saleDate = document.querySelector("#eSaleDate");
-                var finalTcp = document.querySelector("#eFinalTcp");
-                var commission = document.querySelector("#eCommission");
-                var receivable = document.querySelector("#eReceivable")
-                var agentsCommission = document.querySelector("#eAgentCommission");
-                var arCommission = document.querySelector("#eArCommission");
-                var buyersCommision = document.querySelector("#eBuyersCommssion");
-                var finalReceivable = document.querySelector("#eFinalReceivable");
-                //client/s holders
-
-                var client0 = $("#eClient0");
-                var client1 = $("#eClient1");
-
-                //get the client ids and insert to  clientObj
-                clientObj = [];
-                if (transactionInformation[0].firstClientId !== null && transactionInformation[0].secondClientId !== null) {
-
-                    clientObj.push({
-                        "client": transactionInformation[0].firstClientId
-                    });
-                    clientObj.push({
-                        "client": transactionInformation[0].secondClientId
-                    });
-                } else {
-                    //either firstCLiend Id is present or secondclient Id
-                    if (transactionInformation[0].firstClientId !== null) {
-                        clientObj.push({
-                            "client": transactionInformation[0].firstClientId
-                        });
-                    } else {
-                        clientObj.push({
-                            "client": transactionInformation[0].secondClientId
-                        });
-                    }
-                }
-
-
-
-                //append transaction  name to select tag
-                var selectedPropertyName = document.createElement("OPTION");
-                var selectedPropertyTextName = document.createTextNode(transactionInformation[0].propertyName);
-                selectedPropertyName.setAttribute("value", transactionInformation[0].propertyId);
-                selectedPropertyName.appendChild(selectedPropertyTextName);
-                agentProperties.append(selectedPropertyName);
-
-                $("#eAllPropertyHolder").select2({
-                    placeholder: "Select a Property",
-                    allowClear: true,
-                    ajax: {
-                        url: "includes/selecteditproperty.inc.php",
-                        type: "post",
-                        dataType: 'json',
-                        delay: 250,
-                        data: function (params) {
-                            return {
-                                searchTerm: params.term // search term
-                            };
-                        },
-                        processResults: function (response) {
-                            return {
-                                results: response
-
-                            };
-                        },
-                        cache: true
-                    }
-                });
-                //trigger the onchange in input tag of offertype
-                var event = new Event('change');
-                agentProperties.dispatchEvent(event);
-
-
-
-                propertyType.value = transactionInformation[0].propertyType;
-                propertyOfferType.value = transactionInformation[0].category;
-
-                unitNo.value = transactionInformation[0].unitNo;
-                tcp.value = transactionInformation[0].TCP;
-                Address.value = transactionInformation[0].address;
-                terms.value = transactionInformation[0].termsOfPayment;
-
-
-                if (transactionInformation[0].firstClientId !== null) {
-                    //clear first the container to prevent multiple entry
-                    client0.empty();
-
-                    var primartyId = document.createElement("img");
-                    primartyId.src = 'assets/img/user.png'
-                    primartyId.style.height = "50px";
-                    primartyId.style.width = "50px";
-                    primartyId.style.marginLeft = "15px";
-                    primartyId.style.cursor = "pointer";
-                    primartyId.id = transactionInformation[0].firstClientId;
-
-                    primartyId.setAttribute("onclick", `selectedClient(this.id,'client0')`);
-                    client0.append(primartyId);
-                }
-
-
-                if (transactionInformation[0].secondClientId !== null) {
-                    //clear first the container to prevent multiple entry
-                    client1.empty();
-
-                    var secondaryId = document.createElement("img");
-                    secondaryId.src = 'assets/img/user.png'
-                    secondaryId.style.height = "50px";
-                    secondaryId.style.width = "50px";
-                    secondaryId.style.marginLeft = "15px";
-                    secondaryId.style.cursor = "pointer";
-                    secondaryId.id = transactionInformation[0].secondClientId;
-                    secondaryId.setAttribute("onclick", `selectedClient(this.id,'client0')`);
-                    client1.append(secondaryId);
-                }
-
-                //hide "add client" button if the there are 2 clients
-                if (client0.children().length !== 0 && client1.children().length !== 0) {
-                    $("#eAddClientBtn").removeClass("hidden");
-                    $("#eAddClientNote").removeClass("hidden");
-                } else {
-                    if (client0.children().length !== 0) {
-                        //if client 0 is have img tag child
-                        $("#eAddClientBtn").removeClass("hidden");
-                        $("#eAddClientNote").removeClass("hidden");
-                    } else if (client1.children().length !== 0) {
-                        //if client 1 have img tag child
-                        $("#eAddClientBtn").removeClass("hidden");
-                        $("#eAddClientNote").removeClass("hidden");
-                    }
-                }
-
-
-                status.value = transactionInformation[0].status;
-                transactionDate.value = transactionInformation[0].dateOfTransaction;
-                saleDate.value = transactionInformation[0].dataOfReservation;
-
-                finalTcp.value = transactionInformation[0].finalTCP;
-                //trigger the blur and keypress in input tag of finalTcp
-                var eventBlur = new Event('blur');
-                var eventKeyPress = new Event('keypress');
-                finalTcp.dispatchEvent(eventBlur);
-                finalTcp.dispatchEvent(eventKeyPress);
-
-
-                commission.value = transactionInformation[0].commission;
-                receivable.value = transactionInformation[0].receivable;
-                agentsCommission.value = transactionInformation[0].commissionAgent;
-
-                //trigger the onchange and keyup in input tag of agentsCommission
-                var eventChange = new Event('change');
-                var eventKeyUp = new Event('keyup');
-                agentsCommission.dispatchEvent(eventChange);
-                agentsCommission.dispatchEvent(eventKeyUp);
-
-                arCommission.value = transactionInformation[0].commissionAR;
-                buyersCommision.value = transactionInformation[0].commissionBuyer;
-                finalReceivable.value = transactionInformation[0].receivable2;
-
-                $(this).off('shown.bs.modal');
-            });
-
-        },
-        error: function (data) {
-            console.log(data);
-        }
-    });
+    //edit Transaction Information
+    editTransaction(transactionId);
 });
 
 
@@ -2845,7 +2632,206 @@ function eBuyersCommissionValidation(buyersCommission) {
 //-------EDITTING TRANSACTION VALIDATION ENDS HERE------
 
 
+function editTransaction(transactionid) {
+    Swal.fire({
+        text: "Please Wait....",
+        allowOutsideClick: false,
+        showConfirmButton: false,
 
+        willOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    //ajax call
+    $.ajax({
+        url: "includes/transactionloadedit.inc.php",
+        data: {
+            "transactionId": transactionid
+        },
+        type: "POST",
+        dataType: "json",
+        success: function (transactionInformation) {
+            Swal.close();
+            $("#editTransaction").modal('show');
+            //use modal function to load data into the modal before showing
+            $("#editTransaction").on('shown.bs.modal', function () {
+
+                var agentProperties = document.querySelector("#eAllPropertyHolder");
+                var propertyType = document.querySelector("#ePropertyType");
+                var propertyOfferType = document.querySelector("#ePropertyOfferType");
+                var unitNo = document.querySelector("#eUnitNo");
+                var tcp = document.querySelector("#ePropertyTcp");
+                var Address = document.querySelector("#ePropertyAddress");
+                var terms = document.querySelector("#eTerms");
+                var status = document.querySelector("#eStatus");
+                var transactionDate = document.querySelector("#eTransactionDate");
+                var saleDate = document.querySelector("#eSaleDate");
+                var finalTcp = document.querySelector("#eFinalTcp");
+                var commission = document.querySelector("#eCommission");
+                var receivable = document.querySelector("#eReceivable")
+                var agentsCommission = document.querySelector("#eAgentCommission");
+                var arCommission = document.querySelector("#eArCommission");
+                var buyersCommision = document.querySelector("#eBuyersCommssion");
+                var finalReceivable = document.querySelector("#eFinalReceivable");
+                //client/s holders
+
+                var client0 = $("#eClient0");
+                var client1 = $("#eClient1");
+
+                //get the client ids and insert to  clientObj
+                clientObj = [];
+                if (transactionInformation[0].firstClientId !== null && transactionInformation[0].secondClientId !== null) {
+
+                    clientObj.push({
+                        "client": transactionInformation[0].firstClientId
+                    });
+                    clientObj.push({
+                        "client": transactionInformation[0].secondClientId
+                    });
+                } else {
+                    //either firstCLiend Id is present or secondclient Id
+                    if (transactionInformation[0].firstClientId !== null) {
+                        clientObj.push({
+                            "client": transactionInformation[0].firstClientId
+                        });
+                    } else {
+                        clientObj.push({
+                            "client": transactionInformation[0].secondClientId
+                        });
+                    }
+                }
+
+
+
+                //append transaction  name to select tag
+                var selectedPropertyName = document.createElement("OPTION");
+                var selectedPropertyTextName = document.createTextNode(transactionInformation[0].propertyName);
+                selectedPropertyName.setAttribute("value", transactionInformation[0].propertyId);
+                selectedPropertyName.appendChild(selectedPropertyTextName);
+                agentProperties.append(selectedPropertyName);
+
+                $("#eAllPropertyHolder").select2({
+                    placeholder: "Select a Property",
+                    allowClear: true,
+                    ajax: {
+                        url: "includes/selecteditproperty.inc.php",
+                        type: "post",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                searchTerm: params.term // search term
+                            };
+                        },
+                        processResults: function (response) {
+                            return {
+                                results: response
+
+                            };
+                        },
+                        cache: true
+                    }
+                });
+                //trigger the onchange in input tag of offertype
+                var event = new Event('change');
+                agentProperties.dispatchEvent(event);
+
+
+
+                propertyType.value = transactionInformation[0].propertyType;
+                propertyOfferType.value = transactionInformation[0].category;
+
+                unitNo.value = transactionInformation[0].unitNo;
+                tcp.value = transactionInformation[0].TCP;
+                Address.value = transactionInformation[0].address;
+                terms.value = transactionInformation[0].termsOfPayment;
+
+
+                if (transactionInformation[0].firstClientId !== null) {
+                    //clear first the container to prevent multiple entry
+                    client0.empty();
+
+                    var primartyId = document.createElement("img");
+                    primartyId.src = 'assets/img/user.png'
+                    primartyId.style.height = "50px";
+                    primartyId.style.width = "50px";
+                    primartyId.style.marginLeft = "15px";
+                    primartyId.style.cursor = "pointer";
+                    primartyId.id = transactionInformation[0].firstClientId;
+
+                    primartyId.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                    client0.append(primartyId);
+                }
+
+
+                if (transactionInformation[0].secondClientId !== null) {
+                    //clear first the container to prevent multiple entry
+                    client1.empty();
+
+                    var secondaryId = document.createElement("img");
+                    secondaryId.src = 'assets/img/user.png'
+                    secondaryId.style.height = "50px";
+                    secondaryId.style.width = "50px";
+                    secondaryId.style.marginLeft = "15px";
+                    secondaryId.style.cursor = "pointer";
+                    secondaryId.id = transactionInformation[0].secondClientId;
+                    secondaryId.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                    client1.append(secondaryId);
+                }
+
+                //hide "add client" button if the there are 2 clients
+                if (client0.children().length !== 0 && client1.children().length !== 0) {
+                    $("#eAddClientBtn").removeClass("hidden");
+                    $("#eAddClientNote").removeClass("hidden");
+                } else {
+                    if (client0.children().length !== 0) {
+                        //if client 0 is have img tag child
+                        $("#eAddClientBtn").removeClass("hidden");
+                        $("#eAddClientNote").removeClass("hidden");
+                    } else if (client1.children().length !== 0) {
+                        //if client 1 have img tag child
+                        $("#eAddClientBtn").removeClass("hidden");
+                        $("#eAddClientNote").removeClass("hidden");
+                    }
+                }
+
+
+                status.value = transactionInformation[0].status;
+                transactionDate.value = transactionInformation[0].dateOfTransaction;
+                saleDate.value = transactionInformation[0].dataOfReservation;
+
+                finalTcp.value = transactionInformation[0].finalTCP;
+                //trigger the blur and keypress in input tag of finalTcp
+                var eventBlur = new Event('blur');
+                var eventKeyPress = new Event('keypress');
+                finalTcp.dispatchEvent(eventBlur);
+                finalTcp.dispatchEvent(eventKeyPress);
+
+
+                commission.value = transactionInformation[0].commission;
+                receivable.value = transactionInformation[0].receivable;
+                agentsCommission.value = transactionInformation[0].commissionAgent;
+
+                //trigger the onchange and keyup in input tag of agentsCommission
+                var eventChange = new Event('change');
+                var eventKeyUp = new Event('keyup');
+                agentsCommission.dispatchEvent(eventChange);
+                agentsCommission.dispatchEvent(eventKeyUp);
+
+                arCommission.value = transactionInformation[0].commissionAR;
+                buyersCommision.value = transactionInformation[0].commissionBuyer;
+                finalReceivable.value = transactionInformation[0].receivable2;
+
+                $(this).off('shown.bs.modal');
+            });
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
 
 
 
@@ -2853,14 +2839,18 @@ function eBuyersCommissionValidation(buyersCommission) {
 
 
 //------------DELETING TRANSACTION-----------
-$("#transaction").on("click", "#deleteTransactionBtn", function () {
+$("#transaction").on("click", "#deleteTransactionBtn", function (evt) {
+    evt.stopPropagation();
     var data = table.row($(this).parents("tr")).data();
     var transactionId = data[0];
 
-
     Swal.fire({
         icon: "warning",
-        title: "Delete this Transaction?"
+        title: "Delete this Transaction?",
+        text: "Deleting this transaction will 'alter' the status of the property involved.",
+        showCancelButton: true,
+        confirmButtonColor: "#ff0000 ",
+        confirmButtonText: "Delete"
     }).then(result => {
         if (result.value) {
             Swal.fire({
@@ -2903,9 +2893,89 @@ $("#transaction").on("click", "#deleteTransactionBtn", function () {
             });
         }
     })
-
-
-
-
 });
 //------------DELETING TRANSACTION ENDS HERE-----------
+
+
+
+///HANDLING ROW CLICKING
+$('#transaction').on('click', 'tbody tr', function () {
+
+    var data = table.row(this).data();
+    var transactionid = data[0];
+
+    Swal.fire({
+        icon: "question",
+        title: `What do you want to do with this Property?`,
+        text: "You can click outside this box to disregard this popup.",
+        showDenyButton: true,
+        denyButtonColor: "#ff0000 ",
+        showCancelButton: true,
+        confirmButtonText: `Edit`,
+        confirmButtonColor: "#3CB371",
+        denyButtonText: `Delete`,
+
+
+    }).then(result => {
+        if (result.isConfirmed) {
+
+            //edit the transaction information
+            editTransaction(transactionid);
+
+        } else if (result.isDenied) {
+            Swal.fire({
+                icon: "warning",
+                title: "Delete this Transaction?",
+                text: "Deleting this transaction will 'alter' the status of the property involved.",
+                showCancelButton: true,
+                confirmButtonColor: "#ff0000 ",
+                confirmButtonText: "Delete"
+            }).then(result => {
+                if (result.value) {
+                    Swal.fire({
+                        text: "Please Wait....",
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+
+                        willOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
+
+                    $.ajax({
+                        url: "includes/deletetransaction.inc.php",
+                        data: {
+                            "transactionId": transactionid
+                        },
+                        type: "POST",
+                        success: function (data) {
+                            Swal.close();
+                            if (data === "Client information Deleted") {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Transaction Deleted!",
+                                    text: "Website will now reload",
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                }).then(function (result) {
+                                    location.reload();
+                                });
+                            } else {
+                                console.log(data)
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            })
+
+        }
+    });
+
+
+
+})

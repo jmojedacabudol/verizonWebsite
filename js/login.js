@@ -14,7 +14,7 @@ $(() => {
         var email = formData.get("uid");
 
         Swal.fire({
-            text: "Please Wait....",
+            text: "Please wait....",
             allowOutsideClick: false,
             showConfirmButton: false,
 
@@ -43,7 +43,7 @@ $(() => {
                             Swal.fire({
                                 icon: "success",
                                 title: "Success!",
-                                text: "You have successfully change your password",
+                                text: "You have successfully changed your password",
                                 showConfirmButton: false,
                                 allowOutsideClick: false,
                                 focusConfirm: true,
@@ -66,6 +66,7 @@ $(() => {
                         allowOutsideClick: false,
                         confirmButtonText: "Proceed",
                         confirmButtonColor: "#3CB371",
+                        focusConfirm: false
                     }).then(result => {
                         if (result.value) {
                             location.reload();
@@ -93,7 +94,7 @@ function resetPwd(email) {
             Swal.fire({
                 icon: "info",
                 title: "Do you want to save the changes you made?",
-                text: "Please check your credentials before saving",
+                text: "Kindly, check your credentials before saving",
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
                 cancelBUttonText: "No",
@@ -140,7 +141,7 @@ function passwordValidation(password, confirmpassword, min, max) {
                 if (password.match(passwordformat) && confirmpassword.match(passwordformat)) {
                     return true;
                 } else {
-                    $("#resetPwd-Alert").html('<div class="alert alert-danger" role="alert">Your Password must contain at least 1 capital Letter, at leat 1 small letter, at least 1 number, and at least 1 special characters.</div>');
+                    $("#resetPwd-Alert").html('<div class="alert alert-danger" role="alert">Your password must contain at least 1 capital Letter, at leat 1 small letter, at least 1 number, and at least 1 special characters.</div>');
                     return false;
                 }
             } else {
@@ -148,7 +149,7 @@ function passwordValidation(password, confirmpassword, min, max) {
                 return false;
             }
         } else {
-            $("#resetPwd-Alert").html('<div class="alert alert-danger" role="alert">Password and Confirm password must be 6 or more unique characters.</div>');
+            $("#resetPwd-Alert").html('<div class="alert alert-danger" role="alert">Password and Confirm password should have 6 or more unique characters.</div>');
             return false;
         }
     } else {

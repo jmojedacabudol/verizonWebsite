@@ -2,24 +2,25 @@
 require_once 'admin-header.php';
 ?>
 <div class="main">
-    <h5>SCHEDULES</h5>
-    <br>
-    <table id="schedules" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>User Name</th>
-                <th>Mobile Number</th>
-                <th>Property Id</th>
-                <th>Property Name</th>
-                <th>Agent Id</th>
-                <th>Agent Name</th>
-                <th>Date</th>
-                <th class='notexport'>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+    <div class="card">
+        <h5 class="card-header textToGreen">Schedules</h5>
+        <div class="card-body">
+            <table id="schedules" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>User Name</th>
+                        <th>Mobile Number</th>
+                        <th>Property Id</th>
+                        <th>Property Name</th>
+                        <th>Agent Id</th>
+                        <th>Agent Name</th>
+                        <th>Date</th>
+                        <th class='notexport'>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 $sql = "SELECT schedules.scheduleid,schedules.clientname,schedules.usersMobileNumber,schedules.propertyid,schedules.propertyname,schedules.agentId,schedules.start_event,users.usersFirstName,users.userLastName FROM schedules,users WHERE schedules.agentId=users.usersId;";
 
 $result = mysqli_query($conn, $sql);
@@ -58,8 +59,11 @@ if (mysqli_num_rows($result) > 0) {
 }
 ?>
 
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 
 <!-- Bootstrap core JS-->

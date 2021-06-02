@@ -125,12 +125,12 @@ $(() => {
         var managerid = data[0];
         Swal.fire({
             icon: "warning",
-            title: "Do you want to Approve this Manager?",
+            title: "Do you want to approve this Manager?",
             showCancelButton: true
         }).then(result => {
             if (result.value) {
                 Swal.fire({
-                    text: "Please Wait....",
+                    text: "Please wait....",
                     allowOutsideClick: false,
                     showConfirmButton: false,
 
@@ -162,7 +162,7 @@ $(() => {
                         } else {
                             Swal.fire({
                                 icon: "error",
-                                title: "Error Deleting Message",
+                                title: "There is an error deleting the message",
                                 text: data,
                                 showCancelButton: true,
                                 cancelButtonText: "Close",
@@ -187,12 +187,12 @@ $(() => {
 
         Swal.fire({
             icon: "warning",
-            title: "Do you want to Deny this Manager?",
+            title: "Do you want to deny this Manager?",
             showCancelButton: true
         }).then(result => {
             if (result.value) {
                 Swal.fire({
-                    text: "Please Wait....",
+                    text: "Please wait....",
                     allowOutsideClick: false,
                     showConfirmButton: false,
 
@@ -214,7 +214,7 @@ $(() => {
                             Swal.fire({
                                 icon: "success",
                                 title: "Manager Updated",
-                                text: "The page will now reload.",
+                                text: "The page will be reloaded.",
                                 showConfirmButton: false,
                                 allowOutsideClick: false,
                                 timer: 2000
@@ -224,7 +224,7 @@ $(() => {
                         } else {
                             Swal.fire({
                                 icon: "error",
-                                title: "Error Deleting Message",
+                                title: "Error deleting message",
                                 text: data,
                                 showCancelButton: true,
                                 cancelButtonText: "Close",
@@ -250,7 +250,7 @@ $(() => {
         // console.log(managerid);
 
         Swal.fire({
-            text: "Please Wait....",
+            text: "Please wait....",
             allowOutsideClick: false,
             showConfirmButton: false,
 

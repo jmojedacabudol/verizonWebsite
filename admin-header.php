@@ -45,11 +45,13 @@ if (!isset($_SESSION['adminUser'])) {
             <div class="dropdown-divider"></div>
             <a href="admin-managers.php"><i class="fas fa-user-tie"></i>&nbsp;Managers</a>
             <div class="dropdown-divider"></div>
-            <a href="admin-properties.php"><i class="fas fa-list"></i> &nbsp;Properties</a>
+            <a href="admin-properties.php"><i class="fas fa-home"></i> &nbsp;Properties</a>
             <div class="dropdown-divider"></div>
             <a href="admin-messages.php"><i class="fas fa-comment"></i> &nbsp;Messages</a>
             <div class="dropdown-divider"></div>
             <a href="admin-schedules.php"><i class="fas fa-clock"></i> &nbsp;Schedules</a>
+            <div class="dropdown-divider"></div>
+            <a href="admin-transactions.php"><i class="fas fa-list"></i> &nbsp;Transactions</a>
             <div class="dropdown-divider"></div>
             <a style='cursor:pointer;' data-toggle='modal' data-target='#ConfirmLogout'><i
                     class="fas fa-sign-out-alt"></i> &nbsp;Logout</a>

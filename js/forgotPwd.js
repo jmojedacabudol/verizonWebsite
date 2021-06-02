@@ -9,7 +9,7 @@ $(() => {
         // }
 
         Swal.fire({
-            text: "Please Wait....",
+            text: "Please wait....",
             allowOutsideClick: false,
             showConfirmButton: false,
 
@@ -31,7 +31,7 @@ $(() => {
                     $("#forgotPwd-Alert").html("");
                     Swal.fire({
                         icon: "success",
-                        title: "Account Updated!",
+                        title: "Your account has been updated",
                         text: data,
                         showConfirmButton: false,
                         allowOutsideClick: false,

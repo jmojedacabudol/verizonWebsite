@@ -441,6 +441,8 @@ if (isset($_SESSION['userid'])) {
                         </div>
 
                     </div>
+                    <p><b>Note:</b> Kindly, fill out the following fields for account verification.</p>
+
                     <form id='forgotPwdForm' action="includes/signup.inc.php" method="post"
                         enctype='multipart/form-data'>
                         <div class="form-group">
@@ -484,7 +486,7 @@ if (isset($_SESSION['userid'])) {
     <!-- Reset Password Modal -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="resetPwd"
         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -494,10 +496,13 @@ if (isset($_SESSION['userid'])) {
                 <div class="modal-body">
                     <div class="col-md-6 login-form-1">
                         <h3 class="login-title">Reset Password</h3>
+
                         <div id="resetPwd-Alert" style="text-align:center;">
                         </div>
 
                     </div>
+                    <p><b>Note:</b> For setting up a new password, it shoud contain at least 1 capital Letter, at
+                        leat 1 small letter, at least 1 number, and at least 1 special character/s</p>
                     <form id='resetPwdForm' action="includes/signup.inc.php" method="post"
                         enctype='multipart/form-data'>
 

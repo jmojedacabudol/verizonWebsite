@@ -85,7 +85,7 @@ function viewPropertyCalendar(userid, propertyid, propertyname, agentId) {
                     // userForm.append("number", userNumber);
 
                     Swal.fire({
-                        text: "Please Wait....",
+                        text: "Please wait....",
                         allowOutsideClick: false,
                         showConfirmButton: false,
 
@@ -138,14 +138,14 @@ function viewPropertyCalendar(userid, propertyid, propertyname, agentId) {
             console.log(agentId)
             Swal.fire({
                 icon: 'info',
-                title: "Do you want to book this schedule?",
+                title: "Do you want to book this date?",
                 showCancelButton: true,
                 confirmButtonText: "Yes",
                 cancelButtonText: "No"
             }).then(result => {
                 if (result.value) {
                     Swal.fire({
-                        text: "Please Wait....",
+                        text: "Please wait....",
                         allowOutsideClick: false,
                         showConfirmButton: false,
 
@@ -269,19 +269,19 @@ function checkuserinformations(name, phonenumber) {
     if (name !== "" || phonenumber !== "") {
         if (name.length < 5) {
 
-            $("#contact-error").html("<div class='alert alert-danger' role='alert'>Please provide a more readable Name.</div>");
+            $("#contact-error").html("<div class='alert alert-danger' role='alert'>Please provide a valid name.</div>");
             return false;
         } else {
             if (phonenumber.length === 11) {
                 $("#contact-error").html('');
                 return true;
             } else {
-                $("#contact-error").html("<div class='alert alert-danger' role='alert'>Please provide a valid Phone Number.</div>");
+                $("#contact-error").html("<div class='alert alert-danger' role='alert'>Please provide a valid phone number.</div>");
             }
         }
     } else {
 
-        $("#contact-error").html("<div class='alert alert-danger' role='alert'>Please Provide your Name and Number.</div>");
+        $("#contact-error").html("<div class='alert alert-danger' role='alert'>Please Provide your name and number.</div>");
         return false;
     }
 }

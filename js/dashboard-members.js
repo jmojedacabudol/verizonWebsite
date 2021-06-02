@@ -432,7 +432,7 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "No Messages/s",
-        text: "This Agent does not have any message/s yet.",
+        text: "This agent does not have any message/s yet.",
         confirmButtonColor: "#3CB371",
       })
     });
@@ -498,7 +498,7 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "No Schedules/s",
-        text: "This Agent does not have any schedules/s yet.",
+        text: "This agent does not have any schedules/s yet.",
         confirmButtonColor: "#3CB371",
       })
     });
@@ -510,7 +510,7 @@ $(document).ready(function () {
     var memberid = data[0];
 
     Swal.fire({
-      text: "Please Wait....",
+      text: "Please wait....",
       allowOutsideClick: false,
       showConfirmButton: false,
 
@@ -565,7 +565,7 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "No Property/s",
-        text: "This Agent does not have any property/s yet.",
+        text: "This agent does not have any property/s yet.",
         confirmButtonColor: "#3CB371",
 
       })
@@ -578,7 +578,7 @@ $(document).ready(function () {
     var memberid = data[0];
 
     Swal.fire({
-      text: "Please Wait....",
+      text: "Please wait....",
       allowOutsideClick: false,
       showConfirmButton: false,
 
@@ -666,7 +666,7 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "No Transaction/s",
-        text: "This Agent does not have any transaction/s yet.",
+        text: "This agent does not have any transaction/s yet.",
         confirmButtonColor: "#3CB371",
 
       });

@@ -6,23 +6,25 @@ if (!isset($_SESSION['adminUser'])) {
 
 ?>
 <div class="main">
-    <h5>AGENT ACCOUNTS`</h5>
-    <table id="Agents" class="display" style="width:100%">
-        <thead>
-            <tr>
-            <tr>
-                <th>User No.</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Mobile Number</th>
-                <th>Email</th>
-                <th>Position</th>
-                <th class="notexport"> Actions</th>
-            </tr>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+    <div class="card">
+        <h5 class="card-header textToGreen">Agents</h5>
+        <div class="card-body">
+            <table id="Agents" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th>User No.</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Mobile Number</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th class="notexport"> Actions</th>
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 $sql = "SELECT * FROM users WHERE approval!=3;";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -67,26 +69,32 @@ if (mysqli_num_rows($result) > 0) {
     echo "No Data";
 }
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <br>
-    <h5>Featured Agent/s</h5>
     <br>
-    <table id="featured" class="display" style="width:100%">
-        <thead>
-            <tr>
-            <tr>
-                <th>User No.</th>
-                <th>Name</th>
-                <th>Mobile Number</th>
-                <th>Email</th>
-                <th>Position</th>
-                <th class="notexport"> Actions</th>
-            </tr>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+
+    <div class="card">
+        <h5 class="card-header textToGreen">Featured Agent/s</h5>
+        <div class="card-body">
+            <table id="featured" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th>User No.</th>
+                        <th>Name</th>
+                        <th>Mobile Number</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th class="notexport"> Actions</th>
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 $sql = "SELECT * FROM featuredAgent;";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -120,8 +128,11 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 ?>
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 
 <div class="properties-modal modal fade" id="agentModal" tabindex="-1" role="dialog"

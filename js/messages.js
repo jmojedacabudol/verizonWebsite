@@ -13,7 +13,7 @@ $(() => {
         //     console.log(value);
         // }
         Swal.fire({
-            text: "Please Wait....",
+            text: "Please wait....",
             allowOutsideClick: false,
             showConfirmButton: false,
 
@@ -33,8 +33,8 @@ $(() => {
                 if (data === "Message saved") {
                     Swal.fire({
                         icon: "success",
-                        title: "Contact Information  Submitted",
-                        text: "Please click 'Ok' button to view Agent`s Info.",
+                        title: "Your contact information has successfully submitted",
+                        text: "Click the 'Ok' button to view Agent`s Info.",
                         allowOutsideClick: false
                     }).then(result => {
                         if (result.value) {

@@ -149,7 +149,7 @@ $(document).ready(function () {
     var propertyid = data[0];
     Swal.fire({
       icon: "warning",
-      title: "Do you want to approve this Property?",
+      title: "Do you want to approve this property?",
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "No",
@@ -163,13 +163,13 @@ $(document).ready(function () {
               case "Already Approved":
                 Swal.fire({
                   icon: "info",
-                  title: "Property already Approved",
+                  title: "This property has been already approved",
                 })
                 break;
               case "Listing Approved":
                 Swal.fire({
                   icon: "success",
-                  title: "Listing Approved"
+                  title: "This listing is approve"
                 }).then(result => {
                   if (result.value) {
                     location.reload();
@@ -191,7 +191,7 @@ $(document).ready(function () {
     var propertyid = data[0];
     Swal.fire({
       icon: "error",
-      title: "Do you want to deny this Property?",
+      title: "Do you want to deny this property?",
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "No",
@@ -206,8 +206,8 @@ $(document).ready(function () {
               case "Already Denied":
                 Swal.fire({
                   icon: "info",
-                  title: "Property already Denied",
-                  text: "You can delete this Listing.",
+                  title: "This property has bee already denied",
+                  text: "You may delete this property.",
                   showCancelButton: true,
                   confirmButtonColor: "#d33",
                   cancelButtonColor: "#3085d6",
@@ -275,7 +275,7 @@ $(document).ready(function () {
     $("#approvelisting").click(function () {
       Swal.fire({
         icon: "warning",
-        title: "Do you want to approve this Property?",
+        title: "Do you want to approve this property?",
         showCancelButton: true,
         confirmButtonText: "Yes",
         cancelButtonText: "No",
@@ -289,7 +289,7 @@ $(document).ready(function () {
                 case "Already Approved":
                   Swal.fire({
                     icon: "info",
-                    title: "Property already Approved",
+                    title: "This property has been already approved",
                     showCancelButton: true,
                     confirmButtonText: "Yes",
                     cancelButtonText: "No",
@@ -315,7 +315,7 @@ $(document).ready(function () {
     $("#denylisting").click(function () {
       Swal.fire({
         icon: "error",
-        title: "Do you want to deny this Property?",
+        title: "Do you want to deny this property?",
         showCancelButton: true,
         confirmButtonText: "Yes",
         cancelButtonText: "No",
@@ -330,8 +330,8 @@ $(document).ready(function () {
                 case "Already Denied":
                   Swal.fire({
                     icon: "info",
-                    title: "Listing already Denied",
-                    text: "You can delete this Listing.",
+                    title: "This property has been denied",
+                    text: "You may delete this property.",
                     showCancelButton: true,
                     confirmButtonColor: "#d33",
                     cancelButtonColor: "#3085d6",
@@ -378,7 +378,7 @@ $(document).ready(function () {
     localStorage.setItem('selectedProperty', propertyid);
 
     Swal.fire({
-      text: "Please Wait....",
+      text: "Please wait....",
       allowOutsideClick: false,
       showConfirmButton: false,
 
@@ -450,7 +450,7 @@ function checkRentChoice(buttonClicked) {
 function deleteProperty(id, propertyid) {
   Swal.fire({
     icon: "warning",
-    title: "Do you want to delete this Picture?",
+    title: "Do you want to delete this picture?",
     showCancelButton: true,
     confirmButtonText: "Yes",
     cancelButtonText: "No"
@@ -507,7 +507,7 @@ $("#epropertyForm").submit(function (event) {
   Swal.fire({
     icon: "warning",
     title: "Do you want to save the changes you made?",
-    text: "Please check all your changes before saving.",
+    text: "Please check all the changes you made before saving.",
     showCancelButton: true,
     confirmButtonText: "Yes",
     cancelButtonText: "No"
@@ -516,7 +516,7 @@ $("#epropertyForm").submit(function (event) {
   }).then(result => {
     if (result.value) {
       Swal.fire({
-        text: "Please Wait....",
+        text: "Please wait....",
         allowOutsideClick: false,
         showConfirmButton: false,
 
@@ -539,7 +539,7 @@ $("#epropertyForm").submit(function (event) {
             // $("#form-message").html(``);
             Swal.fire({
               icon: "success",
-              title: "Property Updated!",
+              title: "Property has successfully updated",
               text: data,
               showConfirmButton: false,
               allowOutsideClick: false,

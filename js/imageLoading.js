@@ -15,7 +15,7 @@ function previewImage(image_blog, container) {
     Swal.fire({
       icon: "error",
       title: "No Image Found",
-      text: "Please Select a valid image. Valid Image formats are jpg, png, and jpeg file formats.",
+      text: "Please upload an image.",
     }).then(function (result) {
       if (result.value) {
         $(`#${container}`).attr("src", 'assets/img/user.png');
@@ -35,7 +35,7 @@ function previewImage(image_blog, container) {
       Swal.fire({
         icon: "error",
         title: "Invalid Image",
-        text: "Please Select a valid image. Valid Image formats are jpg, png, and jpeg file formats.",
+        text: "Kindly, upload a valid image format. These are jpg, png, and jpeg file formats.",
       }).then(function (result) {
         if (result.value) {
           reader.readAsDataURL(image_blog.files[0]);

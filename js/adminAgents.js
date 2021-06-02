@@ -124,7 +124,7 @@ $(document).ready(function () {
         // console.log(userid)
         Swal.fire({
             icon: "warning",
-            title: "Do you want to Approve this User?",
+            title: "Do you want to approve this user?",
             confirmButtonText: "Yes",
             cancelButtonText: "No",
             showCancelButton: true
@@ -138,13 +138,13 @@ $(document).ready(function () {
                             case "Already Approved":
                                 Swal.fire({
                                     icon: "info",
-                                    title: "User already Approved"
+                                    title: "This user has been already approved"
                                 })
                                 break;
                             case "User Approved":
                                 Swal.fire({
                                     icon: "success",
-                                    title: "User Approved"
+                                    title: "This user is approve"
                                 })
                                 break;
                         }
@@ -162,7 +162,7 @@ $(document).ready(function () {
 
         Swal.fire({
             icon: "error",
-            title: "Do you want to deny this User?",
+            title: "Do you want to deny this user?",
             confirmButtonText: "Yes",
             cancelButtonText: "No",
             showCancelButton: true
@@ -177,8 +177,8 @@ $(document).ready(function () {
                             case "Already Denied":
                                 Swal.fire({
                                     icon: "info",
-                                    title: "User already Denied",
-                                    text: "You can delete this User.",
+                                    title: "This user has been already denied",
+                                    text: "You may delete this user.",
                                     showCancelButton: true,
                                     confirmButtonColor: "#d33",
                                     cancelButtonColor: "#3085d6",
@@ -206,7 +206,7 @@ $(document).ready(function () {
                             case "User Denied":
                                 Swal.fire({
                                     icon: "success",
-                                    title: "User Denied"
+                                    title: "This user is denied"
                                 })
                                 break;
                         }
@@ -224,7 +224,7 @@ $(document).ready(function () {
 
 
         Swal.fire({
-            text: "Please Wait....",
+            text: "Please wait....",
             allowOutsideClick: false,
             showConfirmButton: false,
 
@@ -251,7 +251,7 @@ $(document).ready(function () {
         $("#featureUserBtn").click(function () {
 
             Swal.fire({
-                text: "Please Wait....",
+                text: "Please wait....",
                 allowOutsideClick: false,
                 showConfirmButton: false,
 
@@ -281,15 +281,15 @@ $(document).ready(function () {
             $("#featBtn").click(function () {
                 Swal.fire({
                     icon: "warning",
-                    title: "Do you want to feature this Agent?",
-                    text: "This agent will be posted in your Home page.",
+                    title: "Do you want this agent to be featured?",
+                    text: "The agent will now be posted in your Home page.",
                     showCancelButton: true,
                     confirmButtonText: "Yes",
                     cancelButtonText: "No"
                 }).then(result => {
                     if (result.value) {
                         Swal.fire({
-                            text: "Please Wait....",
+                            text: "Please wait....",
                             allowOutsideClick: false,
                             showConfirmButton: false,
 
@@ -312,7 +312,7 @@ $(document).ready(function () {
                                 if (data == "Success") {
                                     Swal.fire({
                                         icon: "success",
-                                        title: "Agent Uploaded",
+                                        title: "The agent is successfully uploaded",
                                         text: "You can now see the featured User in Website`s Main Page.",
                                         showConfirmButton: false,
                                         allowOutsideClick: false,
@@ -341,7 +341,7 @@ $(document).ready(function () {
         $("#approveAgentBtn").click(function () {
             Swal.fire({
                 icon: "warning",
-                title: "Do you want to Approve this User?",
+                title: "Do you want to approve this User?",
                 confirmButtonText: "Yes",
                 cancelButtonText: "No",
                 showCancelButton: true
@@ -355,13 +355,13 @@ $(document).ready(function () {
                                 case "Already Approved":
                                     Swal.fire({
                                         icon: "info",
-                                        title: "User already Approved"
+                                        title: "This user has been approved already"
                                     })
                                     break;
                                 case "User Approved":
                                     Swal.fire({
                                         icon: "success",
-                                        title: "User Approved"
+                                        title: "This user is approve"
                                     })
                                     break;
                             }
@@ -376,7 +376,7 @@ $(document).ready(function () {
         $("#denyAgentBtn").click(function () {
             Swal.fire({
                 icon: "error",
-                title: "Do you want to deny this User?",
+                title: "Do you want to deny this user?",
                 confirmButtonText: "Yes",
                 cancelButtonText: "No",
                 showCancelButton: true
@@ -391,7 +391,7 @@ $(document).ready(function () {
                                 case "Already Denied":
                                     Swal.fire({
                                         icon: "info",
-                                        title: "User already Denied",
+                                        title: "This user already Denied",
                                         text: "You can delete this User.",
                                         showCancelButton: true,
                                         confirmButtonColor: "#d33",
@@ -746,7 +746,7 @@ $(document).ready(function () {
             Swal.fire({
                 icon: "warning",
                 title: "Do you want to save changes?",
-                text: "Please check your changes.",
+                text: "Kindly, check the changes you made.",
                 confirmButtonText: "Yes",
                 cancelButtonText: "No",
                 showCancelButton: true
@@ -774,8 +774,8 @@ $(document).ready(function () {
                             if (data == "Success") {
                                 Swal.fire({
                                     icon: "success",
-                                    title: "Agent Uploaded",
-                                    text: "You can now see the featured User in Website`s Main Page.",
+                                    title: "This agent has been uploaded successfully",
+                                    text: "You may now see the featured agent in the Website`s Main Page.",
                                     showConfirmButton: false,
                                     allowOutsideClick: false,
                                     timer: 2000
@@ -785,7 +785,7 @@ $(document).ready(function () {
                             } else {
                                 Swal.fire({
                                     icon: "error",
-                                    title: "Error Updating Featured User",
+                                    title: "Error updating the featured user",
                                     text: data
                                 }).then(function (result) {
                                     location.reload();
@@ -811,7 +811,7 @@ function changeUserPassword(userId) {
     if (password !== "") {
         Swal.fire({
             icon: "warning",
-            title: "Do you want to save your changes?",
+            title: "Do you want to save the changes?",
             confirmButtonText: "Yes",
             cancelButtonText: "No",
             showCancelButton: true,
@@ -829,8 +829,8 @@ function changeUserPassword(userId) {
                         if (data === "Success") {
                             Swal.fire({
                                 icon: "success",
-                                title: "User Updated!",
-                                text: "Page will now Reload",
+                                title: "This user is updated",
+                                text: "The page will be reloaded",
                                 showConfirmButton: false,
                                 allowOutsideClick: false,
                                 timer: 2000

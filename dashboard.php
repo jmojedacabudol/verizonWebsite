@@ -93,7 +93,7 @@ if (isset($_SESSION["userid"])) {
             echo " <label for='lastname' class='col-4 col-form-label'>Email</label>";
             echo " <div class='col-8'>";
             echo " <input id='email' name='email' value='";
-            echo $row['usersEmail'] . "'";
+            echo $row['companyEmail'] . "'";
             echo " class='form-control here'type='text' disabled>";
             echo "</div>";
             echo "</div>";
@@ -119,7 +119,8 @@ if (isset($_SESSION["userid"])) {
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -142,7 +143,8 @@ if (isset($_SESSION["userid"])) {
 
 <!-- properties Modals-->
 <!-- properties Modal 1-->
-<div class="properties-modal modal fade" id="propertiesModal1" tabindex="-1" role="dialog" aria-labelledby="propertiesModal1Label" aria-hidden="true">
+<div class="properties-modal modal fade" id="propertiesModal1" tabindex="-1" role="dialog"
+    aria-labelledby="propertiesModal1Label" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content"> <br>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -155,13 +157,15 @@ if (isset($_SESSION["userid"])) {
                         <div class="col-lg">
 
                             <!-- properties Modal - Title-->
-                            <h2 class="properties-modal-title text-secondary text-uppercase mb-0" id="propertiesModal1Label">Down Avenue</h2>
+                            <h2 class="properties-modal-title text-secondary text-uppercase mb-0"
+                                id="propertiesModal1Label">Down Avenue</h2>
                             <h5 class="text-uppercase mproperties-price"> P 40,000,000 </h5><br>
 
 
                             <!-- properties Modal - Image-->
                             <div class="container">
-                                <img class="img-fluid rounded mb-5" src="assets/img/properties/sampl_properties1_xl.png" alt="" />
+                                <img class="img-fluid rounded mb-5" src="assets/img/properties/sampl_properties1_xl.png"
+                                    alt="" />
                             </div>
 
 

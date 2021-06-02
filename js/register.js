@@ -146,14 +146,15 @@ $(function () {
                                                     if (mobileNumberValidation(mobileNo)) {
                                                         if (positionValidation(selectedPosition)) {
                                                             if (selectedPosition === "Agent") {
-                                                                //check if there is a manager corresponds to the manager Id provided 0=>False 1=>True 
-                                                                managerIdValidation(managerId).then((result) => {
-                                                                    //if the manager id is valid
-                                                                    if (result === true) {
-                                                                        //check if the id is valid
-                                                                        if (imgValidation(validId, "Valid Id")) {
-                                                                            //terms of Agreement
-                                                                            if (termsAgreement.checked) {
+                                                                if (imgValidation(validId, "Valid Id")) {
+                                                                    if (termsAgreement.checked) {
+                                                                        //check if there is a manager corresponds to the manager Id provided 0=>False 1=>True 
+                                                                        managerIdValidation(managerId).then((result) => {
+                                                                            if (result === "AR-DM1") {
+                                                                                //if the function return AR Verizon default 
+                                                                                //add the default input to managerId
+                                                                                $("#managerId").val(result);
+
                                                                                 Swal.fire({
                                                                                     icon: "info",
                                                                                     title: "Register as an Agent of AR Verizon?",
@@ -170,6 +171,16 @@ $(function () {
                                                                                         //email to user`s email
                                                                                         //notif to users about about the result
 
+                                                                                        Swal.fire({
+                                                                                            text: "Please Wait....",
+                                                                                            allowOutsideClick: false,
+                                                                                            showConfirmButton: false,
+
+                                                                                            willOpen: () => {
+                                                                                                Swal.showLoading();
+                                                                                            },
+                                                                                        });
+
                                                                                         $.ajax({
                                                                                             url: "includes/signup.inc.php",
                                                                                             data: formData,
@@ -178,19 +189,19 @@ $(function () {
                                                                                             type: "POST",
                                                                                             success: function (data) {
                                                                                                 Swal.close();
-                                                                                                // console.log(data)
                                                                                                 if (data === "Message has been sent") {
                                                                                                     Swal.fire({
                                                                                                         icon: "success",
                                                                                                         title: "Registration Complete",
-                                                                                                        text: "You can now logged in.",
-                                                                                                        showConfirmButton: false,
+                                                                                                        text: "Please check your email for account confirmation",
+                                                                                                        showConfirmButton: true,
                                                                                                         allowOutsideClick: false,
-                                                                                                        timer: 2000
+                                                                                                        confirmButtonColor: "#3CB371",
                                                                                                     }).then(function (result) {
-                                                                                                        location.reload();
-                                                                                                    })
-
+                                                                                                        if (result.value) {
+                                                                                                            location.reload();
+                                                                                                        }
+                                                                                                    });
                                                                                                 } else {
                                                                                                     $("#registration-alert").html(data);
                                                                                                 }
@@ -200,30 +211,87 @@ $(function () {
                                                                                                 alert("Error: " + data);
                                                                                             },
                                                                                         });
-                                                                                    };
-                                                                                });
+                                                                                    }
+                                                                                })
+
                                                                             } else {
-                                                                                $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
-                                                                            };
-                                                                        };
-                                                                    };
-                                                                }).catch(error => {
-                                                                    //there is no Manager Id
-                                                                    $("#managerId").val("anf-Verizon");
-                                                                    // // $("#registration-alert").html('<div class="alert alert-danger" role="alert">' + error + '!</div>');
-                                                                    // var defaultManagaerId = $("#managerId").val();
-                                                                    // if (defaultManagaerId !== "anf-Verizon") {
-                                                                    //     //set AR Verizon as default manager 
+                                                                                //managerId
+                                                                                $("#managerId").val(result);
 
-                                                                    // } else {
+                                                                                Swal.fire({
+                                                                                    icon: "info",
+                                                                                    title: "Register as an Agent of AR Verizon?",
+                                                                                    text: "If you`re sure about all information kindly click ''Yes''",
+                                                                                    showCancelButton: true,
+                                                                                    cancelButtonText: "No",
+                                                                                    confirmButtonText: "Yes",
+                                                                                    confirmButtonColor: "#3CB371",
+                                                                                    cancelButtonColor: "#70945A"
+                                                                                }).then(result => {
+                                                                                    if (result.value) {
+                                                                                        $("#registration-alert").html("");
+                                                                                        //insert to sql database
+                                                                                        //email to user`s email
+                                                                                        //notif to users about about the result
 
-                                                                    // }
-                                                                });
+                                                                                        Swal.fire({
+                                                                                            text: "Please Wait....",
+                                                                                            allowOutsideClick: false,
+                                                                                            showConfirmButton: false,
+
+                                                                                            willOpen: () => {
+                                                                                                Swal.showLoading();
+                                                                                            },
+                                                                                        });
+
+                                                                                        $.ajax({
+                                                                                            url: "includes/signup.inc.php",
+                                                                                            data: formData,
+                                                                                            processData: false,
+                                                                                            contentType: false,
+                                                                                            type: "POST",
+                                                                                            success: function (data) {
+                                                                                                Swal.close();
+                                                                                                if (data === "Message has been sent") {
+                                                                                                    Swal.fire({
+                                                                                                        icon: "success",
+                                                                                                        title: "Registration Complete",
+                                                                                                        text: "Please check your email for account confirmation",
+                                                                                                        showConfirmButton: true,
+                                                                                                        allowOutsideClick: false,
+                                                                                                        confirmButtonColor: "#3CB371",
+                                                                                                    }).then(function (result) {
+                                                                                                        if (result.value) {
+                                                                                                            location.reload();
+                                                                                                        }
+                                                                                                    });
+                                                                                                } else {
+                                                                                                    $("#registration-alert").html(data);
+                                                                                                }
+                                                                                            },
+                                                                                            error: function (data) {
+                                                                                                Swal.close();
+                                                                                                alert("Error: " + data);
+                                                                                            },
+                                                                                        });
+                                                                                    }
+                                                                                })
+                                                                            }
+                                                                        }).catch(error => {
+                                                                            $("#registration-alert").html(error)
+                                                                        });
+                                                                    } else {
+                                                                        //terms and condition validation
+                                                                        $("#registration-alert").html('<div class="alert alert-warning" role="alert">Please Read Our Terms and Conditions.</div>');
+
+                                                                    }
+                                                                }
                                                             } else if (selectedPosition === "Manager") {
                                                                 //check if the id is valid
                                                                 if (imgValidation(validId, "Valid Id")) {
                                                                     //terms of Agreement
                                                                     if (termsAgreement.checked) {
+
                                                                         Swal.fire({
                                                                             icon: "info",
                                                                             title: "Register as Manager of AR Verizon?",
@@ -261,12 +329,14 @@ $(function () {
                                                                                             Swal.fire({
                                                                                                 icon: "success",
                                                                                                 title: "Registration Complete",
-                                                                                                text: "You can now logged in.",
-                                                                                                showConfirmButton: false,
+                                                                                                text: "Please check your email for account confirmation",
+                                                                                                showConfirmButton: true,
+                                                                                                confirmButtonColor: "#3CB371",
                                                                                                 allowOutsideClick: false,
-                                                                                                timer: 2000
                                                                                             }).then(function (result) {
-                                                                                                location.reload();
+                                                                                                if (result.value) {
+                                                                                                    location.reload();
+                                                                                                }
                                                                                             });
                                                                                         } else {
                                                                                             $("#registration-alert").html(data);
@@ -581,9 +651,8 @@ function managerIdValidation(managerid) {
                 showCancelButton: true
             }).then(result => {
                 if (result.value) {
-                    resolve(result.value);
-                    $("#managerId").val("AR-DM1");
-                    return false;
+                    //return default AR Verizon Id
+                    resolve("AR-DM1");
                 };
             });
         };

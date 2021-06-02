@@ -121,8 +121,8 @@ $(() => {
         var scheduleid = data[0];
         Swal.fire({
             icon: "warning",
-            title: "Are you sure you want to delete this Schedule?",
-            text: "This schedule will no longer retrievable.",
+            title: "Are you sure you want to delete this schedule?",
+            text: "This schedule will be permanently deleted",
             showCancelButton: true,
             confirmButtonText: "Yes",
             cancelButtonText: "No",
@@ -151,7 +151,7 @@ $(() => {
                             Swal.fire({
                                 icon: "success",
                                 title: "Schedule Deleted",
-                                text: "The page will now reload.",
+                                text: "The page will be reloaded",
                                 showConfirmButton: false,
                                 allowOutsideClick: false,
                                 timer: 2000
@@ -161,7 +161,7 @@ $(() => {
                         } else {
                             Swal.fire({
                                 icon: "error",
-                                title: "Error Deleting Schedule",
+                                title: "There is an error deleting the schedule",
                                 text: data
                             }).then(function (result) {
                                 location.reload();

@@ -3,21 +3,24 @@ require_once 'admin-header.php';
 
 ?>
 <div class="main">
-    <h5>MANAGERS</h5>
-    <br>
-    <table id="managers" class="display" style="width:100%">
-        <thead>
-            <tr>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th class="notexport"> Actions</th>
-            </tr>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+
+
+    <div class="card">
+        <h5 class="card-header textToGreen">Managers</h5>
+        <div class="card-body">
+            <table id="managers" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th class="notexport"> Actions</th>
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 
 $sql = "SELECT * FROM managers;";
 $result = mysqli_query($conn, $sql);
@@ -57,9 +60,10 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 ?>
-        </tbody>
-    </table>
-    <br>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 

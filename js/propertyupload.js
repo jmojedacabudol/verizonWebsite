@@ -105,10 +105,10 @@ $(function () {
                                       //Building Rent
                                       Swal.fire({
                                         icon: "warning",
-                                        title: "Are you sure about all Property details?",
-                                        text: "Please double check information before submitting",
+                                        title: "Are you sure about all the property details?",
+                                        text: "Kindly, double check the information before submitting",
                                         showCancelButton: true,
-                                        cancelButtonText: "Close",
+                                        cancelButtonText: "Cancel",
                                         confirmButtonText: "Submit",
                                         confirmButtonColor: "#3CB371",
                                         cancelButtonColor: "#70945A"
@@ -136,11 +136,12 @@ $(function () {
                                               if (data = "Property Submitted") {
                                                 Swal.fire({
                                                   icon: "success",
-                                                  title: "Property Uploaded",
+                                                  title: "This property has successfully uploaded",
                                                   text: data,
                                                   showConfirmButton: false,
                                                   allowOutsideClick: false,
-                                                  timer: 2000
+                                                  timer: 2000,
+                                                  timerProgressBar: true,
                                                 }).then(function (result) {
                                                   location.reload();
                                                 });
@@ -207,11 +208,12 @@ $(function () {
                                             Swal.close();
                                             Swal.fire({
                                               icon: "success",
-                                              title: "Property Uploaded",
+                                              title: "This property has successfully uploaded",
                                               text: data,
                                               showConfirmButton: false,
                                               allowOutsideClick: false,
-                                              timer: 2000
+                                              timer: 2000,
+                                              timerProgressBar: true,
                                             }).then(function (result) {
                                               location.reload();
                                             });
@@ -269,7 +271,7 @@ $(function () {
                                               if (result.value) {
 
                                                 Swal.fire({
-                                                  text: "Please Wait....",
+                                                  text: "Please wait....",
                                                   allowOutsideClick: false,
                                                   showConfirmButton: false,
 
@@ -288,11 +290,12 @@ $(function () {
                                                     Swal.close();
                                                     Swal.fire({
                                                       icon: "success",
-                                                      title: "Property Uploaded",
+                                                      title: "This property has successfully uploaded",
                                                       text: data,
                                                       showConfirmButton: false,
                                                       allowOutsideClick: false,
-                                                      timer: 2000
+                                                      timer: 2000,
+                                                      timerProgressBar: true,
                                                     }).then(function (result) {
                                                       location.reload();
                                                     });
@@ -362,11 +365,12 @@ $(function () {
                                                   Swal.close();
                                                   Swal.fire({
                                                     icon: "success",
-                                                    title: "Property Uploaded",
+                                                    title: "This property has successfully uploaded",
                                                     text: data,
                                                     showConfirmButton: false,
                                                     allowOutsideClick: false,
-                                                    timer: 2000
+                                                    timer: 2000,
+                                                    timerProgressBar: true,
                                                   }).then(function (result) {
                                                     if (result.value) {
                                                       location.reload();
@@ -446,11 +450,12 @@ $(function () {
                                                 Swal.close();
                                                 Swal.fire({
                                                   icon: "success",
-                                                  title: "Property Uploaded",
+                                                  title: "This property has successfully uploaded",
                                                   text: data,
                                                   showConfirmButton: false,
                                                   allowOutsideClick: false,
-                                                  timer: 2000
+                                                  timer: 2000,
+                                                  timerProgressBar: true,
                                                 }).then(function (result) {
                                                   location.reload();
                                                 });
@@ -521,11 +526,12 @@ $(function () {
                                               Swal.close();
                                               Swal.fire({
                                                 icon: "success",
-                                                title: "Property Uploaded",
+                                                title: "This property has successfully uploaded",
                                                 text: data,
                                                 showConfirmButton: false,
                                                 allowOutsideClick: false,
-                                                timer: 2000
+                                                timer: 2000,
+                                                timerProgressBar: true,
                                               }).then(function (result) {
                                                 location.reload();
                                               });
@@ -582,7 +588,7 @@ $(function () {
                                         if (result.value) {
 
                                           Swal.fire({
-                                            text: "Please Wait....",
+                                            text: "Please wait....",
                                             allowOutsideClick: false,
                                             showConfirmButton: false,
 
@@ -601,11 +607,12 @@ $(function () {
                                               Swal.close();
                                               Swal.fire({
                                                 icon: "success",
-                                                title: "Property Uploaded",
+                                                title: "This property has successfully uploaded",
                                                 text: data,
                                                 showConfirmButton: false,
                                                 allowOutsideClick: false,
-                                                timer: 2000
+                                                timer: 2000,
+                                                timerProgressBar: true,
                                               }).then(function (result) {
                                                 location.reload();
                                               });
@@ -654,7 +661,7 @@ $(function () {
                                       if (result.value) {
 
                                         Swal.fire({
-                                          text: "Please Wait....",
+                                          text: "Please wait....",
                                           allowOutsideClick: false,
                                           showConfirmButton: false,
 
@@ -673,11 +680,12 @@ $(function () {
                                             Swal.close();
                                             Swal.fire({
                                               icon: "success",
-                                              title: "Property Uploaded",
+                                              title: "This property has successfully uploaded",
                                               text: data,
                                               showConfirmButton: false,
                                               allowOutsideClick: false,
-                                              timer: 2000
+                                              timer: 2000,
+                                              timerProgressBar: true,
                                             }).then(function (result) {
                                               location.reload();
                                             });
@@ -750,11 +758,12 @@ $(function () {
                                             Swal.close();
                                             Swal.fire({
                                               icon: "success",
-                                              title: "Property Uploaded",
+                                              title: "This property has successfully uploaded",
                                               text: data,
                                               showConfirmButton: false,
                                               allowOutsideClick: false,
-                                              timer: 2000
+                                              timer: 2000,
+                                              timerProgressBar: true,
                                             }).then(function (result) {
                                               location.reload();
                                             });
@@ -800,7 +809,7 @@ $(function () {
                                     if (result.value) {
 
                                       Swal.fire({
-                                        text: "Please Wait....",
+                                        text: "Please wait....",
                                         allowOutsideClick: false,
                                         showConfirmButton: false,
 
@@ -819,11 +828,12 @@ $(function () {
                                           Swal.close();
                                           Swal.fire({
                                             icon: "success",
-                                            title: "Property Uploaded",
+                                            title: "This property has successfully uploaded",
                                             text: data,
                                             showConfirmButton: false,
                                             allowOutsideClick: false,
-                                            timer: 2000
+                                            timer: 2000,
+                                            timerProgressBar: true,
                                           }).then(function (result) {
                                             location.reload();
                                           });
@@ -868,7 +878,7 @@ function propertyImgValidation(img) {
     return true;
   } else {
     $(`#propertyImgHolder`).addClass('input-error');
-    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Image is Empty!</div>');
+    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Image is empty</div>');
     return false;
   }
 }
@@ -881,7 +891,7 @@ function listingNameValidation(name) {
     return true;
   } else {
     $(`#listingTitle`).addClass('input-error');
-    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Name is Empty!</div>');
+    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Name is empty</div>');
     return false;
   }
 }
@@ -894,7 +904,7 @@ function propertyTypeValidation(propertyType) {
     return true;
   } else {
     $(`#listingType`).addClass('input-error');
-    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Type is Empty!</div>');
+    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Type is empty</div>');
     return false;
   }
 }
@@ -906,7 +916,7 @@ function propertyUnitNoValidation(unitNo) {
     return true;
   } else {
     $(`#listingUnitNo`).addClass('input-error');
-    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Unit Number is Empty!</div>');
+    $("#propertyUploadAlert").html('<div class="alert alert-danger" role="alert">Property Unit Number is empty</div>');
     return false;
   }
 }

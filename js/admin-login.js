@@ -24,10 +24,10 @@ $(function () {
                 // // console.log(data)
                 switch (data) {
                   case "Please Fill out the fields.":
-                    $("#form-message").html(`<div class='alert alert-danger'role='alert'>${data}</div>'`);
+                    $("#form-message").html(`<div class='alert alert-danger'role='alert'>Kindly, fill out the fields.</div>'`);
                     break;
                   case "No User Found":
-                    $("#form-message").html(`<div class='alert alert-danger'role='alert'>${data}</div>'`);
+                    $("#form-message").html(`<div class='alert alert-danger'role='alert'>User does not exist</div>'`);
                     break;
                   case "Success":
                     $("#form-message").html(`<div class='alert alert-success'role='alert'>${data}</div>'`);
@@ -88,10 +88,10 @@ $(function () {
         success: function (data) {
           switch (data) {
             case "Please Fill out the fields.":
-              $("#form-message").html(`<div class='alert alert-danger'role='alert'>${data}</div>'`);
+              $("#form-message").html(`<div class='alert alert-danger'role='alert'>Kindly, fill out the fields</div>'`);
               break;
             case "No User Found":
-              $("#form-message").html(`<div class='alert alert-danger'role='alert'>${data}</div>'`);
+              $("#form-message").html(`<div class='alert alert-danger'role='alert'>User does not exist</div>'`);
               break;
             case "Success":
               $("#form-message").html(`<div class='alert alert-success'role='alert'>${data}</div>'`);

@@ -3,26 +3,31 @@ require_once 'admin-header.php';
 
 ?>
 <div class="main">
-    <h5>PROPERTIES</h5>
-    <br>
-    <table id="properties" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Property Id</th>
-                <th>Property Name</th>
-                <th>Location</th>
-                <th>Lot Area</th>
-                <th>Floor Area</th>
-                <th>Property type</th>
-                <th>Offer Type</th>
-                <th>Price</th>
-                <th>Agent</th>
-                <th>Status</th>
-                <th class='notexport'>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+    <!-- <h5>PROPERTIES</h5>
+    <br> -->
+    <div class="card">
+        <h5 class="card-header textToGreen">Properties</h5>
+        <div class="card-body">
+
+
+            <table id="properties" class="display table-responsive" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Property Id</th>
+                        <th>Property Name</th>
+                        <th>Location</th>
+                        <th>Lot Area</th>
+                        <th>Floor Area</th>
+                        <th>Property type</th>
+                        <th>Offer Type</th>
+                        <th>Price</th>
+                        <th>Agent</th>
+                        <th>Status</th>
+                        <th class='notexport'>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 $sql = "SELECT property.*,users.usersFirstName,users.userLastName FROM property,users WHERE property.approval !=3 AND property.usersId=users.usersId;";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -93,24 +98,28 @@ if (mysqli_num_rows($result) > 0) {
 }
 ?>
 
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Property Id</th>
-                <th>Property Name</th>
-                <th>Location</th>
-                <th>Lot Area</th>
-                <th>Floor Area</th>
-                <th>Property type</th>
-                <th>Offer Type</th>
-                <th>Price</th>
-                <th>Agent</th>
-                <th>Status</th>
-                <th class='notexport'>Action</th>
-            </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Property Id</th>
+                        <th>Property Name</th>
+                        <th>Location</th>
+                        <th>Lot Area</th>
+                        <th>Floor Area</th>
+                        <th>Property type</th>
+                        <th>Offer Type</th>
+                        <th>Price</th>
+                        <th>Agent</th>
+                        <th>Status</th>
+                        <th class='notexport'>Action</th>
+                    </tr>
 
-        </tfoot>
-    </table>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
 </div>
 
 <div class="properties-modal modal fade" id="propertiesModal" tabindex="-1" role="dialog"

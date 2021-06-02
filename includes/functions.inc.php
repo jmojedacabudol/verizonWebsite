@@ -1151,12 +1151,12 @@ function sendEmail($companyemail, $email, $defaultPassword, $firstname, $lastnam
         // $mail->Password = "BEE0AAD9AFCC23302CACD16D67246F43B4CC"; // GMAIL password
 
         // $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
-        $mail->Host = 'smtp.elasticemail.com'; //Set the SMTP server to send through
+        $mail->Host = 'mail.arverizon.com'; //Set the SMTP server to send through
         $mail->SMTPAuth = true; //Enable SMTP authentication
-        $mail->Username = 'nonreply@arverizon.com'; //SMTP username
-        $mail->Password = 'EC3F3DFEC4DEFCF5EEDB9C3A38285A4674EA'; //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $mail->Port = 2525; //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+        $mail->Username = 'noreply@arverizon.com'; //SMTP username
+        $mail->Password = 'Z9H*k?wUb(YH'; //SMTP password
+        $mail->SMTPSecure = 'tls'; //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+        $mail->Port = 587; //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
 //Recipients
         $mail->setFrom('noreply@arverizon.com', 'AR Verizon');
@@ -1184,10 +1184,10 @@ function sendEmail($companyemail, $email, $defaultPassword, $firstname, $lastnam
         $message = str_replace('%EMAIL_PASSWORD%', $defaultPassword, $message);
 
         //adding image to the website
-        $message = str_replace("%BANNER_ACCOUNT%", "https://filebin.net/pbbc48bgsuldpf7u/Optimized-banner_userAccount.png", $message);
-        $message = str_replace("%FB_LOGO%", "https://filebin.net/pbbc48bgsuldpf7u/fbLogo.png", $message);
-        $message = str_replace("%INSTA_LOGO%", "https://filebin.net/pbbc48bgsuldpf7u/instaLogo.png", $message);
-        $message = str_replace("%TWITTER_LOGO%", "https://filebin.net/pbbc48bgsuldpf7u/twitterLogo.png", $message);
+        $message = str_replace("%BANNER_ACCOUNT%", "https://i.ibb.co/kJ1bxCJ/banner-Account.jpg", $message);
+        $message = str_replace("%FB_LOGO%", "https://i.ibb.co/vBQBvDr/fbLogo.png", $message);
+        $message = str_replace("%INSTA_LOGO%", "https://i.ibb.co/nfQzV4t/insta-Logo.png", $message);
+        $message = str_replace("%TWITTER_LOGO%", "https://i.ibb.co/Chh4wJX/twitter-Logo.png", $message);
 
         $mail->MsgHTML($message);
         $mail->Subject = "Welcome to AR Verizon";

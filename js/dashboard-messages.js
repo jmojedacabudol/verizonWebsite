@@ -1,3 +1,4 @@
+var table;
 $(document).ready(function () {
 
   //<----------------PROPERTIES------------------->
@@ -6,7 +7,7 @@ $(document).ready(function () {
     console.log(title);
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var table = $('#messages').DataTable({
+  table = $('#messages').DataTable({
     dom: 'Bfrtip',
     buttons: [{
       extend: 'pdfHtml5',
@@ -137,7 +138,8 @@ $(document).ready(function () {
   });
 
 
-  $("#messages").on("click", "#btn-delete", function () {
+  $("#messages").on("click", "#btn-delete", function (evt) {
+    evt.stopPropagation();
     var data = table.row($(this).parents("tr")).data();
     var messageId = data[0];
     Swal.fire({
@@ -175,22 +177,86 @@ $(document).ready(function () {
               Swal.fire({
                 icon: "success",
                 title: "Message Deleted",
+                text: "Reloading page....",
                 showConfirmButton: false,
                 allowOutsideClick: false,
-                timer: 2000
+                timer: 2000,
+                timerProgressBar: true
               }).then(function (result) {
                 location.reload();
               })
+            } else {
+              console.log(data)
             }
           },
           error: function (data) {
-            alert(data);
+            console.log(data);
           },
         });
 
 
       }
     })
-  })
+  });
+});
 
-})
+$('#messages').on('click', 'tbody tr', function () {
+
+  var data = table.row(this).data();
+  var messageId = data[0];
+  Swal.fire({
+    icon: "warning",
+    title: "Do you want to delete this Message?",
+    text: "This message will be permanently deleted.",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    confirmButtonColor: "#3CB371",
+    cancelButtonColor: "#70945A"
+  }).then(result => {
+    if (result.value) {
+
+      Swal.fire({
+        text: "Please Wait....",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+
+        willOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      $.ajax({
+        url: "includes/dashboardDeleteMessage.inc.php",
+        data: {
+          "messageId": messageId
+        },
+        type: "POST",
+        success: function (data) {
+          Swal.close();
+
+          if (data == 'Success') {
+            Swal.fire({
+              icon: "success",
+              title: "Message Deleted",
+              text: "Reloading page....",
+              showConfirmButton: false,
+              allowOutsideClick: false,
+              timer: 2000,
+              timerProgressBar: true
+            }).then(function (result) {
+              location.reload();
+            })
+          } else {
+            console.log(data);
+          }
+        },
+        error: function (data) {
+          console.log(data);
+        },
+      });
+
+
+    }
+  })
+});
