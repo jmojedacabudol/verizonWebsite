@@ -26,9 +26,7 @@ $(() => {
             type: "POST",
             success: function (data) {
                 Swal.close();
-                // console.log(data)
-                if (data == "Success") {
-                    $("#forgotPwd-Alert").html("");
+                if (data === "Please check your email!") {
                     Swal.fire({
                         icon: "success",
                         title: "Your account has been updated",
@@ -38,11 +36,37 @@ $(() => {
                         timer: 2000
                     }).then(function (result) {
                         location.reload();
-                    })
-                } else {
-                    $("#forgotPwd-Alert").html(`<div class='alert alert-danger' id='alert' role='alert'>${data}</div>`);
-                }
+                    });
+                } else if (data === "Error found in Sending the email, Please contact the Developer!") {
+                    Swal.fire({
+                        icon: "error",
+                        title: data,
+                        text: "No changes has been made",
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        timer: 2000
+                    }).then(function (result) {
+                        location.reload();
+                    });
 
+                } else if ("No User Found!") {
+                    Swal.fire({
+                        icon: "error",
+                        title: data,
+                        text: "No changes has been made",
+                        allowOutsideClick: false,
+                        confirmButtonColor: "#3CB371",
+                    });
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: data,
+                        text: "No changes has been made",
+                        allowOutsideClick: false,
+                        confirmButtonColor: "#3CB371",
+                    });
+                }
             },
             error: function (data) {
                 alert(data);

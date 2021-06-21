@@ -53,7 +53,7 @@ include_once 'includes/dbh.inc.php';
                 <i class="fas fa-bars"></i>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0">
                         <a class="nav-link py-3 px-0  px-lg-3" href="index.php">Home <span
@@ -84,6 +84,9 @@ include_once 'includes/dbh.inc.php';
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
                                             href="properties.php?propertytype=Condominium&sub-type=Commercial">Commercial</a>
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="properties.php?propertytype=Condominium&sub-type=Parking">Parking</a>
                                     </li>
                                 </ul>
                             </li>
@@ -449,7 +452,7 @@ if (isset($_SESSION['userid'])) {
                             <input type="text" class="form-control" placeholder="Email *" name="email" /> <br>
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <input type="number" class="form-control" maxlength="11" placeholder="Mobile No. *"
                                 name="mobile" />
                             <br>
@@ -464,7 +467,7 @@ if (isset($_SESSION['userid'])) {
                             <input type="Password" class="form-control" placeholder="Confirm Password *"
                                 name="pwdrepeat" />
                             <br>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <!-- <input type="Submit" class="btn btn-primary btn-primary-w100" value="Register" /> -->

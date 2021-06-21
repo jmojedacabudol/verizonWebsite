@@ -202,7 +202,7 @@ if (mysqli_num_rows($result) > 0) {
                         <div class="col-8">
                             <select name="listingOfferType" class="form-control" onchange="priceVariation(this.value)"
                                 id="offerType">
-                                <option value="default" selected>Please select offer type first</option>
+                                <option value="default" selected>Complete the information above.</option>
                             </select>
                         </div>
                     </div>
@@ -234,27 +234,17 @@ if (mysqli_num_rows($result) > 0) {
                         <div class="col-8">
                             <div class="input-group w-100">
                                 <input type="text" class="form-control" aria-label="Lot Area" name="listingLotArea"
-                                    id="listingLotArea" placeholder="Lot Area *"
-                                    onkeypress="return isNumberKey(event)" />
-
-                                <div class="input-group-append">
-                                    <span class="input-group-text">sqm</span>
-                                </div>
+                                    id="listingLotArea" placeholder="Lot Area *" />
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row" id="floorAreaHolder">
                         <label for="onlyNumbers2" class="col-4 col-form-label">Floor Area</label>
                         <div class="col-8">
                             <div class="input-group w-100">
                                 <input type="text" class="form-control" aria-label="floor-area" name="listingFloorArea"
-                                    id="listingFloorArea" placeholder="Floor Area *"
-                                    onkeypress="return isNumberKey(event)" />
-
-                                <div class="input-group-append">
-                                    <span class="input-group-text">sqm</span>
-                                </div>
+                                    id="listingFloorArea" placeholder="Floor Area *" />
                             </div>
                         </div>
                     </div>
@@ -264,7 +254,7 @@ if (mysqli_num_rows($result) > 0) {
                         <label for="bedroom" class="col-4 col-form-label">No. of Bedrooms</label>
                         <div class="col-8">
                             <input type="text" class="form-control" aria-label="Bedrooms" name="listingBedrooms"
-                                id="listingBedrooms" placeholder="Bedrooms *" onkeypress="return isNumberKey(event)" />
+                                id="listingBedrooms" placeholder="Bedrooms *" />
                         </div>
                     </div>
 
@@ -274,7 +264,7 @@ if (mysqli_num_rows($result) > 0) {
                         <div class="col-8">
                             <input type="text" class="form-control" aria-label="listing-garage"
                                 name="listingCapacityOfGarage" id="listingCapacityOfGarage"
-                                placeholder="Capacity of Garage *" onkeypress="return isNumberKey(event)" />
+                                placeholder="Capacity of Garage *" />
                         </div>
                     </div>
 
@@ -486,7 +476,7 @@ if (mysqli_num_rows($result) > 0) {
                                         <span class="input-group-text">₱</span>
                                     </div>
                                     <input type="text" id='eListingRentChoice' name="eListingRentChoice"
-                                        style="display:none;">
+                                        style="display:none;" onchange='rentChoiceVariation(this.value)'>
                                     <input type="text" class="form-control CurrencyInput"
                                         onkeypress="return isNumberKey(event)" aria-label="Price" id="eListingPrice"
                                         name="eListingPrice">
@@ -508,27 +498,19 @@ if (mysqli_num_rows($result) > 0) {
                             <div class="col-8">
                                 <div class="input-group w-100">
                                     <input type="text" class="form-control" aria-label="Lot Area" name="eListingLotArea"
-                                        id="eListingLotArea" placeholder="Lot Area *"
-                                        onkeypress="return isNumberKey(event)" />
+                                        id="eListingLotArea" placeholder="Lot Area *" />
 
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">sqm</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row" id="eFloorAreaHolder">
                             <label for="onlyNumbers2" class="col-4 col-form-label">Floor Area</label>
                             <div class="col-8">
                                 <div class="input-group w-100">
                                     <input type="text" class="form-control" aria-label="floor-area"
-                                        name="eListingFloorArea" id="eListingFloorArea" placeholder="Floor Area *"
-                                        onkeypress="return isNumberKey(event)" />
+                                        name="eListingFloorArea" id="eListingFloorArea" placeholder="Floor Area *" />
 
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">sqm</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -538,8 +520,7 @@ if (mysqli_num_rows($result) > 0) {
                             <label for="bedroom" class="col-4 col-form-label">No. of Bedrooms</label>
                             <div class="col-8">
                                 <input type="text" class="form-control" aria-label="Bedrooms" name="eListingBedrooms"
-                                    id="eListingBedrooms" placeholder="Bedrooms *"
-                                    onkeypress="return isNumberKey(event)" />
+                                    id="eListingBedrooms" placeholder="Bedrooms *" />
                             </div>
                         </div>
 
@@ -549,7 +530,7 @@ if (mysqli_num_rows($result) > 0) {
                             <div class="col-8">
                                 <input type="text" class="form-control" aria-label="listing-garage"
                                     name="eListingCapacityOfGarage" id="eListingCapacityOfGarage"
-                                    placeholder="Capacity of Garage *" onkeypress="return isNumberKey(event)" />
+                                    placeholder="Capacity of Garage *" />
                             </div>
                         </div>
 
@@ -648,8 +629,8 @@ if (mysqli_num_rows($result) > 0) {
             <br>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" name="submit" id="eListing-submit">Edit
-                    Property</button>
+                <button type="submit" class="btn btn-primary" name="submit" id="eListing-submit">Save
+                    Changes</button>
             </div>
 
             </form>

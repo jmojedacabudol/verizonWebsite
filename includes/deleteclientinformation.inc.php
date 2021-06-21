@@ -2,7 +2,7 @@
 require_once 'dbh.inc.php';
 
 if (isset($_POST['clientId'])) {
-    define("TESTING", true);
+    define("TESTING", false);
     $clientId = $_POST['clientId'];
     //INSERT TO CLIENTS TABLE
     $sql = "SELECT primaryId,secondaryId FROM clients WHERE clientId=?;";
@@ -28,21 +28,25 @@ if (isset($_POST['clientId'])) {
                     mysqli_stmt_bind_param($deletestmt, 's', $clientId);
                     if (mysqli_stmt_execute($deletestmt)) {
                         echo "Client information Deleted";
+                        //delete the client id from transactions
                     } else {
                         mysqli_stmt_close($deletestmt);
 
                         if (TESTING) {
                             //inserting property information error
                             echo mysqli_stmt_error($deletestmt);
+                            exit();
+
                         }
-                        exit();
                     }
 
                 }
 
+                //delete the
+
             } else {
                 echo "No Client Information Found";
-                mysqli_stmt_close($deletestmt);
+                mysqli_stmt_close($stmt);
                 exit();
             }
         } else {
@@ -51,8 +55,10 @@ if (isset($_POST['clientId'])) {
             if (TESTING) {
                 //inserting property information error
                 echo mysqli_stmt_error($stmt);
+                exit();
+
             }
-            exit();
+
         }
 
     }

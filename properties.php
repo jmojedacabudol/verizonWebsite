@@ -278,7 +278,7 @@ echo '</div>';
 echo '</div>';
 
 //SUB CATEGORY
-if ($propertytype === "Building" || $propertytype === "Condominium") {
+if ($propertytype === "Building") {
     echo '<div class="col-md-3" id="subCategoryHolder">';
     echo '<div class="form-group">';
     echo '<select name="sub-type" id=subCategory class="form-control">';
@@ -292,6 +292,35 @@ if ($propertytype === "Building" || $propertytype === "Condominium") {
         echo '<option hidden>Property Sub Category</option>';
         echo '<option>Residential</option>';
         echo '<option selected>Commercial</option>';
+
+    }
+
+    echo '</select>';
+    echo '</div>';
+    echo '</div>';
+
+} else if ($propertytype === "Condominium") {
+    echo '<div class="col-md-3" id="subCategoryHolder">';
+    echo '<div class="form-group">';
+    echo '<select name="sub-type" id=subCategory class="form-control">';
+
+    if ($subType === "Residential") {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option selected>Residential</option>';
+        echo '<option>Commercial</option>';
+        echo '<option>Parking</option>';
+
+    } else if ($subType === "Parking") {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option>Residential</option>';
+        echo '<option>Commercial</option>';
+        echo '<option selected>Parking</option>';
+
+    } else {
+        echo '<option hidden>Property Sub Category</option>';
+        echo '<option>Residential</option>';
+        echo '<option selected>Commercial</option>';
+        echo '<option>Parking</option>';
 
     }
 

@@ -14,10 +14,10 @@ if (isset($_POST['propertyId'])) {
         while ($row = mysqli_fetch_assoc($result)) {
             //get the unit number if the property type is a condo
             if ($row['propertytype'] == "Condominium") {
-                $data[] = array("propertyType" => $row['propertytype'], "unitNo" => $row['unitNo'], "propertyPrice" => $row['propertyamount'], "RoomFloorUnitNoBuilding" => $row['RoomFloorUnitNoBuilding'], "HouseLotBlockNo" => $row['HouseLotBlockNo'], "street" => $row['street'], "subdivision" => $row['subdivision'], "barangay" => $row['barangay'], "city" => $row['city'], "propertyOffertType" => $row['offertype'], "propertyApprovalStatus" => $row['approval']);
+                $data[] = array("propertyType" => $row['propertytype'], "subcategory" => $row['subcategory'], "unitNo" => $row['unitNo'], "propertyPrice" => $row['propertyamount'], "RoomFloorUnitNoBuilding" => $row['RoomFloorUnitNoBuilding'], "HouseLotBlockNo" => $row['HouseLotBlockNo'], "street" => $row['street'], "subdivision" => $row['subdivision'], "barangay" => $row['barangay'], "city" => $row['city'], "propertyOffertType" => $row['offertype'], "propertyApprovalStatus" => $row['approval']);
 
             } else {
-                $data[] = array("propertyType" => $row['propertytype'], "unitNo" => "None", "propertyPrice" => $row['propertyamount'], "RoomFloorUnitNoBuilding" => $row['RoomFloorUnitNoBuilding'], "HouseLotBlockNo" => $row['HouseLotBlockNo'], "street" => $row['street'], "subdivision" => $row['subdivision'], "barangay" => $row['barangay'], "city" => $row['city'], "propertyOffertType" => $row['offertype'], "propertyApprovalStatus" => $row['approval']);
+                $data[] = array("propertyType" => $row['propertytype'], "subcategory" => $row['subcategory'], "unitNo" => "None", "propertyPrice" => $row['propertyamount'], "RoomFloorUnitNoBuilding" => $row['RoomFloorUnitNoBuilding'], "HouseLotBlockNo" => $row['HouseLotBlockNo'], "street" => $row['street'], "subdivision" => $row['subdivision'], "barangay" => $row['barangay'], "city" => $row['city'], "propertyOffertType" => $row['offertype'], "propertyApprovalStatus" => $row['approval']);
 
             }
 

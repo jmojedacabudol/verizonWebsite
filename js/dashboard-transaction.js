@@ -244,9 +244,13 @@ function propertyNameBehavior(value) {
             var propertyLocation = completeAddress(data[0].RoomFloorUnitNoBuilding, data[0].HouseLotBlockNo, data[0].street, data[0].subdivision, data[0].barangay, data[0].city);
             var propertyOffertType = data[0].propertyOffertType;
             var propertyApprovalStatus = data[0].propertyApprovalStatus;
+            var subcategory = data[0].subcategory;
 
             $("#propertyType").val(propertyType);
             $('#propertyType').attr('readonly', true);
+
+            $("#subcategory").val(subcategory);
+            $('#subcategory').attr('readonly', true);
 
             $("#unitNo").val(unitNo);
             $('#unitNo').attr('readonly', true);
@@ -557,6 +561,8 @@ $("#addClientForm").submit(function (event) {
     var companyBrgyAddress = formData.get("companyBrgyAddress");
     var companyCityAddress = formData.get("companyCityAddress");
 
+    var clientLocalNumber = formData.get("clientLocalLandlineNumber");
+
     //append addClientBtn
     formData.append("addClientBtn", "btnClientSubmit");
 
@@ -566,103 +572,105 @@ $("#addClientForm").submit(function (event) {
 
     if (compeleteNameValidation(fName, mName, lName, 'fName', 'mName', 'lName', 'addClientAlert')) {
         if (mobileNumberValidation(clientMobileNumber, 'clientMobileNumber', 'addClientAlert')) {
-            if (landlineValidation(clientLandlineNumber, 'clientLandlineNumber', 'addClientAlert')) {
-                if (emailValidation(emailAddress, 'emailAddress', 'addClientAlert')) {
-                    if (birthdayValidation(birthday, 'birthday', 'addClientAlert')) {
-                        if (genderValidation(gender, 'gender', 'addClientAlert')) {
-                            if (ageValidation(clientAge, 'clientAge', 'addClientAlert')) {
-                                if (civilStatusValidation(civilStatus, 'civilStatus', 'addClientAlert')) {
-                                    if (validIdImgValidation(primaryId, secondId, 'firstValidId', 'secondValidId', 'addClientAlert')) {
-                                        if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'clientRFUB', 'clientHLB', 'addClientAlert')) {
-                                            if (streetValidation(clientStreet, "clientStreet", 'addClientAlert')) {
-                                                //subdivision can be empty
-                                                if (clientBrgyValidation(clientBrgyAddress, "clientBrgyAddress", 'addClientAlert')) {
-                                                    if (clientCityValidation(clientCityAddress, "clientCityAddress", 'addClientAlert')) {
-                                                        if (companyNameValidation(companyName, 'companyName', 'addClientAlert')) {
-                                                            if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'companyInitalAddress', 'addClientAlert')) {
-                                                                if (streetValidation(companyStreet, 'companyStreet', 'addClientAlert')) {
-                                                                    if (clientBrgyValidation(companyBrgyAddress, 'companyBrgyAddress', 'addClientAlert')) {
-                                                                        if (clientCityValidation(companyCityAddress, 'companyCityAddress', 'addClientAlert')) {
-                                                                            Swal.fire({
-                                                                                icon: "warning",
-                                                                                title: "Are you sure about all Client details?",
-                                                                                text: "Kindly, double check information before submitting",
-                                                                                showCancelButton: true,
-                                                                                cancelButtonText: "Close",
-                                                                                confirmButtonText: "Submit",
-                                                                                confirmButtonColor: "#3CB371",
-                                                                                cancelButtonColor: "#70945A"
-                                                                            }).then(result => {
-                                                                                if (result.value) {
+            if (localNumberValidation(clientLocalNumber, 'clientLocalLandlineNumber', 'addClientAlert')) {
+                if (landlineValidation(clientLandlineNumber, 'clientLandlineNumber', 'addClientAlert')) {
+                    if (emailValidation(emailAddress, 'emailAddress', 'addClientAlert')) {
+                        if (birthdayValidation(birthday, 'birthday', 'addClientAlert')) {
+                            if (genderValidation(gender, 'gender', 'addClientAlert')) {
+                                if (ageValidation(clientAge, 'clientAge', 'addClientAlert')) {
+                                    if (civilStatusValidation(civilStatus, 'civilStatus', 'addClientAlert')) {
+                                        if (validIdImgValidation(primaryId, secondId, 'firstValidId', 'secondValidId', 'addClientAlert')) {
+                                            if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'clientRFUB', 'clientHLB', 'addClientAlert')) {
+                                                if (streetValidation(clientStreet, "clientStreet", 'addClientAlert')) {
+                                                    //subdivision can be empty
+                                                    if (clientBrgyValidation(clientBrgyAddress, "clientBrgyAddress", 'addClientAlert')) {
+                                                        if (clientCityValidation(clientCityAddress, "clientCityAddress", 'addClientAlert')) {
+                                                            if (companyNameValidation(companyName, 'companyName', 'addClientAlert')) {
+                                                                if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'companyInitalAddress', 'addClientAlert')) {
+                                                                    if (streetValidation(companyStreet, 'companyStreet', 'addClientAlert')) {
+                                                                        if (clientBrgyValidation(companyBrgyAddress, 'companyBrgyAddress', 'addClientAlert')) {
+                                                                            if (clientCityValidation(companyCityAddress, 'companyCityAddress', 'addClientAlert')) {
+                                                                                Swal.fire({
+                                                                                    icon: "warning",
+                                                                                    title: "Are you sure about all Client details?",
+                                                                                    text: "Kindly, double check information before submitting",
+                                                                                    showCancelButton: true,
+                                                                                    cancelButtonText: "Close",
+                                                                                    confirmButtonText: "Submit",
+                                                                                    confirmButtonColor: "#3CB371",
+                                                                                    cancelButtonColor: "#70945A"
+                                                                                }).then(result => {
+                                                                                    if (result.value) {
 
-                                                                                    Swal.fire({
-                                                                                        text: "Please wait....",
-                                                                                        allowOutsideClick: false,
-                                                                                        showConfirmButton: false,
+                                                                                        Swal.fire({
+                                                                                            text: "Please wait....",
+                                                                                            allowOutsideClick: false,
+                                                                                            showConfirmButton: false,
 
-                                                                                        willOpen: () => {
-                                                                                            Swal.showLoading();
-                                                                                        },
-                                                                                    });
+                                                                                            willOpen: () => {
+                                                                                                Swal.showLoading();
+                                                                                            },
+                                                                                        });
 
-                                                                                    //insert the client to database
-                                                                                    $.ajax({
-                                                                                        url: "includes/insertclients.inc.php",
-                                                                                        type: "POST",
-                                                                                        processData: false,
-                                                                                        contentType: false,
-                                                                                        data: formData,
-                                                                                        success: function (clientId) {
-                                                                                            Swal.close();
-                                                                                            //data can be zero if there is no insertted client
-                                                                                            if (typeof clientId != 0) {
-                                                                                                //add the client Id to client object variable
-                                                                                                clientObj.push({
-                                                                                                    "client": clientId
-                                                                                                });
-                                                                                                //create ang Img element with tool tip of the client Name 
+                                                                                        //insert the client to database
+                                                                                        $.ajax({
+                                                                                            url: "includes/insertclients.inc.php",
+                                                                                            type: "POST",
+                                                                                            processData: false,
+                                                                                            contentType: false,
+                                                                                            data: formData,
+                                                                                            success: function (clientId) {
+                                                                                                Swal.close();
+                                                                                                //data can be zero if there is no insertted client
+                                                                                                if (typeof clientId != 0) {
+                                                                                                    //add the client Id to client object variable
+                                                                                                    clientObj.push({
+                                                                                                        "client": clientId
+                                                                                                    });
+                                                                                                    //create ang Img element with tool tip of the client Name 
 
-                                                                                                //create an element img 
-                                                                                                var clientImg = document.createElement("img");
-                                                                                                clientImg.src = `assets/img/user.png`;
-                                                                                                clientImg.style.height = "50px";
-                                                                                                clientImg.style.width = "50px";
-                                                                                                clientImg.style.marginLeft = "15px";
-                                                                                                clientImg.id = clientId;
-                                                                                                clientImg.style.cursor = "pointer";
-                                                                                                clientImg.setAttribute('data-toggle', 'tooltip');
-                                                                                                clientImg.setAttribute('data-placement', 'top');
-                                                                                                clientImg.setAttribute('title', `${fName + " " + mName + " " + lName}`);
+                                                                                                    //create an element img 
+                                                                                                    var clientImg = document.createElement("img");
+                                                                                                    clientImg.src = `assets/img/user.png`;
+                                                                                                    clientImg.style.height = "50px";
+                                                                                                    clientImg.style.width = "50px";
+                                                                                                    clientImg.style.marginLeft = "15px";
+                                                                                                    clientImg.id = clientId;
+                                                                                                    clientImg.style.cursor = "pointer";
+                                                                                                    clientImg.setAttribute('data-toggle', 'tooltip');
+                                                                                                    clientImg.setAttribute('data-placement', 'top');
+                                                                                                    clientImg.setAttribute('title', `${fName + " " + mName + " " + lName}`);
 
-                                                                                                var holder1 = $("#client0");
-                                                                                                var holder2 = $("#client1");
+                                                                                                    var holder1 = $("#client0");
+                                                                                                    var holder2 = $("#client1");
 
-                                                                                                if (holder1.children().length === 0) {
-                                                                                                    //create onclick function with id of client object and where it is stored
-                                                                                                    clientImg.setAttribute("onclick", `selectedClient(this.id,'client0')`);
-                                                                                                    holder1.append(clientImg);
+                                                                                                    if (holder1.children().length === 0) {
+                                                                                                        //create onclick function with id of client object and where it is stored
+                                                                                                        clientImg.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                                                                                                        holder1.append(clientImg);
 
+                                                                                                    } else {
+                                                                                                        //create onclick function with id of client object and where it is stored
+                                                                                                        clientImg.setAttribute("onclick", `selectedClient(this.id,'client1')`);
+                                                                                                        holder2.append(clientImg);
+
+                                                                                                    }
+
+                                                                                                    $("#addClient").modal('hide');
                                                                                                 } else {
-                                                                                                    //create onclick function with id of client object and where it is stored
-                                                                                                    clientImg.setAttribute("onclick", `selectedClient(this.id,'client1')`);
-                                                                                                    holder2.append(clientImg);
-
+                                                                                                    //elses display the data to console log
+                                                                                                    console.log(data)
                                                                                                 }
 
-                                                                                                $("#addClient").modal('hide');
-                                                                                            } else {
-                                                                                                //elses display the data to console log
-                                                                                                console.log(data)
-                                                                                            }
-
-                                                                                        },
-                                                                                        error: function (data) {
-                                                                                            Swal.close();
-                                                                                            console.log(data);
-                                                                                        },
-                                                                                    });
-                                                                                }
-                                                                            });
+                                                                                            },
+                                                                                            error: function (data) {
+                                                                                                Swal.close();
+                                                                                                console.log(data);
+                                                                                            },
+                                                                                        });
+                                                                                    }
+                                                                                });
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -679,6 +687,7 @@ $("#addClientForm").submit(function (event) {
                     }
                 }
             }
+
         }
     }
     return false;
@@ -897,6 +906,7 @@ function updateClient(clientIdToEdit) {
                     $("#eLName").val(clientInformation[0].lastName);
 
                     $("#eClientMobileNumber").val(clientInformation[0].mobileNumber);
+                    $("#eClientLocalLandlineNumber").val(clientInformation[0].areaCode)
                     $("#eClientLandlineNumber").val(clientInformation[0].landlineNumber);
                     $("#eEmailAddress").val(clientInformation[0].email);
                     $("#eBirthday").val(clientInformation[0].birthday);
@@ -1019,6 +1029,7 @@ $("#editClientForm").submit(function (event) {
     var lName = formData.get("eLName");
     var clientMobileNumber = formData.get("eClientMobileNumber");
     var clientLandlineNumber = formData.get("eClientLandlineNumber");
+    var clientLocalNumber = formData.get("eClientLocalLandlineNumber");
     var emailAddress = formData.get("eEmailAddress");
     var birthday = formData.get("eBirthday");
     var gender = formData.get("eGender");
@@ -1045,6 +1056,7 @@ $("#editClientForm").submit(function (event) {
     var companyBrgyAddress = formData.get("eCompanyBrgyAddress");
     var companyCityAddress = formData.get("eCompanyCityAddress");
 
+
     //append the client id that will be editted
     formData.append("eClientId", localStorage.getItem('selectedClient'));
 
@@ -1056,87 +1068,89 @@ $("#editClientForm").submit(function (event) {
     if (compeleteNameValidation(fName, mName, lName, 'eFName', 'eMName', 'eLName', 'editClientAlert')) {
         if (mobileNumberValidation(clientMobileNumber, 'eClientMobileNumber', 'editClientAlert')) {
             if (landlineValidation(clientLandlineNumber, 'eClientLandlineNumber', 'editClientAlert')) {
-                if (emailValidation(emailAddress, 'eEmailAddress', 'editClientAlert')) {
-                    if (birthdayValidation(birthday, 'eBirthday', 'editClientAlert')) {
-                        if (genderValidation(gender, 'eGender', 'editClientAlert')) {
-                            if (ageValidation(clientAge, 'eClientAge', 'editClientAlert')) {
-                                if (civilStatusValidation(civilStatus, 'eCivilStatus', 'editClientAlert')) {
-                                    if (checkIdImgIsChanged(primaryId, secondId, 'eFirstValidId', 'eSecondValidId', eFirstValidId, eSecondValidId, 'editClientAlert')) {
-                                        if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'eClientRFUB', 'eClientHLB', 'editClientAlert')) {
-                                            if (streetValidation(clientStreet, "eClientStreet", 'editClientAlert')) {
-                                                //subdivision can be empty
-                                                if (clientBrgyValidation(clientBrgyAddress, "eClientBrgyAddress", 'editClientAlert')) {
-                                                    if (clientCityValidation(clientCityAddress, "eClientCityAddress", 'editClientAlert')) {
-                                                        if (companyNameValidation(companyName, 'eCompanyName', 'editClientAlert')) {
-                                                            if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'eCompanyInitalAddress', 'editClientAlert')) {
-                                                                if (streetValidation(companyStreet, 'eCompanyStreet', 'editClientAlert')) {
-                                                                    if (clientBrgyValidation(companyBrgyAddress, 'eCompanyBrgyAddress', 'editClientAlert')) {
-                                                                        if (clientCityValidation(companyCityAddress, 'eCompanyCityAddress', 'editClientAlert')) {
-                                                                            Swal.fire({
-                                                                                icon: "warning",
-                                                                                title: "Are you sure about all Client details?",
-                                                                                text: "Please double check information before submitting",
-                                                                                showCancelButton: true,
-                                                                                cancelButtonText: "Close",
-                                                                                confirmButtonText: "Submit",
-                                                                                confirmButtonColor: "#3CB371",
-                                                                                cancelButtonColor: "#70945A"
-                                                                            }).then(result => {
-                                                                                if (result.value) {
-                                                                                    Swal.fire({
-                                                                                        text: "Please Wait....",
-                                                                                        allowOutsideClick: false,
-                                                                                        showConfirmButton: false,
+                if (localNumberValidation(clientLocalNumber, 'eClientLocalLandlineNumber', 'editClientAlert')) {
+                    if (emailValidation(emailAddress, 'eEmailAddress', 'editClientAlert')) {
+                        if (birthdayValidation(birthday, 'eBirthday', 'editClientAlert')) {
+                            if (genderValidation(gender, 'eGender', 'editClientAlert')) {
+                                if (ageValidation(clientAge, 'eClientAge', 'editClientAlert')) {
+                                    if (civilStatusValidation(civilStatus, 'eCivilStatus', 'editClientAlert')) {
+                                        if (checkIdImgIsChanged(primaryId, secondId, 'eFirstValidId', 'eSecondValidId', eFirstValidId, eSecondValidId, 'editClientAlert')) {
+                                            if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'eClientRFUB', 'eClientHLB', 'editClientAlert')) {
+                                                if (streetValidation(clientStreet, "eClientStreet", 'editClientAlert')) {
+                                                    //subdivision can be empty
+                                                    if (clientBrgyValidation(clientBrgyAddress, "eClientBrgyAddress", 'editClientAlert')) {
+                                                        if (clientCityValidation(clientCityAddress, "eClientCityAddress", 'editClientAlert')) {
+                                                            if (companyNameValidation(companyName, 'eCompanyName', 'editClientAlert')) {
+                                                                if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'eCompanyInitalAddress', 'editClientAlert')) {
+                                                                    if (streetValidation(companyStreet, 'eCompanyStreet', 'editClientAlert')) {
+                                                                        if (clientBrgyValidation(companyBrgyAddress, 'eCompanyBrgyAddress', 'editClientAlert')) {
+                                                                            if (clientCityValidation(companyCityAddress, 'eCompanyCityAddress', 'editClientAlert')) {
+                                                                                Swal.fire({
+                                                                                    icon: "warning",
+                                                                                    title: "Are you sure about all Client details?",
+                                                                                    text: "Please double check information before submitting",
+                                                                                    showCancelButton: true,
+                                                                                    cancelButtonText: "Close",
+                                                                                    confirmButtonText: "Submit",
+                                                                                    confirmButtonColor: "#3CB371",
+                                                                                    cancelButtonColor: "#70945A"
+                                                                                }).then(result => {
+                                                                                    if (result.value) {
+                                                                                        Swal.fire({
+                                                                                            text: "Please Wait....",
+                                                                                            allowOutsideClick: false,
+                                                                                            showConfirmButton: false,
 
-                                                                                        willOpen: () => {
-                                                                                            Swal.showLoading();
-                                                                                        },
-                                                                                    });
-                                                                                    //insert the property to database
-                                                                                    $.ajax({
-                                                                                        url: "includes/insertclientedit.inc.php",
-                                                                                        data: formData,
-                                                                                        processData: false,
-                                                                                        contentType: false,
-                                                                                        type: "POST",
-                                                                                        success: function (data) {
-                                                                                            Swal.close();
-                                                                                            console.log(data)
-                                                                                            if (data === "Success, Client Updated") {
-                                                                                                Swal.fire({
-                                                                                                    icon: "success",
-                                                                                                    title: "Client Uploaded",
-                                                                                                    text: data,
-                                                                                                    showConfirmButton: true,
-                                                                                                    allowOutsideClick: false,
-                                                                                                }).then(function (result) {
-                                                                                                    if (result.value) {
-                                                                                                        $("#editClient").modal('hide');
-                                                                                                    }
-                                                                                                });
-                                                                                            } else if (data === "No edit/s Found") {
-                                                                                                Swal.fire({
-                                                                                                    icon: "warning",
-                                                                                                    title: data,
-                                                                                                    text: "No detected change/s in Client`s Information",
-                                                                                                    showConfirmButton: true,
-                                                                                                    allowOutsideClick: false,
-                                                                                                }).then(function (result) {
-                                                                                                    if (result.value) {
-                                                                                                        $("#editClient").modal('hide');
-                                                                                                    }
-                                                                                                });
-                                                                                            } else {
-                                                                                                //display other data
+                                                                                            willOpen: () => {
+                                                                                                Swal.showLoading();
+                                                                                            },
+                                                                                        });
+                                                                                        //insert the property to database
+                                                                                        $.ajax({
+                                                                                            url: "includes/insertclientedit.inc.php",
+                                                                                            data: formData,
+                                                                                            processData: false,
+                                                                                            contentType: false,
+                                                                                            type: "POST",
+                                                                                            success: function (data) {
+                                                                                                Swal.close();
+                                                                                                console.log(data)
+                                                                                                if (data === "Success, Client Updated") {
+                                                                                                    Swal.fire({
+                                                                                                        icon: "success",
+                                                                                                        title: "Client Uploaded",
+                                                                                                        text: data,
+                                                                                                        showConfirmButton: true,
+                                                                                                        allowOutsideClick: false,
+                                                                                                    }).then(function (result) {
+                                                                                                        if (result.value) {
+                                                                                                            $("#editClient").modal('hide');
+                                                                                                        }
+                                                                                                    });
+                                                                                                } else if (data === "No edit/s Found") {
+                                                                                                    Swal.fire({
+                                                                                                        icon: "warning",
+                                                                                                        title: data,
+                                                                                                        text: "No detected change/s in Client`s Information",
+                                                                                                        showConfirmButton: true,
+                                                                                                        allowOutsideClick: false,
+                                                                                                    }).then(function (result) {
+                                                                                                        if (result.value) {
+                                                                                                            $("#editClient").modal('hide');
+                                                                                                        }
+                                                                                                    });
+                                                                                                } else {
+                                                                                                    //display other data
+                                                                                                    console.log(data);
+                                                                                                }
+                                                                                            },
+                                                                                            error: function (data) {
                                                                                                 console.log(data);
-                                                                                            }
-                                                                                        },
-                                                                                        error: function (data) {
-                                                                                            console.log(data);
-                                                                                        },
-                                                                                    });
-                                                                                }
-                                                                            });
+                                                                                            },
+                                                                                        });
+                                                                                    }
+                                                                                });
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -1152,6 +1166,7 @@ $("#editClientForm").submit(function (event) {
                         }
                     }
                 }
+
             }
         }
     }
@@ -1261,6 +1276,8 @@ $("#addTransactionForm").submit(function (event) {
                                                             }).then(function (result) {
                                                                 location.reload();
                                                             });
+                                                        } else {
+                                                            console.log(data)
                                                         }
 
                                                     },
@@ -1329,16 +1346,21 @@ $("#addTransactionForm").submit(function (event) {
                                                         type: "POST",
                                                         success: function (data) {
                                                             Swal.close();
-                                                            Swal.fire({
-                                                                icon: "success",
-                                                                title: data,
-                                                                text: "Please wait! Website will now reload",
-                                                                showConfirmButton: false,
-                                                                allowOutsideClick: false,
-                                                                timer: 2000
-                                                            }).then(function (result) {
-                                                                location.reload();
-                                                            });
+                                                            if (data == "Transaction Created") {
+                                                                Swal.fire({
+                                                                    icon: "success",
+                                                                    title: data,
+                                                                    text: "Please wait! Website will now reload",
+                                                                    showConfirmButton: false,
+                                                                    allowOutsideClick: false,
+                                                                    timer: 2000
+                                                                }).then(function (result) {
+                                                                    location.reload();
+                                                                });
+                                                            } else {
+                                                                console.log(data);
+                                                            }
+
                                                         },
                                                         error: function (data) {
                                                             alert(data);
@@ -1759,21 +1781,21 @@ function mobileNumberValidation(clientMobileNumber, mobileNumberTag, alertId) {
 
 //landline validation
 function landlineValidation(clientLandlineNumber, landLineTag, alertId) {
-    //regex for mobule number ex. 09123456789
-    var regex = /^(8|9)\d{9}$/;
+    //regex for landline number ex. 09123456789
     //mobile number is not empty
     if (clientLandlineNumber !== "") {
         //meet the requiret number lenght of mobile number
-        if (clientLandlineNumber.length === 10) {
-            if (clientLandlineNumber.match(regex)) {
-                $(`#${landLineTag}`).removeClass('input-error');
-                return true;
-            } else {
-                //not match the regex for mobule number ex 09123456789
-                $(`#${landLineTag}`).addClass('input-error');
-                $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
-                return false;
-            }
+        if (clientLandlineNumber.length == 7 || clientLandlineNumber.length == 8) {
+            $(`#${landLineTag}`).removeClass('input-error');
+            return true;
+            // if (clientLandlineNumber.match(regex)) {
+
+            // } else {
+            //     //not match the regex for mobule number ex 09123456789
+            //     $(`#${landLineTag}`).addClass('input-error');
+            //     $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
+            //     return false;
+            // }
         } else {
             //error for not meeting the min length
             $(`#${landLineTag}`).addClass('input-error');
@@ -1789,6 +1811,39 @@ function landlineValidation(clientLandlineNumber, landLineTag, alertId) {
     }
 }
 
+//local number validation
+
+function localNumberValidation(localNumber, localNumberTag, alertId) {
+    //regex for mobule number ex. 09123456789
+    //local number is not empty
+    if (localNumber !== "") {
+        //meet the requiret number lenght of mobile number
+        if (localNumber.length != 1) {
+            $(`#${localNumberTag}`).removeClass('input-error');
+            return true;
+            // if (localNumber.match(regex)) {
+            //     $(`#${localNumberTag}`).removeClass('input-error');
+            //     return true;
+            // } else {
+            //     //not match the regex for mobule number ex 09123456789
+            //     $(`#${localNumberTag}`).addClass('input-error');
+            //     $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
+            //     return false;
+            // }
+        } else {
+            //error for not meeting the min length
+            $(`#${localNumberTag}`).addClass('input-error');
+            $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Local Number!</div>');
+            return false;
+        }
+
+    } else {
+        //error for mobile number empty
+        $(`#${localNumberTag}`).addClass('input-error');
+        $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Local Number Empty!</div>');
+        return false;
+    }
+}
 
 
 //emailValidation
@@ -2131,11 +2186,12 @@ $("#editTransactionForm").submit(function (event) {
     var formData = new FormData(this);
     //append submit button
     formData.append("eSubmit", "eTransactionSubmit");
+    //append the transactionId
+    formData.append("transactionId", localStorage.getItem("transactionId"));
     //append propertyName
-    var agentProperties = $("#eAllPropertyHolder option:selected").text();
-    formData.append("ePropertyName", agentProperties);
+    // var agentProperties = $("#eAllPropertyHolder option:selected").text();
+    // formData.append("ePropertyName", agentProperties);
     // Display the values
-
     var propertyType = formData.get("ePropertyType");
     var propertyOfferType = formData.get("ePropertyOfferType");
     var unitNo = formData.get("eUnitNo");
@@ -2147,11 +2203,16 @@ $("#editTransactionForm").submit(function (event) {
     var saleDate = formData.get("eSaleDate");
     var finalTcp = formData.get("eFinalTcp");
     var commission = formData.get("eCommission");
-    var receivable = formData.get("eReceivable")
+    var receivable = formData.get("eReceivable");
     var agentsCommission = formData.get("eAgentsCommission");
     var arCommission = formData.get("eArCommission");
     var buyersCommision = formData.get("eBuyersCommision");
-    var finalReceivable = formData.get("eFinalReceivable")
+    var finalReceivable = formData.get("eFinalReceivable");
+
+    // for (var value of formData.values()) {
+    //     console.log(value);
+    // }
+
     //client/s holders
 
     var client0 = $("#eClient0");
@@ -2207,9 +2268,10 @@ $("#editTransactionForm").submit(function (event) {
                                                     type: "POST",
                                                     success: function (data) {
                                                         Swal.close();
-                                                        for (var value of formData.keys()) {
-                                                            console.log(value);
-                                                        }
+                                                        // for (var value of formData.keys()) {
+                                                        //     console.log(value);
+                                                        // }
+                                                        console.log(data)
                                                         // if (data == "Transaction Created") {
                                                         //     Swal.fire({
                                                         //         icon: "success",
@@ -2240,83 +2302,83 @@ $("#editTransactionForm").submit(function (event) {
         }
         return false;
     } else {
-        if (ePropertyNameValidation(agentProperties)) {
-            if (eTermsValidation(terms)) {
-                if (eCheckClients(client0, client1)) {
-                    if (eTransactionDateValidation(transactionDate)) {
-                        if (eFinalTCPValidation(finalTcp)) {
-                            if (eCommissionValidation(commission)) {
-                                if (eAgentCommissionValidation(agentsCommission)) {
-                                    if (eARCommissionValidation(arCommission)) {
-                                        if (eBuyersCommissionValidation(buyersCommision)) {
+        // if (ePropertyNameValidation(agentProperties)) {
+        if (eTermsValidation(terms)) {
+            if (eCheckClients(client0, client1)) {
+                if (eTransactionDateValidation(transactionDate)) {
+                    if (eFinalTCPValidation(finalTcp)) {
+                        if (eCommissionValidation(commission)) {
+                            if (eAgentCommissionValidation(agentsCommission)) {
+                                if (eARCommissionValidation(arCommission)) {
+                                    if (eBuyersCommissionValidation(buyersCommision)) {
 
-                                            //find transaction clients based on diplayed user icon
-                                            if (clientObj.length === 1) {
-                                                formData.append("firstClient", clientObj[0].client);
-                                            } else if (clientObj.length === 2) {
-                                                formData.append("firstClient", clientObj[0].client);
-                                                formData.append("secondClient", clientObj[1].client);
-                                            }
-
-                                            $("#transactionAlert").html('');
-                                            Swal.fire({
-                                                icon: "warning",
-                                                title: "Are you sure about all Transaction details?",
-                                                text: "Please double check information before submitting",
-                                                showCancelButton: true,
-                                                cancelButtonText: "Close",
-                                                confirmButtonText: "Submit",
-                                                confirmButtonColor: "#3CB371",
-                                                cancelButtonColor: "#70945A"
-                                            }).then(result => {
-                                                if (result.value) {
-                                                    Swal.fire({
-                                                        text: "Please Wait....",
-                                                        allowOutsideClick: false,
-                                                        showConfirmButton: false,
-
-                                                        willOpen: () => {
-                                                            Swal.showLoading();
-                                                        },
-                                                    });
-
-                                                    //add the transaction details to database
-                                                    $.ajax({
-                                                        url: "includes/inserttransactionedit.inc.php",
-                                                        data: formData,
-                                                        processData: false,
-                                                        contentType: false,
-                                                        type: "POST",
-                                                        success: function (data) {
-                                                            Swal.close();
-                                                            for (var value of formData.keys()) {
-                                                                console.log(value);
-                                                            }
-                                                            console.log(data)
-                                                            // Swal.fire({
-                                                            //     icon: "success",
-                                                            //     title: data,
-                                                            //     text: "Please wait! Website will now reload",
-                                                            //     showConfirmButton: false,
-                                                            //     allowOutsideClick: false,
-                                                            //     timer: 2000
-                                                            // }).then(function (result) {
-                                                            //     location.reload();
-                                                            // });
-                                                        },
-                                                        error: function (data) {
-                                                            alert(data);
-                                                        },
-                                                    });
-                                                }
-                                            })
+                                        //find transaction clients based on diplayed user icon
+                                        if (clientObj.length === 1) {
+                                            formData.append("firstClient", clientObj[0].client);
+                                        } else if (clientObj.length === 2) {
+                                            formData.append("firstClient", clientObj[0].client);
+                                            formData.append("secondClient", clientObj[1].client);
                                         }
+
+                                        $("#transactionAlert").html('');
+                                        Swal.fire({
+                                            icon: "warning",
+                                            title: "Are you sure about all Transaction details?",
+                                            text: "Please double check information before submitting",
+                                            showCancelButton: true,
+                                            cancelButtonText: "Close",
+                                            confirmButtonText: "Submit",
+                                            confirmButtonColor: "#3CB371",
+                                            cancelButtonColor: "#70945A"
+                                        }).then(result => {
+                                            if (result.value) {
+                                                Swal.fire({
+                                                    text: "Please Wait....",
+                                                    allowOutsideClick: false,
+                                                    showConfirmButton: false,
+
+                                                    willOpen: () => {
+                                                        Swal.showLoading();
+                                                    },
+                                                });
+
+                                                //add the transaction details to database
+                                                $.ajax({
+                                                    url: "includes/inserttransactionedit.inc.php",
+                                                    data: formData,
+                                                    processData: false,
+                                                    contentType: false,
+                                                    type: "POST",
+                                                    success: function (data) {
+                                                        Swal.close();
+                                                        // for (var value of formData.keys()) {
+                                                        //     console.log(value);
+                                                        // }
+                                                        console.log(data)
+                                                        // Swal.fire({
+                                                        //     icon: "success",
+                                                        //     title: data,
+                                                        //     text: "Please wait! Website will now reload",
+                                                        //     showConfirmButton: false,
+                                                        //     allowOutsideClick: false,
+                                                        //     timer: 2000
+                                                        // }).then(function (result) {
+                                                        //     location.reload();
+                                                        // });
+                                                    },
+                                                    error: function (data) {
+                                                        alert(data);
+                                                    },
+                                                });
+                                            }
+                                        })
                                     }
                                 }
                             }
                         }
                     }
                 }
+                // }
             }
         }
         return false;
@@ -2642,6 +2704,7 @@ function editTransaction(transactionid) {
             Swal.showLoading();
         },
     });
+    localStorage.setItem("transactionId", transactionid);
 
     //ajax call
     $.ajax({
@@ -2659,6 +2722,7 @@ function editTransaction(transactionid) {
 
                 var agentProperties = document.querySelector("#eAllPropertyHolder");
                 var propertyType = document.querySelector("#ePropertyType");
+                var subcategory = document.querySelector('#eSubcategory');
                 var propertyOfferType = document.querySelector("#ePropertyOfferType");
                 var unitNo = document.querySelector("#eUnitNo");
                 var tcp = document.querySelector("#ePropertyTcp");
@@ -2737,9 +2801,14 @@ function editTransaction(transactionid) {
                 var event = new Event('change');
                 agentProperties.dispatchEvent(event);
 
+                //disable selecting property
+                $("#eAllPropertyHolder").select2({
+                    disabled: "readonly"
+                });
 
 
                 propertyType.value = transactionInformation[0].propertyType;
+                subcategory.value = transactionInformation[0].subcategory;
                 propertyOfferType.value = transactionInformation[0].category;
 
                 unitNo.value = transactionInformation[0].unitNo;

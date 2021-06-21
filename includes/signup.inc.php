@@ -3,6 +3,7 @@ require_once 'dbh.inc.php';
 require_once 'functions.inc.php';
 
 if (isset($_POST['termsNConditions'])) {
+
     $profileImg = $_FILES['FileUpload'];
     $email = $_POST['email'];
     $firstname = $_POST['firstname'];
@@ -28,7 +29,7 @@ if (isset($_POST['termsNConditions'])) {
         $managerid = $_POST['managerId'];
 
         // echo $managerid;
-        if (emailExists($conn, $email)) {
+        if (registrationEmailExist($conn, $email)) {
             echo '<div class = "alert alert-danger" role = "alert">Email already exists</div>';
             exit();
         }
@@ -48,7 +49,7 @@ if (isset($_POST['termsNConditions'])) {
 
     } else if ($position === "Manager") {
         //else if position is Manager
-        if (emailExists($conn, $email)) {
+        if (registrationEmailExist($conn, $email)) {
             echo '<div class = "alert alert-danger" role = "alert">Email already exists</div>';
             exit();
         }

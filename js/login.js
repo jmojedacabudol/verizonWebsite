@@ -33,7 +33,6 @@ $(() => {
                 Swal.close();
                 $("#loginNotf").html('');
                 if (data == "Password reset needed") {
-
                     $("#Login").modal('hide');
                     $("#resetPwd").modal('show');
                     resetPwd(email).then((result) => {
@@ -97,7 +96,7 @@ function resetPwd(email) {
                 text: "Kindly, check your credentials before saving",
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
-                cancelBUttonText: "No",
+                cancelButtonText: "No",
                 confirmButtonColor: "#3CB371",
                 cancelButtonColor: "#70945A",
                 focusConfirm: true,

@@ -1,6 +1,10 @@
 // <--------------------------USERS-------------------------------->
+//agent table
+var table2;
+//feature table
+var table3;
 $(document).ready(function () {
-    var table2 = $('#Agents').DataTable({
+    table2 = $('#Agents').DataTable({
         dom: 'Bfrtip',
         buttons: [{
             extend: 'pdfHtml5',
@@ -117,423 +121,9 @@ $(document).ready(function () {
     });
 
 
-    $("#Agents").on("click", "#approveBtn", function () {
-        var data = table2.row($(this).parents("tr")).data();
-        var userid = data[0];
-
-        // console.log(userid)
-        Swal.fire({
-            icon: "warning",
-            title: "Do you want to approve this user?",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            showCancelButton: true
-        }).then((result) => {
-            if (result.value) {
-                $.post('includes/approveuser.inc.php', {
-                        userId: userid,
-                    },
-                    function (returnedData) {
-                        switch (returnedData) {
-                            case "Already Approved":
-                                Swal.fire({
-                                    icon: "info",
-                                    title: "This user has been already approved"
-                                })
-                                break;
-                            case "User Approved":
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "This user is approve"
-                                })
-                                break;
-                        }
-                    }).fail(function () {
-                    console.log("error");
-                });
-            }
-        });
-    });
-
-
-    $("#Agents").on("click", "#denyBtn", function () {
-        var data = table2.row($(this).parents("tr")).data();
-        var userid = data[0];
-
-        Swal.fire({
-            icon: "error",
-            title: "Do you want to deny this user?",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            showCancelButton: true
-        }).then((result) => {
-            if (result.value) {
-                $.post('includes/denyuser.inc.php', {
-                        userId: userid,
-                    },
-                    function (returnedData) {
-                        // console.log(returnedData)
-                        switch (returnedData) {
-                            case "Already Denied":
-                                Swal.fire({
-                                    icon: "info",
-                                    title: "This user has been already denied",
-                                    text: "You may delete this user.",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#d33",
-                                    cancelButtonColor: "#3085d6",
-                                    confirmButtonText: "Delete",
-                                }).then((result) => {
-                                    if (result.value) {
-                                        $.post('includes/deleteuser.inc.php', {
-                                                userId: userid,
-                                            },
-                                            function (returnedData) {
-                                                Swal.fire({
-                                                    icon: "success",
-                                                    title: returnedData
-                                                }).then((result) => {
-                                                    if (result.value) {
-                                                        window.location.reload();
-                                                    }
-                                                })
-                                            }).fail(function () {
-                                            console.log("error");
-                                        });
-                                    }
-                                })
-                                break;
-                            case "User Denied":
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "This user is denied"
-                                })
-                                break;
-                        }
-                    }).fail(function () {
-                    console.log("error");
-                });
-            }
-        });
-    });
-
-
-    $("#Agents").on("click", "#viewBtn", function () {
-        var data = table2.row($(this).parents("tr")).data();
-        var userid = data[0];
-
-
-        Swal.fire({
-            text: "Please wait....",
-            allowOutsideClick: false,
-            showConfirmButton: false,
-
-            willOpen: () => {
-                Swal.showLoading();
-            },
-        });
-
-        //load the agent information
-        //load agent images
-
-        $("#agentProfileImg").load("includes/adminagentprofileimgload.inc.php", {
-            userId: userid,
-        }, function (callback) {
-            $("#agentInfo").load("includes/adminloadagentinfo.inc.php", {
-                userId: userid,
-            }, function (callback) {
-                Swal.close();
-                $("#agentModal").modal('show');
-            });
-        });
-
-
-        $("#featureUserBtn").click(function () {
-
-            Swal.fire({
-                text: "Please wait....",
-                allowOutsideClick: false,
-                showConfirmButton: false,
-
-                willOpen: () => {
-                    Swal.showLoading();
-                },
-            });
-            Swal.close();
-            $("#agentModal").modal('hide');
-
-            $("#featureImg").load("includes/adminagentprofileimgload.inc.php", {
-                userId: userid,
-            }, function (callback) {
-                $("#featureAgentInfo").load("includes/adminloadagentinfo.inc.php", {
-                    userId: userid,
-                    feature: userid
-                }, function (callback) {
-                    Swal.close();
-                    $("#featureModal").modal('show');
-                });
-            });
-
-
-
-
-            //feature the user to index page of the website
-            $("#featBtn").click(function () {
-                Swal.fire({
-                    icon: "warning",
-                    title: "Do you want this agent to be featured?",
-                    text: "The agent will now be posted in your Home page.",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No"
-                }).then(result => {
-                    if (result.value) {
-                        Swal.fire({
-                            text: "Please wait....",
-                            allowOutsideClick: false,
-                            showConfirmButton: false,
-
-                            willOpen: () => {
-                                Swal.showLoading();
-                            },
-                        });
-
-                        //insert the user to featured
-                        $.ajax({
-                            url: "includes/insertagenttofeatured.inc.php",
-                            data: {
-                                userId: userid,
-                                featureMessage: $("#listing-desc").val()
-                            },
-                            type: "POST",
-                            success: function (data) {
-                                Swal.close();
-                                // console.log(data)
-                                if (data == "Success") {
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: "The agent is successfully uploaded",
-                                        text: "You can now see the featured User in Website`s Main Page.",
-                                        showConfirmButton: false,
-                                        allowOutsideClick: false,
-                                        timer: 2000
-                                    }).then(function (result) {
-                                        location.reload();
-                                    })
-                                } else {
-                                    Swal.fire({
-                                        icon: "error",
-                                        title: "Error Updating Featured User",
-                                        text: data
-                                    })
-                                }
-
-                            },
-                            error: function (data) {
-                                alert(data);
-                            },
-                        });
-                    }
-                })
-            })
-        })
-
-        $("#approveAgentBtn").click(function () {
-            Swal.fire({
-                icon: "warning",
-                title: "Do you want to approve this User?",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                showCancelButton: true
-            }).then((result) => {
-                if (result.value) {
-                    $.post('includes/approveuser.inc.php', {
-                            userId: userid,
-                        },
-                        function (returnedData) {
-                            switch (returnedData) {
-                                case "Already Approved":
-                                    Swal.fire({
-                                        icon: "info",
-                                        title: "This user has been approved already"
-                                    })
-                                    break;
-                                case "User Approved":
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: "This user is approve"
-                                    })
-                                    break;
-                            }
-                        }).fail(function () {
-                        console.log("error");
-                    });
-                }
-            });
-        })
-
-
-        $("#denyAgentBtn").click(function () {
-            Swal.fire({
-                icon: "error",
-                title: "Do you want to deny this user?",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                showCancelButton: true
-            }).then((result) => {
-                if (result.value) {
-                    $.post('includes/denyuser.inc.php', {
-                            userId: userid,
-                        },
-                        function (returnedData) {
-                            // console.log(returnedData)
-                            switch (returnedData) {
-                                case "Already Denied":
-                                    Swal.fire({
-                                        icon: "info",
-                                        title: "This user already Denied",
-                                        text: "You can delete this User.",
-                                        showCancelButton: true,
-                                        confirmButtonColor: "#d33",
-                                        cancelButtonColor: "#3085d6",
-                                        confirmButtonText: "Delete",
-                                    }).then((result) => {
-                                        if (result.value) {
-                                            $.post('includes/deleteuser.inc.php', {
-                                                    userId: userid,
-                                                },
-                                                function (returnedData) {
-                                                    Swal.fire({
-                                                        icon: "success",
-                                                        title: returnedData
-                                                    }).then((result) => {
-                                                        if (result.value) {
-                                                            window.location.reload();
-                                                        }
-                                                    })
-                                                }).fail(function () {
-                                                console.log("error");
-                                            });
-                                        }
-                                    })
-                                    break;
-                                case "User Denied":
-                                    Swal.fire({
-                                        icon: "success",
-                                        title: "User Denied"
-                                    })
-                                    break;
-                            }
-                        }).fail(function () {
-                        console.log("error");
-                    });
-                }
-            });
-        })
-
-
-
-
-
-    });
-
-    $("#Agents").on("click", "#featureBtn", function () {
-        var data = table2.row($(this).parents("tr")).data();
-        var userid = data[0];
-
-        Swal.fire({
-            text: "Please Wait....",
-            allowOutsideClick: false,
-            showConfirmButton: false,
-
-            willOpen: () => {
-                Swal.showLoading();
-            },
-        });
-
-        //load the agent information
-        //load agent images
-
-        $("#featureImg").load("includes/adminagentprofileimgload.inc.php", {
-            userId: userid,
-        }, function (callback) {
-            $("#featureAgentInfo").load("includes/adminloadagentinfo.inc.php", {
-                userId: userid,
-                feature: userid
-            }, function (callback) {
-                Swal.close();
-                $("#featureModal").modal('show');
-            });
-        });
-
-
-        //feature the user to index page of the website
-        $("#featBtn").click(function () {
-            Swal.fire({
-                icon: "warning",
-                title: "Do you want to feature  this Agent?",
-                text: "This agent will be posted in Homepage.",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                showCancelButton: true
-            }).then(result => {
-                if (result.value) {
-                    Swal.fire({
-                        text: "Please Wait....",
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-
-                        willOpen: () => {
-                            Swal.showLoading();
-                        },
-                    });
-
-                    //insert the user to featured
-                    $.ajax({
-                        url: "includes/insertagenttofeatured.inc.php",
-                        data: {
-                            userId: userid,
-                            featureMessage: $("#listing-desc").val()
-                        },
-                        type: "POST",
-                        success: function (data) {
-                            Swal.close();
-                            // console.log(data)
-                            if (data == "Success") {
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "Agent Uploaded",
-                                    text: "You can now see the featured User in Website`s Main Page.",
-                                    showConfirmButton: false,
-                                    allowOutsideClick: false,
-                                    timer: 2000
-                                }).then(function (result) {
-                                    location.reload();
-                                })
-                            } else {
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "Error Updating Featured User",
-                                    text: data
-                                }).then(function (result) {
-                                    location.reload();
-                                })
-                            }
-                        },
-                        error: function (data) {
-                            alert(data);
-                        },
-                    });
-                }
-            })
-        })
-
-    })
-
-
     // FEATURED AGENT TABLE
 
-    var table3 = $('#featured').DataTable({
+    table3 = $('#featured').DataTable({
         dom: 'Bfrtip',
         buttons: [{
             extend: 'pdfHtml5',
@@ -646,17 +236,157 @@ $(document).ready(function () {
     });
 
 
-    $("#featured").on("click", "#deleteFeatured", function () {
-        var data = table3.row($(this).parents("tr")).data();
-        var userid = data[0];
+});
 
+
+//---------Agent BUTTONS EVENTS------
+
+
+$("#Agents").on("click", "#approveBtn", function (evt) {
+    evt.stopPropagation();
+    var data = table2.row($(this).parents("tr")).data();
+    var agentId = data[0];
+
+    //approve agent
+    approveAgent(agentId);
+
+});
+
+
+$("#Agents").on("click", "#denyBtn", function () {
+    var data = table2.row($(this).parents("tr")).data();
+    var agentId = data[0];
+    //deny agent
+    denyAgent(agentId);
+});
+
+
+$("#Agents").on("click", "#viewBtn", function () {
+    var data = table2.row($(this).parents("tr")).data();
+    var agentId = data[0];
+
+    //view agent information
+    viewAgent(agentId);
+
+});
+
+$("#Agents").on("click", "#featureBtn", function () {
+    var data = table2.row($(this).parents("tr")).data();
+    var agentId = data[0];
+    //feature agent
+    featureModal(agentId);
+
+});
+
+
+// ---------Agent Feature BUTTON EVENTS---------
+
+
+
+$("#featured").on("click", "#deleteFeatured", function () {
+    var data = table3.row($(this).parents("tr")).data();
+    var userid = data[0];
+
+    Swal.fire({
+        icon: "warning",
+        title: "Do you want to delete this featured Agent?",
+        text: "Deleting from this table will also remove him/her from the main page`s 'TOP AGENTS'.",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No"
+    }).then(result => {
+        if (result.value) {
+            Swal.fire({
+                text: "Please Wait....",
+                allowOutsideClick: false,
+                showConfirmButton: false,
+
+                willOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+
+            //delete the user from featured
+            $.ajax({
+                url: "includes/deleteagentfromfeatured.inc.php",
+                data: {
+                    userId: userid,
+                },
+                type: "POST",
+                success: function (data) {
+                    Swal.close();
+                    // console.log(data)
+                    if (data == "Success") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Agent Uploaded",
+                            text: "You can now see the featured User in Website`s Main Page.",
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            timer: 2000
+                        }).then(function (result) {
+                            location.reload();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error Updating Featured User",
+                            text: data
+                        }).then(function (result) {
+                            location.reload();
+                        })
+                    }
+                },
+                error: function (data) {
+                    alert(data);
+                },
+            });
+
+
+        }
+    })
+
+
+})
+
+
+$("#featured").on("click", "#viewFeatured", function () {
+    var data = table3.row($(this).parents("tr")).data();
+    var userid = data[0];
+    // console.log(userid)
+
+    Swal.fire({
+        text: "Please Wait....",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+
+        willOpen: () => {
+            Swal.showLoading();
+        },
+    });
+
+    $("#editFeatureImg").load("includes/adminagentprofileimgload.inc.php", {
+        userId: userid,
+        featuredAgent: "already-featured"
+    }, function (callback) {
+        $("#editFeatureAgentInfo").load("includes/adminloadagentinfo.inc.php", {
+            userId: userid,
+            feature: "Featured"
+        }, function (callback) {
+            Swal.close();
+            $("#editFeatureModal").modal('show');
+        });
+    });
+
+    $("#editFeatBtn").click(function () {
         Swal.fire({
             icon: "warning",
-            title: "Do you want to delete this featured Agent?",
-            text: "Deleting from this table will also remove him/her from the main page`s 'TOP AGENTS'.",
-            showCancelButton: true,
+            title: "Do you want to save changes?",
+            text: "Kindly, check the changes you made.",
             confirmButtonText: "Yes",
-            cancelButtonText: "No"
+            cancelButtonText: "No",
+            showCancelButton: true
         }).then(result => {
             if (result.value) {
                 Swal.fire({
@@ -668,13 +398,11 @@ $(document).ready(function () {
                         Swal.showLoading();
                     },
                 });
-
-
-                //delete the user from featured
                 $.ajax({
-                    url: "includes/deleteagentfromfeatured.inc.php",
+                    url: "includes/updatefeaturedagentstatement.inc.php",
                     data: {
                         userId: userid,
+                        newdescription: $("#editListing-desc").val()
                     },
                     type: "POST",
                     success: function (data) {
@@ -683,8 +411,8 @@ $(document).ready(function () {
                         if (data == "Success") {
                             Swal.fire({
                                 icon: "success",
-                                title: "Agent Uploaded",
-                                text: "You can now see the featured User in Website`s Main Page.",
+                                title: "This agent has been uploaded successfully",
+                                text: "You may now see the featured agent in the Website`s Main Page.",
                                 showConfirmButton: false,
                                 allowOutsideClick: false,
                                 timer: 2000
@@ -694,7 +422,7 @@ $(document).ready(function () {
                         } else {
                             Swal.fire({
                                 icon: "error",
-                                title: "Error Updating Featured User",
+                                title: "Error updating the featured user",
                                 text: data
                             }).then(function (result) {
                                 location.reload();
@@ -706,104 +434,13 @@ $(document).ready(function () {
                     },
                 });
 
-
             }
         })
-
-
     })
 
+})
 
-    $("#featured").on("click", "#viewFeatured", function () {
-        var data = table3.row($(this).parents("tr")).data();
-        var userid = data[0];
-        // console.log(userid)
 
-        Swal.fire({
-            text: "Please Wait....",
-            allowOutsideClick: false,
-            showConfirmButton: false,
-
-            willOpen: () => {
-                Swal.showLoading();
-            },
-        });
-
-        $("#editFeatureImg").load("includes/adminagentprofileimgload.inc.php", {
-            userId: userid,
-            featuredAgent: "already-featured"
-        }, function (callback) {
-            $("#editFeatureAgentInfo").load("includes/adminloadagentinfo.inc.php", {
-                userId: userid,
-                feature: "Featured"
-            }, function (callback) {
-                Swal.close();
-                $("#editFeatureModal").modal('show');
-            });
-        });
-
-        $("#editFeatBtn").click(function () {
-            Swal.fire({
-                icon: "warning",
-                title: "Do you want to save changes?",
-                text: "Kindly, check the changes you made.",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                showCancelButton: true
-            }).then(result => {
-                if (result.value) {
-                    Swal.fire({
-                        text: "Please Wait....",
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-
-                        willOpen: () => {
-                            Swal.showLoading();
-                        },
-                    });
-                    $.ajax({
-                        url: "includes/updatefeaturedagentstatement.inc.php",
-                        data: {
-                            userId: userid,
-                            newdescription: $("#editListing-desc").val()
-                        },
-                        type: "POST",
-                        success: function (data) {
-                            Swal.close();
-                            // console.log(data)
-                            if (data == "Success") {
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "This agent has been uploaded successfully",
-                                    text: "You may now see the featured agent in the Website`s Main Page.",
-                                    showConfirmButton: false,
-                                    allowOutsideClick: false,
-                                    timer: 2000
-                                }).then(function (result) {
-                                    location.reload();
-                                })
-                            } else {
-                                Swal.fire({
-                                    icon: "error",
-                                    title: "Error updating the featured user",
-                                    text: data
-                                }).then(function (result) {
-                                    location.reload();
-                                })
-                            }
-                        },
-                        error: function (data) {
-                            alert(data);
-                        },
-                    });
-
-                }
-            })
-        })
-
-    })
-
-});
 
 
 function changeUserPassword(userId) {
@@ -846,4 +483,252 @@ function changeUserPassword(userId) {
 
 
 
+}
+
+
+
+//-------ALL AGENT EVENTS------
+
+
+function approveAgent(agentId) {
+    // console.log(userid)
+    Swal.fire({
+        icon: "warning",
+        title: "Do you want to approve this user?",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        showCancelButton: true,
+        confirmButtonColor: "#3CB371",
+        cancelButtonColor: "#70945A"
+    }).then((result) => {
+        if (result.value) {
+            $.post('includes/approveuser.inc.php', {
+                    userId: agentId,
+                },
+                function (returnedData) {
+                    switch (returnedData) {
+                        case "Already Approved":
+                            Swal.fire({
+                                icon: "info",
+                                title: "This user has been already approved",
+                                confirmButtonColor: "#3CB371",
+                            })
+                            break;
+                        case "User Approved":
+                            Swal.fire({
+                                icon: "success",
+                                title: "This user is approve",
+                                confirmButtonColor: "#3CB371"
+                            })
+                            break;
+                    }
+                }).fail(function () {
+                console.log("error");
+            });
+        }
+    });
+}
+
+
+function denyAgent(agentId) {
+
+    Swal.fire({
+        icon: "error",
+        title: "Do you want to deny this user?",
+        text: "You can deny a user so that he/she cannot post a Property.",
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        showCancelButton: true,
+        confirmButtonColor: "#3CB371",
+        cancelButtonColor: "#70945A"
+    }).then((result) => {
+        if (result.value) {
+            $.post('includes/denyuser.inc.php', {
+                    userId: agentId,
+                },
+                function (returnedData) {
+                    // console.log(returnedData)
+                    switch (returnedData) {
+                        case "Already Denied":
+                            Swal.fire({
+                                icon: "info",
+                                title: "This user has been already denied",
+                                text: "You may delete this user.",
+                                showCancelButton: true,
+                                confirmButtonColor: "#d33",
+                                cancelButtonColor: "#3085d6",
+                                confirmButtonText: "Delete",
+                            }).then((result) => {
+                                if (result.value) {
+                                    $.post('includes/deleteuser.inc.php', {
+                                            userId: userid,
+                                        },
+                                        function (returnedData) {
+                                            Swal.fire({
+                                                icon: "success",
+                                                title: returnedData,
+                                                confirmButtonColor: "#3CB371",
+                                            }).then((result) => {
+                                                if (result.value) {
+                                                    window.location.reload();
+                                                }
+                                            })
+                                        }).fail(function () {
+                                        console.log("error");
+                                    });
+                                }
+                            })
+                            break;
+                        case "User Denied":
+                            Swal.fire({
+                                icon: "success",
+                                title: "This user is denied",
+                                confirmButtonColor: "#3CB371",
+                            })
+                            break;
+                    }
+                }).fail(function () {
+                console.log("error");
+            });
+        }
+    });
+}
+
+
+function viewAgent(agentId) {
+    Swal.fire({
+        text: "Please wait....",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+
+        willOpen: () => {
+            Swal.showLoading();
+        },
+    });
+    //load the agent information
+    //load agent images
+
+    $("#agentProfileImg").load("includes/adminagentprofileimgload.inc.php", {
+        userId: agentId,
+    }, function (callback) {
+        $("#agentInfo").load("includes/adminloadagentinfo.inc.php", {
+            userId: agentId,
+        }, function (callback) {
+            Swal.close();
+            $("#agentModal").modal('show');
+        });
+    });
+
+
+    $("#featureUserBtn").click(function () {
+        //show feature Modal
+        featureModal(agentId);
+    });
+
+    $("#approveAgentBtn").click(function () {
+        //approve the agent
+        approveAgent(agentId);
+    })
+
+
+    $("#denyAgentBtn").click(function () {
+        denyAgent(agentId);
+    })
+}
+
+
+function featureAgent(agentId) {
+    Swal.fire({
+        icon: "warning",
+        title: "Do you want this agent to be featured?",
+        text: "The agent will now be posted in your Home page.",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        confirmButtonColor: "#3CB371",
+        cancelButtonColor: "#70945A"
+    }).then(result => {
+        if (result.value) {
+            Swal.fire({
+                text: "Please wait....",
+                allowOutsideClick: false,
+                showConfirmButton: false,
+
+                willOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            //insert the user to featured
+            $.ajax({
+                url: "includes/insertagenttofeatured.inc.php",
+                data: {
+                    userId: agentId,
+                    featureMessage: $("#listing-desc").val()
+                },
+                type: "POST",
+                success: function (data) {
+                    Swal.close();
+                    // console.log(data)
+                    if (data == "Success") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "The agent is successfully uploaded",
+                            text: "You can now see the featured User in Website`s Main Page.",
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            timer: 2000,
+                            timerProgressBar: true
+                        }).then(function (result) {
+                            location.reload();
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error Updating Featured User",
+                            text: data,
+                            confirmButtonColor: "#3CB371",
+                        })
+                    }
+
+                },
+                error: function (data) {
+                    console.log(data);
+                },
+            });
+        }
+    })
+}
+
+
+function featureModal(agentId) {
+    Swal.fire({
+        text: "Please wait....",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+
+        willOpen: () => {
+            Swal.showLoading();
+        },
+    });
+    Swal.close();
+    $("#agentModal").modal('hide');
+
+    $("#featureImg").load("includes/adminagentprofileimgload.inc.php", {
+        userId: agentId,
+    }, function (callback) {
+        $("#featureAgentInfo").load("includes/adminloadagentinfo.inc.php", {
+            userId: agentId,
+            feature: agentId
+        }, function (callback) {
+            Swal.close();
+            $("#featureModal").modal('show');
+        });
+    });
+
+    //feature the user to index page of the website
+    $("#featBtn").click(function () {
+        //feature the agent
+        featureAgent(agentId);
+    });
 }

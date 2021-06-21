@@ -8,6 +8,7 @@ if (isset($_POST['submit'])) {
     $propertyId = $_POST['agentProperties'];
     $agentProperties = $_POST['propertyName'];
     $propertyType = $_POST['propertyType'];
+    $subcategory = $_POST['subcategory'];
     $propertyOfferType = $_POST['propertyOfferType'];
     $tcp = $_POST['tcp'];
     $Address = $_POST['Address'];
@@ -46,7 +47,7 @@ if (isset($_POST['submit'])) {
             //preselling condo
             $reservationDate = $_POST['saleDate'];
             $unitNo = $_POST['unitNo'];
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId, $subcategory);
             //this result will return the index of transaction that is inserted
             echo $result;
 
@@ -54,7 +55,7 @@ if (isset($_POST['submit'])) {
             //preselling but not condomonium
             //preselling condo
             $reservationDate = $_POST['saleDate'];
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId, $subcategory);
             //this result will return the index of transaction that is inserted
             echo $result;
 
@@ -69,7 +70,7 @@ if (isset($_POST['submit'])) {
             $commission = $_POST['commission'];
 
             $unitNo = $_POST['unitNo'];
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId, $subcategory);
 //this result will return the index of transaction that is inserted
             echo $result;
 
@@ -81,7 +82,7 @@ if (isset($_POST['submit'])) {
             $finalReceivable = $_POST['finalReceivable'];
             $commission = $_POST['commission'];
 
-            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
+            $result = createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId, $subcategory);
 //this result will return the index of transaction that is inserted
             echo $result;
 

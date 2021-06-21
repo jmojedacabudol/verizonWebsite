@@ -53,19 +53,19 @@ $result = mysqli_stmt_get_result($stmt);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
 
-        if ($row['category'] === "Preselling") {
+        if ($row['offertype'] === "Preselling") {
             echo "<tr>";
             echo "<td class='w-20'>";
             echo $row['transactionId'];
             echo "</td>";
             echo "<td class='w-20'>";
-            echo $row['propertyName'];
+            echo ucwords($row['propertyName']);
             echo "</td>";
             echo "<td><i class='fas fa-building'></i>&nbsp;&nbsp;";
             echo $row['propertyType'];
             echo "</td>";
             echo "<td>";
-            echo $row['category'];
+            echo $row['offertype'];
             echo "</td>";
             if ($row['propertyType'] === "Condominium") {
                 echo "<td>";
@@ -139,13 +139,13 @@ if (mysqli_num_rows($result) > 0) {
             echo $row['transactionId'];
             echo "</td>";
             echo "<td class='w-20'>";
-            echo $row['propertyName'];
+            echo ucwords($row['propertyName']);
             echo "</td>";
             echo "<td><i class='fas fa-building'></i>&nbsp;&nbsp;";
             echo $row['propertyType'];
             echo "</td>";
             echo "<td>";
-            echo $row['category'];
+            echo $row['offertype'];
             echo "</td>";
             if ($row['propertyType'] === "Condominium") {
                 echo "<td>";
@@ -278,6 +278,13 @@ if (mysqli_num_rows($result) > 0) {
                         <div class="col-8">
                             <input type="text" class="form-control transform important" placeholder="Property Type *"
                                 name="propertyType" id="propertyType" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="allPropertyHolder" class="col-4 col-form-label">Sub Category</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control transform important" placeholder="Sub Category*"
+                                name="subcategory" id="subcategory" readonly />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -516,7 +523,7 @@ if (mysqli_num_rows($result) > 0) {
                     <div class="form-group row">
                         <label for="allPropertyHolder" class="col-4 col-form-label">Property Name</label>
                         <div class="col-8">
-                            <select class="form-control transform" onchange="ePropertyNameBehavior(this.value)"
+                            <select class="form-control" onchange="ePropertyNameBehavior(this.value)"
                                 id="eAllPropertyHolder" name="eAgentProperties" style="width: 100%">
                             </select>
                         </div>
@@ -526,6 +533,13 @@ if (mysqli_num_rows($result) > 0) {
                         <div class="col-8">
                             <input type="text" class="form-control transform important" placeholder="Property Type *"
                                 name="ePropertyType" id="ePropertyType" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="allPropertyHolder" class="col-4 col-form-label">Sub Category</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control transform important" placeholder="Sub Category*"
+                                name="eSubcategory" id="eSubcategory" readonly />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -791,10 +805,18 @@ if (mysqli_num_rows($result) > 0) {
                     <div class="form-group row">
                         <label for="allPropertyHolder" class="col-4 col-form-label">Landline Number</label>
                         <div class="col-8">
-                            <input type="text" class="form-control" onkeypress="return isNumberKey(event)"
-                                aria-label="landline-number" name="clientLandlineNumber" id="clientLandlineNumber"
-                                placeholder="Landline Number *" maxlength="10">
+
+                            <div class="input-group select-group w-100">
+                                <input type="text" class="form-control input-group-addon"
+                                    onkeypress="return isNumberKey(event)" aria-label="landline-number"
+                                    name="clientLocalLandlineNumber" id="clientLocalLandlineNumber"
+                                    placeholder="Local Number *" maxlength="3" />
+                                <input type="text" class="form-control" onkeypress="return isNumberKey(event)"
+                                    aria-label="landline-number" name="clientLandlineNumber" id="clientLandlineNumber"
+                                    placeholder="Landline Number *" maxlength="8" />
+                            </div>
                         </div>
+
                     </div>
                     <div class="form-group row">
                         <label for="allPropertyHolder" class="col-4 col-form-label">Email Address</label>
@@ -846,7 +868,8 @@ if (mysqli_num_rows($result) > 0) {
                     </h3>
 
                     <div class="form-group row">
-                        <label for="allPropertyHolder" class="col-4 col-form-label">Upload 2 images of your valid Ids
+                        <label for="allPropertyHolder" class="col-4 col-form-label">Upload 2 images of your
+                            valid Ids
                             (Permanent and
                             Secondary) </label>
                         <div class="col-8">
@@ -876,7 +899,8 @@ if (mysqli_num_rows($result) > 0) {
                         <small class="text-muted">Complete Address</small>
                     </h3>
                     <div class="form-group row">
-                        <label for="allPropertyHolder" class="col-4 col-form-label">Room/Floor/Unit No. & Building
+                        <label for="allPropertyHolder" class="col-4 col-form-label">Room/Floor/Unit No. &
+                            Building
                         </label>
                         <div class="col-8">
                             <input type="text" class="form-control transform"
@@ -885,7 +909,8 @@ if (mysqli_num_rows($result) > 0) {
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="allPropertyHolder" class="col-4 col-form-label transform">House/Lot & Block No.
+                        <label for="allPropertyHolder" class="col-4 col-form-label transform">House/Lot & Block
+                            No.
                         </label>
                         <div class="col-8">
                             <input type="text" class="form-control transform" aria-label="House/Lot & Block No."
@@ -929,7 +954,8 @@ if (mysqli_num_rows($result) > 0) {
                     </h3>
 
                     <div class="form-group row">
-                        <label for="allPropertyHolder" class="col-4 col-form-label transform">Company Name</label>
+                        <label for="allPropertyHolder" class="col-4 col-form-label transform">Company
+                            Name</label>
                         <div class="col-8">
                             <input type="text" class="form-control transform" placeholder="Company Name*"
                                 name="companyName" id="companyName" onkeypress="return allowOnlyLetters(event);" />
@@ -938,7 +964,8 @@ if (mysqli_num_rows($result) > 0) {
 
 
                     <div class="form-group row">
-                        <label for="allPropertyHolder" class="col-4 col-form-label transform">Room / Floor / Unit No. &
+                        <label for="allPropertyHolder" class="col-4 col-form-label transform">Room / Floor /
+                            Unit No. &
                             Building
                             Name</label>
                         <div class="col-8">
@@ -1026,7 +1053,6 @@ if (mysqli_num_rows($result) > 0) {
                         </div>
                     </div>
 
-
                     <div class="form-group row">
                         <label for="allPropertyHolder" class="col-4 col-form-label">Mobile Number</label>
                         <div class="col-8">
@@ -1038,11 +1064,21 @@ if (mysqli_num_rows($result) > 0) {
                     <div class="form-group row">
                         <label for="allPropertyHolder" class="col-4 col-form-label">Landline Number</label>
                         <div class="col-8">
-                            <input type="text" class="form-control" onkeypress="return isNumberKey(event)"
-                                aria-label="landline-number" name="eClientLandlineNumber" id="eClientLandlineNumber"
-                                placeholder="Landline Number *" maxlength="10">
+
+                            <div class="input-group select-group w-100">
+                                <input type="text" class="form-control input-group-addon"
+                                    onkeypress="return isNumberKey(event)" aria-label="landline-number"
+                                    name="eClientLocalLandlineNumber" id="eClientLocalLandlineNumber"
+                                    placeholder="Local Number *" maxlength="3" />
+                                <input type="text" class="form-control" onkeypress="return isNumberKey(event)"
+                                    aria-label="landline-number" name="eClientLandlineNumber" id="eClientLandlineNumber"
+                                    placeholder="Landline Number *" maxlength="8" />
+                            </div>
                         </div>
+
                     </div>
+
+
                     <div class="form-group row">
                         <label for="allPropertyHolder" class="col-4 col-form-label">Email Address</label>
                         <div class="col-8">
@@ -1094,7 +1130,8 @@ if (mysqli_num_rows($result) > 0) {
                     </h3>
 
                     <div class="form-group row">
-                        <label for="allPropertyHolder" class="col-4 col-form-label">Upload 2 images of your valid Ids
+                        <label for="allPropertyHolder" class="col-4 col-form-label">Upload 2 images of your valid
+                            Ids
                             (Permanent and
                             Secondary) </label>
                         <div class="col-8">
@@ -1188,7 +1225,8 @@ if (mysqli_num_rows($result) > 0) {
 
 
                     <div class="form-group row">
-                        <label for="allPropertyHolder" class="col-4 col-form-label transform">Room / Floor / Unit No. &
+                        <label for="allPropertyHolder" class="col-4 col-form-label transform">Room / Floor / Unit
+                            No. &
                             Building
                             Name</label>
                         <div class="col-8">

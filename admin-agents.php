@@ -60,6 +60,8 @@ if (mysqli_num_rows($result) > 0) {
 
         echo " <button class='btn btn-info' id='viewBtn' type='text' aria-label='View'><i
                                         class='far fa-eye'></i></button>";
+        echo " <a class='btn btn-dark' id='deleteFeatured'type='text' aria-label='Deny' href='mailto:";
+        echo $row['usersEmail'] . "'" . "`;><i class='far fa-envelope'></i></a>";
 
         echo "</td>";
 
@@ -122,6 +124,7 @@ if (mysqli_num_rows($result) > 0) {
 
         echo " <button class='btn btn-danger' id='deleteFeatured'type='text' aria-label='Deny'><i
                                         class='far fa-times-circle'></i></button>";
+
         echo "</td>";
 
         echo "</tr>";

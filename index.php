@@ -39,7 +39,9 @@ window.fbAsyncInit = function() {
     <header class="masthead bg-photo text-white text-center">
         <!--Call Us Panel-->
         <div class="overlay">
-            <i class="fas fa-phone"></i> Call Us! (+63) 9310645492
+            Call Us!
+            <i class="fas fa-mobile-alt"></i> 0917-8617-878 <br>
+            <i class="fas fa-phone"></i> (02) 7216 4568
         </div>
         <!---End of Call Us Panel--->
 
@@ -199,7 +201,7 @@ window.fbAsyncInit = function() {
             <div class="row justify-content-center padding-pr">
                 <!-- Latest Properties Item 1-->
                 <?php
-$sql = "SELECT property.propertyid,MIN(images.file_name) as file_name,property.propertytype,propertyamount,propertydesc,propertyname, propertybedrooms,property.approval FROM property,images WHERE property.propertyid=images.propertyid AND property.approval NOT IN ('Pending','Deny','Delete')AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3";
+$sql = "SELECT property.propertydesc,property.propertyid,MIN(images.file_name) as file_name,property.propertytype,propertyamount,propertyname, propertybedrooms,property.approval FROM property,images WHERE property.propertyid=images.propertyid AND property.approval NOT IN ('Pending','Deny','Delete') AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3";
 
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -233,9 +235,10 @@ if (mysqli_num_rows($result) > 0) {
             echo $row['propertybedrooms'];
             echo " Bedroom/s </h6>";
         }
-        echo "<p class='lproperties-desc'> ";
-        echo $row['propertydesc'];
-        echo "</p>";
+        echo "<pre class='lproperties-desc'> ";
+
+        echo substr($row['propertydesc'], 0, 100); //limit property description
+        echo "</pre>";
         echo "</div>";
         echo "</div>";
 
@@ -243,6 +246,7 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     echo "<p>No Latest Properties for Sale</p>";
 }
+
 ?>
 
 
@@ -261,7 +265,7 @@ if (mysqli_num_rows($result) > 0) {
         <!-- Latest Rental Properties Grid Items-->
         <div class="row justify-content-center">
             <?php
-$sql = "SELECT property.propertyid,propertyamount,propertydesc,propertyname,property.propertyrentchoice, propertybedrooms,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval  NOT IN (0, 2, 3) AND property.offertype='Rent' GROUP BY property.propertyid DESC LIMIT 3;";
+$sql = "SELECT property.propertyid,propertyamount,property.propertytype,propertydesc,propertyname,property.propertyrentchoice, propertybedrooms,property.approval,MIN(images.file_name)AS file_name FROM property, images WHERE property.propertyid = images.propertyid AND property.approval  NOT IN  ('Pending','Deny','Delete') AND property.offertype='Rent' GROUP BY property.propertyid DESC LIMIT 3;";
 
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -287,14 +291,17 @@ if (mysqli_num_rows($result) > 0) {
         echo '<h4 class="text-uppercase lrproperties-title">';
         echo $row['propertyname'];
         echo '</h4>';
-        echo '<h6 class="lrproperties-br">';
-        echo $row['propertybedrooms'];
-        echo 'Bedroom/s </h6>';
-        echo ' <p class="lrproperties-desc">';
-        echo $row['propertydesc'];
-        echo '</p>';
+        if ($row['propertytype'] === "House and Lot" || $row['propertytype'] === "Condominium") {
+            echo '<h6 class="lrproperties-br">';
+            echo $row['propertybedrooms'];
+            echo ' Bedroom/s </h6>';
+
+        }
+        echo ' <pre class="lrproperties-desc">';
+        echo substr($row['propertydesc'], 0, 100);
+        echo '</pre>';
         echo ' <h5 class="lrproperties-price">';
-        echo '₱ ' . number_format($row['propertyamount']) . '/' . $row['propertyrentchoice'];
+        echo '₱ ' . $row['propertyamount'] . '/' . $row['propertyrentchoice'];
         echo '</h5>';
         echo '</div>';
         echo '</div>';
@@ -424,11 +431,11 @@ if (mysqli_num_rows($result) > 0) {
     </div>
     <!-- Call Us & Email Us Button-->
     <div class="text-center mt-4">
-        <a class="btn btn-xl btn-outline-light" href="#contact">
+        <!-- <a class="btn btn-xl btn-outline-light" href="#contact">
             <i class="fas fa-phone"></i>
             &nbsp;Call Us
         </a>
-        &nbsp;
+        &nbsp; -->
         <a class="btn btn-xl btn-outline-light" href="mailto:helpdesk@arverizon.com">
             <i class="far fa-envelope"></i>
             &nbsp;Email Us

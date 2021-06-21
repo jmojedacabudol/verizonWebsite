@@ -30,6 +30,7 @@ if (isset($_POST['addClientBtn'])) {
     $companyStreet = $_POST['companyStreet'];
     $companyBrgyAddress = $_POST['companyBrgyAddress'];
     $companyCityAddress = $_POST['companyCityAddress'];
+    $areaCode = $_POST['clientLocalLandlineNumber'];
 
     //check first the size/s of all img/s of Property
     if (invalidImgSize($firstValidIdHolder)) {
@@ -44,7 +45,7 @@ if (isset($_POST['addClientBtn'])) {
     }
 
     //insert to table
-    $result = insertClientInformation($conn, $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdHolder, $secondValidIdHolder);
+    $result = insertClientInformation($conn, $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdHolder, $secondValidIdHolder, $areaCode);
     echo $result;
 
 } else {

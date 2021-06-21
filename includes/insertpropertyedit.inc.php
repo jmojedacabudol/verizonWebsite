@@ -3,6 +3,9 @@
 require_once 'dbh.inc.php';
 require_once 'functions.inc.php';
 
+//for testing purpose only
+define("TESTING", true);
+
 if (isset($_POST['ePropertyId'])) {
     //Property Id to Edit
     $propertyId = $_POST['ePropertyId'];
@@ -60,6 +63,69 @@ if (isset($_POST['ePropertyId'])) {
     $result = mysqli_query($conn, $propertysql);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
+            //delete the ATSFILE if there is a new file to upload
+            if (emptyvalIdImg($propertyATS) !== true) {
+
+                //check if there is an uploaded ATS File
+                if ($row['ATSFile'] != null) {
+                    //delete the previous ATS FILE
+                    $fileName = $row['ATSFile'];
+                    $filename = "../uploads/$fileName" . "*";
+                    $fileInfo = glob($filename);
+                    $fileext = explode(".", $fileInfo[0]);
+                    $fileactualext = $fileext[4];
+
+                    unlink('../uploads/' . $row['ATSFile'] . "." . $fileactualext);
+
+                    //upload the ATS File to file folder
+                    $propertyATSFileName = $propertyATS['name'];
+                    $propertyATSFileExt = explode('.', $propertyATSFileName);
+                    $propertyATSFileTmpName = $propertyATS['tmp_name'];
+                    $propertyATSFileActualExt = strtolower(end($propertyATSFileExt));
+                    $propertyATSNewFileName = explode(' ', trim($row['propertyname']))[0] . "_ATS" . uniqid('', true);
+                    $propertyATSFileNameNew = $propertyATSNewFileName . "." . $propertyATSFileActualExt;
+                    $propertyATSFileDestination = '../uploads/' . $propertyATSFileNameNew;
+
+                    if (move_uploaded_file($propertyATSFileTmpName, $propertyATSFileDestination)) {
+                        //insert the new ATF FILE NAME TO database
+                        $conditions[] = "ATSFile=" . "'" . mysqli_real_escape_string($conn, $propertyATSNewFileName) . "'";
+                    } else {
+                        //show error in uploading profile FILE in testing mode
+                        if (TESTING) {
+                            echo "ATS FILE NOT UPLOADED" . $_FILES["file"]["error"];
+                            exit();
+                        }
+                        exit();
+                    }
+
+                } else {
+                    //JUST UPLOAD THE FILE AND INSERT TO DATABASE
+
+                    //upload the ATS File to file folder
+                    $propertyATSFileName = $propertyATS['name'];
+                    $propertyATSFileExt = explode('.', $propertyATSFileName);
+                    $propertyATSFileTmpName = $propertyATS['tmp_name'];
+                    $propertyATSFileActualExt = strtolower(end($propertyATSFileExt));
+                    $propertyATSNewFileName = explode(' ', trim($row['propertyname']))[0] . "_ATS" . uniqid('', true);
+                    $propertyATSFileNameNew = $propertyATSNewFileName . "." . $propertyATSFileActualExt;
+                    $propertyATSFileDestination = '../uploads/' . $propertyATSFileNameNew;
+
+                    if (move_uploaded_file($propertyATSFileTmpName, $propertyATSFileDestination)) {
+                        //insert the new ATF FILE NAME TO database
+                        $conditions[] = "ATSFile=" . "'" . mysqli_real_escape_string($conn, $propertyATSNewFileName) . "'";
+                    } else {
+                        //show error in uploading profile FILE in testing mode
+                        if (TESTING) {
+                            echo "ATS FILE NOT UPLOADED" . $_FILES["file"]["error"];
+                            exit();
+                        }
+                        exit();
+                    }
+
+                }
+
+            }
+
             if ($row['propertyname'] != $eListingTitle) {
                 $conditions[] = "propertyname=" . "'" . mysqli_real_escape_string($conn, $eListingTitle) . "'";
             }

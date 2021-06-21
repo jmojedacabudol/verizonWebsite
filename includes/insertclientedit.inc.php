@@ -15,6 +15,7 @@ if (isset($_POST['eClientId'])) {
     $eLName = $_POST['eLName'];
     $eClientMobileNumber = $_POST['eClientMobileNumber'];
     $eClientLandlineNumber = $_POST['eClientLandlineNumber'];
+    $eClientLocalLandlineNumber = $_POST['eClientLocalLandlineNumber'];
     $eEmailAddress = $_POST['eEmailAddress'];
     $eBirthday = $_POST['eBirthday'];
     $eGender = $_POST['eGender'];
@@ -89,6 +90,10 @@ if (isset($_POST['eClientId'])) {
 
             if ($row['landlineNumber'] != $eClientLandlineNumber) {
                 $conditions[] = "landlineNumber=" . "'" . mysqli_real_escape_string($conn, $eClientLandlineNumber) . "'";
+            }
+
+            if ($row['areaCode'] != $eClientLocalLandlineNumber) {
+                $conditions[] = "areaCode=" . "'" . mysqli_real_escape_string($conn, $eClientLocalLandlineNumber) . "'";
             }
 
             if ($row['email'] != $eEmailAddress) {

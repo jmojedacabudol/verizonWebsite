@@ -34,9 +34,9 @@ if (isset($_POST['propertyId'])) {
             echo "</hr>";
             echo "<p class='mproperties-desc'>Description";
             echo "</p>";
-            echo "<p class='mproperties-subdesc'>";
+            echo "<pre class='mproperties-subdesc'>";
             echo $row['propertydesc'];
-            echo "</p> <br>";
+            echo "</pre> <br>";
 
             echo "<p class='mproperties-desc'>Location";
             echo "</p>";

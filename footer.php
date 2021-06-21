@@ -34,7 +34,7 @@ function isNumberKey(evt) {
 //preventing numbers to names
 function allowOnlyLetters(evt) {
     var inputValue = evt.charCode;
-    if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
+    if (!(inputValue >= 65 && inputValue <= 122) && (inputValue != 32 && inputValue != 0)) {
         event.preventDefault();
     }
 }
@@ -46,6 +46,15 @@ $('.dropdown-submenu a.test').on("click", function(e) {
     e.stopPropagation();
     e.preventDefault();
 });
+
+function add3Dots(string, limit) {
+    var dots = "...";
+    if (string.length > limit) {
+        // you can also use substr instead of substring
+        string = string.substring(0, limit) + dots;
+    }
+    return string;
+}
 </script>
 
 <!-- Core theme JS-->

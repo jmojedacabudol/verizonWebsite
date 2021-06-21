@@ -1,6 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 function emptyInputsSignup($email, $pwd, $pwdrepeat, $firstname, $lastname, $mobile, $position, $managerid)
 {
@@ -38,6 +39,32 @@ function invalidEmail($email)
 function emailExists($conn, $email)
 {
     $sql = "SELECT * FROM users WHERE companyEmail=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = false;
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        // header("location: ../index.php?error=stmtfailed");
+        $result = "statement Failed";
+        //exit();
+    }
+    mysqli_stmt_bind_param($stmt, 's', $email);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+    // echo $resultData;
+    if (mysqli_num_rows($resultData) > 0) {
+        $row = mysqli_fetch_assoc($resultData);
+        return $row;
+    } else {
+        $result = 0;
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+function registrationEmailExist($conn, $email)
+{
+    $sql = "SELECT * FROM users WHERE usersEmail=?;";
     $stmt = mysqli_stmt_init($conn);
     $result = false;
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -283,14 +310,23 @@ function loginUser($conn, $email, $pwd)
     if ($uidExists === 0) {
         $result = "User does not exist";
     } else {
-        //get the user password and compare to users password in the database
-        $hashedPwd = $uidExists['usersPwd'];
+
         $userTag = $uidExists['Tag'];
         if ($userTag == "New User") {
-            //password is not hashed and need to be change
-            $result = "Password reset needed";
+            //check default password
+            $userDefaultPass = $uidExists['usersPwd'];
+            //check default password
+            if ($pwd === $userDefaultPass) {
+                //password is not hashed and need to be change
+                $result = "Password reset needed";
+
+            } else {
+                $result = "Wrong logged in Credentials";
+            }
 
         } else {
+            //get the user password and compare to users password in the database
+            $hashedPwd = $uidExists['usersPwd'];
             //check if the password user typed is verified
             $checkPwd = password_verify($pwd, $hashedPwd);
             if ($checkPwd === false) {
@@ -435,7 +471,7 @@ function emptypInputProperty($propertyName, $propertyLocation, $propertyLotArea,
 function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $listingUnitNo, $listingSubCategory, $propertyOfferType, $listingPrice, $listingRentChoice, $listingLotArea, $listingFloorArea, $listingBedrooms, $listingCapacityOfGarage, $propertyDesc, $propertyATS, $listingRFUB, $listingHLB, $listingStreet, $listingSubdivision, $listingBrgyAddress, $listingCityAddress, $propertyOwner)
 {
     //testing mode set to true if you want to see error in execution
-    define("TESTING", false);
+    define("TESTING", true);
     $result = "default";
 
     $sql = "SELECT approval FROM users WHERE usersId=?;";
@@ -509,47 +545,55 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
                                 }
                             }
                         }
-                        //upload ATS FILE and insert the name of file to database
-                        $ATSFileName = $propertyATS['name'];
-                        $ATSExt = explode('.', $ATSFileName);
-                        $ATSTmpName = $propertyATS['tmp_name'];
-                        $ATSFileActualExt = strtolower(end($ATSExt));
-                        $ATSFileNewName = explode(' ', trim($propertyName))[0] . "_ATS" . uniqid('', true);
-                        $ATSFileNameWithExt = $ATSFileNewName . "." . $ATSFileActualExt;
-                        $ATSFileDestination = '../uploads/' . $ATSFileNameWithExt;
 
-                        if (move_uploaded_file($ATSTmpName, $ATSFileDestination)) {
-                            //insert the file name to property`s information
-                            $sql = "UPDATE property SET ATSFile = ?  WHERE propertyid=?;";
-                            $stmt = mysqli_stmt_init($conn);
-                            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                                if (TESTING) {
-                                    $result = "Error inserting ATS name to datebase!";
+                        //check first if ATS file is available
+                        if (emptyvalIdImg($propertyATS) !== true) {
+                            //upload ATS FILE and insert the name of file to database
+                            $ATSFileName = $propertyATS['name'];
+                            $ATSExt = explode('.', $ATSFileName);
+                            $ATSTmpName = $propertyATS['tmp_name'];
+                            $ATSFileActualExt = strtolower(end($ATSExt));
+                            $ATSFileNewName = explode(' ', trim($propertyName))[0] . "_ATS" . uniqid('', true);
+                            $ATSFileNameWithExt = $ATSFileNewName . "." . $ATSFileActualExt;
+                            $ATSFileDestination = '../uploads/' . $ATSFileNameWithExt;
+
+                            if (move_uploaded_file($ATSTmpName, $ATSFileDestination)) {
+                                //insert the file name to property`s information
+                                $sql = "UPDATE property SET ATSFile = ?  WHERE propertyid=?;";
+                                $stmt = mysqli_stmt_init($conn);
+                                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                                    if (TESTING) {
+                                        $result = "Error inserting ATS name to datebase!";
+                                    }
+
+                                } else {
+                                    mysqli_stmt_bind_param($stmt, 'ss', $ATSFileNewName, $propertyId);
+                                    if (mysqli_stmt_execute($stmt)) {
+                                        //PROPERTY SUCCESSFULLY CREATED!
+                                        $result = "Property Submitted";
+                                        //close statement;
+                                        mysqli_stmt_close($stmt);
+                                    } else {
+                                        //display the error in testing mode
+                                        if (TESTING) {
+                                            //inserting ATS name error
+                                            $result = mysqli_stmt_error($stmt);
+                                        }
+                                        //close statement;
+                                        mysqli_stmt_close($stmt);
+                                    }
                                 }
 
                             } else {
-                                mysqli_stmt_bind_param($stmt, 'ss', $ATSFileNewName, $propertyId);
-                                if (mysqli_stmt_execute($stmt)) {
-                                    //PROPERTY SUCCESSFULLY CREATED!
-                                    $result = "Property Submitted";
-                                    //close statement;
-                                    mysqli_stmt_close($stmt);
-                                } else {
-                                    //display the error in testing mode
-                                    if (TESTING) {
-                                        //inserting ATS name error
-                                        $result = mysqli_stmt_error($stmt);
-                                    }
-                                    //close statement;
-                                    mysqli_stmt_close($stmt);
+                                //show error in uploading ATS FILE in testing mode
+                                if (TESTING) {
+                                    $result = "ATS NOT UPLOADED" . $_FILES["file"]["error"];
+
                                 }
                             }
-
                         } else {
-                            //show error in uploading ATS FILE in testing mode
-                            if (TESTING) {
-                                $result = "ATS NOT UPLOADED" . $_FILES["file"]["error"];
-                            }
+                            //PROPERTY UPLOADED WITHOUT ATS
+                            $result = "Property Submitted";
                         }
 
                     } else {
@@ -972,11 +1016,10 @@ function featuredTable($conn)
 
 }
 
-function forgotPwdInputsEmpty($email, $mobile, $pwd, $pwdrepeat)
+function forgotPwdEmailIsEmpty($email)
 {
     $result = false;
-
-    if (empty($email) || empty($mobile) || empty($pwd) || empty($pwdrepeat)) {
+    if (empty($email)) {
         $result = true;
     } else {
         $result = false;
@@ -1009,6 +1052,19 @@ function passwordNotSame($pwd, $pwdrepeat)
     return $result;
 }
 
+function generatePassword()
+{
+    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@#$';
+    $pass = array(); //remember to declare $pass as an array
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    for ($i = 0; $i < 10; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
+    }
+    return implode($pass);
+
+}
+
 function changePassword($conn, $email, $pwd)
 {
     $sql = "UPDATE users SET usersPwd=?, Tag=? WHERE companyEmail=?;";
@@ -1031,6 +1087,72 @@ function changePassword($conn, $email, $pwd)
         $result = false;
 
     }
+    return $result;
+}
+
+function sendEmailChangePassword($conn, $email)
+{
+    define("TESTING", false);
+    //generate a default password for the user
+    $generatedPassword = generatePassword();
+
+    $sql = "SELECT * FROM users WHERE usersEmail=?;";
+    $stmt = mysqli_stmt_init($conn);
+    $result = false;
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        $result = "Internal Error: Change Password`s Statement Error";
+        mysqli_stmt_close($stmt);
+    } else {
+        mysqli_stmt_bind_param($stmt, 's', $email);
+        if (mysqli_stmt_execute($stmt)) {
+            $resultData = mysqli_stmt_get_result($stmt);
+            if (mysqli_num_rows($resultData) > 0) {
+                while ($row = mysqli_fetch_assoc($resultData)) {
+                    $userFullName = $row['usersFirstName'] . " " . $row['userLastName'];
+                    $companyEmail = $row['companyEmail'];
+                    //sendEmail to email account of resetted password
+                    $sendingEmail = sendResetPwdEmail($email, $generatedPassword, $userFullName, $companyEmail);
+                    if ($sendingEmail === "Message has been sent") {
+                        $hashedPwd = password_hash($generatedPassword, PASSWORD_DEFAULT);
+                        $updateSql = "UPDATE users SET usersPwd=? WHERE usersEmail=?;";
+                        $updateStmt = mysqli_stmt_init($conn);
+                        if (!mysqli_stmt_prepare($updateStmt, $updateSql)) {
+                            $result = "Internal Error: Update Password`s Statement Error";
+                            mysqli_stmt_close($updateStmt);
+                        } else {
+                            mysqli_stmt_bind_param($updateStmt, 'ss', $hashedPwd, $email);
+                            if (mysqli_stmt_execute($updateStmt)) {
+                                //success in sending email
+                                $result = "Please check your email!";
+                            } else {
+                                if (TESTING) {
+                                    //show error in testing mode
+                                    $result = "Error Updating User: " . mysqli_stmt_error($updateStmt);
+                                }
+                                mysqli_stmt_close($updateStmt);
+                            }
+                        }
+
+                    } else {
+                        $result = $sendingEmail;
+                    }
+
+                }
+
+            } else {
+                $result = "No User Found!";
+                mysqli_stmt_close($stmt);
+            }
+
+        } else {
+            if (TESTING) {
+                //show error in testing mode
+                $result = "Error Selecting User: " . mysqli_stmt_error($stmt);
+            }
+            mysqli_stmt_close($stmt);
+        }
+    }
+
     return $result;
 }
 
@@ -1137,46 +1259,28 @@ function sendEmail($companyemail, $email, $defaultPassword, $firstname, $lastnam
         require '../PHPMailer/src/PHPMailer.php';
         require '../PHPMailer/src/Exception.php';
         require '../PHPMailer/src/SMTP.php';
+        require 'dbh.inc.php';
 
         $mail = new PHPMailer();
         $mail->IsHTML(true);
         $mail->IsSMTP(true);
         $mail->CharSet = "utf-8";
-// Sending Email
-        // $mail->SMTPAuth = true; // enable SMTP authentication
-        // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // sets the prefix to the servier
-        // $mail->Host = "smtp.elasticemail.com"; // sets GMAIL as the SMTP server
-        // $mail->Port = 2525; // set the SMTP port for the GMAIL server
-        // $mail->Username = "nonreply@arverizon.com"; // GMAIL username
-        // $mail->Password = "BEE0AAD9AFCC23302CACD16D67246F43B4CC"; // GMAIL password
-
-        // $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
-        $mail->Host = 'mail.arverizon.com'; //Set the SMTP server to send through
+        // Sending Email
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
+        $mail->Host = $app_host; //Set the SMTP server to send through
         $mail->SMTPAuth = true; //Enable SMTP authentication
-        $mail->Username = 'noreply@arverizon.com'; //SMTP username
-        $mail->Password = 'Z9H*k?wUb(YH'; //SMTP password
+        $mail->Username = $app_email; //SMTP username
+        $mail->Password = $password; //SMTP password
         $mail->SMTPSecure = 'tls'; //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
         $mail->Port = 587; //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-//Recipients
-        $mail->setFrom('noreply@arverizon.com', 'AR Verizon');
-
-//ROOM FOR IMPROVE
-
-        // $mail->DKIM_domain = 'arverizon.com';
-        // $mail->DKIM_private = '../keys/private.key';
-        // $mail->DKIM_selector = 'phpmailer';
-        // $mail->DKIM_passphrase = '';
-        // $mail->DKIM_identity = $mail->From;
-
+        //Recipients
+        $mail->setFrom('dontreply.info@arverizon.com', 'AR Verizon');
         $mail->addAddress($email); //Add a recipient
         $mail->addReplyTo('helpdesk@arverizon.com', 'Customer Service');
         $mail->addCC('helpdesk@arverizon.com');
 
         $email_template = '../email_templates/emailTemplate.html';
-
-        $username = 'nonreply@arverizon.com';
-        $password = 'C6D97476387E1AA45833DFDA523959397F5B';
 
         $message = file_get_contents($email_template);
         $message = str_replace('%USER_NAME%', $firstname . " " . $lastname, $message);
@@ -1200,16 +1304,16 @@ function sendEmail($companyemail, $email, $defaultPassword, $firstname, $lastnam
     return $result;
 }
 
-function createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId)
+function createTransaction($conn, $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $Address, $terms, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId, $subcategory)
 {
     $result = "";
-    $sql = "INSERT INTO transactions (agentId,propertyName,propertyType,category,unitNo,TCP,termsOfPayment,address,status,dateOfTransaction,dataOfReservation,finalTCP,commission,receivable,commissionAgent,commissionAR,commissionBuyer,receivable2,firstClientId,secondClientId,propertyId) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql = "INSERT INTO transactions (agentId,propertyName,propertyType,offertype,unitNo,TCP,termsOfPayment,address,status,dateOfTransaction,dataOfReservation,finalTCP,commission,receivable,commissionAgent,commissionAR,commissionBuyer,receivable2,firstClientId,secondClientId,propertyId,subcategory) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         $result = "Internal Error: Transaction`s Statement Error";
     } else {
 
-        mysqli_stmt_bind_param($stmt, 'sssssssssssssssssssss', $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $terms, $Address, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId);
+        mysqli_stmt_bind_param($stmt, 'ssssssssssssssssssssss', $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $terms, $Address, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId, $subcategory);
         if (mysqli_stmt_execute($stmt)) {
             //get the id of latest inserted query;
             $result = "Transaction Created";
@@ -1221,7 +1325,7 @@ function createTransaction($conn, $agentId, $agentProperties, $propertyType, $pr
     return $result;
 }
 
-function insertClientInformation($conn, $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdHolder, $secondValidIdHolder)
+function insertClientInformation($conn, $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdHolder, $secondValidIdHolder, $areaCode)
 {
     $result = "default";
     //testing mode (to see error properly)
@@ -1252,13 +1356,13 @@ function insertClientInformation($conn, $fName, $mName, $lName, $clientMobileNum
             //upload the second Valid Id
 
             //INSERT TO CLIENTS TABLE
-            $sql = "INSERT INTO clients (firstName,middleName,lastName,mobileNumber,landlineNumber,email,birthday,gender,age,civilStatus,RoomFloorUnitNoBuilding,HouseLotBlockNo,street,subdivision,barangay,city,companyName,companyRoomFloorUnitNoBuilding,companyStreet,companyBarangay,companyCity,primaryId,secondaryId) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            $sql = "INSERT INTO clients (firstName,middleName,lastName,mobileNumber,landlineNumber,email,birthday,gender,age,civilStatus,RoomFloorUnitNoBuilding,HouseLotBlockNo,street,subdivision,barangay,city,companyName,companyRoomFloorUnitNoBuilding,companyStreet,companyBarangay,companyCity,primaryId,secondaryId,areaCode) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
             $stmt = mysqli_stmt_init($conn);
 
             if (!mysqli_stmt_prepare($stmt, $sql)) {
                 $result = "Internal Error: Transaction`s Statement Error";
             } else {
-                mysqli_stmt_bind_param($stmt, 'sssssssssssssssssssssss', $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdFileNameNew, $secondValidIdFileNameNew);
+                mysqli_stmt_bind_param($stmt, 'ssssssssssssssssssssssss', $fName, $mName, $lName, $clientMobileNumber, $clientLandlineNumber, $emailAddress, $birthday, $gender, $clientAge, $civilStatus, $clientRFUB, $clientHLB, $clientStreet, $subdivision, $clientBrgyAddress, $clientCityAddress, $companyName, $companyInitalAddress, $companyStreet, $companyBrgyAddress, $companyCityAddress, $firstValidIdFileNameNew, $secondValidIdFileNameNew, $areaCode);
                 if (mysqli_stmt_execute($stmt)) {
 
                     mysqli_stmt_close($stmt);
@@ -1293,4 +1397,63 @@ function insertClientInformation($conn, $fName, $mName, $lName, $clientMobileNum
         exit();
     }
     echo $result;
+}
+
+function sendResetPwdEmail($email, $generatedPassword, $userFullName, $companyEmail)
+{
+    $result = "";
+    try {
+        require '../PHPMailer/src/PHPMailer.php';
+        require '../PHPMailer/src/Exception.php';
+        require '../PHPMailer/src/SMTP.php';
+        require 'dbh.inc.php';
+
+        $mail = new PHPMailer();
+        $mail->IsHTML(true);
+        $mail->IsSMTP(true);
+        $mail->CharSet = "utf-8";
+        // Sending Email
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
+        $mail->Host = $app_host; //Set the SMTP server to send through
+        $mail->SMTPAuth = true; //Enable SMTP authentication
+        $mail->Username = $app_resetPasswod_email; //SMTP username
+        $mail->Password = $app_resetPassword_password; //SMTP password
+        $mail->SMTPSecure = 'tls'; //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+        $mail->Port = 587; //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+        //Recipients
+        $mail->setFrom('dontreply.info@arverizon.com', 'AR Verizon');
+        $mail->addAddress($email); //Add a recipient
+        $mail->addReplyTo('helpdesk@arverizon.com', 'Customer Service');
+        $mail->addCC('helpdesk@arverizon.com');
+
+        $email_template = '../email_templates/resetPwd_template.html';
+
+        $message = file_get_contents($email_template);
+        $message = str_replace('%USER_NAME%', $userFullName, $message);
+        $message = str_replace('%EMAIL_ADDRESS%', $companyEmail, $message);
+        $message = str_replace('%EMAIL_PASSWORD%', $generatedPassword, $message);
+
+        //adding image to the website
+        $message = str_replace("%BANNER_ACCOUNT%", "https://i.ibb.co/kJ1bxCJ/banner-Account.jpg", $message);
+        $message = str_replace("%FB_LOGO%", "https://i.ibb.co/vBQBvDr/fbLogo.png", $message);
+        $message = str_replace("%INSTA_LOGO%", "https://i.ibb.co/nfQzV4t/insta-Logo.png", $message);
+        $message = str_replace("%TWITTER_LOGO%", "https://i.ibb.co/Chh4wJX/twitter-Logo.png", $message);
+
+        $mail->MsgHTML($message);
+        $mail->Subject = "Welcome to AR Verizon";
+        if ($mail->send()) {
+            $result = 'Message has been sent';
+
+        } else {
+            $result = "Email Not sent";
+        }
+
+    } catch (phpmailerException $e) {
+        $result = $e->errorMessage(); //Pretty error messages from PHPMailer
+    } catch (Exception $e) {
+        $result = $e->getMessage(); //Boring error messages from anything else!
+    }
+    return $result;
+
 }

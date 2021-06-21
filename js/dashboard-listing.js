@@ -181,9 +181,7 @@ $("#epropertyForm").submit(function (event) {
   var formData = new FormData(this);
   formData.append("ePropertyId", localStorage.getItem('selectedProperty'));
 
-  // for (var value of formData.keys()) {
-  //   console.log(value);
-  // }
+
 
   //no Validation for subdivision, it can be empty
 
@@ -212,6 +210,10 @@ $("#epropertyForm").submit(function (event) {
   //ATS FILE
   var eATSFile = $("#eATSFile");
 
+  // for (var value of formData.keys()) {
+  //   console.log(value);
+  // }
+
   if (eListingNameValidation(listingTitle)) {
     if (ePropertyTypeValidation(listingType)) {
       if (listingType === "Building" || listingType === "Lot") {
@@ -227,64 +229,63 @@ $("#epropertyForm").submit(function (event) {
                   if (ePropertyLotAreaValidation(listingLotArea)) {
                     if (ePropertyFloorAreaValidation(listingFloorArea)) {
                       if (ePropertyDescValidation(listingDesc)) {
-                        if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                          if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                            if (eStreetValidation(listingStreet)) {
-                              if (eBrgyValidation(listingBrgyAddress)) {
-                                if (eClientCityValidation(listingCityAddress)) {
-                                  $("#propertyUploadAlert").html('');
-                                  //Building Rent
-                                  Swal.fire({
-                                    icon: "warning",
-                                    title: "Are you sure about all the property details?",
-                                    text: "Kindly, check the information before submitting.",
-                                    showCancelButton: true,
-                                    cancelButtonText: "Cancel",
-                                    confirmButtonText: "Submit",
-                                    confirmButtonColor: "#3CB371",
-                                    cancelButtonColor: "#70945A"
-                                  }).then(result => {
-                                    if (result.value) {
+                        if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                          if (eStreetValidation(listingStreet)) {
+                            if (eBrgyValidation(listingBrgyAddress)) {
+                              if (eClientCityValidation(listingCityAddress)) {
+                                $("#propertyUploadAlert").html('');
+                                //Building Rent
+                                Swal.fire({
+                                  icon: "warning",
+                                  title: "Are you sure about all the property details?",
+                                  text: "Kindly, check the information before submitting.",
+                                  showCancelButton: true,
+                                  cancelButtonText: "Cancel",
+                                  confirmButtonText: "Submit",
+                                  confirmButtonColor: "#3CB371",
+                                  cancelButtonColor: "#70945A"
+                                }).then(result => {
+                                  if (result.value) {
 
-                                      Swal.fire({
-                                        text: "Please wait....",
-                                        allowOutsideClick: false,
-                                        showConfirmButton: false,
+                                    Swal.fire({
+                                      text: "Please wait....",
+                                      allowOutsideClick: false,
+                                      showConfirmButton: false,
 
-                                        willOpen: () => {
-                                          Swal.showLoading();
-                                        },
-                                      });
-                                      //insert the property to database
-                                      $.ajax({
-                                        url: "includes/insertpropertyedit.inc.php",
-                                        data: formData,
-                                        processData: false,
-                                        contentType: false,
-                                        type: "POST",
-                                        success: function (data) {
-                                          Swal.close();
-                                          console.log(data)
-                                          if (data = "Success, Property Updated!") {
-                                            Swal.fire({
-                                              icon: "success",
-                                              title: "Property has been uploaded successfully",
-                                              text: data,
-                                              showConfirmButton: false,
-                                              allowOutsideClick: false,
-                                              timer: 2000
-                                            }).then(function (result) {
-                                              location.reload();
-                                            });
-                                          }
-                                        },
-                                        error: function (data) {
-                                          console.log(data);
-                                        },
-                                      });
-                                    }
-                                  });
-                                }
+                                      willOpen: () => {
+                                        Swal.showLoading();
+                                      },
+                                    });
+                                    //insert the property to database
+                                    $.ajax({
+                                      url: "includes/insertpropertyedit.inc.php",
+                                      data: formData,
+                                      processData: false,
+                                      contentType: false,
+                                      type: "POST",
+                                      success: function (data) {
+                                        Swal.close();
+                                        if (data == "Success, Property Updated!") {
+                                          Swal.fire({
+                                            icon: "success",
+                                            title: "Property has been uploaded successfully",
+                                            text: data,
+                                            showConfirmButton: false,
+                                            allowOutsideClick: false,
+                                            timer: 2000
+                                          }).then(function (result) {
+                                            location.reload();
+                                          });
+                                        } else {
+                                          $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                        }
+                                      },
+                                      error: function (data) {
+                                        console.log(data);
+                                      },
+                                    });
+                                  }
+                                });
                               }
                             }
                           }
@@ -300,645 +301,6 @@ $("#epropertyForm").submit(function (event) {
                 if (ePropertyLotAreaValidation(listingLotArea)) {
                   if (ePropertyFloorAreaValidation(listingFloorArea)) {
                     if (ePropertyDescValidation(listingDesc)) {
-                      if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                        if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                          if (eStreetValidation(listingStreet)) {
-                            if (eBrgyValidation(listingBrgyAddress)) {
-                              if (eClientCityValidation(listingCityAddress)) {
-                                $("#propertyUploadAlert").html('');
-                                //Building Rent
-                                Swal.fire({
-                                  icon: "warning",
-                                  title: "Are you sure about all the property details?",
-                                  text: "Kindly, check the information before submitting.",
-                                  showCancelButton: true,
-                                  cancelButtonText: "Close",
-                                  confirmButtonText: "Submit",
-                                  confirmButtonColor: "#3CB371",
-                                  cancelButtonColor: "#70945A"
-                                }).then(result => {
-                                  if (result.value) {
-
-                                    Swal.fire({
-                                      text: "Please wait....",
-                                      allowOutsideClick: false,
-                                      showConfirmButton: false,
-
-                                      willOpen: () => {
-                                        Swal.showLoading();
-                                      },
-                                    });
-                                    //insert the property to database
-                                    $.ajax({
-                                      url: "includes/insertpropertyedit.inc.php",
-                                      data: formData,
-                                      processData: false,
-                                      contentType: false,
-                                      type: "POST",
-                                      success: function (data) {
-                                        Swal.close();
-                                        console.log(data)
-                                        if (data = "Success, Property Updated!") {
-                                          Swal.fire({
-                                            icon: "success",
-                                            title: "Property has been uploaded successfully",
-                                            text: data,
-                                            showConfirmButton: false,
-                                            allowOutsideClick: false,
-                                            timer: 2000
-                                          }).then(function (result) {
-                                            location.reload();
-                                          });
-                                        }
-                                      },
-                                      error: function (data) {
-                                        alert(data);
-                                      },
-                                    });
-                                  }
-                                });
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      } else if (listingType === "Condominium") {
-        //if condominium is the type of property
-        //additional "unit No"
-        if (ePropertyUnitNoValidation(listingUnitNo)) {
-          if (ePropertySubCategoryValidation(listingSubCategory)) {
-            if (ePropertyOfferTypeValidation(listingOfferType)) {
-              //check listing offer for "rent" option(daily,weekly,monthly) validation
-              if (listingOfferType === "Rent") {
-                if (ePropertyPriceRentValidation(listingRentChoice)) {
-                  if (ePropertyPriceValidation(listingPrice)) {
-                    if (ePropertyLotAreaValidation(listingLotArea)) {
-                      if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                        if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
-                          if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
-                            if (ePropertyDescValidation(listingDesc)) {
-                              if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                                if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                                  if (eStreetValidation(listingStreet)) {
-                                    if (eBrgyValidation(listingBrgyAddress)) {
-                                      if (eClientCityValidation(listingCityAddress)) {
-                                        $("#propertyUploadAlert").html('');
-                                        //Building Rent
-                                        Swal.fire({
-                                          icon: "warning",
-                                          title: "Are you sure about all the property details?",
-                                          text: "Kindly, check the information before submitting.",
-                                          showCancelButton: true,
-                                          cancelButtonText: "Close",
-                                          confirmButtonText: "Submit",
-                                          confirmButtonColor: "#3CB371",
-                                          cancelButtonColor: "#70945A"
-                                        }).then(result => {
-                                          if (result.value) {
-
-                                            Swal.fire({
-                                              text: "Please wait....",
-                                              allowOutsideClick: false,
-                                              showConfirmButton: false,
-
-                                              willOpen: () => {
-                                                Swal.showLoading();
-                                              },
-                                            });
-                                            //insert the property to database
-                                            $.ajax({
-                                              url: "includes/insertpropertyedit.inc.php",
-                                              data: formData,
-                                              processData: false,
-                                              contentType: false,
-                                              type: "POST",
-                                              success: function (data) {
-                                                Swal.close();
-                                                console.log(data)
-                                                if (data = "Success, Property Updated!") {
-                                                  Swal.fire({
-                                                    icon: "success",
-                                                    title: "Property has been uploaded successfully",
-                                                    text: data,
-                                                    showConfirmButton: false,
-                                                    allowOutsideClick: false,
-                                                    timer: 2000
-                                                  }).then(function (result) {
-                                                    location.reload();
-                                                  });
-                                                }
-                                              },
-                                              error: function (data) {
-                                                alert(data);
-                                              },
-                                            });
-                                          }
-                                        });
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              } else {
-                //else it is either sell or presell
-                if (ePropertyPriceValidation(listingPrice)) {
-                  if (ePropertyLotAreaValidation(listingLotArea)) {
-                    if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                      if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
-                        if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
-                          if (ePropertyDescValidation(listingDesc)) {
-                            if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                              if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                                if (eStreetValidation(listingStreet)) {
-                                  if (eBrgyValidation(listingBrgyAddress)) {
-                                    if (eClientCityValidation(listingCityAddress)) {
-                                      $("#propertyUploadAlert").html('');
-                                      //Building Rent
-                                      Swal.fire({
-                                        icon: "warning",
-                                        title: "Are you sure about all the property details?",
-                                        text: "Kindly, check the information before submitting.",
-                                        showCancelButton: true,
-                                        cancelButtonText: "Close",
-                                        confirmButtonText: "Submit",
-                                        confirmButtonColor: "#3CB371",
-                                        cancelButtonColor: "#70945A"
-                                      }).then(result => {
-                                        if (result.value) {
-
-                                          Swal.fire({
-                                            text: "Please wait....",
-                                            allowOutsideClick: false,
-                                            showConfirmButton: false,
-
-                                            willOpen: () => {
-                                              Swal.showLoading();
-                                            },
-                                          });
-                                          //insert the property to database
-                                          $.ajax({
-                                            url: "includes/insertpropertyedit.inc.php",
-                                            data: formData,
-                                            processData: false,
-                                            contentType: false,
-                                            type: "POST",
-                                            success: function (data) {
-                                              Swal.close();
-                                              console.log(data)
-                                              if (data = "Success, Property Updated!") {
-                                                Swal.fire({
-                                                  icon: "success",
-                                                  title: "Property has been uploaded successfully",
-                                                  text: data,
-                                                  showConfirmButton: false,
-                                                  allowOutsideClick: false,
-                                                  timer: 2000
-                                                }).then(function (result) {
-                                                  location.reload();
-                                                });
-                                              }
-                                            },
-                                            error: function (data) {
-                                              alert(data);
-                                            },
-                                          });
-                                        }
-                                      });
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-
-      } else if (listingType === "House and Lot") {
-        //if house and lot is the type of property
-        //no "unit No", sub category
-        if (ePropertyOfferTypeValidation(listingOfferType)) {
-          if (listingOfferType === "Rent") {
-            if (ePropertyPriceRentValidation(listingRentChoice)) {
-              if (ePropertyPriceValidation(listingPrice)) {
-                if (ePropertyLotAreaValidation(listingLotArea)) {
-                  if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                    if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
-                      if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
-                        if (ePropertyDescValidation(listingDesc)) {
-                          if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                            if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                              if (eStreetValidation(listingStreet)) {
-                                if (eBrgyValidation(listingBrgyAddress)) {
-                                  if (eClientCityValidation(listingCityAddress)) {
-                                    $("#propertyUploadAlert").html('');
-                                    //Building Rent
-                                    Swal.fire({
-                                      icon: "warning",
-                                      title: "Are you sure about all the property details?",
-                                      text: "Kindly, check the information before submitting.",
-                                      showCancelButton: true,
-                                      cancelButtonText: "Close",
-                                      confirmButtonText: "Submit",
-                                      confirmButtonColor: "#3CB371",
-                                      cancelButtonColor: "#70945A"
-                                    }).then(result => {
-                                      if (result.value) {
-
-                                        Swal.fire({
-                                          text: "Please wait....",
-                                          allowOutsideClick: false,
-                                          showConfirmButton: false,
-
-                                          willOpen: () => {
-                                            Swal.showLoading();
-                                          },
-                                        });
-                                        //insert the property to database
-                                        $.ajax({
-                                          url: "includes/insertpropertyedit.inc.php",
-                                          data: formData,
-                                          processData: false,
-                                          contentType: false,
-                                          type: "POST",
-                                          success: function (data) {
-                                            Swal.close();
-                                            console.log(data)
-                                            if (data = "Success, Property Updated!") {
-                                              Swal.fire({
-                                                icon: "success",
-                                                title: "Property has been uploaded successfully",
-                                                text: data,
-                                                showConfirmButton: false,
-                                                allowOutsideClick: false,
-                                                timer: 2000
-                                              }).then(function (result) {
-                                                location.reload();
-                                              });
-                                            }
-                                          },
-                                          error: function (data) {
-                                            alert(data);
-                                          },
-                                        });
-                                      }
-                                    });
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-
-          } else {
-            //else it is either sell or presell
-            if (ePropertyPriceValidation(listingPrice)) {
-              if (ePropertyLotAreaValidation(listingLotArea)) {
-                if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                  if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
-                    if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
-                      if (ePropertyDescValidation(listingDesc)) {
-                        if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                          if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                            if (eStreetValidation(listingStreet)) {
-                              if (eBrgyValidation(listingBrgyAddress)) {
-                                if (eClientCityValidation(listingCityAddress)) {
-                                  $("#propertyUploadAlert").html('');
-                                  //Building Rent
-                                  Swal.fire({
-                                    icon: "warning",
-                                    title: "Are you sure about all Property details?",
-                                    text: "Kindly, check the information before submitting.",
-                                    showCancelButton: true,
-                                    cancelButtonText: "Close",
-                                    confirmButtonText: "Submit",
-                                    confirmButtonColor: "#3CB371",
-                                    cancelButtonColor: "#70945A"
-                                  }).then(result => {
-                                    if (result.value) {
-
-                                      Swal.fire({
-                                        text: "Please wait....",
-                                        allowOutsideClick: false,
-                                        showConfirmButton: false,
-
-                                        willOpen: () => {
-                                          Swal.showLoading();
-                                        },
-                                      });
-                                      //insert the property to database
-                                      $.ajax({
-                                        url: "includes/insertpropertyedit.inc.php",
-                                        data: formData,
-                                        processData: false,
-                                        contentType: false,
-                                        type: "POST",
-                                        success: function (data) {
-                                          Swal.close();
-                                          console.log(data)
-                                          if (data = "Success, Property Updated!") {
-                                            Swal.fire({
-                                              icon: "success",
-                                              title: "Property has been uploaded successfully",
-                                              text: data,
-                                              showConfirmButton: false,
-                                              allowOutsideClick: false,
-                                              timer: 2000
-                                            }).then(function (result) {
-                                              location.reload();
-                                            });
-                                          }
-                                        },
-                                        error: function (data) {
-                                          alert(data);
-                                        },
-                                      });
-                                    }
-                                  });
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-
-
-      } else if (listingType === "Office") {
-        //if office is the type of property
-        //no "Unit No",no "sub category" and no "No of Bedrooms"
-        if (ePropertyOfferTypeValidation(listingOfferType)) {
-          if (listingOfferType === "Rent") {
-            if (ePropertyPriceRentValidation(listingRentChoice)) {
-              if (ePropertyPriceValidation(listingPrice)) {
-                if (ePropertyLotAreaValidation(listingLotArea)) {
-                  if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                    if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
-                      if (ePropertyDescValidation(listingDesc)) {
-                        if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                          if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                            if (eStreetValidation(listingStreet)) {
-                              if (eBrgyValidation(listingBrgyAddress)) {
-                                if (eClientCityValidation(listingCityAddress)) {
-                                  $("#propertyUploadAlert").html('');
-                                  //Building Rent
-                                  Swal.fire({
-                                    icon: "warning",
-                                    title: "Are you sure about all the property details?",
-                                    text: "Kindly, check the information before submitting.",
-                                    showCancelButton: true,
-                                    cancelButtonText: "Close",
-                                    confirmButtonText: "Submit",
-                                    confirmButtonColor: "#3CB371",
-                                    cancelButtonColor: "#70945A"
-                                  }).then(result => {
-                                    if (result.value) {
-
-                                      Swal.fire({
-                                        text: "Please wait....",
-                                        allowOutsideClick: false,
-                                        showConfirmButton: false,
-
-                                        willOpen: () => {
-                                          Swal.showLoading();
-                                        },
-                                      });
-                                      //insert the property to database
-                                      $.ajax({
-                                        url: "includes/insertpropertyedit.inc.php",
-                                        data: formData,
-                                        processData: false,
-                                        contentType: false,
-                                        type: "POST",
-                                        success: function (data) {
-                                          Swal.close();
-                                          Swal.close();
-                                          console.log(data)
-                                          if (data = "Success, Property Updated!") {
-                                            Swal.fire({
-                                              icon: "success",
-                                              title: "Property has been uploaded successfully",
-                                              text: data,
-                                              showConfirmButton: false,
-                                              allowOutsideClick: false,
-                                              timer: 2000
-                                            }).then(function (result) {
-                                              location.reload();
-                                            });
-                                          }
-                                        },
-                                        error: function (data) {
-                                          alert(data);
-                                        },
-                                      });
-                                    }
-                                  });
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          } else {
-            //else it is either sell or presell
-            if (ePropertyPriceValidation(listingPrice)) {
-              if (ePropertyLotAreaValidation(listingLotArea)) {
-                if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                  if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
-                    if (ePropertyDescValidation(listingDesc)) {
-                      if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                        if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                          if (eStreetValidation(listingStreet)) {
-                            if (eBrgyValidation(listingBrgyAddress)) {
-                              if (eClientCityValidation(listingCityAddress)) {
-                                $("#propertyUploadAlert").html('');
-                                //Building Rent
-                                Swal.fire({
-                                  icon: "warning",
-                                  title: "Are you sure about all the property details?",
-                                  text: "Kindly, check the information before submitting.",
-                                  showCancelButton: true,
-                                  cancelButtonText: "Close",
-                                  confirmButtonText: "Submit",
-                                  confirmButtonColor: "#3CB371",
-                                  cancelButtonColor: "#70945A"
-                                }).then(result => {
-                                  if (result.value) {
-
-                                    Swal.fire({
-                                      text: "Please wait....",
-                                      allowOutsideClick: false,
-                                      showConfirmButton: false,
-
-                                      willOpen: () => {
-                                        Swal.showLoading();
-                                      },
-                                    });
-                                    //insert the property to database
-                                    $.ajax({
-                                      url: "includes/insertpropertyedit.inc.php",
-                                      data: formData,
-                                      processData: false,
-                                      contentType: false,
-                                      type: "POST",
-                                      success: function (data) {
-                                        Swal.close();
-                                        Swal.close();
-                                        console.log(data)
-                                        if (data = "Success, Property Updated!") {
-                                          Swal.fire({
-                                            icon: "success",
-                                            title: "Property has been uploaded successfully",
-                                            text: data,
-                                            showConfirmButton: false,
-                                            allowOutsideClick: false,
-                                            timer: 2000
-                                          }).then(function (result) {
-                                            location.reload();
-                                          });
-                                        }
-                                      },
-                                      error: function (data) {
-                                        alert(data);
-                                      },
-                                    });
-                                  }
-                                });
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-
-      } else if (listingType === "Warehouse") {
-        //if house and lot is the type of property
-        //no "unit No", "sub category","preselling","No of bedrooms",and no "Capacity of garage"
-        if (ePropertyOfferTypeValidation(listingOfferType)) {
-          if (listingOfferType === "Rent") {
-            if (ePropertyPriceRentValidation(listingRentChoice)) {
-              if (ePropertyPriceValidation(listingPrice)) {
-                if (ePropertyLotAreaValidation(listingLotArea)) {
-                  if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                    if (ePropertyDescValidation(listingDesc)) {
-                      if (ePropertyATSFileValidation(listingATS, eATSFile)) {
-                        if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
-                          if (eStreetValidation(listingStreet)) {
-                            if (eBrgyValidation(listingBrgyAddress)) {
-                              if (eClientCityValidation(listingCityAddress)) {
-                                $("#propertyUploadAlert").html('');
-                                //Building Rent
-                                Swal.fire({
-                                  icon: "warning",
-                                  title: "Are you sure about all the property details?",
-                                  text: "Kindly, check the information before submitting.",
-                                  showCancelButton: true,
-                                  cancelButtonText: "Close",
-                                  confirmButtonText: "Submit",
-                                  confirmButtonColor: "#3CB371",
-                                  cancelButtonColor: "#70945A"
-                                }).then(result => {
-                                  if (result.value) {
-
-                                    Swal.fire({
-                                      text: "Please wait....",
-                                      allowOutsideClick: false,
-                                      showConfirmButton: false,
-
-                                      willOpen: () => {
-                                        Swal.showLoading();
-                                      },
-                                    });
-                                    //insert the property to database
-                                    $.ajax({
-                                      url: "includes/insertpropertyedit.inc.php",
-                                      data: formData,
-                                      processData: false,
-                                      contentType: false,
-                                      type: "POST",
-                                      success: function (data) {
-                                        Swal.close();
-                                        console.log(daya)
-                                        Swal.close();
-                                        console.log(data)
-                                        if (data = "Success, Property Updated!") {
-                                          Swal.fire({
-                                            icon: "success",
-                                            title: "Property Uploaded",
-                                            text: data,
-                                            showConfirmButton: false,
-                                            allowOutsideClick: false,
-                                            timer: 2000
-                                          }).then(function (result) {
-                                            location.reload();
-                                          });
-                                        }
-                                      },
-                                      error: function (data) {
-                                        alert(data);
-                                      },
-                                    });
-                                  }
-                                });
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          } else {
-            if (ePropertyPriceValidation(listingPrice)) {
-              if (ePropertyLotAreaValidation(listingLotArea)) {
-                if (ePropertyFloorAreaValidation(listingFloorArea)) {
-                  if (ePropertyDescValidation(listingDesc)) {
-                    if (ePropertyATSFileValidation(listingATS, eATSFile)) {
                       if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
                         if (eStreetValidation(listingStreet)) {
                           if (eBrgyValidation(listingBrgyAddress)) {
@@ -976,7 +338,7 @@ $("#epropertyForm").submit(function (event) {
                                     success: function (data) {
                                       Swal.close();
                                       console.log(data)
-                                      if (data = "Success, Property Updated!") {
+                                      if (data == "Success, Property Updated!") {
                                         Swal.fire({
                                           icon: "success",
                                           title: "Property has been uploaded successfully",
@@ -987,6 +349,8 @@ $("#epropertyForm").submit(function (event) {
                                         }).then(function (result) {
                                           location.reload();
                                         });
+                                      } else {
+                                        $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
                                       }
                                     },
                                     error: function (data) {
@@ -996,6 +360,717 @@ $("#epropertyForm").submit(function (event) {
                                 }
                               });
                             }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      } else if (listingType === "Condominium") {
+        //if condominium is the type of property
+        //additional "unit No"
+        if (ePropertyUnitNoValidation(listingUnitNo)) {
+          if (ePropertySubCategoryValidation(listingSubCategory)) {
+            //parking sub Category Upload
+            if (listingSubCategory === "Parking") {
+              if (propertyOfferTypeValidation(listingOfferType)) {
+                if (propertyPriceValidation(listingPrice)) {
+                  if (propertyLotAreaValidation(listingLotArea)) {
+                    if (propertyDescValidation(listingDesc)) {
+                      if (roomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                        if (streetValidation(listingStreet)) {
+                          if (brgyValidation(listingBrgyAddress)) {
+                            if (clientCityValidation(listingCityAddress)) {
+                              $("#propertyUploadAlert").html('');
+                              //Building Rent
+                              Swal.fire({
+                                icon: "warning",
+                                title: "Are you sure about all the property details?",
+                                text: "Kindly, check the information before submitting.",
+                                showCancelButton: true,
+                                cancelButtonText: "Close",
+                                confirmButtonText: "Submit",
+                                confirmButtonColor: "#3CB371",
+                                cancelButtonColor: "#70945A"
+                              }).then(result => {
+                                if (result.value) {
+
+                                  Swal.fire({
+                                    text: "Please wait....",
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+
+                                    willOpen: () => {
+                                      Swal.showLoading();
+                                    },
+                                  });
+                                  //insert the property to database
+                                  $.ajax({
+                                    url: "includes/insertpropertyedit.inc.php",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    type: "POST",
+                                    success: function (data) {
+                                      Swal.close();
+                                      console.log(data)
+                                      if (data == "Success, Property Updated!") {
+                                        Swal.fire({
+                                          icon: "success",
+                                          title: "Property has been uploaded successfully",
+                                          text: data,
+                                          showConfirmButton: false,
+                                          allowOutsideClick: false,
+                                          timer: 2000
+                                        }).then(function (result) {
+                                          location.reload();
+                                        });
+                                      } else {
+                                        $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                      }
+                                    },
+                                    error: function (data) {
+                                      alert(data);
+                                    },
+                                  });
+                                }
+                              });
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            } else {
+              if (ePropertyOfferTypeValidation(listingOfferType)) {
+                //check listing offer for "rent" option(daily,weekly,monthly) validation
+                if (listingOfferType === "Rent") {
+                  if (ePropertyPriceRentValidation(listingRentChoice)) {
+                    if (ePropertyPriceValidation(listingPrice)) {
+                      if (ePropertyLotAreaValidation(listingLotArea)) {
+                        if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                          if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
+                            if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
+                              if (ePropertyDescValidation(listingDesc)) {
+                                if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                                  if (eStreetValidation(listingStreet)) {
+                                    if (eBrgyValidation(listingBrgyAddress)) {
+                                      if (eClientCityValidation(listingCityAddress)) {
+                                        $("#propertyUploadAlert").html('');
+                                        //Building Rent
+                                        Swal.fire({
+                                          icon: "warning",
+                                          title: "Are you sure about all the property details?",
+                                          text: "Kindly, check the information before submitting.",
+                                          showCancelButton: true,
+                                          cancelButtonText: "Close",
+                                          confirmButtonText: "Submit",
+                                          confirmButtonColor: "#3CB371",
+                                          cancelButtonColor: "#70945A"
+                                        }).then(result => {
+                                          if (result.value) {
+
+                                            Swal.fire({
+                                              text: "Please wait....",
+                                              allowOutsideClick: false,
+                                              showConfirmButton: false,
+
+                                              willOpen: () => {
+                                                Swal.showLoading();
+                                              },
+                                            });
+                                            //insert the property to database
+                                            $.ajax({
+                                              url: "includes/insertpropertyedit.inc.php",
+                                              data: formData,
+                                              processData: false,
+                                              contentType: false,
+                                              type: "POST",
+                                              success: function (data) {
+                                                Swal.close();
+                                                console.log(data)
+                                                if (data == "Success, Property Updated!") {
+                                                  Swal.fire({
+                                                    icon: "success",
+                                                    title: "Property has been uploaded successfully",
+                                                    text: data,
+                                                    showConfirmButton: false,
+                                                    allowOutsideClick: false,
+                                                    timer: 2000
+                                                  }).then(function (result) {
+                                                    location.reload();
+                                                  });
+                                                } else {
+                                                  $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                                }
+                                              },
+                                              error: function (data) {
+                                                alert(data);
+                                              },
+                                            });
+                                          }
+                                        });
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  //else it is either sell or presell
+                  if (ePropertyPriceValidation(listingPrice)) {
+                    if (ePropertyLotAreaValidation(listingLotArea)) {
+                      if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                        if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
+                          if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
+                            if (ePropertyDescValidation(listingDesc)) {
+                              if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                                if (eStreetValidation(listingStreet)) {
+                                  if (eBrgyValidation(listingBrgyAddress)) {
+                                    if (eClientCityValidation(listingCityAddress)) {
+                                      $("#propertyUploadAlert").html('');
+                                      //Building Rent
+                                      Swal.fire({
+                                        icon: "warning",
+                                        title: "Are you sure about all the property details?",
+                                        text: "Kindly, check the information before submitting.",
+                                        showCancelButton: true,
+                                        cancelButtonText: "Close",
+                                        confirmButtonText: "Submit",
+                                        confirmButtonColor: "#3CB371",
+                                        cancelButtonColor: "#70945A"
+                                      }).then(result => {
+                                        if (result.value) {
+
+                                          Swal.fire({
+                                            text: "Please wait....",
+                                            allowOutsideClick: false,
+                                            showConfirmButton: false,
+
+                                            willOpen: () => {
+                                              Swal.showLoading();
+                                            },
+                                          });
+                                          //insert the property to database
+                                          $.ajax({
+                                            url: "includes/insertpropertyedit.inc.php",
+                                            data: formData,
+                                            processData: false,
+                                            contentType: false,
+                                            type: "POST",
+                                            success: function (data) {
+                                              Swal.close();
+                                              console.log(data)
+                                              if (data == "Success, Property Updated!") {
+                                                Swal.fire({
+                                                  icon: "success",
+                                                  title: "Property has been uploaded successfully",
+                                                  text: data,
+                                                  showConfirmButton: false,
+                                                  allowOutsideClick: false,
+                                                  timer: 2000
+                                                }).then(function (result) {
+                                                  location.reload();
+                                                });
+                                              } else {
+                                                $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                              }
+                                            },
+                                            error: function (data) {
+                                              alert(data);
+                                            },
+                                          });
+                                        }
+                                      });
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      } else if (listingType === "House and Lot") {
+        //if house and lot is the type of property
+        //no "unit No", sub category
+        if (ePropertyOfferTypeValidation(listingOfferType)) {
+          if (listingOfferType === "Rent") {
+            if (ePropertyPriceRentValidation(listingRentChoice)) {
+              if (ePropertyPriceValidation(listingPrice)) {
+                if (ePropertyLotAreaValidation(listingLotArea)) {
+                  if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                    if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
+                      if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
+                        if (ePropertyDescValidation(listingDesc)) {
+                          if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                            if (eStreetValidation(listingStreet)) {
+                              if (eBrgyValidation(listingBrgyAddress)) {
+                                if (eClientCityValidation(listingCityAddress)) {
+                                  $("#propertyUploadAlert").html('');
+                                  //Building Rent
+                                  Swal.fire({
+                                    icon: "warning",
+                                    title: "Are you sure about all the property details?",
+                                    text: "Kindly, check the information before submitting.",
+                                    showCancelButton: true,
+                                    cancelButtonText: "Close",
+                                    confirmButtonText: "Submit",
+                                    confirmButtonColor: "#3CB371",
+                                    cancelButtonColor: "#70945A"
+                                  }).then(result => {
+                                    if (result.value) {
+
+                                      Swal.fire({
+                                        text: "Please wait....",
+                                        allowOutsideClick: false,
+                                        showConfirmButton: false,
+
+                                        willOpen: () => {
+                                          Swal.showLoading();
+                                        },
+                                      });
+                                      //insert the property to database
+                                      $.ajax({
+                                        url: "includes/insertpropertyedit.inc.php",
+                                        data: formData,
+                                        processData: false,
+                                        contentType: false,
+                                        type: "POST",
+                                        success: function (data) {
+                                          Swal.close();
+                                          console.log(data)
+                                          if (data == "Success, Property Updated!") {
+                                            Swal.fire({
+                                              icon: "success",
+                                              title: "Property has been uploaded successfully",
+                                              text: data,
+                                              showConfirmButton: false,
+                                              allowOutsideClick: false,
+                                              timer: 2000
+                                            }).then(function (result) {
+                                              location.reload();
+                                            });
+                                          } else {
+                                            $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                          }
+                                        },
+                                        error: function (data) {
+                                          alert(data);
+                                        },
+                                      });
+                                    }
+                                  });
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+          } else {
+            //else it is either sell or presell
+            if (ePropertyPriceValidation(listingPrice)) {
+              if (ePropertyLotAreaValidation(listingLotArea)) {
+                if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                  if (ePropertyNoOfBedroomsValidation(listingBedrooms)) {
+                    if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
+                      if (ePropertyDescValidation(listingDesc)) {
+                        if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                          if (eStreetValidation(listingStreet)) {
+                            if (eBrgyValidation(listingBrgyAddress)) {
+                              if (eClientCityValidation(listingCityAddress)) {
+                                $("#propertyUploadAlert").html('');
+                                //Building Rent
+                                Swal.fire({
+                                  icon: "warning",
+                                  title: "Are you sure about all Property details?",
+                                  text: "Kindly, check the information before submitting.",
+                                  showCancelButton: true,
+                                  cancelButtonText: "Close",
+                                  confirmButtonText: "Submit",
+                                  confirmButtonColor: "#3CB371",
+                                  cancelButtonColor: "#70945A"
+                                }).then(result => {
+                                  if (result.value) {
+
+                                    Swal.fire({
+                                      text: "Please wait....",
+                                      allowOutsideClick: false,
+                                      showConfirmButton: false,
+
+                                      willOpen: () => {
+                                        Swal.showLoading();
+                                      },
+                                    });
+                                    //insert the property to database
+                                    $.ajax({
+                                      url: "includes/insertpropertyedit.inc.php",
+                                      data: formData,
+                                      processData: false,
+                                      contentType: false,
+                                      type: "POST",
+                                      success: function (data) {
+                                        Swal.close();
+                                        console.log(data)
+                                        if (data == "Success, Property Updated!") {
+                                          Swal.fire({
+                                            icon: "success",
+                                            title: "Property has been uploaded successfully",
+                                            text: data,
+                                            showConfirmButton: false,
+                                            allowOutsideClick: false,
+                                            timer: 2000
+                                          }).then(function (result) {
+                                            location.reload();
+                                          });
+                                        } else {
+                                          $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                        }
+                                      },
+                                      error: function (data) {
+                                        alert(data);
+                                      },
+                                    });
+                                  }
+                                });
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+
+      } else if (listingType === "Office") {
+        //if office is the type of property
+        //no "Unit No",no "sub category" and no "No of Bedrooms"
+        if (ePropertyOfferTypeValidation(listingOfferType)) {
+          if (listingOfferType === "Rent") {
+            if (ePropertyPriceRentValidation(listingRentChoice)) {
+              if (ePropertyPriceValidation(listingPrice)) {
+                if (ePropertyLotAreaValidation(listingLotArea)) {
+                  if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                    if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
+                      if (ePropertyDescValidation(listingDesc)) {
+                        if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                          if (eStreetValidation(listingStreet)) {
+                            if (eBrgyValidation(listingBrgyAddress)) {
+                              if (eClientCityValidation(listingCityAddress)) {
+                                $("#propertyUploadAlert").html('');
+                                //Building Rent
+                                Swal.fire({
+                                  icon: "warning",
+                                  title: "Are you sure about all the property details?",
+                                  text: "Kindly, check the information before submitting.",
+                                  showCancelButton: true,
+                                  cancelButtonText: "Close",
+                                  confirmButtonText: "Submit",
+                                  confirmButtonColor: "#3CB371",
+                                  cancelButtonColor: "#70945A"
+                                }).then(result => {
+                                  if (result.value) {
+
+                                    Swal.fire({
+                                      text: "Please wait....",
+                                      allowOutsideClick: false,
+                                      showConfirmButton: false,
+
+                                      willOpen: () => {
+                                        Swal.showLoading();
+                                      },
+                                    });
+                                    //insert the property to database
+                                    $.ajax({
+                                      url: "includes/insertpropertyedit.inc.php",
+                                      data: formData,
+                                      processData: false,
+                                      contentType: false,
+                                      type: "POST",
+                                      success: function (data) {
+                                        Swal.close();
+                                        Swal.close();
+                                        console.log(data)
+                                        if (data == "Success, Property Updated!") {
+                                          Swal.fire({
+                                            icon: "success",
+                                            title: "Property has been uploaded successfully",
+                                            text: data,
+                                            showConfirmButton: false,
+                                            allowOutsideClick: false,
+                                            timer: 2000
+                                          }).then(function (result) {
+                                            location.reload();
+                                          });
+                                        } else {
+                                          $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                        }
+                                      },
+                                      error: function (data) {
+                                        alert(data);
+                                      },
+                                    });
+                                  }
+                                });
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          } else {
+            //else it is either sell or presell
+            if (ePropertyPriceValidation(listingPrice)) {
+              if (ePropertyLotAreaValidation(listingLotArea)) {
+                if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                  if (ePropertyCapacityOfGarageValidation(listingCapacityOfGarage)) {
+                    if (ePropertyDescValidation(listingDesc)) {
+                      if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                        if (eStreetValidation(listingStreet)) {
+                          if (eBrgyValidation(listingBrgyAddress)) {
+                            if (eClientCityValidation(listingCityAddress)) {
+                              $("#propertyUploadAlert").html('');
+                              //Building Rent
+                              Swal.fire({
+                                icon: "warning",
+                                title: "Are you sure about all the property details?",
+                                text: "Kindly, check the information before submitting.",
+                                showCancelButton: true,
+                                cancelButtonText: "Close",
+                                confirmButtonText: "Submit",
+                                confirmButtonColor: "#3CB371",
+                                cancelButtonColor: "#70945A"
+                              }).then(result => {
+                                if (result.value) {
+
+                                  Swal.fire({
+                                    text: "Please wait....",
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+
+                                    willOpen: () => {
+                                      Swal.showLoading();
+                                    },
+                                  });
+                                  //insert the property to database
+                                  $.ajax({
+                                    url: "includes/insertpropertyedit.inc.php",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    type: "POST",
+                                    success: function (data) {
+                                      Swal.close();
+                                      Swal.close();
+                                      console.log(data)
+                                      if (data == "Success, Property Updated!") {
+                                        Swal.fire({
+                                          icon: "success",
+                                          title: "Property has been uploaded successfully",
+                                          text: data,
+                                          showConfirmButton: false,
+                                          allowOutsideClick: false,
+                                          timer: 2000
+                                        }).then(function (result) {
+                                          location.reload();
+                                        });
+                                      } else {
+                                        $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                      }
+                                    },
+                                    error: function (data) {
+                                      alert(data);
+                                    },
+                                  });
+                                }
+                              });
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      } else if (listingType === "Warehouse") {
+        //if house and lot is the type of property
+        //no "unit No", "sub category","preselling","No of bedrooms",and no "Capacity of garage"
+        if (ePropertyOfferTypeValidation(listingOfferType)) {
+          if (listingOfferType === "Rent") {
+            if (ePropertyPriceRentValidation(listingRentChoice)) {
+              if (ePropertyPriceValidation(listingPrice)) {
+                if (ePropertyLotAreaValidation(listingLotArea)) {
+                  if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                    if (ePropertyDescValidation(listingDesc)) {
+                      if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                        if (eStreetValidation(listingStreet)) {
+                          if (eBrgyValidation(listingBrgyAddress)) {
+                            if (eClientCityValidation(listingCityAddress)) {
+                              $("#propertyUploadAlert").html('');
+                              //Building Rent
+                              Swal.fire({
+                                icon: "warning",
+                                title: "Are you sure about all the property details?",
+                                text: "Kindly, check the information before submitting.",
+                                showCancelButton: true,
+                                cancelButtonText: "Close",
+                                confirmButtonText: "Submit",
+                                confirmButtonColor: "#3CB371",
+                                cancelButtonColor: "#70945A"
+                              }).then(result => {
+                                if (result.value) {
+
+                                  Swal.fire({
+                                    text: "Please wait....",
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+
+                                    willOpen: () => {
+                                      Swal.showLoading();
+                                    },
+                                  });
+                                  //insert the property to database
+                                  $.ajax({
+                                    url: "includes/insertpropertyedit.inc.php",
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    type: "POST",
+                                    success: function (data) {
+                                      Swal.close();
+                                      console.log(data)
+                                      Swal.close();
+                                      console.log(data)
+                                      if (data == "Success, Property Updated!") {
+                                        Swal.fire({
+                                          icon: "success",
+                                          title: "Property Uploaded",
+                                          text: data,
+                                          showConfirmButton: false,
+                                          allowOutsideClick: false,
+                                          timer: 2000
+                                        }).then(function (result) {
+                                          location.reload();
+                                        });
+                                      } else {
+                                        $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                      }
+                                    },
+                                    error: function (data) {
+                                      alert(data);
+                                    },
+                                  });
+                                }
+                              });
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          } else {
+            if (ePropertyPriceValidation(listingPrice)) {
+              if (ePropertyLotAreaValidation(listingLotArea)) {
+                if (ePropertyFloorAreaValidation(listingFloorArea)) {
+                  if (ePropertyDescValidation(listingDesc)) {
+                    if (eRoomUnitNoAndHouseLotValidation(listingRFUB, listingHLB)) {
+                      if (eStreetValidation(listingStreet)) {
+                        if (eBrgyValidation(listingBrgyAddress)) {
+                          if (eClientCityValidation(listingCityAddress)) {
+                            $("#propertyUploadAlert").html('');
+                            //Building Rent
+                            Swal.fire({
+                              icon: "warning",
+                              title: "Are you sure about all the property details?",
+                              text: "Kindly, check the information before submitting.",
+                              showCancelButton: true,
+                              cancelButtonText: "Close",
+                              confirmButtonText: "Submit",
+                              confirmButtonColor: "#3CB371",
+                              cancelButtonColor: "#70945A"
+                            }).then(result => {
+                              if (result.value) {
+
+                                Swal.fire({
+                                  text: "Please wait....",
+                                  allowOutsideClick: false,
+                                  showConfirmButton: false,
+
+                                  willOpen: () => {
+                                    Swal.showLoading();
+                                  },
+                                });
+                                //insert the property to database
+                                $.ajax({
+                                  url: "includes/insertpropertyedit.inc.php",
+                                  data: formData,
+                                  processData: false,
+                                  contentType: false,
+                                  type: "POST",
+                                  success: function (data) {
+                                    Swal.close();
+                                    console.log(data)
+                                    if (data == "Success, Property Updated!") {
+                                      Swal.fire({
+                                        icon: "success",
+                                        title: "Property has been uploaded successfully",
+                                        text: data,
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        timer: 2000
+                                      }).then(function (result) {
+                                        location.reload();
+                                      });
+                                    } else {
+                                      $("#ePropertyUploadAlert").html('<div class = "alert alert-danger" role = "alert" >' + data + '</div>');
+                                    }
+                                  },
+                                  error: function (data) {
+                                    alert(data);
+                                  },
+                                });
+                              }
+                            });
                           }
                         }
                       }
@@ -1361,6 +1436,7 @@ function buttonVariations(buttonClicked) {
     // document.getElementById("forrentBtn").classList.remove('gradient-bg');
     document.getElementById("eWeeklyBtn").classList.add('btn-secondary');
     document.getElementById("eMonthlyBtn").classList.add('btn-secondary');
+
   } else if (buttonClicked == "eWeeklyBtn") {
     document.getElementById("eWeeklyBtn").classList.remove('btn-secondary');
     document.getElementById("eWeeklyBtn").classList.add('btn-primary');
@@ -1371,6 +1447,38 @@ function buttonVariations(buttonClicked) {
     document.getElementById("eMonthlyBtn").classList.add('btn-secondary');
 
   } else if (buttonClicked == "eMonthlyBtn") {
+    document.getElementById("eMonthlyBtn").classList.remove('btn-secondary');
+    document.getElementById("eMonthlyBtn").classList.add('btn-primary');
+    $("#eListingRentChoice").val("Monthly")
+
+    // document.getElementById("forrentBtn").classList.remove('gradient-bg');
+    document.getElementById("eWeeklyBtn").classList.add('btn-secondary');
+    document.getElementById("eDailyBtn").classList.add('btn-secondary');
+  }
+}
+
+
+
+function rentChoiceVariation(inputValue) {
+  if (inputValue == "Daily") {
+    document.getElementById("eDailyBtn").classList.remove('btn-secondary');
+    document.getElementById("eDailyBtn").classList.add('btn-primary');
+    $("#eListingRentChoice").val("Daily")
+
+    // document.getElementById("forrentBtn").classList.remove('gradient-bg');
+    document.getElementById("eWeeklyBtn").classList.add('btn-secondary');
+    document.getElementById("eMonthlyBtn").classList.add('btn-secondary');
+
+  } else if (inputValue == "Weekly") {
+    document.getElementById("eWeeklyBtn").classList.remove('btn-secondary');
+    document.getElementById("eWeeklyBtn").classList.add('btn-primary');
+    $("#eListingRentChoice").val("Weekly")
+
+    // document.getElementById("forrentBtn").classList.remove('gradient-bg');
+    document.getElementById("eDailyBtn").classList.add('btn-secondary');
+    document.getElementById("eMonthlyBtn").classList.add('btn-secondary');
+
+  } else if (inputValue == "Monthly") {
     document.getElementById("eMonthlyBtn").classList.remove('btn-secondary');
     document.getElementById("eMonthlyBtn").classList.add('btn-primary');
     $("#eListingRentChoice").val("Monthly")
@@ -1489,70 +1597,141 @@ function allVariations(value) {
     //create 2nd option "Residential"
     var residentialCategory = document.createElement("OPTION");
     var residentialCatergoryText = document.createTextNode("Residential");
-    residentialCategory.setAttribute("value", "Commercial");
+    residentialCategory.setAttribute("value", "Residential");
     residentialCategory.appendChild(residentialCatergoryText);
 
     //append residential to select tag parent
     $("#eListingSubCategory").append(residentialCategory);
 
+    //create 3rd option "Parking"
+    var ParkingCategory = document.createElement("OPTION");
+    var ParkingCatergoryText = document.createTextNode("Parking");
+    ParkingCategory.setAttribute("value", "Parking");
+    ParkingCategory.appendChild(ParkingCatergoryText);
+
+    //append residential to select tag parent
+    $("#eListingSubCategory").append(ParkingCategory);
+
+
+
     // unhide the sub category 
     $("#eSubCategoryHolder").removeClass('hidden');
     //show unit No for Condominium
-    $("#unitNoHolder").removeClass("hidden");
-
-    //OFFERTYPE VARIATION
-    //clear the select parent
-    $("#eListingOfferType").empty();
-
-    //create all options 
-    var firstOption = document.createElement("OPTION");
-    var firstOptionText = document.createTextNode("Select Offer Type");
-    firstOption.setAttribute("value", "default");
-    firstOption.appendChild(firstOptionText);
+    $("#eUnitNoHolder").removeClass("hidden");
 
 
-    //append firstOption to select tag parent
-    $("#eListingOfferType").append(firstOption);
+
+    //get the value of sub category select each time it changes
+    // console.log($("#eListingSubCategory").val())
+
+    $('#eListingSubCategory').change(function () {
+      var value = this.value;
+      //get the sub category value
+      //IF IT IS PARKING display only Unit Not,Price,Floor Area, and Description
+
+      if (value === "Parking") {
+        //OFFERTYPE VARIATION
+
+        //PARKING will have offertype of Sell and Presell only
+        //clear the select parent
+        $("#eListingOfferType").empty();
+
+        //create all options 
+        var firstOption = document.createElement("OPTION");
+        var firstOptionText = document.createTextNode("Select Offer Type");
+        firstOption.setAttribute("value", "default");
+        firstOption.appendChild(firstOptionText);
+
+        //append firstOption to select tag parent
+        $("#eListingOfferType").append(firstOption);
 
 
-    var secondOption = document.createElement("OPTION");
-    var secondOptionText = document.createTextNode("Sell");
-    secondOption.setAttribute("value", "Sell");
-    secondOption.appendChild(secondOptionText);
+        var secondOption = document.createElement("OPTION");
+        var secondOptionText = document.createTextNode("Sell");
+        secondOption.setAttribute("value", "Sell");
+        secondOption.appendChild(secondOptionText);
 
-    //append secondOption to select tag parent
-    $("#eListingOfferType").append(secondOption);
-
-
-    var thirdOption = document.createElement("OPTION");
-    var thirdOptionText = document.createTextNode("Rent");
-    thirdOption.setAttribute("value", "Rent");
-    thirdOption.appendChild(thirdOptionText);
+        //append secondOption to select tag parent
+        $("#eListingOfferType").append(secondOption);
 
 
-    //append thirdOption to select tag parent
-    $("#eListingOfferType").append(thirdOption);
+        var fourthOption = document.createElement("OPTION");
+        var fourthOptionText = document.createTextNode("Presell");
+        fourthOption.setAttribute("value", "Presell");
+        fourthOption.appendChild(fourthOptionText);
 
 
-    var fourthOption = document.createElement("OPTION");
-    var fourthOptionText = document.createTextNode("Presell");
-    fourthOption.setAttribute("value", "Presell");
-    fourthOption.appendChild(fourthOptionText);
+        //append fourthOption to select tag parent
+        $("#eListingOfferType").append(fourthOption);
+
+        // -----OFFERTYPE VARIATION ENDS HERE------
+
+        // No. of Bedrooms and capacity of Garage Variation
+        //Condominium that has parking as sub category dont No. of bedrooms, garage capacity(separate input), and floor area
+        //parking als
+        $("#eNoOfBedroomsHolder").addClass("hidden");
+        $("#eCapacityOfGarageHolder").addClass("hidden");
+        //No. of Bedrooms and capacity of Garage Variation Ends Here
 
 
-    //append fourthOption to select tag parent
-    $("#eListingOfferType").append(fourthOption);
+        //floor area variation
+        $("#eFloorAreaHolder").addClass("hidden");
 
-    // -----OFFERTYPE VARIATION ENDS HERE------
+      } else {
+        //OFFERTYPE VARIATION
+
+        //create all options 
+        var firstOption = document.createElement("OPTION");
+        var firstOptionText = document.createTextNode("Select Offer Type");
+        firstOption.setAttribute("value", "default");
+        firstOption.appendChild(firstOptionText);
 
 
-    // No. of Bedrooms and capacity of Garage Variation
-    //Condominium have No. of bedrooms and garage capacity
-    //dont hide those inputs
-    $("#eNoOfBedroomsHolder").removeClass("hidden");
-    $("#eCapacityOfGarageHolder").removeClass("hidden");
-    //No. of Bedrooms and capacity of Garage Variation Ends Here
+        //append firstOption to select tag parent
+        $("#eListingOfferType").append(firstOption);
 
+
+        var secondOption = document.createElement("OPTION");
+        var secondOptionText = document.createTextNode("Sell");
+        secondOption.setAttribute("value", "Sell");
+        secondOption.appendChild(secondOptionText);
+
+        //append secondOption to select tag parent
+        $("#eListingOfferType").append(secondOption);
+
+
+        var thirdOption = document.createElement("OPTION");
+        var thirdOptionText = document.createTextNode("Rent");
+        thirdOption.setAttribute("value", "Rent");
+        thirdOption.appendChild(thirdOptionText);
+
+
+        //append thirdOption to select tag parent
+        $("#eListingOfferType").append(thirdOption);
+
+
+        var fourthOption = document.createElement("OPTION");
+        var fourthOptionText = document.createTextNode("Presell");
+        fourthOption.setAttribute("value", "Presell");
+        fourthOption.appendChild(fourthOptionText);
+
+
+        //append fourthOption to select tag parent
+        $("#eListingOfferType").append(fourthOption);
+
+        // -----OFFERTYPE VARIATION ENDS HERE------
+
+
+        // No. of Bedrooms and capacity of Garage Variation
+        //Condominium that is not parking have No. of bedrooms and garage capacity
+        //dont hide those inputs
+        $("#eNoOfBedroomsHolder").removeClass("hidden");
+        $("#eCapacityOfGarageHolder").removeClass("hidden");
+        //No. of Bedrooms and capacity of Garage Variation Ends Here
+
+      }
+
+    });
   } else if (propertyType === "Lot") {
 
     //lot will have 4 sub category (industrial,commercial,agricultural,residential)
@@ -1966,7 +2145,7 @@ function editProperty(propertyid) {
       var listingUnitNo = document.querySelector("#eListingUnitNo");
       var listingSubCategory = document.querySelector("#eListingSubCategory");
       // var listingOfferType = document.querySelector("#eListingOfferType");
-      var listingRentChoice = document.querySelector("#eListingRentChoice");
+      // var listingRentChoice = document.querySelector("#eListingRentChoice");
       var listingPrice = document.querySelector("#eListingPrice");
       var listingLotArea = document.querySelector("#eListingLotArea");
       var listingFloorArea = document.querySelector("#eListingFloorArea");
@@ -2036,12 +2215,13 @@ function editProperty(propertyid) {
           listingPrice.value = propertyInformation[0].propertyamount;
           // //check if property is for Rent 
           if (propertyInformation[0].offertype == "Rent") {
-            //RENT BUTTON BEHAVIOR
-            //change the color of buttons base from propertyrentchoice
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
+            $("#eListingRentChoice").val(propertyInformation[0].propertyrentchoice).change()
+            // //RENT BUTTON BEHAVIOR
+            // //change the color of buttons base from propertyrentchoice
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
 
-            listingRentChoice.value = propertyInformation[0].propertyrentchoice;
+            // listingRentChoice.value = propertyInformation[0].propertyrentchoice;
 
           }
 
@@ -2049,37 +2229,42 @@ function editProperty(propertyid) {
           listingFloorArea.value = propertyInformation[0].propertyfloorarea;
           listingDesc.value = propertyInformation[0].propertydesc;
 
-          //display the ATS file
-          //NOTE: Javascript dont have glob function so just display file icon and the name of file
 
-          var ATSFile = $("#eATSFile");
-          //clear first the container to prevent multiple entry
-          ATSFile.empty();
+          if (propertyInformation[0].ATSFile !== null) {
+            //display the ATS file
+            //NOTE: Javascript dont have glob function so just display file icon and the name of file
 
-          var ATSImg = document.createElement("img");
-          ATSImg.src = 'assets/img/file.png'
-          ATSImg.style.height = "100px";
-          ATSImg.style.width = "100px";
-          ATSImg.style.marginLeft = "15px";
-          ATSImg.style.cursor = "pointer";
-          ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
-          //append the img to container name "ATSFile"
-          ATSFile.append(ATSImg);
+            var ATSFile = $("#eATSFile");
+            //clear first the container to prevent multiple entry
+            ATSFile.empty();
+
+            var ATSImg = document.createElement("img");
+            ATSImg.src = 'assets/img/file.png'
+            ATSImg.style.height = "100px";
+            ATSImg.style.width = "100px";
+            ATSImg.style.marginLeft = "15px";
+            ATSImg.style.cursor = "pointer";
+            ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
+            //append the img to container name "ATSFile"
+            ATSFile.append(ATSImg);
 
 
-          var ATSDesc = $("#eATSDesc");
-          ATSDesc.empty();
-          //get the information of file besid its picture
-          var fileInformation = document.createElement("p");
-          var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
-          fileInformation.append(fileInformationText);
-          ATSDesc.append(fileInformation);
+            var ATSDesc = $("#eATSDesc");
+            ATSDesc.empty();
+            //get the information of file besid its picture
+            var fileInformation = document.createElement("p");
+            var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
+            fileInformation.append(fileInformationText);
+            ATSDesc.append(fileInformation);
 
-          //hide the button for adding file
-          $("#eAddATSBtn").addClass("hidden");
+            //hide the button for adding file
+            $("#eAddATSBtn").addClass("hidden");
 
-          //show the note for changing ATS file
-          $("#eAddATSNote").removeClass("hidden");
+            //show the note for changing ATS file
+            $("#eAddATSNote").removeClass("hidden");
+          }
+
+
 
         } else if (propertyType === "Condominium") {
           //Condominium have No. of bedrooms and garage capacity
@@ -2087,77 +2272,137 @@ function editProperty(propertyid) {
 
 
           listingUnitNo.value = propertyInformation[0].unitNo;
-          listingSubCategory.value = propertyInformation[0].subcategory;
 
-          var holder = $("#ePropertyOfferType");
-          holder.empty();
-          var selectList = document.createElement("select");
-          selectList.id = "eListingOfferType";
-          selectList.name = "eListingOfferType";
-          selectList.classList.add('form-control');
-          selectList.options[0] = new Option('Sell', 'Sell');
-          selectList.options[1] = new Option('Rent', 'Rent');
-          selectList.options[2] = new Option('Presell', 'Presell');
-          selectList.setAttribute("onchange", 'priceVariations(this.value)');
-          holder.append(selectList);
+          // listingSubCategory.value = 
+          $("#eListingSubCategory").val(propertyInformation[0].subcategory).change();
+
+          //check sub category 
+          if (propertyInformation[0].subcategory === "Parking") {
+
+            var holder = $("#ePropertyOfferType");
+            holder.empty();
+            var selectList = document.createElement("select");
+            selectList.id = "eListingOfferType";
+            selectList.name = "eListingOfferType";
+            selectList.classList.add('form-control');
+            selectList.options[0] = new Option('Sell', 'Sell');
+            selectList.options[1] = new Option('Presell', 'Presell');
+            holder.append(selectList);
+
+            $("#eListingOfferType").val(propertyInformation[0].offertype).change()
+
+            listingPrice.value = propertyInformation[0].propertyamount;
+            listingLotArea.value = propertyInformation[0].propertylotarea;
+            listingDesc.value = propertyInformation[0].propertydesc;
 
 
-          $("#eListingOfferType").val(propertyInformation[0].offertype).change()
+
+            if (propertyInformation[0].ATSFile !== null) {
+              //display the ATS file
+              //NOTE: Javascript dont have glob function so just display file icon and the name of file
+
+              var ATSFile = $("#eATSFile");
+              //clear first the container to prevent multiple entry
+              ATSFile.empty();
+
+              var ATSImg = document.createElement("img");
+              ATSImg.src = 'assets/img/file.png'
+              ATSImg.style.height = "100px";
+              ATSImg.style.width = "100px";
+              ATSImg.style.marginLeft = "15px";
+              ATSImg.style.cursor = "pointer";
+              ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
+              //append the img to container name "ATSFile"
+              ATSFile.append(ATSImg);
 
 
-          listingPrice.value = propertyInformation[0].propertyamount;
-          // //check if property is for Rent 
-          if (propertyInformation[0].offertype == "Rent") {
-            //RENT BUTTON BEHAVIOR
-            //change the color of buttons base from propertyrentchoice
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
+              var ATSDesc = $("#eATSDesc");
+              ATSDesc.empty();
+              //get the information of file besid its picture
+              var fileInformation = document.createElement("p");
+              var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
+              fileInformation.append(fileInformationText);
+              ATSDesc.append(fileInformation);
 
-            listingRentChoice.value = propertyInformation[0].propertyrentchoice;
+              //hide the button for adding file
+              $("#eAddATSBtn").addClass("hidden");
 
+              //show the note for changing ATS file
+              $("#eAddATSNote").removeClass("hidden");
+            }
+          } else {
+            //other sub category
+
+            var holder = $("#ePropertyOfferType");
+            holder.empty();
+            var selectList = document.createElement("select");
+            selectList.id = "eListingOfferType";
+            selectList.name = "eListingOfferType";
+            selectList.classList.add('form-control');
+            selectList.options[0] = new Option('Sell', 'Sell');
+            selectList.options[1] = new Option('Rent', 'Rent');
+            selectList.options[2] = new Option('Presell', 'Presell');
+            selectList.setAttribute("onchange", 'priceVariations(this.value)');
+            holder.append(selectList);
+
+
+            $("#eListingOfferType").val(propertyInformation[0].offertype).change()
+
+
+            listingPrice.value = propertyInformation[0].propertyamount;
+            // //check if property is for Rent 
+            if (propertyInformation[0].offertype == "Rent") {
+              $("#eListingRentChoice").val(propertyInformation[0].propertyrentchoice).change()
+              // //RENT BUTTON BEHAVIOR
+              // //change the color of buttons base from propertyrentchoice
+              // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
+              // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
+
+              // listingRentChoice.value = propertyInformation[0].propertyrentchoice;
+
+            }
+
+            listingLotArea.value = propertyInformation[0].propertylotarea;
+            listingFloorArea.value = propertyInformation[0].propertyfloorarea;
+            listingBedrooms.value = propertyInformation[0].propertybedrooms;
+            listingCapacityOfGarage.value = propertyInformation[0].propertycarpark;
+            listingDesc.value = propertyInformation[0].propertydesc;
+
+
+            if (propertyInformation[0].ATSFile !== null) {
+              //display the ATS file
+              //NOTE: Javascript dont have glob function so just display file icon and the name of file
+
+              var ATSFile = $("#eATSFile");
+              //clear first the container to prevent multiple entry
+              ATSFile.empty();
+
+              var ATSImg = document.createElement("img");
+              ATSImg.src = 'assets/img/file.png'
+              ATSImg.style.height = "100px";
+              ATSImg.style.width = "100px";
+              ATSImg.style.marginLeft = "15px";
+              ATSImg.style.cursor = "pointer";
+              ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
+              //append the img to container name "ATSFile"
+              ATSFile.append(ATSImg);
+
+
+              var ATSDesc = $("#eATSDesc");
+              ATSDesc.empty();
+              //get the information of file besid its picture
+              var fileInformation = document.createElement("p");
+              var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
+              fileInformation.append(fileInformationText);
+              ATSDesc.append(fileInformation);
+
+              //hide the button for adding file
+              $("#eAddATSBtn").addClass("hidden");
+
+              //show the note for changing ATS file
+              $("#eAddATSNote").removeClass("hidden");
+            }
           }
-
-          listingLotArea.value = propertyInformation[0].propertylotarea;
-          listingFloorArea.value = propertyInformation[0].propertyfloorarea;
-          listingBedrooms.value = propertyInformation[0].propertybedrooms;
-          listingCapacityOfGarage.value = propertyInformation[0].propertycarpark;
-          listingDesc.value = propertyInformation[0].propertydesc;
-
-
-          //display the ATS file
-          //NOTE: Javascript dont have glob function so just display file icon and the name of file
-
-          var ATSFile = $("#eATSFile");
-          //clear first the container to prevent multiple entry
-          ATSFile.empty();
-
-          var ATSImg = document.createElement("img");
-          ATSImg.src = 'assets/img/file.png'
-          ATSImg.style.height = "100px";
-          ATSImg.style.width = "100px";
-          ATSImg.style.marginLeft = "15px";
-          ATSImg.style.cursor = "pointer";
-          ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
-          //append the img to container name "ATSFile"
-          ATSFile.append(ATSImg);
-
-
-          var ATSDesc = $("#eATSDesc");
-          ATSDesc.empty();
-
-          //get the information of file besid its picture
-          var fileInformation = document.createElement("p");
-          var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
-          fileInformation.append(fileInformationText);
-          ATSDesc.append(fileInformation);
-
-          //hide the button for adding file
-          $("#eAddATSBtn").addClass("hidden");
-
-          //show the note for changing ATS file
-          $("#eAddATSNote").removeClass("hidden");
-
-
         } else if (propertyType === "Lot") {
 
           listingSubCategory.value = propertyInformation[0].subcategory;
@@ -2181,12 +2426,13 @@ function editProperty(propertyid) {
           listingPrice.value = propertyInformation[0].propertyamount;
           // //check if property is for Rent 
           if (propertyInformation[0].offertype == "Rent") {
-            //RENT BUTTON BEHAVIOR
-            //change the color of buttons base from propertyrentchoice
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
+            $("#eListingRentChoice").val(propertyInformation[0].propertyrentchoice).change()
+            // //RENT BUTTON BEHAVIOR
+            // //change the color of buttons base from propertyrentchoice
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
 
-            listingRentChoice.value = propertyInformation[0].propertyrentchoice;
+            // listingRentChoice.value = propertyInformation[0].propertyrentchoice;
 
           }
 
@@ -2194,38 +2440,39 @@ function editProperty(propertyid) {
           listingFloorArea.value = propertyInformation[0].propertyfloorarea;
           listingDesc.value = propertyInformation[0].propertydesc;
 
-          //display the ATS file
-          //NOTE: Javascript dont have glob function so just display file icon and the name of file
+          if (propertyInformation[0].ATSFile !== null) {
+            //display the ATS file
+            //NOTE: Javascript dont have glob function so just display file icon and the name of file
 
-          var ATSFile = $("#eATSFile");
-          //clear first the container to prevent multiple entry
-          ATSFile.empty();
+            var ATSFile = $("#eATSFile");
+            //clear first the container to prevent multiple entry
+            ATSFile.empty();
 
-          var ATSImg = document.createElement("img");
-          ATSImg.src = 'assets/img/file.png'
-          ATSImg.style.height = "100px";
-          ATSImg.style.width = "100px";
-          ATSImg.style.marginLeft = "15px";
-          ATSImg.style.cursor = "pointer";
-          ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
-          //append the img to container name "ATSFile"
-          ATSFile.append(ATSImg);
+            var ATSImg = document.createElement("img");
+            ATSImg.src = 'assets/img/file.png'
+            ATSImg.style.height = "100px";
+            ATSImg.style.width = "100px";
+            ATSImg.style.marginLeft = "15px";
+            ATSImg.style.cursor = "pointer";
+            ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
+            //append the img to container name "ATSFile"
+            ATSFile.append(ATSImg);
 
 
-          var ATSDesc = $("#eATSDesc");
-          ATSDesc.empty();
-          //get the information of file besid its picture
-          var fileInformation = document.createElement("p");
-          var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
-          fileInformation.append(fileInformationText);
-          ATSDesc.append(fileInformation);
+            var ATSDesc = $("#eATSDesc");
+            ATSDesc.empty();
+            //get the information of file besid its picture
+            var fileInformation = document.createElement("p");
+            var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
+            fileInformation.append(fileInformationText);
+            ATSDesc.append(fileInformation);
 
-          //hide the button for adding file
-          $("#eAddATSBtn").addClass("hidden");
+            //hide the button for adding file
+            $("#eAddATSBtn").addClass("hidden");
 
-          //show the note for changing ATS file
-          $("#eAddATSNote").removeClass("hidden");
-
+            //show the note for changing ATS file
+            $("#eAddATSNote").removeClass("hidden");
+          }
 
         } else if (propertyType === "House and Lot") {
           var holder = $("#ePropertyOfferType");
@@ -2247,12 +2494,13 @@ function editProperty(propertyid) {
           listingPrice.value = propertyInformation[0].propertyamount;
           // //check if property is for Rent 
           if (propertyInformation[0].offertype == "Rent") {
-            //RENT BUTTON BEHAVIOR
-            //change the color of buttons base from propertyrentchoice
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
+            $("#eListingRentChoice").val(propertyInformation[0].propertyrentchoice).change()
+            // //RENT BUTTON BEHAVIOR
+            // //change the color of buttons base from propertyrentchoice
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
 
-            listingRentChoice.value = propertyInformation[0].propertyrentchoice;
+            // listingRentChoice.value = propertyInformation[0].propertyrentchoice;
 
           }
 
@@ -2263,37 +2511,39 @@ function editProperty(propertyid) {
           listingDesc.value = propertyInformation[0].propertydesc;
 
 
-          //display the ATS file
-          //NOTE: Javascript dont have glob function so just display file icon and the name of file
+          if (propertyInformation[0].ATSFile !== null) {
+            //display the ATS file
+            //NOTE: Javascript dont have glob function so just display file icon and the name of file
 
-          var ATSFile = $("#eATSFile");
-          //clear first the container to prevent multiple entry
-          ATSFile.empty();
+            var ATSFile = $("#eATSFile");
+            //clear first the container to prevent multiple entry
+            ATSFile.empty();
 
-          var ATSImg = document.createElement("img");
-          ATSImg.src = 'assets/img/file.png'
-          ATSImg.style.height = "100px";
-          ATSImg.style.width = "100px";
-          ATSImg.style.marginLeft = "15px";
-          ATSImg.style.cursor = "pointer";
-          ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
-          //append the img to container name "ATSFile"
-          ATSFile.append(ATSImg);
+            var ATSImg = document.createElement("img");
+            ATSImg.src = 'assets/img/file.png'
+            ATSImg.style.height = "100px";
+            ATSImg.style.width = "100px";
+            ATSImg.style.marginLeft = "15px";
+            ATSImg.style.cursor = "pointer";
+            ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
+            //append the img to container name "ATSFile"
+            ATSFile.append(ATSImg);
 
 
-          var ATSDesc = $("#eATSDesc");
-          ATSDesc.empty();
-          //get the information of file besid its picture
-          var fileInformation = document.createElement("p");
-          var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
-          fileInformation.append(fileInformationText);
-          ATSDesc.append(fileInformation);
+            var ATSDesc = $("#eATSDesc");
+            ATSDesc.empty();
+            //get the information of file besid its picture
+            var fileInformation = document.createElement("p");
+            var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
+            fileInformation.append(fileInformationText);
+            ATSDesc.append(fileInformation);
 
-          //hide the button for adding file
-          $("#eAddATSBtn").addClass("hidden");
+            //hide the button for adding file
+            $("#eAddATSBtn").addClass("hidden");
 
-          //show the note for changing ATS file
-          $("#eAddATSNote").removeClass("hidden");
+            //show the note for changing ATS file
+            $("#eAddATSNote").removeClass("hidden");
+          }
 
         } else if (propertyType === "Warehouse") {
 
@@ -2315,12 +2565,13 @@ function editProperty(propertyid) {
           listingPrice.value = propertyInformation[0].propertyamount;
           // //check if property is for Rent 
           if (propertyInformation[0].offertype == "Rent") {
-            //RENT BUTTON BEHAVIOR
-            //change the color of buttons base from propertyrentchoice
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
+            $("#eListingRentChoice").val(propertyInformation[0].propertyrentchoice).change()
+            // //RENT BUTTON BEHAVIOR
+            // //change the color of buttons base from propertyrentchoice
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
 
-            listingRentChoice.value = propertyInformation[0].propertyrentchoice;
+            // listingRentChoice.value = propertyInformation[0].propertyrentchoice;
 
           }
 
@@ -2330,38 +2581,39 @@ function editProperty(propertyid) {
           listingDesc.value = propertyInformation[0].propertydesc;
 
 
-          //display the ATS file
-          //NOTE: Javascript dont have glob function so just display file icon and the name of file
+          if (propertyInformation[0].ATSFile !== null) {
+            //display the ATS file
+            //NOTE: Javascript dont have glob function so just display file icon and the name of file
 
-          var ATSFile = $("#eATSFile");
-          //clear first the container to prevent multiple entry
-          ATSFile.empty();
+            var ATSFile = $("#eATSFile");
+            //clear first the container to prevent multiple entry
+            ATSFile.empty();
 
-          var ATSImg = document.createElement("img");
-          ATSImg.src = 'assets/img/file.png'
-          ATSImg.style.height = "100px";
-          ATSImg.style.width = "100px";
-          ATSImg.style.marginLeft = "15px";
-          ATSImg.style.cursor = "pointer";
-          ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
-          //append the img to container name "ATSFile"
-          ATSFile.append(ATSImg);
+            var ATSImg = document.createElement("img");
+            ATSImg.src = 'assets/img/file.png'
+            ATSImg.style.height = "100px";
+            ATSImg.style.width = "100px";
+            ATSImg.style.marginLeft = "15px";
+            ATSImg.style.cursor = "pointer";
+            ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
+            //append the img to container name "ATSFile"
+            ATSFile.append(ATSImg);
 
 
-          var ATSDesc = $("#eATSDesc");
-          ATSDesc.empty();
-          //get the information of file besid its picture
-          var fileInformation = document.createElement("p");
-          var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
-          fileInformation.append(fileInformationText);
-          ATSDesc.append(fileInformation);
+            var ATSDesc = $("#eATSDesc");
+            ATSDesc.empty();
+            //get the information of file besid its picture
+            var fileInformation = document.createElement("p");
+            var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
+            fileInformation.append(fileInformationText);
+            ATSDesc.append(fileInformation);
 
-          //hide the button for adding file
-          $("#eAddATSBtn").addClass("hidden");
+            //hide the button for adding file
+            $("#eAddATSBtn").addClass("hidden");
 
-          //show the note for changing ATS file
-          $("#eAddATSNote").removeClass("hidden");
-
+            //show the note for changing ATS file
+            $("#eAddATSNote").removeClass("hidden");
+          }
 
         } else if (propertyType === "Office") {
 
@@ -2384,12 +2636,13 @@ function editProperty(propertyid) {
           listingPrice.value = propertyInformation[0].propertyamount;
           // //check if property is for Rent 
           if (propertyInformation[0].offertype == "Rent") {
-            //RENT BUTTON BEHAVIOR
-            //change the color of buttons base from propertyrentchoice
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
-            $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
+            $("#eListingRentChoice").val(propertyInformation[0].propertyrentchoice).change()
+            // //RENT BUTTON BEHAVIOR
+            // //change the color of buttons base from propertyrentchoice
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).removeClass('btn-secondary');
+            // $(`#e${ propertyInformation[0].propertyrentchoice}Btn`).addClass('btn-primary');
 
-            listingRentChoice.value = propertyInformation[0].propertyrentchoice;
+            // listingRentChoice.value = propertyInformation[0].propertyrentchoice;
 
           }
 
@@ -2399,39 +2652,39 @@ function editProperty(propertyid) {
           listingDesc.value = propertyInformation[0].propertydesc;
 
 
-          //display the ATS file
-          //NOTE: Javascript dont have glob function so just display file icon and the name of file
+          if (propertyInformation[0].ATSFile !== null) {
+            //display the ATS file
+            //NOTE: Javascript dont have glob function so just display file icon and the name of file
 
-          var ATSFile = $("#eATSFile");
-          //clear first the container to prevent multiple entry
-          ATSFile.empty();
+            var ATSFile = $("#eATSFile");
+            //clear first the container to prevent multiple entry
+            ATSFile.empty();
 
-          var ATSImg = document.createElement("img");
-          ATSImg.src = 'assets/img/file.png'
-          ATSImg.style.height = "100px";
-          ATSImg.style.width = "100px";
-          ATSImg.style.marginLeft = "15px";
-          ATSImg.style.cursor = "pointer";
-          ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
-          //append the img to container name "ATSFile"
-          ATSFile.append(ATSImg);
-
-
-          var ATSDesc = $("#eATSDesc");
-          ATSDesc.empty();
-          //get the information of file besid its picture
-          var fileInformation = document.createElement("p");
-          var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
-          fileInformation.append(fileInformationText);
-          ATSDesc.append(fileInformation);
-
-          //hide the button for adding file
-          $("#eAddATSBtn").addClass("hidden");
-
-          //show the note for changing ATS file
-          $("#eAddATSNote").removeClass("hidden");
+            var ATSImg = document.createElement("img");
+            ATSImg.src = 'assets/img/file.png'
+            ATSImg.style.height = "100px";
+            ATSImg.style.width = "100px";
+            ATSImg.style.marginLeft = "15px";
+            ATSImg.style.cursor = "pointer";
+            ATSImg.setAttribute("onclick", `document.querySelector("#eListingATS").click()`);
+            //append the img to container name "ATSFile"
+            ATSFile.append(ATSImg);
 
 
+            var ATSDesc = $("#eATSDesc");
+            ATSDesc.empty();
+            //get the information of file besid its picture
+            var fileInformation = document.createElement("p");
+            var fileInformationText = document.createTextNode(`File Name: ${ propertyInformation[0].ATSFile}`);
+            fileInformation.append(fileInformationText);
+            ATSDesc.append(fileInformation);
+
+            //hide the button for adding file
+            $("#eAddATSBtn").addClass("hidden");
+
+            //show the note for changing ATS file
+            $("#eAddATSNote").removeClass("hidden");
+          }
         }
 
         //load Complete Address
@@ -2555,8 +2808,8 @@ $('#properties').on('click', 'tbody tr', function () {
 
   var data = table.row(this).data();
   var propertyid = data[0];
-
-
+  localStorage.setItem('selectedProperty', propertyid);
+  console.log(propertyid)
   Swal.fire({
     icon: "question",
     title: `What do you want to do with this Property?`,
