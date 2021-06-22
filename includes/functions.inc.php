@@ -486,7 +486,8 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
         $approvalStatus = mysqli_stmt_get_result($stmt);
         if ($row = mysqli_fetch_assoc($approvalStatus)) {
             //user is still pending and his property upload will be pending also
-            if ($row['approval'] === 0) {
+            //2 is equal to denied
+            if ($row['approval'] !== 2) {
                 //create insert sql for property upload
                 $insertsql = "INSERT INTO property(usersId,propertyname,unitNo,offertype,propertytype,subcategory,propertylotarea,propertyfloorarea,propertybedrooms,propertycarpark,propertyamount,propertydesc,RoomFloorUnitNoBuilding,HouseLotBlockNo,street,subdivision,barangay,city,propertyrentchoice)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
                 $insertstmt = mysqli_stmt_init($conn);
@@ -606,6 +607,9 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
                         mysqli_stmt_close($insertstmt);
                     }
                 }
+            } else {
+                //user is denied and cannot upload property.
+                $result = "Your account is denied. You cannot post any property. Please contact Admin.";
             }
         }
     }
