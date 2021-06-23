@@ -26,8 +26,8 @@ if (isset($_POST['memberId'])) {
                 'Id' => $row['propertyid'],
                 'Property' => $row['propertyname'],
                 'OfferType' => $row['offertype'],
-                'Location' => $row['propertylocation'],
-                'Price' => $row['propertyamount'],
+                'Location' => $row['barangay'] . " " . $row['city'],
+                'Price' => "₱" . " " . $row['propertyamount'],
                 'Approval' => $row['approval'],
             );
 

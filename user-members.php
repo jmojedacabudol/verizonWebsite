@@ -57,7 +57,7 @@ if (mysqli_num_rows($result) > 0) {
         echo " <button class='btn btn-info w-20' id='viewMessagesBtn' type='text' aria-label='View'>Messages</button>";
         echo " <button class='btn btn-warning w-20' id='viewSchedulesBtn'type='text' aria-label='Schedules'>Schedules</button>";
         echo " <button class='btn btn-success w-20' id='viewPropertiesBtn'type='text' aria-label='Properties'>Properties</button>";
-        echo " <button class='btn btn-secondary w-20' id='viewTransactionBtn'type='text' aria-label='Transaction'>Transaction</button>";
+        echo " <button class='btn btn-dark w-20' id='viewTransactionBtn'type='text' aria-label='Transaction'>Transaction</button>";
         echo "</td>";
     }
 }
@@ -104,6 +104,7 @@ if (mysqli_num_rows($result) > 0) {
                                 <th>Client</th>
                                 <th>Number</th>
                                 <th>Property</th>
+                                <th>Date</th>
                             </tr>
                             </tr>
                         </thead>

@@ -1307,7 +1307,7 @@ if (mysqli_num_rows($result) > 0) {
 
 <script src="js/imageLoading.js"></script>
 <script src="js/dashboard-listing.js"></script>
-<script src="js/dashboard-transaction.js"></script>
+<script src="js/dashboard-transaction.js?v=1.1"></script>
 <script src="js/propertyupload.js"></script>
 </body>
 

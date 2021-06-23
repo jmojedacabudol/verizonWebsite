@@ -26,6 +26,7 @@ if (isset($_POST['memberId'])) {
                 'Client' => $row['userName'],
                 'Number' => $row['usersMobileNumber'],
                 'Property' => $row['propertyName'],
+                'Date' => $row['date'],
             );
         }
         echo json_encode($data);

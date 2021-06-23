@@ -419,6 +419,9 @@ $(document).ready(function () {
             },
             {
               "data": "Property"
+            },
+            {
+              "data": "Date"
             }
           ]
 

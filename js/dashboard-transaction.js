@@ -572,106 +572,102 @@ $("#addClientForm").submit(function (event) {
 
     if (compeleteNameValidation(fName, mName, lName, 'fName', 'mName', 'lName', 'addClientAlert')) {
         if (mobileNumberValidation(clientMobileNumber, 'clientMobileNumber', 'addClientAlert')) {
-            if (localNumberValidation(clientLocalNumber, 'clientLocalLandlineNumber', 'addClientAlert')) {
-                if (landlineValidation(clientLandlineNumber, 'clientLandlineNumber', 'addClientAlert')) {
-                    if (emailValidation(emailAddress, 'emailAddress', 'addClientAlert')) {
-                        if (birthdayValidation(birthday, 'birthday', 'addClientAlert')) {
-                            if (genderValidation(gender, 'gender', 'addClientAlert')) {
-                                if (ageValidation(clientAge, 'clientAge', 'addClientAlert')) {
-                                    if (civilStatusValidation(civilStatus, 'civilStatus', 'addClientAlert')) {
-                                        if (validIdImgValidation(primaryId, secondId, 'firstValidId', 'secondValidId', 'addClientAlert')) {
-                                            if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'clientRFUB', 'clientHLB', 'addClientAlert')) {
-                                                if (streetValidation(clientStreet, "clientStreet", 'addClientAlert')) {
-                                                    //subdivision can be empty
-                                                    if (clientBrgyValidation(clientBrgyAddress, "clientBrgyAddress", 'addClientAlert')) {
-                                                        if (clientCityValidation(clientCityAddress, "clientCityAddress", 'addClientAlert')) {
-                                                            if (companyNameValidation(companyName, 'companyName', 'addClientAlert')) {
-                                                                if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'companyInitalAddress', 'addClientAlert')) {
-                                                                    if (streetValidation(companyStreet, 'companyStreet', 'addClientAlert')) {
-                                                                        if (clientBrgyValidation(companyBrgyAddress, 'companyBrgyAddress', 'addClientAlert')) {
-                                                                            if (clientCityValidation(companyCityAddress, 'companyCityAddress', 'addClientAlert')) {
+            if (emailValidation(emailAddress, 'emailAddress', 'addClientAlert')) {
+                if (birthdayValidation(birthday, 'birthday', 'addClientAlert')) {
+                    if (genderValidation(gender, 'gender', 'addClientAlert')) {
+                        if (ageValidation(clientAge, 'clientAge', 'addClientAlert')) {
+                            if (civilStatusValidation(civilStatus, 'civilStatus', 'addClientAlert')) {
+                                if (validIdImgValidation(primaryId, secondId, 'firstValidId', 'secondValidId', 'addClientAlert')) {
+                                    if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'clientRFUB', 'clientHLB', 'addClientAlert')) {
+                                        if (streetValidation(clientStreet, "clientStreet", 'addClientAlert')) {
+                                            //subdivision can be empty
+                                            if (clientBrgyValidation(clientBrgyAddress, "clientBrgyAddress", 'addClientAlert')) {
+                                                if (clientCityValidation(clientCityAddress, "clientCityAddress", 'addClientAlert')) {
+                                                    if (companyNameValidation(companyName, 'companyName', 'addClientAlert')) {
+                                                        if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'companyInitalAddress', 'addClientAlert')) {
+                                                            if (streetValidation(companyStreet, 'companyStreet', 'addClientAlert')) {
+                                                                if (clientBrgyValidation(companyBrgyAddress, 'companyBrgyAddress', 'addClientAlert')) {
+                                                                    if (clientCityValidation(companyCityAddress, 'companyCityAddress', 'addClientAlert')) {
+                                                                        Swal.fire({
+                                                                            icon: "warning",
+                                                                            title: "Are you sure about all Client details?",
+                                                                            text: "Kindly, double check information before submitting",
+                                                                            showCancelButton: true,
+                                                                            cancelButtonText: "Close",
+                                                                            confirmButtonText: "Submit",
+                                                                            confirmButtonColor: "#3CB371",
+                                                                            cancelButtonColor: "#70945A"
+                                                                        }).then(result => {
+                                                                            if (result.value) {
+
                                                                                 Swal.fire({
-                                                                                    icon: "warning",
-                                                                                    title: "Are you sure about all Client details?",
-                                                                                    text: "Kindly, double check information before submitting",
-                                                                                    showCancelButton: true,
-                                                                                    cancelButtonText: "Close",
-                                                                                    confirmButtonText: "Submit",
-                                                                                    confirmButtonColor: "#3CB371",
-                                                                                    cancelButtonColor: "#70945A"
-                                                                                }).then(result => {
-                                                                                    if (result.value) {
+                                                                                    text: "Please wait....",
+                                                                                    allowOutsideClick: false,
+                                                                                    showConfirmButton: false,
 
-                                                                                        Swal.fire({
-                                                                                            text: "Please wait....",
-                                                                                            allowOutsideClick: false,
-                                                                                            showConfirmButton: false,
+                                                                                    willOpen: () => {
+                                                                                        Swal.showLoading();
+                                                                                    },
+                                                                                });
 
-                                                                                            willOpen: () => {
-                                                                                                Swal.showLoading();
-                                                                                            },
-                                                                                        });
+                                                                                //insert the client to database
+                                                                                $.ajax({
+                                                                                    url: "includes/insertclients.inc.php",
+                                                                                    type: "POST",
+                                                                                    processData: false,
+                                                                                    contentType: false,
+                                                                                    data: formData,
+                                                                                    success: function (clientId) {
+                                                                                        Swal.close();
+                                                                                        //data can be zero if there is no insertted client
+                                                                                        if (typeof clientId != 0) {
+                                                                                            //add the client Id to client object variable
+                                                                                            clientObj.push({
+                                                                                                "client": clientId
+                                                                                            });
+                                                                                            //create ang Img element with tool tip of the client Name 
 
-                                                                                        //insert the client to database
-                                                                                        $.ajax({
-                                                                                            url: "includes/insertclients.inc.php",
-                                                                                            type: "POST",
-                                                                                            processData: false,
-                                                                                            contentType: false,
-                                                                                            data: formData,
-                                                                                            success: function (clientId) {
-                                                                                                Swal.close();
-                                                                                                //data can be zero if there is no insertted client
-                                                                                                if (typeof clientId != 0) {
-                                                                                                    //add the client Id to client object variable
-                                                                                                    clientObj.push({
-                                                                                                        "client": clientId
-                                                                                                    });
-                                                                                                    //create ang Img element with tool tip of the client Name 
+                                                                                            //create an element img 
+                                                                                            var clientImg = document.createElement("img");
+                                                                                            clientImg.src = `assets/img/user.png`;
+                                                                                            clientImg.style.height = "50px";
+                                                                                            clientImg.style.width = "50px";
+                                                                                            clientImg.style.marginLeft = "15px";
+                                                                                            clientImg.id = clientId;
+                                                                                            clientImg.style.cursor = "pointer";
+                                                                                            clientImg.setAttribute('data-toggle', 'tooltip');
+                                                                                            clientImg.setAttribute('data-placement', 'top');
+                                                                                            clientImg.setAttribute('title', `${fName + " " + mName + " " + lName}`);
 
-                                                                                                    //create an element img 
-                                                                                                    var clientImg = document.createElement("img");
-                                                                                                    clientImg.src = `assets/img/user.png`;
-                                                                                                    clientImg.style.height = "50px";
-                                                                                                    clientImg.style.width = "50px";
-                                                                                                    clientImg.style.marginLeft = "15px";
-                                                                                                    clientImg.id = clientId;
-                                                                                                    clientImg.style.cursor = "pointer";
-                                                                                                    clientImg.setAttribute('data-toggle', 'tooltip');
-                                                                                                    clientImg.setAttribute('data-placement', 'top');
-                                                                                                    clientImg.setAttribute('title', `${fName + " " + mName + " " + lName}`);
+                                                                                            var holder1 = $("#client0");
+                                                                                            var holder2 = $("#client1");
 
-                                                                                                    var holder1 = $("#client0");
-                                                                                                    var holder2 = $("#client1");
+                                                                                            if (holder1.children().length === 0) {
+                                                                                                //create onclick function with id of client object and where it is stored
+                                                                                                clientImg.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                                                                                                holder1.append(clientImg);
 
-                                                                                                    if (holder1.children().length === 0) {
-                                                                                                        //create onclick function with id of client object and where it is stored
-                                                                                                        clientImg.setAttribute("onclick", `selectedClient(this.id,'client0')`);
-                                                                                                        holder1.append(clientImg);
+                                                                                            } else {
+                                                                                                //create onclick function with id of client object and where it is stored
+                                                                                                clientImg.setAttribute("onclick", `selectedClient(this.id,'client1')`);
+                                                                                                holder2.append(clientImg);
 
-                                                                                                    } else {
-                                                                                                        //create onclick function with id of client object and where it is stored
-                                                                                                        clientImg.setAttribute("onclick", `selectedClient(this.id,'client1')`);
-                                                                                                        holder2.append(clientImg);
+                                                                                            }
 
-                                                                                                    }
+                                                                                            $("#addClient").modal('hide');
+                                                                                        } else {
+                                                                                            //elses display the data to console log
+                                                                                            console.log(data)
+                                                                                        }
 
-                                                                                                    $("#addClient").modal('hide');
-                                                                                                } else {
-                                                                                                    //elses display the data to console log
-                                                                                                    console.log(data)
-                                                                                                }
-
-                                                                                            },
-                                                                                            error: function (data) {
-                                                                                                Swal.close();
-                                                                                                console.log(data);
-                                                                                            },
-                                                                                        });
-                                                                                    }
+                                                                                    },
+                                                                                    error: function (data) {
+                                                                                        Swal.close();
+                                                                                        console.log(data);
+                                                                                    },
                                                                                 });
                                                                             }
-                                                                        }
+                                                                        });
                                                                     }
                                                                 }
                                                             }
@@ -687,7 +683,6 @@ $("#addClientForm").submit(function (event) {
                     }
                 }
             }
-
         }
     }
     return false;
@@ -1067,91 +1062,87 @@ $("#editClientForm").submit(function (event) {
 
     if (compeleteNameValidation(fName, mName, lName, 'eFName', 'eMName', 'eLName', 'editClientAlert')) {
         if (mobileNumberValidation(clientMobileNumber, 'eClientMobileNumber', 'editClientAlert')) {
-            if (landlineValidation(clientLandlineNumber, 'eClientLandlineNumber', 'editClientAlert')) {
-                if (localNumberValidation(clientLocalNumber, 'eClientLocalLandlineNumber', 'editClientAlert')) {
-                    if (emailValidation(emailAddress, 'eEmailAddress', 'editClientAlert')) {
-                        if (birthdayValidation(birthday, 'eBirthday', 'editClientAlert')) {
-                            if (genderValidation(gender, 'eGender', 'editClientAlert')) {
-                                if (ageValidation(clientAge, 'eClientAge', 'editClientAlert')) {
-                                    if (civilStatusValidation(civilStatus, 'eCivilStatus', 'editClientAlert')) {
-                                        if (checkIdImgIsChanged(primaryId, secondId, 'eFirstValidId', 'eSecondValidId', eFirstValidId, eSecondValidId, 'editClientAlert')) {
-                                            if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'eClientRFUB', 'eClientHLB', 'editClientAlert')) {
-                                                if (streetValidation(clientStreet, "eClientStreet", 'editClientAlert')) {
-                                                    //subdivision can be empty
-                                                    if (clientBrgyValidation(clientBrgyAddress, "eClientBrgyAddress", 'editClientAlert')) {
-                                                        if (clientCityValidation(clientCityAddress, "eClientCityAddress", 'editClientAlert')) {
-                                                            if (companyNameValidation(companyName, 'eCompanyName', 'editClientAlert')) {
-                                                                if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'eCompanyInitalAddress', 'editClientAlert')) {
-                                                                    if (streetValidation(companyStreet, 'eCompanyStreet', 'editClientAlert')) {
-                                                                        if (clientBrgyValidation(companyBrgyAddress, 'eCompanyBrgyAddress', 'editClientAlert')) {
-                                                                            if (clientCityValidation(companyCityAddress, 'eCompanyCityAddress', 'editClientAlert')) {
+            if (emailValidation(emailAddress, 'eEmailAddress', 'editClientAlert')) {
+                if (birthdayValidation(birthday, 'eBirthday', 'editClientAlert')) {
+                    if (genderValidation(gender, 'eGender', 'editClientAlert')) {
+                        if (ageValidation(clientAge, 'eClientAge', 'editClientAlert')) {
+                            if (civilStatusValidation(civilStatus, 'eCivilStatus', 'editClientAlert')) {
+                                if (checkIdImgIsChanged(primaryId, secondId, 'eFirstValidId', 'eSecondValidId', eFirstValidId, eSecondValidId, 'editClientAlert')) {
+                                    if (roomUnitNoAndHouseLotValidation(clientRFUB, clientHLB, 'eClientRFUB', 'eClientHLB', 'editClientAlert')) {
+                                        if (streetValidation(clientStreet, "eClientStreet", 'editClientAlert')) {
+                                            //subdivision can be empty
+                                            if (clientBrgyValidation(clientBrgyAddress, "eClientBrgyAddress", 'editClientAlert')) {
+                                                if (clientCityValidation(clientCityAddress, "eClientCityAddress", 'editClientAlert')) {
+                                                    if (companyNameValidation(companyName, 'eCompanyName', 'editClientAlert')) {
+                                                        if (roomUnitNoAndHouseLotValidation(companyInitalAddress, 'eCompanyInitalAddress', 'editClientAlert')) {
+                                                            if (streetValidation(companyStreet, 'eCompanyStreet', 'editClientAlert')) {
+                                                                if (clientBrgyValidation(companyBrgyAddress, 'eCompanyBrgyAddress', 'editClientAlert')) {
+                                                                    if (clientCityValidation(companyCityAddress, 'eCompanyCityAddress', 'editClientAlert')) {
+                                                                        Swal.fire({
+                                                                            icon: "warning",
+                                                                            title: "Are you sure about all Client details?",
+                                                                            text: "Please double check information before submitting",
+                                                                            showCancelButton: true,
+                                                                            cancelButtonText: "Close",
+                                                                            confirmButtonText: "Submit",
+                                                                            confirmButtonColor: "#3CB371",
+                                                                            cancelButtonColor: "#70945A"
+                                                                        }).then(result => {
+                                                                            if (result.value) {
                                                                                 Swal.fire({
-                                                                                    icon: "warning",
-                                                                                    title: "Are you sure about all Client details?",
-                                                                                    text: "Please double check information before submitting",
-                                                                                    showCancelButton: true,
-                                                                                    cancelButtonText: "Close",
-                                                                                    confirmButtonText: "Submit",
-                                                                                    confirmButtonColor: "#3CB371",
-                                                                                    cancelButtonColor: "#70945A"
-                                                                                }).then(result => {
-                                                                                    if (result.value) {
-                                                                                        Swal.fire({
-                                                                                            text: "Please Wait....",
-                                                                                            allowOutsideClick: false,
-                                                                                            showConfirmButton: false,
+                                                                                    text: "Please Wait....",
+                                                                                    allowOutsideClick: false,
+                                                                                    showConfirmButton: false,
 
-                                                                                            willOpen: () => {
-                                                                                                Swal.showLoading();
-                                                                                            },
-                                                                                        });
-                                                                                        //insert the property to database
-                                                                                        $.ajax({
-                                                                                            url: "includes/insertclientedit.inc.php",
-                                                                                            data: formData,
-                                                                                            processData: false,
-                                                                                            contentType: false,
-                                                                                            type: "POST",
-                                                                                            success: function (data) {
-                                                                                                Swal.close();
-                                                                                                console.log(data)
-                                                                                                if (data === "Success, Client Updated") {
-                                                                                                    Swal.fire({
-                                                                                                        icon: "success",
-                                                                                                        title: "Client Uploaded",
-                                                                                                        text: data,
-                                                                                                        showConfirmButton: true,
-                                                                                                        allowOutsideClick: false,
-                                                                                                    }).then(function (result) {
-                                                                                                        if (result.value) {
-                                                                                                            $("#editClient").modal('hide');
-                                                                                                        }
-                                                                                                    });
-                                                                                                } else if (data === "No edit/s Found") {
-                                                                                                    Swal.fire({
-                                                                                                        icon: "warning",
-                                                                                                        title: data,
-                                                                                                        text: "No detected change/s in Client`s Information",
-                                                                                                        showConfirmButton: true,
-                                                                                                        allowOutsideClick: false,
-                                                                                                    }).then(function (result) {
-                                                                                                        if (result.value) {
-                                                                                                            $("#editClient").modal('hide');
-                                                                                                        }
-                                                                                                    });
-                                                                                                } else {
-                                                                                                    //display other data
-                                                                                                    console.log(data);
+                                                                                    willOpen: () => {
+                                                                                        Swal.showLoading();
+                                                                                    },
+                                                                                });
+                                                                                //insert the property to database
+                                                                                $.ajax({
+                                                                                    url: "includes/insertclientedit.inc.php",
+                                                                                    data: formData,
+                                                                                    processData: false,
+                                                                                    contentType: false,
+                                                                                    type: "POST",
+                                                                                    success: function (data) {
+                                                                                        Swal.close();
+                                                                                        console.log(data)
+                                                                                        if (data === "Success, Client Updated") {
+                                                                                            Swal.fire({
+                                                                                                icon: "success",
+                                                                                                title: "Client Uploaded",
+                                                                                                text: data,
+                                                                                                showConfirmButton: true,
+                                                                                                allowOutsideClick: false,
+                                                                                            }).then(function (result) {
+                                                                                                if (result.value) {
+                                                                                                    $("#editClient").modal('hide');
                                                                                                 }
-                                                                                            },
-                                                                                            error: function (data) {
-                                                                                                console.log(data);
-                                                                                            },
-                                                                                        });
-                                                                                    }
+                                                                                            });
+                                                                                        } else if (data === "No edit/s Found") {
+                                                                                            Swal.fire({
+                                                                                                icon: "warning",
+                                                                                                title: data,
+                                                                                                text: "No detected change/s in Client`s Information",
+                                                                                                showConfirmButton: true,
+                                                                                                allowOutsideClick: false,
+                                                                                            }).then(function (result) {
+                                                                                                if (result.value) {
+                                                                                                    $("#editClient").modal('hide');
+                                                                                                }
+                                                                                            });
+                                                                                        } else {
+                                                                                            //display other data
+                                                                                            console.log(data);
+                                                                                        }
+                                                                                    },
+                                                                                    error: function (data) {
+                                                                                        console.log(data);
+                                                                                    },
                                                                                 });
                                                                             }
-                                                                        }
+                                                                        });
                                                                     }
                                                                 }
                                                             }
@@ -1166,7 +1157,6 @@ $("#editClientForm").submit(function (event) {
                         }
                     }
                 }
-
             }
         }
     }
@@ -1779,71 +1769,71 @@ function mobileNumberValidation(clientMobileNumber, mobileNumberTag, alertId) {
     }
 }
 
-//landline validation
-function landlineValidation(clientLandlineNumber, landLineTag, alertId) {
-    //regex for landline number ex. 09123456789
-    //mobile number is not empty
-    if (clientLandlineNumber !== "") {
-        //meet the requiret number lenght of mobile number
-        if (clientLandlineNumber.length == 7 || clientLandlineNumber.length == 8) {
-            $(`#${landLineTag}`).removeClass('input-error');
-            return true;
-            // if (clientLandlineNumber.match(regex)) {
+// //landline validation
+// function landlineValidation(clientLandlineNumber, landLineTag, alertId) {
+//     //regex for landline number ex. 09123456789
+//     //mobile number is not empty
+//     if (clientLandlineNumber !== "") {
+//         //meet the requiret number lenght of mobile number
+//         if (clientLandlineNumber.length == 7 || clientLandlineNumber.length == 8) {
+//             $(`#${landLineTag}`).removeClass('input-error');
+//             return true;
+//             // if (clientLandlineNumber.match(regex)) {
 
-            // } else {
-            //     //not match the regex for mobule number ex 09123456789
-            //     $(`#${landLineTag}`).addClass('input-error');
-            //     $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
-            //     return false;
-            // }
-        } else {
-            //error for not meeting the min length
-            $(`#${landLineTag}`).addClass('input-error');
-            $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
-            return false;
-        }
+//             // } else {
+//             //     //not match the regex for mobule number ex 09123456789
+//             //     $(`#${landLineTag}`).addClass('input-error');
+//             //     $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
+//             //     return false;
+//             // }
+//         } else {
+//             //error for not meeting the min length
+//             $(`#${landLineTag}`).addClass('input-error');
+//             $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
+//             return false;
+//         }
 
-    } else {
-        //error for mobile number empty
-        $(`#${landLineTag}`).addClass('input-error');
-        $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Landline Number Empty!</div>');
-        return false;
-    }
-}
+//     } else {
+//         //error for mobile number empty
+//         $(`#${landLineTag}`).addClass('input-error');
+//         $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Landline Number Empty!</div>');
+//         return false;
+//     }
+// }
 
 //local number validation
 
-function localNumberValidation(localNumber, localNumberTag, alertId) {
-    //regex for mobule number ex. 09123456789
-    //local number is not empty
-    if (localNumber !== "") {
-        //meet the requiret number lenght of mobile number
-        if (localNumber.length != 1) {
-            $(`#${localNumberTag}`).removeClass('input-error');
-            return true;
-            // if (localNumber.match(regex)) {
-            //     $(`#${localNumberTag}`).removeClass('input-error');
-            //     return true;
-            // } else {
-            //     //not match the regex for mobule number ex 09123456789
-            //     $(`#${localNumberTag}`).addClass('input-error');
-            //     $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
-            //     return false;
-            // }
-        } else {
-            //error for not meeting the min length
-            $(`#${localNumberTag}`).addClass('input-error');
-            $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Local Number!</div>');
-            return false;
-        }
+// function localNumberValidation(localNumber, localNumberTag, alertId) {
+//     //regex for mobule number ex. 09123456789
+//     //local number is not empty
+//     if (localNumber !== "") {
+//         //meet the requiret number lenght of mobile number
+//         if (localNumber.length != 1) {
+//             $(`#${localNumberTag}`).removeClass('input-error');
+//             return true;
+//             // if (localNumber.match(regex)) {
+//             //     $(`#${localNumberTag}`).removeClass('input-error');
+//             //     return true;
+//             // } else {
+//             //     //not match the regex for mobule number ex 09123456789
+//             //     $(`#${localNumberTag}`).addClass('input-error');
+//             //     $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Landline Number!</div>');
+//             //     return false;
+//             // }
+//         } else {
+//             //error for not meeting the min length
+//             $(`#${localNumberTag}`).addClass('input-error');
+//             $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Invalid Local Number!</div>');
+//             return false;
+//         }
 
-    } else {
-        //error for mobile number empty
-        $(`#${localNumberTag}`).addClass('input-error');
-        $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Local Number Empty!</div>');
-        return false;
-    }
-}
+//     } else {
+//         //error for mobile number empty
+//         $(`#${localNumberTag}`).addClass('input-error');
+//         $(`#${alertId}`).html('<div class="alert alert-danger" role="alert">Local Number Empty!</div>');
+//         return false;
+//     }
+// }
 
 
 //emailValidation
