@@ -6,8 +6,10 @@ if (isset($_POST['transactionId'])) {
     $transactionId = $_POST['transactionId'];
     $client1 = null;
     $client2 = null;
+    $propertyId = null;
+    $status = "Posted";
 
-    $sql = "SELECT firstClientId,secondClientId FROM transactions WHERE transactionId=?";
+    $sql = "SELECT firstClientId,secondClientId,propertyId FROM transactions WHERE transactionId=?";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -22,7 +24,26 @@ if (isset($_POST['transactionId'])) {
             while ($row = mysqli_fetch_assoc($resultData)) {
                 $client1 = $row['firstClientId'];
                 $client2 = $row['secondClientId'];
+                $propertyId = $row['propertyId'];
+
             }
+        }
+    }
+
+    //alter the property selected status to "Posted"
+    $updatePropertysql = "UPDATE property SET approval=? WHERE propertyid=?;";
+    $updatePropertystmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($updatePropertystmt, $updatePropertysql)) {
+        $result = "Statement failed in updating property";
+        exit();
+    } else {
+        mysqli_stmt_bind_param($updatePropertystmt, 'ss', $status, $propertyId);
+        if (mysqli_stmt_execute($updatePropertystmt)) {
+            mysqli_stmt_close($updatePropertystmt);
+            // $result = "Transaction Created";
+        } else {
+            //error occured
+            $result = mysqli_stmt_error($updatePropertystmt);
         }
     }
 
@@ -31,7 +52,7 @@ if (isset($_POST['transactionId'])) {
         $clientSql = 'SELECT primaryId,secondaryId FROM clients WHERE clientId=?;';
         $clientStmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($clientStmt, $clientSql)) {
-            echo "Statement Failed";
+            echo "Statement failed";
             exit();
         } else {
             mysqli_stmt_bind_param($clientStmt, 's', $client1);

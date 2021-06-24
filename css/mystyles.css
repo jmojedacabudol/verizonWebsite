@@ -2194,7 +2194,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 7%;
+    height: 10%;
     width: 18%;
     color: #000;
     text-align: center;
@@ -2212,7 +2212,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 7%;
+    height: 18%;
     width: 20%;
     color: #000;
     text-align: center;
@@ -2252,7 +2252,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 7%;
+    height: 10%;
     width: 25%;
     color: #000;
     text-align: center;
@@ -2302,7 +2302,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 7%;
+    height: 10%;
     width: 28%;
     color: #000;
     text-align: center;
@@ -2369,7 +2369,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 7%;
+    height: 10%;
     width: 34%;
     color: #000;
     text-align: center;
@@ -2533,7 +2533,7 @@ pre code {
       -moz-border-radius: 6px;
       right: 0;
       z-index: 99;
-      height: 5%;
+      height: 8%;
       width: 44%;
       color: #000;
       text-align: center;
@@ -9956,6 +9956,7 @@ button.bg-dark:focus {
   font-size: 18px;
   line-height: 23px;
   text-align: justify;
+  overflow: hidden
 }
 
 .lrproperties-title {

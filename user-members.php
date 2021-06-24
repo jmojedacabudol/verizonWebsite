@@ -216,7 +216,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <table id="transactions" class="display" style="width:100%">
+                    <table id="transactionss" class="display table-responsive" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -226,11 +226,10 @@ if (mysqli_num_rows($result) > 0) {
                                 <th>Unit No</th>
                                 <th>TCP</th>
                                 <th>Terms Of Payment</th>
-                                <th>Buyer Name</th>
                                 <th>Address</th>
-                                <th>Contact Info</th>
                                 <th>Status</th>
                                 <th>Date of Transaction</th>
+                                <th>Date of Reservation</th>
                                 <th>Final TCP</th>
                                 <th>Commission</th>
                                 <th>Receivable</th>
@@ -276,7 +275,7 @@ if (mysqli_num_rows($result) > 0) {
 <!-- Contact form JS-->
 <script src="assets/mail/jqBootstrapValidation.js"></script>
 <script src="assets/mail/contact_me.js"></script>
-<script src="js/dashboard-members.js"></script>
+<script src="js/dashboard-members.js?v=1.2"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 </body>

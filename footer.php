@@ -58,11 +58,11 @@ function add3Dots(string, limit) {
 </script>
 
 <!-- Core theme JS-->
-<script src="js/scripts.js"></script>
-<script src="js/propertyViewing.js"></script>
-<script src="js/indexSearch.js"></script>
-<script src="js/login.js"></script>
-<script src="js/register.js"></script>
+<script src="js/scripts.js?v=1.2"></script>
+<script src="js/propertyViewing.js?v=1.2"></script>
+<script src="js/indexSearch.js?v=1.2"></script>
+<script src="js/login.js?v=1.2"></script>
+<script src="js/register.js?v=1.2"></script>
 <script src="js/viewpropertyAgent.js"></script>
-<script src="js/loadCalendar.js"></script>
-<script src="js/forgotPwd.js"></script>
+<script src="js/loadCalendar.js?v=1.1"></script>
+<script src="js/forgotPwd.js?v=1.2"></script>

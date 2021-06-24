@@ -1,3 +1,18 @@
+//provide page reloading when transaction modal is open
+window.onbeforeunload = function () {
+    if (($('#addTransaction').is(':visible'))) {
+        //get the client Id from transaction modal if it is not empty
+        closeTransaction
+    } else {
+        location.reload();
+    }
+}
+
+
+
+
+
+
 //propertySelected stored here
 var propertyIdSelected;
 var table;
@@ -609,7 +624,6 @@ $("#addClientForm").submit(function (event) {
                                                                                         Swal.showLoading();
                                                                                     },
                                                                                 });
-
                                                                                 //insert the client to database
                                                                                 $.ajax({
                                                                                     url: "includes/insertclients.inc.php",
@@ -621,6 +635,11 @@ $("#addClientForm").submit(function (event) {
                                                                                         Swal.close();
                                                                                         //data can be zero if there is no insertted client
                                                                                         if (typeof clientId != 0) {
+                                                                                            if (clientObj.length === 1) {
+                                                                                                if (clientObj[0].client == null) {
+                                                                                                    clientObj = [];
+                                                                                                }
+                                                                                            }
                                                                                             //add the client Id to client object variable
                                                                                             clientObj.push({
                                                                                                 "client": clientId
@@ -639,22 +658,48 @@ $("#addClientForm").submit(function (event) {
                                                                                             clientImg.setAttribute('data-placement', 'top');
                                                                                             clientImg.setAttribute('title', `${fName + " " + mName + " " + lName}`);
 
-                                                                                            var holder1 = $("#client0");
-                                                                                            var holder2 = $("#client1");
 
-                                                                                            if (holder1.children().length === 0) {
-                                                                                                //create onclick function with id of client object and where it is stored
-                                                                                                clientImg.setAttribute("onclick", `selectedClient(this.id,'client0')`);
-                                                                                                holder1.append(clientImg);
 
-                                                                                            } else {
-                                                                                                //create onclick function with id of client object and where it is stored
-                                                                                                clientImg.setAttribute("onclick", `selectedClient(this.id,'client1')`);
-                                                                                                holder2.append(clientImg);
+                                                                                            //check the name of the modal that triggered the adding of transaction
 
+                                                                                            if ($('#addTransaction').is(':visible')) {
+                                                                                                var holder1 = $("#client0");
+                                                                                                var holder2 = $("#client1");
+
+                                                                                                if (holder1.children().length === 0) {
+                                                                                                    //create onclick function with id of client object and where it is stored
+                                                                                                    clientImg.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                                                                                                    holder1.append(clientImg);
+
+                                                                                                } else {
+                                                                                                    //create onclick function with id of client object and where it is stored
+                                                                                                    clientImg.setAttribute("onclick", `selectedClient(this.id,'client1')`);
+                                                                                                    holder2.append(clientImg);
+
+                                                                                                }
+
+                                                                                                $("#addClient").modal('hide');
+                                                                                            } else if ($('#editTransaction').is(':visible')) {
+                                                                                                var holder1 = $("#eClient0");
+                                                                                                var holder2 = $("#eClient1");
+
+                                                                                                if (holder1.children().length === 0) {
+                                                                                                    //create onclick function with id of client object and where it is stored
+                                                                                                    clientImg.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                                                                                                    holder1.append(clientImg);
+
+                                                                                                } else {
+                                                                                                    //create onclick function with id of client object and where it is stored
+                                                                                                    clientImg.setAttribute("onclick", `selectedClient(this.id,'client1')`);
+                                                                                                    holder2.append(clientImg);
+
+                                                                                                }
+
+                                                                                                $("#addClient").modal('hide');
                                                                                             }
 
-                                                                                            $("#addClient").modal('hide');
+
+
                                                                                         } else {
                                                                                             //elses display the data to console log
                                                                                             console.log(data)
@@ -755,10 +800,14 @@ $('#addClient').on('hidden.bs.modal', function () {
     if (holder1.children().length !== 0 && holder2.children().length !== 0) {
         $("#addClientBtn").addClass("hidden");
         $("#addClientNote").removeClass("hidden");
-    } else {
-        //else show the button and note
+    } else if (holder1.children().length !== 0 || holder2.children().length !== 0) {
+        //else if one of them is has a child show the button and note
         $("#addClientBtn").removeClass("hidden");
         $("#addClientNote").removeClass("hidden");
+    } else {
+        //else show the button and hide the note
+        $("#addClientBtn").removeClass("hidden");
+        $("#addClientNote").addClass("hidden");
     }
     $(this).off('hidden.bs.modal');
 });
@@ -817,8 +866,8 @@ function selectedClient(id, item) {
                         },
                         success: function (data) {
                             Swal.close();
-                            if (data == "Client information Deleted") {
-                                //delete the client Id to client object variable
+                            if (data == "Client Deleted") {
+                                // //delete the client Id to client object variable
                                 clientObj = clientObj.filter(function (returnableObjects) {
                                     return returnableObjects.client !== id;
                                 });
@@ -839,7 +888,7 @@ function selectedClient(id, item) {
                                 } else {
                                     //else show the button and note
                                     $("#addClientBtn").removeClass("hidden");
-                                    $("#addClientNote").remove("hidden");
+                                    $("#addClientNote").addClass("hidden");
                                 }
                             } else {
                                 //display the error code
@@ -851,13 +900,6 @@ function selectedClient(id, item) {
                             console.log(data);
                         },
                     });
-
-
-
-
-
-
-
                 }
             });
         }
@@ -1256,6 +1298,9 @@ $("#addTransactionForm").submit(function (event) {
                                                         Swal.close();
                                                         console.log(data)
                                                         if (data == "Transaction Created") {
+                                                            //reset the clientObj 
+                                                            clientObj = [];
+
                                                             Swal.fire({
                                                                 icon: "success",
                                                                 title: data,
@@ -1296,7 +1341,7 @@ $("#addTransactionForm").submit(function (event) {
                                 if (agentCommissionValidation(agentsCommission)) {
                                     if (ARCommissionValidation(arCommission)) {
                                         if (buyersCommissionValidation(buyersCommision)) {
-
+                                            console.log(clientObj);
                                             //find transaction clients based on diplayed user icon
                                             if (clientObj.length === 1) {
                                                 formData.append("firstClient", clientObj[0].client);
@@ -1335,6 +1380,8 @@ $("#addTransactionForm").submit(function (event) {
                                                         contentType: false,
                                                         type: "POST",
                                                         success: function (data) {
+                                                            //reset the clientObj 
+                                                            clientObj = [];
                                                             Swal.close();
                                                             if (data == "Transaction Created") {
                                                                 Swal.fire({
@@ -1377,12 +1424,15 @@ $("#addTransactionForm").submit(function (event) {
 
 //CLOSING TRANSACTION MODAL FUNCTION
 
-function closeTransaction(img1, img2) {
-
+function closeTransaction(img1, img2, modal, element1, element2) {
+    console.log(img1)
     Swal.fire({
         icon: "warning",
         title: "Please submit your transaction",
-        text: "You are closing without saving your transaction."
+        text: "You are closing without saving your transaction.",
+        showCancelButton: true,
+        confirmButtonColor: "#3CB371",
+
     }).then(result => {
         if (result.value) {
             Swal.fire({
@@ -1396,8 +1446,8 @@ function closeTransaction(img1, img2) {
             });
             if (img1.children.length !== 0 && img2.children.length !== 0) {
                 //get the img
-                var firstClient = document.querySelector("div#client0 img").id;
-                var secondClient = document.querySelector("div#client1 img").id;
+                var firstClient = document.querySelector(`${element1} img`).id;
+                var secondClient = document.querySelector(`${element2} img`).id;
                 $.ajax({
                     url: "includes/deleteclientinformation.inc.php",
                     type: "POST",
@@ -1447,7 +1497,7 @@ function closeTransaction(img1, img2) {
             } else {
                 //else 1 client is present
                 if (img1.children.length !== 0) {
-                    var firstClient = document.querySelector("div#client0 img").id;
+                    var firstClient = document.querySelector(`${element1} img`).id;
                     $.ajax({
                         url: "includes/deleteclientinformation.inc.php",
                         type: "POST",
@@ -1475,7 +1525,7 @@ function closeTransaction(img1, img2) {
                     });
                 } else if (img2.children.length !== 0) {
                     //delete 2nd client
-                    var secondClient = document.querySelector("div#client1 img").id;
+                    var secondClient = document.querySelector(`${element2} img`).id;
                     $.ajax({
                         url: "includes/deleteclientinformation.inc.php",
                         type: "POST",
@@ -1508,7 +1558,7 @@ function closeTransaction(img1, img2) {
                     //else there are no client 
                     //hide the modal
                     Swal.close();
-                    $("#addTransaction").modal('hide');
+                    $(`#${modal}`).modal('hide');
                 }
             }
 
@@ -2257,23 +2307,23 @@ $("#editTransactionForm").submit(function (event) {
                                                     contentType: false,
                                                     type: "POST",
                                                     success: function (data) {
+                                                        //reset the clientObj 
+                                                        clientObj = [];
                                                         Swal.close();
-                                                        // for (var value of formData.keys()) {
-                                                        //     console.log(value);
-                                                        // }
-                                                        console.log(data)
-                                                        // if (data == "Transaction Created") {
-                                                        //     Swal.fire({
-                                                        //         icon: "success",
-                                                        //         title: data,
-                                                        //         text: "Please wait! Website will now reload",
-                                                        //         showConfirmButton: false,
-                                                        //         allowOutsideClick: false,
-                                                        //         timer: 2000
-                                                        //     }).then(function (result) {
-                                                        //         location.reload();
-                                                        //     });
-                                                        // }
+                                                        if (data == "Transaction Editted") {
+                                                            Swal.fire({
+                                                                icon: "success",
+                                                                title: data,
+                                                                text: "Please wait! Website will now reload",
+                                                                showConfirmButton: false,
+                                                                allowOutsideClick: false,
+                                                                timer: 2000
+                                                            }).then(function (result) {
+                                                                location.reload();
+                                                            });
+                                                        } else {
+                                                            console.log(data);
+                                                        }
 
                                                     },
                                                     error: function (data) {
@@ -2301,7 +2351,7 @@ $("#editTransactionForm").submit(function (event) {
                             if (eAgentCommissionValidation(agentsCommission)) {
                                 if (eARCommissionValidation(arCommission)) {
                                     if (eBuyersCommissionValidation(buyersCommision)) {
-
+                                        console.log(clientObj);
                                         //find transaction clients based on diplayed user icon
                                         if (clientObj.length === 1) {
                                             formData.append("firstClient", clientObj[0].client);
@@ -2340,21 +2390,23 @@ $("#editTransactionForm").submit(function (event) {
                                                     contentType: false,
                                                     type: "POST",
                                                     success: function (data) {
+                                                        //reset the clientObj 
+                                                        clientObj = [];
                                                         Swal.close();
-                                                        // for (var value of formData.keys()) {
-                                                        //     console.log(value);
-                                                        // }
-                                                        console.log(data)
-                                                        // Swal.fire({
-                                                        //     icon: "success",
-                                                        //     title: data,
-                                                        //     text: "Please wait! Website will now reload",
-                                                        //     showConfirmButton: false,
-                                                        //     allowOutsideClick: false,
-                                                        //     timer: 2000
-                                                        // }).then(function (result) {
-                                                        //     location.reload();
-                                                        // });
+                                                        if (data == "Transaction Editted") {
+                                                            Swal.fire({
+                                                                icon: "success",
+                                                                title: data,
+                                                                text: "Please wait! Website will now reload",
+                                                                showConfirmButton: false,
+                                                                allowOutsideClick: false,
+                                                                timer: 2000
+                                                            }).then(function (result) {
+                                                                location.reload();
+                                                            });
+                                                        } else {
+                                                            console.log(data);
+                                                        }
                                                     },
                                                     error: function (data) {
                                                         alert(data);
@@ -2807,7 +2859,7 @@ function editTransaction(transactionid) {
                 terms.value = transactionInformation[0].termsOfPayment;
 
 
-                if (transactionInformation[0].firstClientId !== null) {
+                if (transactionInformation[0].firstClientId != null) {
                     //clear first the container to prevent multiple entry
                     client0.empty();
 
@@ -2819,12 +2871,12 @@ function editTransaction(transactionid) {
                     primartyId.style.cursor = "pointer";
                     primartyId.id = transactionInformation[0].firstClientId;
 
-                    primartyId.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                    primartyId.setAttribute("onclick", `selectedClient(this.id,'eClient0')`);
                     client0.append(primartyId);
                 }
 
 
-                if (transactionInformation[0].secondClientId !== null) {
+                if (transactionInformation[0].secondClientId != null) {
                     //clear first the container to prevent multiple entry
                     client1.empty();
 
@@ -2835,7 +2887,7 @@ function editTransaction(transactionid) {
                     secondaryId.style.marginLeft = "15px";
                     secondaryId.style.cursor = "pointer";
                     secondaryId.id = transactionInformation[0].secondClientId;
-                    secondaryId.setAttribute("onclick", `selectedClient(this.id,'client0')`);
+                    secondaryId.setAttribute("onclick", `selectedClient(this.id,'eClient0')`);
                     client1.append(secondaryId);
                 }
 
@@ -2967,7 +3019,7 @@ $('#transaction').on('click', 'tbody tr', function () {
         icon: "question",
         title: `What do you want to do with this Property?`,
         text: "You can click outside this box to disregard this popup.",
-        showDenyButton: true,
+        // showDenyButton: true,
         denyButtonColor: "#ff0000 ",
         showCancelButton: true,
         confirmButtonText: `Edit`,
@@ -2981,60 +3033,74 @@ $('#transaction').on('click', 'tbody tr', function () {
             //edit the transaction information
             editTransaction(transactionid);
 
-        } else if (result.isDenied) {
-            Swal.fire({
-                icon: "warning",
-                title: "Delete this Transaction?",
-                text: "Deleting this transaction will 'alter' the status of the property involved.",
-                showCancelButton: true,
-                confirmButtonColor: "#ff0000 ",
-                confirmButtonText: "Delete"
-            }).then(result => {
-                if (result.value) {
-                    Swal.fire({
-                        text: "Please Wait....",
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-
-                        willOpen: () => {
-                            Swal.showLoading();
-                        },
-                    });
-
-                    $.ajax({
-                        url: "includes/deletetransaction.inc.php",
-                        data: {
-                            "transactionId": transactionid
-                        },
-                        type: "POST",
-                        success: function (data) {
-                            Swal.close();
-                            if (data === "Client information Deleted") {
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "Transaction Deleted!",
-                                    text: "Website will now reload",
-                                    showConfirmButton: false,
-                                    allowOutsideClick: false,
-                                    timer: 2000,
-                                    timerProgressBar: true
-                                }).then(function (result) {
-                                    location.reload();
-                                });
-                            } else {
-                                console.log(data)
-                            }
-                        },
-                        error: function (data) {
-                            console.log(data);
-                        }
-                    });
-                }
-            })
-
         }
+
+        // else if (result.isDenied) {
+        //     Swal.fire({
+        //         icon: "warning",
+        //         title: "Delete this Transaction?",
+        //         text: "Deleting this transaction will 'alter' the status of the property involved.",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#ff0000 ",
+        //         confirmButtonText: "Delete"
+        //     }).then(result => {
+        //         if (result.value) {
+        //             Swal.fire({
+        //                 text: "Please Wait....",
+        //                 allowOutsideClick: false,
+        //                 showConfirmButton: false,
+
+        //                 willOpen: () => {
+        //                     Swal.showLoading();
+        //                 },
+        //             });
+
+        //             $.ajax({
+        //                 url: "includes/deletetransaction.inc.php",
+        //                 data: {
+        //                     "transactionId": transactionid
+        //                 },
+        //                 type: "POST",
+        //                 success: function (data) {
+        //                     Swal.close();
+        //                     if (data === "Client information Deleted") {
+        //                         Swal.fire({
+        //                             icon: "success",
+        //                             title: "Transaction Deleted!",
+        //                             text: "Website will now reload",
+        //                             showConfirmButton: false,
+        //                             allowOutsideClick: false,
+        //                             timer: 2000,
+        //                             timerProgressBar: true
+        //                         }).then(function (result) {
+        //                             location.reload();
+        //                         });
+        //                     } else {
+        //                         console.log(data)
+        //                     }
+        //                 },
+        //                 error: function (data) {
+        //                     console.log(data);
+        //                 }
+        //             });
+        //         }
+        //     })
+
+        // }
     });
 
 
 
 })
+
+
+
+$('#editTransaction').on('hidden.bs.modal', function () {
+    //reset the form
+    $('#ediTransactionForm').find("input").val("");
+    $('#ediTransactionForm').find("input").removeClass('input-error');
+    $("#eTransactionAlert").html('');
+    //remove class input-error in image container
+    $("#eClientHolders").removeClass('input-error');
+
+});

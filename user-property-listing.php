@@ -63,16 +63,21 @@ if (mysqli_num_rows($result) > 0) {
         echo "</td>";
         if ($row['approval'] === "Pending") {
             echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
-            echo "Pending";
+            echo $row['approval'];
             echo "</td>";
         } else if ($row['approval'] === "Posted") {
             echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
-            echo "Posted";
+            echo $row['approval'];
             echo "</td>";
         } else if ($row['approval'] === "Deny") {
             echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
-            echo "Denied";
+            echo $row['approval'];
             echo "</td>";
+        } else if ($row['approval'] === "On-Going") {
+            echo "<td style='color:green'><i class='fas fa-redo'></i>&nbsp;&nbsp;";
+            echo $row['approval'];
+            echo "</td>";
+
         }
 
         echo "<td>";
@@ -709,8 +714,8 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script src="js/imageLoading.js"></script>
-<script src="js/dashboard-listing.js"></script>
-<script src="js/propertyupload.js"></script>
+<script src="js/dashboard-listing.js?v=1.2"></script>
+<script src="js/propertyupload.js?v=1.2"></script>
 
 
 </body>

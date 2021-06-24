@@ -206,8 +206,8 @@ if (mysqli_num_rows($result) > 0) {
             echo "<td>";
             echo "<button type='button' id='editTransactionBtn' class='btn btn-secondary w-100'>
                                         <i class='far fa-edit'></i>Edit</button>";
-            echo "<button type='button' id='deleteTransactionBtn' class='btn btn-danger w-100'>
-                                        <i class='far fa-edit'></i>Delete</button>";
+            // echo "<button type='button' id='deleteTransactionBtn' class='btn btn-danger w-100'>
+            //                             <i class='far fa-edit'></i>Delete</button>";
 
             echo "</td>";
 
@@ -251,13 +251,14 @@ if (mysqli_num_rows($result) > 0) {
 
 <!--Add transaction Modal -->
 
-<div class="modal fade bd-example-modal" id="addTransaction" tabindex="-1" role="dialog"
-    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal" id="addTransaction" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title textToGreen">Add New Transaction</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" aria-label="Close"
+                    onclick="closeTransaction(document.querySelector('div#client0'),document.querySelector('div#client1'),'addTransaction','div#client0','div#client1')">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -494,7 +495,7 @@ if (mysqli_num_rows($result) > 0) {
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-secondary"
-                    onclick="closeTransaction(document.querySelector('div#client0'),document.querySelector('div#client1'))">Cancel</button>
+                    onclick="closeTransaction(document.querySelector('div#client0'),document.querySelector('div#client1'),'addTransaction','div#client0','div#client1')">Cancel</button>
                 <button type="submit" class="btn btn-primary" name="submit" id="transactionSubmit">Add</button>
             </div>
             </form>
@@ -506,8 +507,8 @@ if (mysqli_num_rows($result) > 0) {
 
 <!--Edit transaction Modal -->
 
-<div class="modal fade bd-example-modal" id="editTransaction" tabindex="-1" role="dialog"
-    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal" id="editTransaction" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -749,8 +750,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary"
-                    onclick="closeTransaction(document.querySelector('div#client0'),document.querySelector('div#client1'))">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-primary" name="eSubmit" id="eTransactionSubmit">Add</button>
             </div>
             </form>
@@ -1022,7 +1022,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 <!-- Edit Client -->
-<div class="modal fade" id="editClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="editClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel "
     aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -1306,9 +1306,9 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
 
 <script src="js/imageLoading.js"></script>
-<script src="js/dashboard-listing.js"></script>
-<script src="js/dashboard-transaction.js?v=1.1"></script>
-<script src="js/propertyupload.js"></script>
+<script src="js/dashboard-listing.js?v=1.2"></script>
+<script src="js/dashboard-transaction.js?v=1.2"></script>
+<script src="js/propertyupload.js?v=1.2"></script>
 </body>
 
 </html>

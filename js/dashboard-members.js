@@ -579,6 +579,7 @@ $(document).ready(function () {
   $("#members").on("click", "#viewTransactionBtn", function () {
     var data = table.row($(this).parents("tr")).data();
     var memberid = data[0];
+    // console.log(memberid);
 
     Swal.fire({
       text: "Please wait....",
@@ -604,7 +605,7 @@ $(document).ready(function () {
         Swal.close();
         // console.log(data)
         // $("#managerAgents").dataTable().fnDestroy()
-        $('#transaction').dataTable({
+        $('#transactionss').dataTable({
           destroy: true,
           "aaData": data,
           "columns": [{
@@ -614,13 +615,13 @@ $(document).ready(function () {
               "data": "Property Name"
             },
             {
-              "data": " Property Type"
+              "data": "Property Type"
             },
             {
               "data": "Category"
             },
             {
-              "data": "Unit No "
+              "data": "Unit No"
             }, {
               "data": "TCP"
             }, {
@@ -630,15 +631,12 @@ $(document).ready(function () {
               "data": "Address"
             },
             {
-              "data": "Buyer Name"
-            }, , {
-              "data": "Contact Info"
-            }, {
               "data": "Status"
             }, {
-              "data": "Date of Transaction "
-            }, {
-              "data": "Date of Reservation "
+              "data": "Date of Transaction"
+            },
+            {
+              "data": "Date of Reservation"
             },
             {
               "data": "Final TCP"
@@ -649,11 +647,11 @@ $(document).ready(function () {
             {
               "data": "Receivable"
             }, {
-              "data": "Agent's Commission"
+              "data": "Agent`s Commission"
             }, {
-              "data": "AR's Commision "
+              "data": "AR`s Commision"
             }, {
-              "data": "Buyer's Commission"
+              "data": "Buyer`s Commission"
             }, {
               "data": "Final Receivable"
             }
@@ -665,6 +663,7 @@ $(document).ready(function () {
       $("#viewTransaction").modal('show');
 
     }).fail(function (jqXHR, textStatus) {
+      console.log(textStatus)
       Swal.close();
       Swal.fire({
         icon: "info",

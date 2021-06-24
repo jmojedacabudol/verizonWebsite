@@ -4,6 +4,8 @@ require_once 'dbh.inc.php';
 if (isset($_POST['clientId'])) {
     define("TESTING", false);
     $clientId = $_POST['clientId'];
+    $client1 = null;
+    $client2 = null;
     //INSERT TO CLIENTS TABLE
     $sql = "SELECT primaryId,secondaryId FROM clients WHERE clientId=?;";
     $stmt = mysqli_stmt_init($conn);
@@ -18,6 +20,9 @@ if (isset($_POST['clientId'])) {
                     //delete the img from file folder
                     unlink('../uploads/' . $row['primaryId']);
                     unlink('../uploads/' . $row['secondaryId']);
+
+                    $client1 = $row['primaryId'];
+                    $client2 = $row['secondaryId'];
                 }
                 $deleteSql = "DELETE FROM clients WHERE clientId=?;";
                 $deletestmt = mysqli_stmt_init($conn);
@@ -27,8 +32,8 @@ if (isset($_POST['clientId'])) {
                 } else {
                     mysqli_stmt_bind_param($deletestmt, 's', $clientId);
                     if (mysqli_stmt_execute($deletestmt)) {
-                        echo "Client information Deleted";
-                        //delete the client id from transactions
+                        //get the transaction id using client id and delete that client id from said transaction
+                        deleteClientIdInTransaction($clientId, $conn);
                     } else {
                         mysqli_stmt_close($deletestmt);
 
@@ -39,15 +44,12 @@ if (isset($_POST['clientId'])) {
 
                         }
                     }
-
                 }
-
-                //delete the
-
             } else {
-                echo "No Client Information Found";
+                //no clients is found in clients table therefore delete the client id from transaction
+                deleteClientIdInTransaction($clientId, $conn);
                 mysqli_stmt_close($stmt);
-                exit();
+                // exit();
             }
         } else {
             mysqli_stmt_close($stmt);
@@ -66,4 +68,84 @@ if (isset($_POST['clientId'])) {
 } else {
     echo "Error Find the Client Information";
     exit();
+}
+
+function deleteClientIdInTransaction($clientId, $conn)
+{
+    $transactionSql = "SELECT transactionId,firstClientId,secondClientId FROM transactions WHERE firstClientId=? OR secondClientId=?;";
+    $transactionStmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($transactionStmt, $transactionSql)) {
+        echo "Statement Failed";
+        exit();
+    } else {
+        $processedClientId = mysqli_real_escape_string($conn, $clientId);
+        mysqli_stmt_bind_param($transactionStmt, 'ss', $processedClientId, $processedClientId);
+        if (mysqli_stmt_execute($transactionStmt)) {
+            $result = mysqli_stmt_get_result($transactionStmt);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    //delete the transaction client ids if they mataches the value of "clientId";
+                    if ($row['firstClientId'] === $clientId) {
+                        echo deleteFirstClientIdFromTransaction($clientId, $row['transactionId'], $conn);
+                    } else if ($row['secondClientId'] === $clientId) {
+                        echo deleteSecondClientIdFromTransaction($clientId, $row['transactionId'], $conn);
+                    }
+                }
+            } else {
+                //just delete the client information if there is no transaction found
+                echo "Client information Deleted without transaction";
+            }
+        } else {
+            echo mysqli_stmt_error($transactionStmt);
+
+        }
+    }
+
+}
+
+function deleteFirstClientIdFromTransaction($firstClientId, $transactionId, $conn)
+{
+    //delete the client id from transactions
+    $updatetransactionsql = "UPDATE transactions SET firstClientId=? WHERE transactionId=?;";
+    $updatetransactionstmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($updatetransactionstmt, $updatetransactionsql)) {
+        $result = "Statement failed";
+        exit();
+    } else {
+        $nullValue = null;
+        mysqli_stmt_bind_param($updatetransactionstmt, 'ss', $nullValue, $transactionId);
+        if (mysqli_stmt_execute($updatetransactionstmt)) {
+            mysqli_stmt_close($updatetransactionstmt);
+            $result = "Client Deleted";
+        } else {
+            //error occured
+            $result = mysqli_stmt_error($updatetranasctionstmt);
+        }
+    }
+    return $result;
+}
+
+function deleteSecondClientIdFromTransaction($seconrdClientId, $transactionId, $conn)
+{
+    //delete the client id from transactions
+    $updatetransactionsql = "UPDATE transactions SET seconrdClientId=? WHERE transactionId=?;";
+    $updatetransactionstmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($updatetransactionstmt, $updatetransactionsql)) {
+        $result = "Statement failed";
+        exit();
+    } else {
+        $nullValue = null;
+
+        mysqli_stmt_bind_param($updatetransactionstmt, 'ss', $nullValue, $transactionId);
+        if (mysqli_stmt_execute($updatetransactionstmt)) {
+            mysqli_stmt_close($updatetransactionstmt);
+            $result = "Client Deleted";
+
+        } else {
+            //error occured
+            $result = mysqli_stmt_error($updatetransactionstmt);
+        }
+    }
+    return $result;
+
 }

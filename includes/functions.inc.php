@@ -1319,12 +1319,27 @@ function createTransaction($conn, $agentId, $agentProperties, $propertyType, $pr
 
         mysqli_stmt_bind_param($stmt, 'ssssssssssssssssssssss', $agentId, $agentProperties, $propertyType, $propertyOfferType, $unitNo, $tcp, $terms, $Address, $status, $transactionDate, $reservationDate, $finalTcp, $commission, $receivable, $agentsCommission, $arCommission, $buyersCommision, $finalReceivable, $firstClient, $secondClient, $propertyId, $subcategory);
         if (mysqli_stmt_execute($stmt)) {
-            //get the id of latest inserted query;
-            $result = "Transaction Created";
+
+            //edit the selected property status to whatever the transaction value
+
+            $updatePropertysql = "UPDATE property SET approval=? WHERE propertyid=?;";
+            $updatePropertystmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($updatePropertystmt, $updatePropertysql)) {
+                $result = "Statement failed";
+            } else {
+                mysqli_stmt_bind_param($updatePropertystmt, 'ss', $status, $propertyId);
+                if (mysqli_stmt_execute($updatePropertystmt)) {
+                    mysqli_stmt_close($updatePropertystmt);
+                    $result = "Transaction Created";
+                } else {
+                    //error occured
+                    $result = mysqli_stmt_error($updatePropertystmt);
+                }
+            }
+
         } else {
             $result = mysqli_stmt_error($stmt);
         }
-
     }
     return $result;
 }

@@ -23,10 +23,10 @@ if (isset($_POST['eSubmit'])) {
     $eFinalReceivable = $_POST['eFinalReceivable'];
     $firstClient = $_POST['firstClient'];
     $firstClient = $_POST['firstClient'];
-
     $transactionId = $_POST['transactionId'];
 
-    // echo $eReceivable, $eAgentCommission, $eArCommission, $eBuyersCommssion, $eFinalReceivable;
+//get the property selected
+    $propertyId = null;
 
     $propertysql = "SELECT * FROM transactions WHERE transactionId=" . "'" . mysqli_real_escape_string($conn, $transactionId) . "'";
     $query = "UPDATE transactions SET ";
@@ -37,6 +37,9 @@ if (isset($_POST['eSubmit'])) {
     $result = mysqli_query($conn, $propertysql);
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
+            //get the proeprty selected
+            $propertyId = $row['propertyId'];
+
             if ($row['TCP'] != $ePropertyTcp) {
                 $conditions[] = "TCP=" . "'" . mysqli_real_escape_string($conn, $ePropertyTcp) . "'";
             }
@@ -100,8 +103,28 @@ if (isset($_POST['eSubmit'])) {
             $query = mysqli_query($conn, $sql);
             if ($query === false) {
                 throw new Exception($this->mysqli->error);
+            } else {
+                //upate selected property status to the status of transaction
+                $updatePropertysql = "UPDATE property SET approval=? WHERE propertyid=?;";
+                $updatePropertystmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($updatePropertystmt, $updatePropertysql)) {
+                    echo "Statement failed";
+                } else {
+                    $status = mysqli_real_escape_string($conn, $eStatus);
+                    mysqli_stmt_bind_param($updatePropertystmt, 'ss', $status, $propertyId);
+                    if (mysqli_stmt_execute($updatePropertystmt)) {
+                        mysqli_stmt_close($updatePropertystmt);
+                        echo "Transaction Editted";
+                    } else {
+                        //error occured
+                        echo mysqli_stmt_error($updatePropertystmt);
+                        exit();
+                        // throw new Exception($this->mysqli->error);
+                    }
+                }
+
             }
-            echo "Transaction Editted";
+
         } catch (Exception $e) {
             echo $e;
             exit();

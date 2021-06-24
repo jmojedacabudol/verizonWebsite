@@ -24,24 +24,44 @@ if (isset($_POST['memberId'])) {
                 $data[] = array(
                     'Id' => $row['transactionId'],
                     'Property Name' => $row['propertyName'],
-                    'Category' => $row['category'],
+                    'Property Type' => $row['propertyType'],
+                    'Category' => $row['offertype'],
                     'Unit No' => $row['unitNo'],
-                    'TCP' => $row['TCP'],
+                    'TCP' => "₱" . $row['TCP'],
                     'Terms Of Payment' => $row['termsOfPayment'],
                     'Address' => $row['address'],
-                    'Buyer Name' => $row['nameOfBuyer'],
-                    'Contact Info' => $row['contactInfo'],
                     'Status' => $row['status'],
                     'Date of Transaction' => $row['dateOfTransaction'],
-                    'Date of Reservation' => $row['dateOfReservation'],
-                    'Final TCP' => $row['finalTCP'],
+                    'Date of Reservation' => $row['dataOfReservation'],
+                    'Final TCP' => "₱" . $row['finalTCP'],
                     'Commission' => $row['commission'],
-                    'Receivable' => $row['receivable'],
+                    'Receivable' => "₱" . $row['receivable'],
+                    'Agent`s Commission' => $row['commissionAgent'],
+                    'AR`s Commision' => $row['commissionAR'],
+                    'Buyer`s Commission' => $row['commissionBuyer'],
+                    'Final Receivable' => "₱" . $row['receivable2'],
+                );
+            } else {
+                $data[] = array(
+                    'Id' => $row['transactionId'],
+                    'Property Name' => $row['propertyName'],
+                    'Property Type' => $row['propertyType'],
+                    'Category' => $row['offertype'],
+                    'Unit No' => $row['unitNo'],
+                    'TCP' => "₱" . $row['TCP'],
+                    'Terms Of Payment' => $row['termsOfPayment'],
+                    'Address' => $row['address'],
+                    'Status' => $row['status'],
+                    'Date of Transaction' => $row['dateOfTransaction'],
+                    'Final TCP' => "₱" . $row['finalTCP'],
+                    'Commission' => $row['commission'],
+                    'Receivable' => "₱" . $row['receivable'],
                     'Agent`s Commission' => $row['commissionAgent'],
                     'AR`s Commision' => $row['commissionAR'],
                     'Buyer`s  Commision' => $row['commissionBuyer'],
-                    'Final Receivable' => $row['receivable2'],
+                    'Final Receivable' => "₱" . $row['receivable2'],
                 );
+
             }
         }
         echo json_encode($data);
