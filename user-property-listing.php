@@ -78,6 +78,16 @@ if (mysqli_num_rows($result) > 0) {
             echo $row['approval'];
             echo "</td>";
 
+        } else if ($row['approval'] === "Closed") {
+            echo "<td style='color:red'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo $row['approval'];
+            echo "</td>";
+
+        } else if ($row['approval'] === "Cancelled") {
+            echo "<td style='color:red'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo $row['approval'];
+            echo "</td>";
+
         }
 
         echo "<td>";

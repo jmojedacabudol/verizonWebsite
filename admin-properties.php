@@ -67,18 +67,33 @@ if (mysqli_num_rows($result) > 0) {
         // echo $row['approval'];
         // echo "</td>";
 
-        if ($row['approval'] == 'Pending') {
+        if ($row['approval'] === "Pending") {
             echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
-            echo "Pending";
+            echo $row['approval'];
             echo "</td>";
-        } else if ($row['approval'] == 'Posted') {
+        } else if ($row['approval'] === "Posted") {
             echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
-            echo "Posted";
+            echo $row['approval'];
             echo "</td>";
-        } else if ($row['approval'] == 'Deny') {
+        } else if ($row['approval'] === "Deny") {
             echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
-            echo "Denied";
+            echo $row['approval'];
             echo "</td>";
+        } else if ($row['approval'] === "On-Going") {
+            echo "<td style='color:green'><i class='fas fa-redo'></i>&nbsp;&nbsp;";
+            echo $row['approval'];
+            echo "</td>";
+
+        } else if ($row['approval'] === "Closed") {
+            echo "<td style='color:red'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo $row['approval'];
+            echo "</td>";
+
+        } else if ($row['approval'] === "Cancelled") {
+            echo "<td style='color:red'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo $row['approval'];
+            echo "</td>";
+
         }
 
         echo "<td>";

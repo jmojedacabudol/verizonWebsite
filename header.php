@@ -32,7 +32,7 @@ include_once 'includes/dbh.inc.php';
     <link href='assets/fullcalendar/main.css' rel='stylesheet' />
 
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/mystyles.css?v=1.2" rel="stylesheet" />
+    <link href="css/mystyles.css?v=1.3" rel="stylesheet" />
     <meta name="google-signin-client_id"
         content="475682005183-t604pq7p67an7j8ko8tmugbpbais63ms.apps.googleusercontent.com">
 
