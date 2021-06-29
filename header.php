@@ -32,7 +32,7 @@ include_once 'includes/dbh.inc.php';
     <link href='assets/fullcalendar/main.css' rel='stylesheet' />
 
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/mystyles.css?v=1.3" rel="stylesheet" />
+    <link href="css/mystyles.css?v=1.4" rel="stylesheet" />
     <meta name="google-signin-client_id"
         content="475682005183-t604pq7p67an7j8ko8tmugbpbais63ms.apps.googleusercontent.com">
 
@@ -67,11 +67,11 @@ include_once 'includes/dbh.inc.php';
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Building</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Building&sub-type=Residential">Residential</a>
+                                            href="properties.php?propertytype=Building&subType=Residential">Residential</a>
                                     </li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Building&sub-type=Commercial">Commercial</a>
+                                            href="properties.php?propertytype=Building&subType=Commercial">Commercial</a>
                                     </li>
                                 </ul>
                             </li>
@@ -79,14 +79,15 @@ include_once 'includes/dbh.inc.php';
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Condominium</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Condominium&sub-type=Residential">Residential</a>
+                                            href="properties.php?propertytype=Condominium&subType=Residential">Residential</a>
                                     </li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Condominium&sub-type=Commercial">Commercial</a>
+                                            href="properties.php?propertytype=Condominium&subType=Commercial">Commercial</a>
                                     </li>
+                                    <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Condominium&sub-type=Parking">Parking</a>
+                                            href="properties.php?propertytype=Condominium&subType=Parking">Parking</a>
                                     </li>
                                 </ul>
                             </li>
@@ -94,19 +95,19 @@ include_once 'includes/dbh.inc.php';
                             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Lot</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Lot&sub-type=Agricultural">Agricultural</a>
+                                            href="properties.php?propertytype=Lot&subType=Agricultural">Agricultural</a>
                                     </li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Lot&sub-type=Commercial">Commercial</a>
+                                            href="properties.php?propertytype=Lot&subType=Commercial">Commercial</a>
                                     </li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Lot&sub-type=Residential">Residential</a>
+                                            href="properties.php?propertytype=Lot&subType=Residential">Residential</a>
                                     </li>
                                     <div class="dropdown-divider"></div>
                                     <li><a class="dropdown-item"
-                                            href="properties.php?propertytype=Lot&sub-type=Industrial">Industrial</a>
+                                            href="properties.php?propertytype=Lot&subType=Industrial">Industrial</a>
                                     </li>
                                 </ul>
                             </li>

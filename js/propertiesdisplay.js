@@ -1,6 +1,6 @@
 function subCategoryDisplay(value) {
     var subCategory = $("#subCategory");
-    if (value === "Building" || value === "Condominium") {
+    if (value === "Building") {
         //show building sub category
         //append property Brgy address to select tag
         subCategory.empty();
@@ -15,6 +15,32 @@ function subCategoryDisplay(value) {
         selectedResidentialSubCategory.setAttribute("value", "Residential");
         selectedResidentialSubCategory.appendChild(selectedSubCategoryText);
         subCategory.append(selectedResidentialSubCategory);
+
+        //unhide the sub category holder
+        $("#subCategoryHolder").removeClass("hidden");
+
+    } else if (value === "Condominium") {
+        //show building sub category
+        //append property Brgy address to select tag
+        subCategory.empty();
+        var selectedCommercialSubCategory = document.createElement("OPTION");
+        var selectedSubCategoryText = document.createTextNode("Commercial");
+        selectedCommercialSubCategory.setAttribute("value", "Commercial");
+        selectedCommercialSubCategory.appendChild(selectedSubCategoryText);
+        subCategory.append(selectedCommercialSubCategory);
+
+        var selectedResidentialSubCategory = document.createElement("OPTION");
+        var selectedSubCategoryText = document.createTextNode("Residential");
+        selectedResidentialSubCategory.setAttribute("value", "Residential");
+        selectedResidentialSubCategory.appendChild(selectedSubCategoryText);
+        subCategory.append(selectedResidentialSubCategory);
+
+
+        var selectedParkingSubCategory = document.createElement("OPTION");
+        var selectedSubCategoryText = document.createTextNode("Parking");
+        selectedParkingSubCategory.setAttribute("value", "Parking");
+        selectedParkingSubCategory.appendChild(selectedSubCategoryText);
+        subCategory.append(selectedParkingSubCategory);
 
         //unhide the sub category holder
         $("#subCategoryHolder").removeClass("hidden");

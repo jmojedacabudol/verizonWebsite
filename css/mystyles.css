@@ -13183,3 +13183,8 @@ form .row:first-child .floating-label-form-group {
 .select-group input.input-group-addon {
   width: 20%;
 }
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}

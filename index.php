@@ -238,7 +238,7 @@ if (mysqli_num_rows($result) > 0) {
         }
         echo "<pre class='lproperties-desc'> ";
 
-        echo substr($row['propertydesc'], 0, 100); //limit property description
+        echo substr($row['propertydesc'], 0, 100) . "..."; //limit property description
         echo "</pre>";
         echo "</div>";
         echo "</div>";
@@ -299,7 +299,7 @@ if (mysqli_num_rows($result) > 0) {
 
         }
         echo ' <pre class="lrproperties-desc">';
-        echo substr($row['propertydesc'], 0, 100);
+        echo substr($row['propertydesc'], 0, 100) . "..."; //limit property description
         echo '</pre>';
         echo ' <h5 class="lrproperties-price">';
         echo '₱ ' . $row['propertyamount'] . '/' . $row['propertyrentchoice'];
