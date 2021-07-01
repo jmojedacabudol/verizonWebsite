@@ -342,7 +342,7 @@ if (mysqli_num_rows($result) > 0) {
                         <label for="allPropertyHolder" class="col-4 col-form-label transform">Street</label>
                         <div class="col-8">
                             <input type="text" class="form-control transform" aria-label="Street" name="listingStreet"
-                                id="listingStreet" placeholder="Street *" onkeypress="return allowOnlyLetters(event);">
+                                id="listingStreet" placeholder="Street *">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -724,7 +724,7 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script src="js/imageLoading.js"></script>
-<script src="js/dashboard-listing.js?v=1.2"></script>
+<script src="js/dashboard-listing.js?v=1.3"></script>
 <script src="js/propertyupload.js?v=1.2"></script>
 
 

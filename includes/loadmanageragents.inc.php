@@ -36,10 +36,10 @@ if (isset($_POST['managerId'])) {
         if (mysqli_num_rows($resultData) > 0) {
             while ($row = mysqli_fetch_assoc($resultData)) {
                 $data[] = array(
-                    'id' => $row['usersId'],
-                    'Agent' => $row['usersFirstName'] . " " . $row['userLastName'],
-                    'Number' => $row['usersMobileNumber'],
-                    'Email' => $row['usersEmail'],
+                    'Id' => $row['usersId'],
+                    'Name' => $row['usersFirstName'] . " " . $row['userLastName'],
+                    'Mobile Number' => $row['usersMobileNumber'],
+                    'Email' => $row['companyEmail'],
                 );
                 // $data[] = $row['usersId'];
                 // $data[] = $row['usersFirstName'] . " " . $row['userLastName'];

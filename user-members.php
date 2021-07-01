@@ -275,7 +275,7 @@ if (mysqli_num_rows($result) > 0) {
 <!-- Contact form JS-->
 <script src="assets/mail/jqBootstrapValidation.js"></script>
 <script src="assets/mail/contact_me.js"></script>
-<script src="js/dashboard-members.js?v=1.2"></script>
+<script src="js/dashboard-members.js?v=1.4"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
 </body>

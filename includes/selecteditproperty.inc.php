@@ -2,14 +2,12 @@
 include 'dbh.inc.php';
 
 $data = array();
-session_start();
-$userId = $_SESSION['userid'];
 
 if (!isset($_POST['searchTerm'])) {
-    $fetchData = mysqli_query($conn, "select * from property WHERE usersId=" . $userId . " AND approval  NOT IN  ('Pending','Deny','Delete','On-Going','Closed','Cancelled') limit 5");
+    $fetchData = mysqli_query($conn, "select * from property WHERE usersId=" . $_POST['usersId'] . " and approval in  ('Posted','On-Going') limit 5");
 } else {
     $search = $_POST['searchTerm'];
-    $fetchData = mysqli_query($conn, 'select * from property WHERE usersId=' . $userId . '  AND approval  NOT IN  ("Pending","Deny","Delete","On-Going","Closed","Cancelled") AND propertyId LIKE "%' . $search . '%" limit 5');
+    $fetchData = mysqli_query($conn, 'select * from property WHERE usersId=' . $_POST['usersId'] . ' and approval in ("Posted","On-Going") and propertyname like "%' . $search . '%" limit 5');
 }
 
 while ($row = mysqli_fetch_array($fetchData)) {

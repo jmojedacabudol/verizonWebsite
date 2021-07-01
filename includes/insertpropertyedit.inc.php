@@ -92,7 +92,7 @@ if (isset($_POST['ePropertyId'])) {
                     } else {
                         //show error in uploading profile FILE in testing mode
                         if (TESTING) {
-                            echo "ATS FILE NOT UPLOADED" . $_FILES["file"]["error"];
+                            echo "ATS FILE NOT UPLOADED" . $_FILES["eListingATS"]["error"];
                             exit();
                         }
                         exit();
@@ -116,7 +116,7 @@ if (isset($_POST['ePropertyId'])) {
                     } else {
                         //show error in uploading profile FILE in testing mode
                         if (TESTING) {
-                            echo "ATS FILE NOT UPLOADED" . $_FILES["file"]["error"];
+                            echo "ATS FILE NOT UPLOADED" . $_FILES["eListingATS"]["error"];
                             exit();
                         }
                         exit();
@@ -211,7 +211,7 @@ if (isset($_POST['ePropertyId'])) {
                         $targetFilePath = $targetDir . $fileNameNew;
 
                         if (!move_uploaded_file($propertyImage['tmp_name'][$key], $targetFilePath)) {
-                            throw new Exception("Image NOT UPLOADED" . $_FILES["file"]["error"]);
+                            throw new Exception("Image NOT UPLOADED" . $propertyImage["error"]);
                             //break the loop
                             break;
                             exit();
@@ -277,7 +277,7 @@ if (isset($_POST['ePropertyId'])) {
 
                     $targetFilePath = $targetDir . $fileNameNew;
                     if (!move_uploaded_file($propertyImage['tmp_name'][$key], $targetFilePath)) {
-                        throw new Exception("Image NOT UPLOADED" . $_FILES["file"]["error"]);
+                        throw new Exception("Image NOT UPLOADED" . $propertyImage["error"]);
                         //break the loop
                         break;
                         //exit the script

@@ -543,6 +543,7 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
                                         $result = "Image NOT UPLOADED" . $_FILES["file"]["error"];
                                     }
                                     break;
+                                    return $result;
                                 }
                             }
                         }
@@ -591,6 +592,7 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
                                     $result = "ATS NOT UPLOADED" . $_FILES["file"]["error"];
 
                                 }
+                                return $result;
                             }
                         } else {
                             //PROPERTY UPLOADED WITHOUT ATS

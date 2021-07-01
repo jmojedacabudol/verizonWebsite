@@ -18,6 +18,7 @@ require_once 'admin-header.php';
                         <th>Lot Area</th>
                         <th>Floor Area</th>
                         <th>Property type</th>
+                        <th>Sub Category</th>
                         <th>Offer Type</th>
                         <th>Price</th>
                         <th>Agent</th>
@@ -51,6 +52,9 @@ if (mysqli_num_rows($result) > 0) {
         echo "</td>";
         echo "<td>";
         echo $row['propertytype'];
+        echo "</td>";
+        echo "<td>";
+        echo $row['subcategory'];
         echo "</td>";
         echo "<td>";
         echo $row['offertype'];
@@ -124,6 +128,7 @@ if (mysqli_num_rows($result) > 0) {
                         <th>Lot Area</th>
                         <th>Floor Area</th>
                         <th>Property type</th>
+                        <th>Sub Category</th>
                         <th>Offer Type</th>
                         <th>Price</th>
                         <th>Agent</th>

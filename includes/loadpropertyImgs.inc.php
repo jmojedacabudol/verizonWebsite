@@ -29,7 +29,7 @@ if (isset($_POST['propertyId'])) {
 
     if (mysqli_num_rows($result) > 0) {
 
-        echo '<div id="carouselExampleControls" class="carousel bg-green slide" data-ride="carousel">';
+        echo '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">';
         echo '<div class="carousel-inner h-400">';
 
         while ($row = mysqli_fetch_assoc($result)) {

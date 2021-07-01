@@ -161,16 +161,19 @@ $(document).ready(function () {
 
                     $("#allPropertyHolder").select2({
                         placeholder: "Select a Property",
-                        allowClear: true,
                         ajax: {
                             url: "includes/selecteditproperty.inc.php",
                             type: "post",
                             dataType: 'json',
                             delay: 250,
                             data: function (params) {
-                                return {
-                                    searchTerm: params.term // search term
-                                };
+                                var query = {
+                                    searchTerm: params.term,
+                                    usersId: localStorage.getItem("userlogged")
+                                }
+
+                                // Query parameters will be ?search=[term]&type=public
+                                return query;
                             },
                             processResults: function (response) {
                                 return {

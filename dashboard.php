@@ -80,11 +80,28 @@ if (isset($_SESSION["userid"])) {
                 echo "<option value='Manager'>Manager</option>";
                 echo "</select>";
             } else {
-                echo "<select id='select'";
-                echo "name='select' class='custom-select' disabled>";
-                echo "<option value='Agent'>Agent</option>";
-                echo "<option value='Manager'selected>Manager(Pending)</option>";
-                echo "</select>";
+                if ($row['approval'] === 0) {
+                    echo "<select id='select'";
+                    echo "name='select' class='custom-select' disabled>";
+                    echo "<option value='Agent'>Agent</option>";
+                    echo "<option value='Manager'selected>Manager(Pending)</option>";
+                    echo "</select>";
+
+                } else if ($row['approval'] === 1) {
+                    echo "<select id='select'";
+                    echo "name='select' class='custom-select' disabled>";
+                    echo "<option value='Agent'>Agent</option>";
+                    echo "<option value='Manager'selected>Manager(Approved)</option>";
+                    echo "</select>";
+
+                } else if ($row['approval'] === 1) {
+                    echo "<select id='select'";
+                    echo "name='select' class='custom-select' disabled>";
+                    echo "<option value='Agent'>Agent</option>";
+                    echo "<option value='Manager'selected>Manager(Denied)</option>";
+                    echo "</select>";
+
+                }
             }
             echo "</div>";
             echo "</div>";

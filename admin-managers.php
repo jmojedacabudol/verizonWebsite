@@ -31,7 +31,7 @@ if (mysqli_num_rows($result) > 0) {
 
         echo "<tr>";
         echo "<td>";
-        echo $row['managerId'];
+        echo $row['managerReference'];
         echo "</td>";
         echo "<td>";
         echo $row['name'];

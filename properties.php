@@ -186,7 +186,7 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option>Warehouse</option>';
 
 } else if ($propertytype == 'Condominium') {
@@ -196,7 +196,7 @@ if ($propertytype == 'Building') {
     echo '<option selected>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option>Warehouse</option>';
 
 } else if ($propertytype == 'Lot') {
@@ -206,7 +206,7 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option selected>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option>Warehouse</option>';
 
 } else if ($propertytype == 'House and Lot') {
@@ -216,17 +216,17 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option selected>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option>Warehouse</option>';
 
-} else if ($propertytype == 'Offices') {
+} else if ($propertytype == 'Office') {
     echo '<option hidden>Property Type</option>';
     echo '<option>Any</option>';
     echo '<option>Building</option>';
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option selected>Offices</option>';
+    echo '<option selected>Office</option>';
     echo '<option>Warehouse</option>';
 
 } else if ($propertytype == 'Warehouse') {
@@ -236,7 +236,7 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option selected>Warehouse</option>';
 
 } else if ($propertytype == 'Any') {
@@ -246,7 +246,7 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option>Warehouse</option>';
 
 } else if ($propertytype == '') {
@@ -256,7 +256,7 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option>Warehouse</option>';
 
 } else if ($propertytype == 'Property Type') {
@@ -266,7 +266,7 @@ if ($propertytype == 'Building') {
     echo '<option>Condominium</option>';
     echo '<option>Lot</option>';
     echo '<option>House and Lot</option>';
-    echo '<option>Offices</option>';
+    echo '<option>Office</option>';
     echo '<option>Warehouse</option>';
 
 }
@@ -425,17 +425,18 @@ echo '</div>';
         <div id="propertiesContainer">
 
             <?php
-$query = "SELECT property.propertyid, property.usersId,property.propertyname,property.city,MIN(images.file_name)AS file_name FROM property,images  WHERE  property.propertyid = images.propertyid AND property.approval  NOT IN ('Pending','Deny','Delete','On-Going','Closed','Cancelled')";
+$query = "SELECT property.propertyid, property.usersId,property.propertyname,property.city,MIN(images.file_name)AS file_name FROM property,images  WHERE  property.propertyid = images.propertyid AND property.approval IN ('Posted','On-Going')";
 
 $by_offertype = $offertype;
 
-if (isset($by_searchOption)) {
+if (isset($_GET['searchOption'])) {
     $by_searchOption = $_GET['searchOption'];
 
 } else {
     $by_searchOption;
 }
 
+$by_query;
 if (isset($_GET['query'])) {
     $by_query = $_GET['query'];
 
@@ -549,12 +550,12 @@ $conditions = array();
 if (!empty($by_searchOption)) {
     if ($by_searchOption === 'property-name') {
         if (!empty($by_query)) {
-            $conditions[] = "propertyname=" . "'" . mysqli_real_escape_string($conn, $by_query) . "'";
+            $conditions[] = "propertyname LIKE" . "'%" . mysqli_real_escape_string($conn, $by_query) . "%'";
         }
 
     } else if ($by_searchOption === 'property-location') {
         if (!empty($by_query)) {
-            $conditions[] = "propertyname=" . "'" . mysqli_real_escape_string($conn, $by_query) . "'";
+            $conditions[] = "RoomFloorUnitNoBuilding LIKE" . "'%" . mysqli_real_escape_string($conn, $by_query) . "%' OR HouseLotBlockNo LIKE " . "'%" . mysqli_real_escape_string($conn, $by_query) . "%' OR street LIKE '%" . mysqli_real_escape_string($conn, $by_query) . "%' OR subdivision LIKE '%" . mysqli_real_escape_string($conn, $by_query) . "%' OR barangay LIKE '%" . mysqli_real_escape_string($conn, $by_query) . "%' OR city LIKE '%" . mysqli_real_escape_string($conn, $by_query) . "%'";
         }
     }
 }
@@ -582,7 +583,7 @@ if (!empty($by_floorarea)) {
 if (!empty($by_propertytype)) {
     if ($by_propertytype !== 'Property Type') {
         if ($by_propertytype === 'Any') {
-            $conditions[] = "propertytype IN ('Building','Condominium','Lots','House and Lot','Industrial','Offices','Warehouse')";
+            $conditions[] = "propertytype IN ('Building','Condominium','Lot','House and Lot','Office','Warehouse')";
         } else {
             $conditions[] = "propertytype=" . "'" . mysqli_real_escape_string($conn, $by_propertytype) . "'";
         }
@@ -615,7 +616,7 @@ if (count($conditions) > 0) {
     $sql .= "GROUP BY property.propertyid;";
 }
 
-// echo $sql;
+echo $sql;
 
 $result = mysqli_query($conn, $sql);
 $number_of_results = mysqli_num_rows($result);
@@ -676,13 +677,13 @@ if (mysqli_num_rows($paginationResult) > 0) {
         echo $row['propertyid'];
         echo ")'";
         echo ">";
-        echo "<img class='card-img-top' src='";
+        echo "<img class='card-img-top img-properties' src='";
         echo "uploads/" . $row['file_name'] . "." . $fileactualext;
         echo "' alt=''>";
         echo " </div>";
         echo " <div class='card-body'>";
         echo " <h5 class='card-title'>";
-        echo $row['propertyname'];
+        echo ucwords($row['propertyname']);
         echo "</h5>";
         echo "<p class='card-text'> <i class='fas fa-map-marker-alt'></i>&nbsp;";
         echo $row['city'];

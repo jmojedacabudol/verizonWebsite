@@ -55,6 +55,11 @@ function add3Dots(string, limit) {
     }
     return string;
 }
+
+
+function test(number) {
+    window.open(`tel:${number}`)
+}
 </script>
 
 <!-- Core theme JS-->

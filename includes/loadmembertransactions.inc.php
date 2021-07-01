@@ -53,12 +53,13 @@ if (isset($_POST['memberId'])) {
                     'Address' => $row['address'],
                     'Status' => $row['status'],
                     'Date of Transaction' => $row['dateOfTransaction'],
+                    'Date of Reservation' => 'N/A',
                     'Final TCP' => "₱" . $row['finalTCP'],
                     'Commission' => $row['commission'],
                     'Receivable' => "₱" . $row['receivable'],
                     'Agent`s Commission' => $row['commissionAgent'],
                     'AR`s Commision' => $row['commissionAR'],
-                    'Buyer`s  Commision' => $row['commissionBuyer'],
+                    'Buyer`s Commission' => $row['commissionBuyer'],
                     'Final Receivable' => "₱" . $row['receivable2'],
                 );
 

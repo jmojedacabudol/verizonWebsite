@@ -202,7 +202,7 @@ window.fbAsyncInit = function() {
             <div class="row justify-content-center padding-pr">
                 <!-- Latest Properties Item 1-->
                 <?php
-$sql = "SELECT property.propertydesc,property.propertyid,MIN(images.file_name) as file_name,property.propertytype,propertyamount,propertyname, propertybedrooms,property.approval FROM property,images WHERE property.propertyid=images.propertyid AND property.approval NOT IN ('Pending','Deny','Delete','On-Going','Closed','Cancelled') AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3";
+$sql = "SELECT property.subcategory,property.propertydesc,property.propertyid,MIN(images.file_name) as file_name,property.propertytype,propertyamount,propertyname, propertybedrooms,property.approval FROM property,images WHERE property.propertyid=images.propertyid AND property.approval NOT IN ('Pending','Deny','Delete','On-Going','Closed','Cancelled') AND property.offertype IN ('Sell','Presell') GROUP BY property.propertyid DESC LIMIT 3";
 
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -231,10 +231,16 @@ if (mysqli_num_rows($result) > 0) {
         echo "<h5 class='text-uppercase lproperties-price'> ₱ ";
         echo $row['propertyamount'];
         echo "</h5>";
-        if ($row['propertytype'] === "House and Lot" || $row['propertytype'] === "Condominium") {
+        if ($row['propertytype'] === "House and Lot") {
             echo "<h6 class='lproperties-br'>";
             echo $row['propertybedrooms'];
             echo " Bedroom/s </h6>";
+        } else if ($row['propertytype'] === "Condominium") {
+            if ($row['subcategory'] !== "Parking") {
+                echo "<h6 class='lproperties-br'>";
+                echo $row['propertybedrooms'];
+                echo " Bedroom/s </h6>";
+            }
         }
         echo "<pre class='lproperties-desc'> ";
 
@@ -286,7 +292,7 @@ if (mysqli_num_rows($result) > 0) {
         echo ')">Read More</button></td>';
         echo ' </div>';
         echo ' </div>';
-        echo '<img class="img-fluid" src="uploads/';
+        echo '<img class="img-index" style="width:100vw;" src="uploads/';
         echo $row['file_name'] . "." . $fileactualext;
         echo '" alt="" />';
         echo '<h4 class="text-uppercase lrproperties-title">';
@@ -403,43 +409,34 @@ if (mysqli_num_rows($result) > 0) {
 
 <!-- About Us Section-->
 <section class="page-section bg-primary text-white mb-0" id="AboutUs">
-    <div class="container">
-        <h2 class="page-section-heading text-center text-uppercase text-white">About Us</h2><br><br>
-    </div>
-
     <!-- About Section Heading-->
     <!-- Mission and vision Content-->
     <div class="container-fluid">
-        <div class="row padding-pr">
 
-            <div class="col-lg-4 ml-auto">
-                <h3 class="page-section-heading text-center text-uppercase text-white">Mission</h3>
-                <p class="lead" align="justify">
-                    &nbsp;&nbsp;&nbsp; We are dedicated in providing world-class service and market-leading expertise to
-                    our clients. We are passionate about providing the extra value that others simply will not. To
-                    modernize and progress the experience of buying and selling real estate by cultivating a spirit of
-                    collaboration, innovation, and integrity
-                </p>
-            </div>
-
-            <div class="col-lg-4 mr-auto">
-                <h3 class="page-section-heading text-center text-uppercase text-white">Vision</h3>
-                <p class="lead" align="justify"> &nbsp;&nbsp;&nbsp; The vision of AR VERIZON REAL ESTATE COMPANY is to
-                    achieve the highest possible standards of the real estate market while establishing our agency as
-                    the premier and preferred real estate marketing partner of leading developers in the country.</p>
-            </div>
+        <div class="center missionVissionPadding">
+            <h3 class="page-section-heading text-center text-uppercase text-white">Mission</h3>
+            <p class="lead" align="justify">
+                &nbsp;&nbsp;&nbsp; We are dedicated in providing world-class service and market-leading expertise to
+                our clients. We are passionate about providing the extra value that others simply will not. To
+                modernize and progress the experience of buying and selling real estate by cultivating a spirit of
+                collaboration, innovation, and integrity
+            <h3 class="page-section-heading text-center text-uppercase text-white">Vision</h3>
+            <p class="lead" align="justify"> &nbsp;&nbsp;&nbsp; The vision of AR VERIZON REAL ESTATE COMPANY is to
+                achieve the highest possible standards of the real estate market while establishing our agency as
+                the premier and preferred real estate marketing partner of leading developers in the country.</p>
         </div>
     </div>
-    <!-- Call Us & Email Us Button-->
     <div class="text-center mt-4">
-        <!-- <a class="btn btn-xl btn-outline-light" href="#contact">
-            <i class="fas fa-phone"></i>
-            &nbsp;Call Us
-        </a>
-        &nbsp; -->
+
+
         <a class="btn btn-xl btn-outline-light" href="mailto:helpdesk@arverizon.com">
             <i class="far fa-envelope"></i>
             &nbsp;Email Us
+        </a>
+        &nbsp;
+        <a class="btn btn-xl btn-outline-light" href="#javascript:void" onclick="test('0917-8617-878')">
+            <i class="fas fa-phone"></i>
+            &nbsp;Call Us
         </a>
     </div>
 </section>

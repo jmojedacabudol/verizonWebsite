@@ -515,13 +515,7 @@ mark,
   content: "— ";
 }
 
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-  width: cover;
-  background-position: cover;
-  border-radius: 6px;
-}
+
 
 .img-property {
   max-width: 100%;
@@ -2003,11 +1997,13 @@ pre code {
 
 
 .slogan-text {
-  font-size: 3.5vw;
+  font-size: 3.0vw;
   text-align: center;
   margin: auto;
   padding-top: 100px;
   text-shadow: 2px 2px 5px #000;
+  text-transform: uppercase !important;
+
 }
 
 
@@ -2148,11 +2144,11 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 15%;
-    width: 15%;
+    height: 10%;
+    width: 10%;
     color: #000;
     text-align: center;
-    padding-top: 1%;
+    padding-top: 3%;
   }
 
   .slogan-text {
@@ -2194,7 +2190,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 15%;
+    height: 10%;
     width: 18%;
     color: #000;
     text-align: center;
@@ -2212,7 +2208,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 15%;
+    height: 10%;
     width: 20%;
     color: #000;
     text-align: center;
@@ -2233,7 +2229,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 15%;
+    height: 10%;
     width: 25%;
     color: #000;
     text-align: center;
@@ -2252,7 +2248,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 15%;
+    height: 10%;
     width: 25%;
     color: #000;
     text-align: center;
@@ -2302,7 +2298,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 15%;
+    height: 10%;
     width: 28%;
     color: #000;
     text-align: center;
@@ -2369,7 +2365,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 15%;
+    height: 10%;
     width: 34%;
     color: #000;
     text-align: center;
@@ -2408,7 +2404,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 10%;
+    height: 7%;
     width: 30%;
     color: #000;
     text-align: center;
@@ -2459,7 +2455,7 @@ pre code {
     -moz-border-radius: 6px;
     right: 0;
     z-index: 99;
-    height: 10%;
+    height: 7%;
     width: 42%;
     color: #000;
     text-align: center;
@@ -2533,7 +2529,7 @@ pre code {
       -moz-border-radius: 6px;
       right: 0;
       z-index: 99;
-      height: 10%;
+      height: 7%;
       width: 44%;
       color: #000;
       text-align: center;
@@ -2603,7 +2599,7 @@ pre code {
       text-align: center;
       margin-top: 0%;
       font-size: 12px;
-      padding-top: 4%;
+      padding-top: 15%;
     }
 
     .page-section-heading {
@@ -2668,7 +2664,7 @@ pre code {
       -moz-border-radius: 6px;
       right: 0;
       z-index: 99;
-      height: 10%;
+      height: 7%;
       width: 50%;
       color: #000;
       text-align: center;
@@ -6193,7 +6189,6 @@ input[type=button].btn-block {
 
 .card {
   position: relative;
-  display: flex;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
@@ -12970,7 +12965,7 @@ form .row:first-child .floating-label-form-group {
 
 .carousel-control-prev,
 .carousel-control-next {
-  bottom: 60%;
+  bottom: 5%;
 }
 
 
@@ -13187,4 +13182,60 @@ form .row:first-child .floating-label-form-group {
 pre {
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+
+.missionVissionPadding {
+  padding: 0 20vw;
+}
+
+
+
+.square {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+}
+
+/* 
+img {
+  position: absolute;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+img.landscape {
+  height: 100%;
+  width: auto;
+} */
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+  background-position: cover;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+
+.img-index {
+  max-width: 100%;
+  height: 400px;
+  width: 100%;
+  background-position: cover;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.img-properties {
+  height: 600px;
+  background-position: cover;
+  border-radius: 6px;
+  object-fit: cover;
 }

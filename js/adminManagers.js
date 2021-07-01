@@ -277,13 +277,13 @@ $(() => {
                     destroy: true,
                     "aaData": data,
                     "columns": [{
-                            "data": "id"
+                            "data": "Id"
                         },
                         {
-                            "data": "Agent"
+                            "data": "Name"
                         },
                         {
-                            "data": "Number"
+                            "data": "Mobile Number"
                         },
                         {
                             "data": "Email"
@@ -297,6 +297,7 @@ $(() => {
 
         }).fail(function (jqXHR, textStatus) {
             Swal.close();
+            console.log(textStatus)
             Swal.fire({
                 icon: "info",
                 title: "No Agent/s",

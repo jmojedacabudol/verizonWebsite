@@ -38,7 +38,7 @@ $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
 
-        if ($row['category'] === "Preselling") {
+        if ($row['offertype'] === "Preselling") {
             echo "<tr>";
             echo "<td class='w-20'>";
             echo $row['transactionId'];
@@ -130,7 +130,7 @@ if (mysqli_num_rows($result) > 0) {
             echo $row['propertyType'];
             echo "</td>";
             echo "<td>";
-            echo $row['category'];
+            echo $row['offertype'];
             echo "</td>";
             if ($row['propertyType'] === "Condominium") {
                 echo "<td>";

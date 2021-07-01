@@ -24,7 +24,6 @@ include_once 'includes/dbh.inc.php';
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
-
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
@@ -32,9 +31,11 @@ include_once 'includes/dbh.inc.php';
     <link href='assets/fullcalendar/main.css' rel='stylesheet' />
 
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/mystyles.css?v=1.4" rel="stylesheet" />
+    <link href="css/mystyles.css?v=1.6" rel="stylesheet" />
     <meta name="google-signin-client_id"
         content="475682005183-t604pq7p67an7j8ko8tmugbpbais63ms.apps.googleusercontent.com">
+
+
 
 
 </head>
