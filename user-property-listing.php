@@ -644,8 +644,7 @@ if (mysqli_num_rows($result) > 0) {
             <br>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" name="submit" id="eListing-submit">Save
-                    Changes</button>
+                <button type="submit" class="btn btn-primary" name="submit" id="eListing-submit">Save</button>
             </div>
 
             </form>

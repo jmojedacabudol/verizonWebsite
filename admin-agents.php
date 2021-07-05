@@ -19,13 +19,14 @@ if (!isset($_SESSION['adminUser'])) {
                         <th>Mobile Number</th>
                         <th>Email</th>
                         <th>Position</th>
+                        <th>Status</th>
                         <th class="notexport"> Actions</th>
                     </tr>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-$sql = "SELECT * FROM users WHERE approval!=3;";
+$sql = "SELECT * FROM users;";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
@@ -50,6 +51,28 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>";
         echo $row['usersPosition'];
         echo "</td>";
+        // echo "<td>";
+        // echo $row['approval'];
+        // echo "</td>";
+
+        if ($row['approval'] == 0) {
+            echo "<td style='color:orange;'><i class='fas fa-clock'></i>&nbsp;&nbsp;";
+            echo "Pending";
+            echo "</td>";
+        } else if ($row['approval'] == 1) {
+            echo "<td style='color:green;'><i class='fas fa-check'></i>&nbsp;&nbsp;";
+            echo "Approved";
+            echo "</td>";
+        } else if ($row['approval'] == 2) {
+            echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo "Denied";
+            echo "</td>";
+        } else if ($row['approval'] == 3) {
+            echo "<td style='color:red;'><i class='fas fa-window-close'></i>&nbsp;&nbsp;";
+            echo "Blocked";
+            echo "</td>";
+        }
+
         echo "<td>";
         echo " <button class='btn btn-success' id='approveBtn' type='text' aria-label='Approve'><i
                                         class='far fa-check-circle'></i></button>";
@@ -91,6 +114,7 @@ if (mysqli_num_rows($result) > 0) {
                         <th>Mobile Number</th>
                         <th>Email</th>
                         <th>Position</th>
+                        <th>Status</th>
                         <th class="notexport"> Actions</th>
                     </tr>
                     </tr>

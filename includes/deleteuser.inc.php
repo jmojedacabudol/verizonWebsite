@@ -6,10 +6,9 @@ if (isset($_POST['userId'])) {
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
-    deleteUser($userid, $conn);
-    echo "User Deleted";
+    echo deleteUser($userid, $conn);
     exit();
 
 } else {
-    echo "No";
+    echo "No User Found";
 }

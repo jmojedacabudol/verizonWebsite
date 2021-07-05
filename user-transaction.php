@@ -876,14 +876,14 @@ if (mysqli_num_rows($result) > 0) {
 
                             <div class="row">
                                 <div class="col-6">
-                                    <img class="addCursorPointer img-thumbnail img-fluid" id="firstValidId"
+                                    <img class="addCursorPointer img-thumbnail" id="firstValidId"
                                         alt="Select 1st Valid Id" title="First Valid Id" src="assets/img/user.png" />
                                     <br>
                                     <input type="file" name="firstValidIdHolder" id="firstValidIdHolder" class="hidden"
                                         accept=".jpg, .jpeg, .png" />
                                 </div>
                                 <div class=col-6>
-                                    <img class="addCursorPointer img-thumbnail img-fluid" id="secondValidId"
+                                    <img class="addCursorPointer img-thumbnail" id="secondValidId"
                                         alt="Select 2nd Valid Id" title="Second Valid Id" src="assets/img/user.png" />
                                     <br>
                                     <input type="file" name="secondValidIdHolder" id="secondValidIdHolder"
@@ -1304,10 +1304,10 @@ if (mysqli_num_rows($result) > 0) {
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <!-- Moment Plugin -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
-
+<script src="js/functions.js?v=1.2"></script>
 <script src="js/imageLoading.js"></script>
 <script src="js/dashboard-listing.js?v=1.2"></script>
-<script src="js/dashboard-transaction.js?v=1.2"></script>
+<script src="js/dashboard-transaction.js?v=1.4"></script>
 <script src="js/propertyupload.js?v=1.2"></script>
 </body>
 

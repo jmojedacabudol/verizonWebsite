@@ -23,49 +23,48 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="assets/img/logo.png" alt="" /> </a>
+            <a class="navbar-brand js-scroll-trigger" id="admin"><img src="assets/img/logo.png" alt="" /> </a>
         </div>
     </nav>
     <div class="main">
-
         <div class="container front">
-            <div class="container-fluid ">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 login-form-1">
-                        <form id="adminloginform" action="includes/login.inc.php" method="post">
-                            <!-- <img src="images/admin_icon.svg" style="width:200px height:200px" alt=""> -->
+            <div class="row justify-content-center">
+                <div class="col-md-6 login-form-1">
+                    <div class="card">
+                        <article class="card-body">
+                            <h4 class="card-title text-center mb-4 mt-1 textToGreen">Admin Login</h4>
+                            <hr>
                             <div id="form-message" style="text-align:center;">
 
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Your Email *" name="uid"
-                                    id="admin" /> <br>
-                            </div>
 
-                            <div class="form-group">
-                                <input type="Password" class="form-control" placeholder="Your Password *" name="pwd">
-                                <br>
-                            </div>
+                            <form id="adminloginform" action="includes/login.inc.php" method="post">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="username *" name="uid"
+                                        id="admin" />
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                    </div>
+                                    <input type="Password" class="form-control" placeholder="password *" name="pwd">
+                                </div>
 
-                            <div class="form-group">
-                                <a data-toggle="modal" name="createAdmin" data-target="#Register" data-dismiss="modal"
-                                    class="forgot-pwd" style="display:none" id="createAdmin">Create Admin User</a>
-                            </div>
-                            <hr>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-green btn-primary-w100" value="Login">
-                                    Login </button>
-                            </div>
-
-                            <div>
-
-                            </div>
-
-                        </form>
-                    </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-green btn-primary-w100"> Login
+                                    </button>
+                                </div> <!-- form-group// -->
+                            </form>
+                        </article>
+                    </div> <!-- card.// -->
                 </div>
             </div>
         </div>
+
+
         <!-- Registration Modal-->
         <!-- Modal -->
         <div class="modal fade" id="Register" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -79,7 +78,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div id="register-form-message" style="text-align:center;">
+
+                        </div>
                         <form id='adminRegister' action="includes/adminsignup.inc.php" method="post">
+
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="username *" name="uid" />
                                 <br>
@@ -91,13 +94,14 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="Password" class="form-control" placeholder="Password *" name="pwd" />
+                                <input type="Password" class="form-control" placeholder="Password *" name="pwd"
+                                    id="pwd" />
                                 <br>
                             </div>
 
                             <div class="form-group">
                                 <input type="Password" class="form-control" placeholder="Confirm Password *"
-                                    name="pwdrepeat" /> <br>
+                                    name="pwdrepeat" id="pwdrepeat" /> <br>
                             </div>
 
                             <div class="form-group">
@@ -116,7 +120,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name='admin-register' class="btn btn-primary">Save changes</button>
+                        <button type="submit" name='admin-register' class="btn btn-primary">Save
+                            changes</button>
                     </div>
                     </form>
                 </div>
@@ -129,6 +134,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Third party plugin JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="js/admin-login.js"></script>
 
 </html>

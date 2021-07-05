@@ -473,21 +473,19 @@ if (mysqli_num_rows($result) > 0) {
             </button>
             <br>
             <div class="modal-body">
-
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-7">
-                            <div id='propertyContainer'></div>
-                        </div>
-                        <div class="col-md-6 col-lg-5">
-                            <div id='property-title'></div>
-                            <div id='property-info'> </div>
-                        </div>
-
+                <div class="row">
+                    <div class="col-md-6 col-lg-7">
+                        <div id='propertyContainer'></div>
                     </div>
+                    <div class="col-md-6 col-lg-5">
+
+                        <div id='property-title'></div>
+                        <div id='property-info'> </div>
+                    </div>
+
                 </div>
-                <br>
             </div>
+            <br>
         </div>
     </div>
 </div>

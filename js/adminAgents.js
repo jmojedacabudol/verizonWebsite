@@ -561,7 +561,7 @@ function denyAgent(agentId) {
                             }).then((result) => {
                                 if (result.value) {
                                     $.post('includes/deleteuser.inc.php', {
-                                            userId: userid,
+                                            userId: agentId,
                                         },
                                         function (returnedData) {
                                             Swal.fire({

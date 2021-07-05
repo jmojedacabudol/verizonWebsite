@@ -22,7 +22,10 @@ if (isset($_POST['propertyId'])) {
             }
 
         }
+        echo json_encode($data);
+
+    } else {
+        echo "No Property Found";
     }
-    echo json_encode($data);
 
 }

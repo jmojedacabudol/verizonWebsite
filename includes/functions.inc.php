@@ -25,16 +25,16 @@ function invalidEmail($email)
     return $result;
 }
 
-// function pwdMatch($pwd, $pwdrepeat)
-// {
-//     $result;
-//     if ($pwd !== $pwdrepeat) {
-//         $result = true;
-//     } else {
-//         $result = false;
-//     }
-//     return $result;
-// }
+function pwdMatch($pwd, $pwdrepeat)
+{
+    $result;
+    if ($pwd !== $pwdrepeat) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
 
 function emailExists($conn, $email)
 {
@@ -540,7 +540,7 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
                                 } else {
                                     //show error in uploading ATS FILE in testing mode
                                     if (TESTING) {
-                                        $result = "Image NOT UPLOADED" . $_FILES["file"]["error"];
+                                        $result = "Image NOT UPLOADED" . $propertyImage["error"];
                                     }
                                     break;
                                     return $result;
@@ -589,7 +589,7 @@ function uploadProperty($conn, $propertyImage, $propertyName, $propertyType, $li
                             } else {
                                 //show error in uploading ATS FILE in testing mode
                                 if (TESTING) {
-                                    $result = "ATS NOT UPLOADED" . $_FILES["file"]["error"];
+                                    $result = "ATS NOT UPLOADED" . $propertyATS["error"];
 
                                 }
                                 return $result;
@@ -674,7 +674,7 @@ function propertyAlreadydenied($propertyid, $conn)
         $approval = $row['approval'];
         mysqli_stmt_close($stmt);
 
-        if ($approval == 2) {
+        if ($approval === "Deny") {
             $result = true;
         } else {
             $result = false;
@@ -697,7 +697,32 @@ function denyPropertyStatus($propertyid, $conn)
 
 function deleteProperty($propertyid, $conn)
 {
-    $sql = "UPDATE property SET approval = 3  WHERE propertyid=?;";
+
+    $clientSql = 'SELECT file_name FROM images WHERE propertyid=?;';
+    $clientStmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($clientStmt, $clientSql)) {
+        echo "Statement failed";
+        exit();
+    } else {
+        mysqli_stmt_bind_param($clientStmt, 's', $propertyid);
+        mysqli_stmt_execute($clientStmt);
+
+        $resultData = mysqli_stmt_get_result($clientStmt);
+        if (mysqli_num_rows($resultData) > 0) {
+            while ($row = mysqli_fetch_assoc($resultData)) {
+                //delete the file from folder
+                $databaseFileName = $row['file_name'];
+                $filename = "../uploads/$databaseFileName" . "*";
+                $fileInfo = glob($filename);
+                $fileext = explode(".", $fileInfo[0]);
+                $fileactualext = $fileext[4];
+
+                unlink('../uploads/' . $row['file_name'] . "." . $fileactualext);
+
+            }
+        }
+    }
+    $sql = "DELETE FROM property WHERE propertyid=?;";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         exit();
@@ -705,6 +730,7 @@ function deleteProperty($propertyid, $conn)
         mysqli_stmt_bind_param($stmt, 's', $propertyid);
         mysqli_stmt_execute($stmt);
     }
+
 }
 
 function userAlreadyApproved($userid, $conn)
@@ -788,12 +814,19 @@ function deleteUser($userid, $conn)
 {
     $sql = "UPDATE users SET approval = 3  WHERE usersId=?;";
     $stmt = mysqli_stmt_init($conn);
+    $result = "";
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         exit();
     } else {
         mysqli_stmt_bind_param($stmt, 's', $userid);
-        mysqli_stmt_execute($stmt);
+        if (!mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_error($stmt);
+        } else {
+            $result = "User Deleted";
+        }
+
     }
+    return $result;
 }
 
 function minGreaterThanMax($minBedrooms, $maxBedrooms)
@@ -899,7 +932,7 @@ function createAdminAccount($username, $email, $pwd, $firstname, $lastname, $mob
         mysqli_stmt_bind_param($stmt, 'ssssss', $email, $firstname, $lastname, $mobile, $hashedPwd, $username);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
-        $result = "Upload Success2";
+        $result = "Registration Success";
     }
     return $result;
 }
@@ -1197,7 +1230,7 @@ function deleteSchedule($scheduleId, $conn)
 
 function approveManager($conn, $managerId)
 {
-    $sql = "UPDATE managers SET approval=1 WHERE managerId=?;";
+    $sql = "UPDATE managers SET approval=1 WHERE managerReference=?;";
     $stmt = mysqli_stmt_init($conn);
     $result = "";
     if (!mysqli_stmt_prepare($stmt, $sql)) {
